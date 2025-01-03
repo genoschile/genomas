@@ -20,7 +20,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto">
+    <div className="relative w-full flex-1 mx-auto">
       {/* Slides */}
       <div className="overflow-hidden relative h-64">
         {slides.map((slide, index) => (

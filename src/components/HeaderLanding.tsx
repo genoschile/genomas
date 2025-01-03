@@ -11,14 +11,12 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-color-primary shadow-md text-color-white sticky top-0 z-50">
+    <header className="bg-color-primary shadow-md text-color-white sticky top-0 z-50 px-8">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo */}
         <div className="text-2xl font-bold text-text">
           <a href="#">Genomas</a>
         </div>
 
-        {/* Navigation Menu (Desktop) */}
         <nav className="hidden md:flex space-x-8 text-white">
           <a href="#" className="hover:text-text">
             Company
@@ -31,9 +29,8 @@ const Header = () => {
           </a>
         </nav>
 
-        {/* Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <a href="#" className="text-gray-600 hover:text-gray-800">
+          <a href="/login" className="text-gray-600 hover:text-gray-800">
             Login
           </a>
           <a
@@ -44,7 +41,6 @@ const Header = () => {
           </a>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden flex items-center text-gray-600 hover:text-gray-800"
           onClick={toggleMobileMenu}
@@ -57,7 +53,6 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <nav className="md:hidden bg-white border-t border-gray-200">
           <div className="px-6 py-4 space-y-2">
