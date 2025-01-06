@@ -14,7 +14,9 @@ export default {
         "color-primary": "#9CE3D6",
         "text": "#433F65",
         "color-secondary": "#6977D2",
-        "color-skyBlue": "#083F7A"
+        "color-skyBlue": "#083F7A",
+        "color-placeholder": "#909BDD",
+        "btn-blue": "#254FAB"
       },
     },
   },
