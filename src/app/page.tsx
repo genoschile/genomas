@@ -1,4 +1,3 @@
-import CardMembers from "@/components/CardMembers";
 import Carrousel from "@/components/Carrousel";
 import HeaderLanding from "@/components/HeaderLanding";
 import TeamCarrousel from "@/components/TeamCarrousel";

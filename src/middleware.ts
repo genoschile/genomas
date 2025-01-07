@@ -6,22 +6,24 @@ export default async function middleware(req: NextRequest) {
 
     // 1. check if route is protected
 
-    /*
-        const protectedRoutes = ['/admin']
-        const currentPath = req.nextUrl.pathname
-        const isProtectedRoute = protectedRoutes.includes(currentPath)
-    */
 
-    const protectedRoutePrefix = '/admin'
+    const protectedRoutes = ['/admin', '/user']
     const currentPath = req.nextUrl.pathname
-    const isProtectedRoute = currentPath.startsWith(protectedRoutePrefix)
+    const isProtectedRoute = protectedRoutes.includes(currentPath)
 
+
+    /*
+const protectedRoutePrefix = '/admin'
+const currentPath = req.nextUrl.pathname
+const isProtectedRoute = currentPath.startsWith(protectedRoutePrefix)
+
+*/
     if (isProtectedRoute) {
 
         // 2.check for valid session
 
         const cookie = await cookies()
-        
+
         const isSession = cookie.get('session')?.value
 
         if (!isSession) {
@@ -29,7 +31,7 @@ export default async function middleware(req: NextRequest) {
             // Redirect to login if no cookie is found
 
             return NextResponse.redirect(new URL('/login', req.nextUrl))
-        }    
+        }
         const session = await decrypt(isSession)
 
         // 3. redirect unauthed users

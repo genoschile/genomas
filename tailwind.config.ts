@@ -16,7 +16,8 @@ export default {
         "color-secondary": "#6977D2",
         "color-skyBlue": "#083F7A",
         "color-placeholder": "#909BDD",
-        "btn-blue": "#254FAB"
+        "btn-blue": "#254FAB",
+        "color-card": "#F5F5F5"
       },
     },
   },

@@ -1,24 +1,30 @@
 "use client";
 
 /* server actions */
-import { submitLogin } from "@/lib/actions/auth";
+import { submitSignUp } from "@/lib/actions/auth";
 
 /* types */
-import type { ActionResponseWithoutRepeatPassword } from "@/lib/types/formTypes";
-import { useRouter } from "next/navigation";
+import type { ActionResponse } from "@/lib/types/formTypes";
 
 /* hooks */
 import { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useRouter } from 'next/navigation'
 
-const initialState: ActionResponseWithoutRepeatPassword = {
+const initialState: ActionResponse = {
   success: false,
   message: "",
 };
 
 export default function FormLogin() {
-  const [state, actions, isPending] = useActionState(submitLogin, initialState);
+  const [state, actions, isPending] = useActionState(submitSignUp, initialState);
   const router = useRouter()
+
+  console.log({
+    initialState: initialState,
+    state: state,
+    isPending: isPending,
+  });
 
   useEffect(() => {
     if (!isPending) {
@@ -44,7 +50,7 @@ export default function FormLogin() {
 
         {/* Título */}
         <h2 className="text-2xl font-semibold text-text text-center mb-6">
-          Login
+          Sign Up
         </h2>
 
         {/* Formulario */}
@@ -85,6 +91,24 @@ export default function FormLogin() {
             )}
           </div>
 
+          {/* Campo de Repetir Contraseña */}
+          <div>
+            <input
+              type="password"
+              id="repeat-password"
+              name="repeatPassword"
+              defaultValue={state?.input?.repeatPassword}
+              placeholder="Repeat your password"
+              className="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm border-color-secondary focus:outline-dotted placeholder:text-color-placeholder"
+            />
+
+            {state?.error?.repeatPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {state.error.repeatPassword[0]}
+              </p>
+            )}
+          </div>
+
           {/* Botón de Crear Cuenta */}
           <div className="flex items-center justify-center">
             <button
@@ -99,12 +123,12 @@ export default function FormLogin() {
 
         {/* Texto de Login */}
         <p className="text-sm font-semibold text-text text-center mt-4">
-          Are you not in GENOMAS yet?{" "}
+          Already in GENOMAS?{" "}
           <a
             href="/login"
             className="text-color-secondary font-bold hover:underline"
           >
-            Sign up
+            Login
           </a>
         </p>
       </div>

@@ -8,3 +8,13 @@ export interface ActionResponse {
         repeatPassword: string;
     };
 }
+
+export interface ActionResponseWithoutRepeatPassword {
+    success: boolean;
+    message: string;
+    error?: Record<string, string[]>;
+    input?: {
+        email: string;
+        password: string;
+    };
+}
