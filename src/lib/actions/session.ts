@@ -4,9 +4,9 @@ import 'server-only'
 import { SignJWT, jwtVerify } from "jose";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { JWT_SECRET } from '@Config/env';
 
-// conv el secret en un Uint8Array para la firma
-const key = new TextEncoder().encode(process.env.JWT_SECRET)
+const key = new TextEncoder().encode(JWT_SECRET)
 
 const cookie = {
     name: 'session',
@@ -86,5 +86,4 @@ export async function deleteSession() {
     const isCookie = await cookies()
 
     isCookie.delete(cookie.name)
-    redirect('/')
 }

@@ -24,7 +24,8 @@
       "@pages/*": ["./src/pages/*"],
       "@lib/*": ["./src/lib/*"],
       "@actions/*": ["./src/lib/actions/*"],
-      "@fonts/*": ["./src/lib/fonts/*"]
+      "@fonts/*": ["./src/lib/fonts/*"],
+      "@Config/*": ["./src/lib/config/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
