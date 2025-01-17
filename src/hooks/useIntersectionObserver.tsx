@@ -10,7 +10,7 @@ interface IntersectionObserverOptions {
 
 export const useIntersectionObserver = ({
   root = null,
-  rootMargin = "0px",
+  rootMargin = "-2px",
   threshold = 0.1,
 }: IntersectionObserverOptions = {}) => {
   const [entries, setEntries] = useState<IntersectionObserverEntry[]>([]);
@@ -19,6 +19,7 @@ export const useIntersectionObserver = ({
   useEffect(() => {
     const observer = new IntersectionObserver(
       (observedEntries) => {
+        console.log("Observed entries:", observedEntries);
         setEntries(observedEntries);
       },
       { root, rootMargin, threshold }
@@ -31,6 +32,7 @@ export const useIntersectionObserver = ({
 
   const observe = (element: Element) => {
     if (observerRef.current && element) {
+      console.log("Observing element:", element); 
       observerRef.current.observe(element);
     }
   };

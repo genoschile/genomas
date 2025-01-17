@@ -19,3 +19,16 @@ body {
   background: var(--background);
   font-family: Inter, Helvetica, sans-serif;
 }
+
+
+.hiddenElement {
+  opacity: 0;
+  transform: translateY(30%);
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.visibleElement {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
