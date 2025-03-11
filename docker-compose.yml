@@ -12,22 +12,21 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - genomas_network
-
-  genomas:
-    build:
-      context: .
-      dockerfile: dockerfile.bdService
-    container_name: genomasApp
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@bd_genomas_services:${POSTGRES_PORT}/${POSTGRES_DB}
-    volumes:
-      - ./:/app
-    depends_on:
-      - bdService
-    networks:
-      - genomas_network
+  # genomas:
+  #   build:
+  #     context: .
+  #     dockerfile: dockerfile.bdService
+  #   container_name: genomasApp
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@bd_genomas_services:${POSTGRES_PORT}/${POSTGRES_DB}
+  #   volumes:
+  #     - ./:/app
+  #   depends_on:
+  #     - bdService
+  #   networks:
+  #     - genomas_network
 
 networks:
   genomas_network:
