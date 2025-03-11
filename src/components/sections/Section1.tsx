@@ -35,7 +35,7 @@ export default function Section1() {
 
   return (
     <section className="container mx-auto h-auto md:h-screen flex items-center">
-      <div className="w-full px-8 py-6 flex flex-col justify-between">
+      <div className="w-full px-[32px] py-6 flex flex-col justify-between">
         {/* Contenedor principal */}
         <div className="flex flex-col md:flex-row justify-between items-start space-y-6 md:space-y-0 md:space-x-8">
           {/* Título */}

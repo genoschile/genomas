@@ -38,7 +38,7 @@ export default function FormLogin() {
   }, [isPending, state.success, state.message]);
 
   return (
-    <section className="flex items-center justify-center flex-shrink-0">
+    <section className="flex items-center justify-center shrink-0">
       <div className="w-full max-w-md p-4 rounded-lg shadow-lg">
         <div className="flex justify-center">
           <img
@@ -63,7 +63,7 @@ export default function FormLogin() {
               name="email"
               defaultValue={state?.input?.email}
               placeholder="Enter your email"
-              className="mt-1 block w-full px-4 py-2 border border-color-secondary rounded-lg shadow-sm placeholder:text-color-placeholder"
+              className="mt-1 block w-full px-4 py-2 border border-color-secondary rounded-lg shadow-xs placeholder:text-color-placeholder"
             />
 
             {state?.error?.email && (
@@ -81,7 +81,7 @@ export default function FormLogin() {
               name="password"
               defaultValue={state?.input?.password}
               placeholder="Enter your password"
-              className="mt-1 block w-full px-4 py-2 border border-color-secondary rounded-lg shadow-sm placeholder:text-color-placeholder"
+              className="mt-1 block w-full px-4 py-2 border border-color-secondary rounded-lg shadow-xs placeholder:text-color-placeholder"
             />
 
             {state?.error?.password && (
@@ -99,7 +99,7 @@ export default function FormLogin() {
               name="repeatPassword"
               defaultValue={state?.input?.repeatPassword}
               placeholder="Repeat your password"
-              className="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm border-color-secondary focus:outline-dotted placeholder:text-color-placeholder"
+              className="mt-1 block w-full px-4 py-2 border rounded-lg shadow-xs border-color-secondary focus:outline-dotted placeholder:text-color-placeholder"
             />
 
             {state?.error?.repeatPassword && (
@@ -113,7 +113,7 @@ export default function FormLogin() {
           <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="w-[50%] py-2 bg-btn-blue text-white font-semibold rounded-sm shadow-md hover:outline-dotted outline-white"
+              className="w-[50%] py-2 bg-btn-blue text-white font-semibold rounded-xs shadow-md hover:outline-dotted outline-white"
               disabled={isPending}
             >
               Create Account

@@ -1,0 +1,182 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum InputSource {
+  SOMATIC
+  GERMINAL
+  LIQUID_BIOPSY
+  CLINICAL
+}
+
+enum SequenceType {
+  WHOLE_GENOME
+  WHOLE_EXOME
+  GENOMIC_PANEL
+}
+
+enum UserType {
+  ADMIN
+  CLIENT
+}
+
+enum DocumentType {
+  VCF
+  MAF
+  REPORT
+  CLINICO
+}
+
+// Modelos principales
+
+model Workplace {
+  id             Int             @id @default(autoincrement())
+  name           String
+  permissions    String[]        
+  userWorkplaces UserWorkplace[]
+}
+
+model User {
+  id                Int             @id @default(autoincrement())
+  name              String
+  email             String          @unique
+  encryptedPassword String          // Contraseña encriptada
+
+  userType          UserType        @default(CLIENT)
+  permissions       String[]        
+
+  userWorkplaces    UserWorkplace[]
+  samples           Sample[]
+
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model UserWorkplace {
+  id           Int        @id @default(autoincrement())
+
+  userId       Int
+  user         User       @relation(fields: [userId], references: [id])
+
+  workplaceId  Int
+  workplace    Workplace  @relation(fields: [workplaceId], references: [id])
+}
+
+// Sample, Gene, Variant
+
+model Sample {
+  id             Int             @id @default(autoincrement())
+  sampleName     String
+  reportDate     DateTime
+  sampleType     InputSource
+  sequencingType SequenceType
+  disease        String
+  folioNumber    Int
+
+  userId         Int
+  user           User           @relation(fields: [userId], references: [id])
+
+  genes          Gene[]
+  sampleDocuments SampleDocument[]
+
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Gene {
+  id                Int       @id @default(autoincrement())
+  types             String[]
+  impacts           String[]
+  significances     String[]
+  description       String
+
+  // Relación con Sample (1-N)
+  sampleId          Int
+  sample            Sample     @relation(fields: [sampleId], references: [id])
+
+  // Un Gene puede tener múltiples Variant
+  variants          Variant[]
+  // M:N
+  activePrinciples  ActivePrincipleOnGene[]
+}
+
+model Variant {
+  id       Int    @id @default(autoincrement())
+  name     String
+
+  // Relación con Gene (1-N)
+  geneId   Int
+  gene     Gene  @relation(fields: [geneId], references: [id])
+}
+
+// ActivePrinciple
+model ActivePrinciple {
+  id                 Int                         @id @default(autoincrement())
+  name               String
+  availabilityInChile Boolean
+  enterprise         String?
+  pharmaceutical     String?
+
+  activePrinciplesOnGene ActivePrincipleOnGene[]
+}
+
+// Gene - ActivePrinciple
+model ActivePrincipleOnGene {
+  id Int @id @default(autoincrement())
+
+  geneId Int
+  gene   Gene @relation(fields: [geneId], references: [id])
+
+  activePrincipleId Int
+  activePrinciple   ActivePrinciple @relation(fields: [activePrincipleId], references: [id])
+}
+
+// Document, SampleDocument, Tag, DocumentTag
+
+model Document {
+  id            Int           @id @default(autoincrement())
+  docType       DocumentType
+  encryptedData String         
+
+  // Relación M:N explícita con Sample
+  sampleDocuments SampleDocument[]
+
+  // Relación M:N con Tag
+  documentTags  DocumentTag[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model SampleDocument {
+  id         Int       @id @default(autoincrement())
+
+  sampleId   Int
+  sample     Sample    @relation(fields: [sampleId], references: [id])
+
+  documentId Int
+  document   Document  @relation(fields: [documentId], references: [id])
+}
+
+model Tag {
+  id   Int     @id @default(autoincrement())
+  name String
+
+  documentTags DocumentTag[]
+}
+
+model DocumentTag {
+  id Int @id @default(autoincrement())
+
+  documentId Int
+  document   Document @relation(fields: [documentId], references: [id])
+
+  tagId Int
+  tag   Tag       @relation(fields: [tagId], references: [id])
+}

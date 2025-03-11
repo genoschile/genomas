@@ -1,7 +1,7 @@
 services:
   bdService:
     image: postgres:17
-    container_name: bd_service
+    container_name: bd_genomas_services
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -10,6 +10,8 @@ services:
       - "${POSTGRES_PORT}:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - genomas_network
 
   genomas:
     build:
@@ -19,10 +21,16 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@bdService:5432/${POSTGRES_DB}
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@bd_genomas_services:${POSTGRES_PORT}/${POSTGRES_DB}
     volumes:
       - ./:/app
     depends_on:
       - bdService
+    networks:
+      - genomas_network
+
+networks:
+  genomas_network:
+    driver: bridge
 volumes:
   db_data:
