@@ -50,7 +50,7 @@ export default async function middleware(req: NextRequest) {
   return res;
 }
 
-// 🔹 Aplicar middleware a todas las rutas excepto archivos estáticos
+// Aplicar middleware a todas las rutas excepto archivos estáticos
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

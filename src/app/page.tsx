@@ -1,4 +1,4 @@
-import HeaderLanding from "@/components/HeaderLanding";
+import HeaderLanding from "@/components/headers/HeaderLanding";
 import TeamCarrousel from "@/components/TeamCarrousel";
 import Section1 from "@/components/sections/Section1";
 import Section2 from "@/components/sections/Section2";
