@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import { useState } from "react";
+import "./carrousel.css";
 
 const Carousel = () => {
   const slides = [
@@ -20,15 +21,13 @@ const Carousel = () => {
   };
 
   return (
-    <div className="relative w-full flex-1 mx-auto">
+    <div className="carousel">
       {/* Slides */}
-      <div className="overflow-hidden relative h-64">
+      <div className="carousel__slides">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-transform duration-500 ${
-              index === currentIndex ? "translate-x-0" : "translate-x-full"
-            }`}
+            className="carousel__slide"
             style={{
               transform: `translateX(${(index - currentIndex) * 100}%)`,
             }}
@@ -36,7 +35,7 @@ const Carousel = () => {
             <img
               src={slide.src}
               alt={`Slide ${slide.id}`}
-              className="w-full h-full object-contain"
+              className="carousel__image"
             />
           </div>
         ))}
@@ -45,27 +44,25 @@ const Carousel = () => {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-600"
+        className="carousel__button carousel__button--prev"
       >
         &lt;
       </button>
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-600"
+        className="carousel__button carousel__button--next"
       >
         &gt;
       </button>
 
       {/* Dots */}
-      <div className="flex justify-center mt-4 space-x-2">
+      <div className="carousel__dots">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full ${
-              currentIndex === index
-                ? "bg-blue-600"
-                : "bg-gray-300 hover:bg-gray-500"
+            className={`carousel__dot ${
+              currentIndex === index ? "carousel__dot--active" : ""
             }`}
           ></button>
         ))}

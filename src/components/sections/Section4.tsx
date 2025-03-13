@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Section4() {
   return (
     <section className="container mx-auto px-4 py-8 md:h-screen flex flex-col md:flex-row items-center bg-purple-600">

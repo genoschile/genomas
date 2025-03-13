@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Carrousel from "../Carrousel";
+import Carrousel from "../carrousel/Carrousel";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import Section from "./section";
+import "./section1.css";
 
 export default function Section1() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
@@ -34,16 +36,16 @@ export default function Section1() {
   );
 
   return (
-    <section className="container mx-auto h-auto md:h-screen flex items-center">
-      <div className="w-full px-[32px] py-6 flex flex-col justify-between">
+    <Section className={`section`}>
+      <div className="section__content">
         {/* Contenedor principal */}
-        <div className="flex flex-col md:flex-row justify-between items-start space-y-6 md:space-y-0 md:space-x-8">
+        <div className="section__main">
           {/* Título */}
           <h2
             ref={h2Ref}
-            className={`${
-              isVisible ? "visibleElement" : "hiddenElement"
-            } text-4xl font-bold leading-tight text-gray-800 md:w-1/2`}
+            className={`section__title ${
+              isVisible ? "visible-element" : "hidden-element"
+            }`}
           >
             Genomics, Bioinformatics, AI
             <br />
@@ -53,9 +55,9 @@ export default function Section1() {
           {/* Descripción */}
           <p
             ref={pRef}
-            className={`${
-              isVisible ? "visibleElement" : "hiddenElement"
-            } text-lg text-gray-600 leading-relaxed md:w-1/2`}
+            className={`section__description ${
+              isVisible ? "visible-element" : "hidden-element"
+            }`}
           >
             Genomas is an AI-powered platform for decoding genetic data. It
             offers functional variant annotations, diagnostic insights,
@@ -64,8 +66,10 @@ export default function Section1() {
           </p>
         </div>
 
-        <Carrousel />
+        <div className="section__img">
+          <Carrousel />
+        </div>
       </div>
-    </section>
+    </Section>
   );
 }
