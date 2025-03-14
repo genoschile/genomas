@@ -1,0 +1,41 @@
+.box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.square {
+  position: fixed;
+  width: 20px;
+  aspect-ratio: 2 / 1;
+  background: var(--color);
+  top: var(--y);
+  left: var(--x);
+  animation: fadeInOut var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

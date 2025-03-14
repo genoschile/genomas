@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { inter } from "@/lib/fonts/fonts";
+import HeaderLanding from "@/components/headers/HeaderLanding";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,9 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter} antialiased`}
-      >
+      <body className={`${inter} antialiased`}>
+        {" "}
+        <HeaderLanding />
         {children}
         <Footer />
         <ToastContainer position="top-right" autoClose={5000} />

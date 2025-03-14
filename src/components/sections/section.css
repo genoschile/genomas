@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   width: 100%;
   max-width: 100%;
   margin-inline: auto;
@@ -6,8 +7,7 @@
   height: 100vh;
   height: 100dvh;
   min-height: 100vh;
-
-  background-color: yellow;
+  overflow: hidden;
 }
 
 @media (min-width: 640px) {
@@ -43,4 +43,39 @@
   .container {
     max-width: 1536px;
   }
+}
+
+/* .container permanece sin cambios */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  overflow: hidden;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent; 
+  z-index: -1;
+  border-radius: 15px;
+}
+
+.container:nth-of-type(2)::before {
+  background: linear-gradient(to right, #9CE3D6 0%, #CCA1F4 100%);
+}
+
+.container:nth-of-type(3)::before {
+  background: radial-gradient(circle, rgba(0, 0, 255, 0.5) 10%, rgba(0, 0, 255, 0) 100%);
+}
+
+.container:nth-of-type(4)::before {
+  background: radial-gradient(circle, rgba(255, 255, 0, 0.5) 10%, rgba(255, 255, 0, 0) 100%);
 }
