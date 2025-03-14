@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 interface IntersectionObserverOptions {
   root?: Element | null;
@@ -15,33 +15,49 @@ export const useIntersectionObserver = ({
 }: IntersectionObserverOptions = {}) => {
   const [entries, setEntries] = useState<IntersectionObserverEntry[]>([]);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const observedElements = useRef<Set<Element>>(new Set()); // Evita observaciones duplicadas
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (observedEntries) => {
-        console.log("Observed entries:", observedEntries);
-        setEntries(observedEntries);
-      },
-      { root, rootMargin, threshold }
-    );
+    if (!observerRef.current) {
+      observerRef.current = new IntersectionObserver(
+        (observedEntries) => {
+          console.log("Observed entries:", observedEntries);
+          setEntries(observedEntries);
+        },
+        { root, rootMargin, threshold }
+      );
+    }
 
-    observerRef.current = observer;
-
-    return () => observer.disconnect(); // Cleanup
+    return () => {
+      observerRef.current?.disconnect();
+      observerRef.current = null;
+      observedElements.current.clear();
+    };
   }, [root, rootMargin, threshold]);
 
-  const observe = (element: Element) => {
-    if (observerRef.current && element) {
-      console.log("Observing element:", element); 
+  const observe = useCallback((element: Element) => {
+    if (
+      observerRef.current &&
+      element &&
+      !observedElements.current.has(element)
+    ) {
+      console.log("Observing element:", element);
       observerRef.current.observe(element);
+      observedElements.current.add(element);
     }
-  };
+  }, []);
 
-  const unobserve = (element: Element) => {
-    if (observerRef.current && element) {
+  const unobserve = useCallback((element: Element) => {
+    if (
+      observerRef.current &&
+      element &&
+      observedElements.current.has(element)
+    ) {
+      console.log("Unobserving element:", element);
       observerRef.current.unobserve(element);
+      observedElements.current.delete(element);
     }
-  };
+  }, []);
 
   return { observe, unobserve, entries };
 };

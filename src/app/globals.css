@@ -43,10 +43,28 @@
 
     --card-background: #f5f5f5;
     --card-background-hover: #e6e6e6;
+
+    --bg-linear-gradient-full: linear-gradient(90deg, #9ce3d6 0%, #cca1f4 100%);
+    --bg-linear-gradient-full-hover: linear-gradient(
+      90deg,
+      #cca1f4 0%,
+      #9ce3d6 100%
+    );
+
+    --bg-linear-gradient-semifull: linear-gradient(
+      to right,
+      #9ce3d6 0%,
+      #cca1f4 100%
+    );
+    --bg-linear-gradient-semifull-hover: linear-gradient(
+      to right,
+      #cca1f4 0%,
+      #9ce3d6 100%
+    );
   }
 
   body {
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: "Inter", Helvetica, sans-serif;
   }
 }
 
@@ -62,6 +80,96 @@
     transform: translateY(0);
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
   }
+}
+
+@layer observerImage {
+  .hiddenImage {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .visibleImage {
+    opacity: 1;
+    transform: translateX(0);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .hiddenImageRight {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .visibleImageRight {
+    opacity: 1;
+    transform: translateX(0);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .hiddenImageLeft {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .visibleImageLeft {
+    opacity: 1;
+    transform: translateX(0);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .hiddenImageTop {
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .visibleImageTop {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .hiddenImageBottom {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+
+  .visibleImageBottom {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  }
+}
+
+/*view transition*/
+@keyframes slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+}
+
+@keyframes slide-in {
+  from {opacity: 0; transform: translateY(-1rem);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+::view-transition-old(page) {
+  opacity: 1;
+  animation: slide-out 0.5s ease-in-out forwards;
+}
+
+::view-transition-new(page) {
+  opacity: 0;
+  animation: slide-in 0.5s ease-out forwards;
+  animation-delay: 300ms;
 }
 
 @media (prefers-color-scheme: dark) {

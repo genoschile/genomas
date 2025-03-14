@@ -1,10 +1,18 @@
+/* metadata */
 import type { Metadata } from "next";
+
+/* styles */
 import "./globals.css";
-import Footer from "@/components/Footer";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+/* fonts */
 import { inter } from "@/lib/fonts/fonts";
+
+/* components */
+import { ToastContainer } from "react-toastify";
 import HeaderLanding from "@/components/headers/HeaderLanding";
+import Footer from "@/components/Footer";
+import { unstable_ViewTransition as ViewTransition } from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,9 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter} antialiased`}>
-        {" "}
         <HeaderLanding />
-        {children}
+        <ViewTransition name="Page">{children}</ViewTransition>
         <Footer />
         <ToastContainer position="top-right" autoClose={5000} />
       </body>

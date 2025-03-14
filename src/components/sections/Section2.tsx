@@ -1,51 +1,65 @@
 "use client";
 
+/* hooks */
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+/* styles */
 import "./section2.css";
+
+/* components */
 import Section from "./section";
 
+const buttons = [
+  { text: "Cancer Variants Analysis", href: "/cancer-variants" },
+  { text: "Germline Variants Analysis", href: "/germline-variants" },
+  { text: "Bla Variants Analysis", href: "/bla-variants" },
+];
+
 export default function sectionTwo2() {
-  const h1Ref = useRef<HTMLHeadingElement | null>(null);
+  const h2Ref = useRef<HTMLHeadingElement | null>(null);
   const pRef = useRef<HTMLParagraphElement | null>(null);
-  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const buttonsRefs = useRef<HTMLDivElement | null>(null);
 
   const { observe, unobserve, entries } = useIntersectionObserver();
 
+  const [isH2Visible, setIsH2Visible] = useState(false);
+  const [isPVisible, setIsPVisible] = useState(false);
+  const [isBoVisible, setIsBoVisible] = useState(false);
+
   useEffect(() => {
-    if (h1Ref.current) observe(h1Ref.current);
-    if (pRef.current) observe(pRef.current);
-    buttonRefs.current.forEach((button) => {
-      if (button) observe(button);
-    });
+    const h2Element = h2Ref.current;
+    const pElement = pRef.current;
+    const dElement = buttonsRefs.current;
+
+    if (h2Element) observe(h2Element);
+    if (pElement) observe(pElement);
+    if (dElement) observe(dElement);
 
     return () => {
-      if (h1Ref.current) unobserve(h1Ref.current);
-      if (pRef.current) unobserve(pRef.current);
-      buttonRefs.current.forEach((button) => {
-        if (button) unobserve(button);
-      });
+      if (h2Element) unobserve(h2Element);
+      if (pElement) unobserve(pElement);
+      if (dElement) unobserve(dElement);
     };
-  }, []);
+  }, [observe, unobserve]); // No ponemos directamente h2Ref.current para evitar loops
 
-  const isVisible = entries.some(
-    (entry) =>
-      entry.isIntersecting &&
-      (entry.target === h1Ref.current ||
-        entry.target === pRef.current ||
-        buttonRefs.current.includes(entry.target as HTMLButtonElement))
-  );
+  useEffect(() => {
+    entries.forEach((entry) => {
+      if (entry.target === h2Ref.current) setIsH2Visible(entry.isIntersecting);
+      if (entry.target === pRef.current) setIsPVisible(entry.isIntersecting);
+      if (entry.target === buttonsRefs.current)
+        setIsBoVisible(entry.isIntersecting);
+    });
+  }, [entries]);
 
   return (
     <Section>
       <main className="sectionTwo__content">
         {/* Título */}
         <h2
-          ref={h1Ref}
+          ref={h2Ref}
           className={`sectionTwo__title ${
-            isVisible
-              ? "sectionTwo--visible"
-              : "sectionTwo--hidden"
+            isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
           Discover How GENOMAS Can Empower You
@@ -55,9 +69,7 @@ export default function sectionTwo2() {
         <p
           ref={pRef}
           className={`sectionTwo__description ${
-            isVisible
-              ? "sectionTwo--visible"
-              : "sectionTwo--hidden"
+            isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >
           GENOMAS offers a centralized platform for all your genomic data,
@@ -66,25 +78,17 @@ export default function sectionTwo2() {
         </p>
 
         {/* Botones */}
-        <div className="sectionTwo__buttons">
-          {[
-            "Cancer Variants Analysis",
-            "Germline Variants Analysis",
-            "Bla Variants Analysis",
-          ].map((text, index) => (
-            <button
+        <div ref={buttonsRefs} className="sectionTwo__buttons">
+          {buttons.map((button, index) => (
+            <a
               key={index}
-              ref={(el) => {
-                buttonRefs.current[index] = el;
-              }}
+              href={button.href}
               className={`sectionTwo__button ${
-                isVisible
-                  ? "sectionTwo--visible"
-                  : "sectionTwo--hidden"
+                isBoVisible ? "visibleElement" : "hiddenElement"
               }`}
             >
-              {text}
-            </button>
+              {button.text}
+            </a>
           ))}
         </div>
       </main>

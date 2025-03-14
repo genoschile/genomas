@@ -1,0 +1,129 @@
+.section3 {
+  padding: 2rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section3__content {
+  max-width: 1200px;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    "box-1 box-4"
+    "box-2 box-4"
+    "box-3 box-4";
+
+  &.alternate-layout {
+    grid-template-areas:
+      "box-4 box-1"
+      "box-4 box-2"
+      "box-4 box-3";
+
+    & .section3__image-container {
+      margin-right: 40px;
+    }
+  }
+
+  & .section3__title {
+    grid-area: box-1;
+    font-size: clamp(2.5rem, calc(2vw + 1rem), 3rem);
+    font-weight: bold;
+    color: #333;
+
+    &::after {
+      content: "";
+      margin: 25px 0 50px 0;
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: #0071b9;
+      background: linear-gradient(
+        to right,
+        white,
+        #000000,
+        #000000,
+        #000000,
+        white
+      );
+    }
+  }
+
+  & .section3__description {
+    grid-area: box-2;
+    font-size: clamp(1.25rem, calc(2vw + 0.5rem), 2rem);
+    color: #555;
+    line-height: 2;
+  }
+
+  & .section3__containerButtons {
+    grid-area: box-3;
+    display: flex;
+    align-items: flex-start;
+
+    .section3__button {
+      background: var(--bg-linear-gradient-full);
+      color: white;
+      padding: 1.2rem 2rem;
+      border: transparent;
+      font-size: clamp(1.1rem, calc(1.7vw + 0.5rem), 1.8rem);
+      font-weight: 700;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 1s ease-in-out;
+      box-shadow: 3px 11px 8px -3px rgba(0, 0, 0, 0.37);
+
+      &:hover {
+        background: var(--bg-linear-gradient-full-hover);
+      }
+    }
+  }
+
+  & .section3__image-container {
+    grid-area: box-4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & .section3__image {
+      background-color: white;
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 1;
+      border-radius: 0.5rem;
+      box-shadow: 3px 11px 8px 9px rgba(0, 0, 0, 0.37);
+      object-fit: contain;
+    }
+  }
+}
+
+@media (min-width: 1000px) {
+  .section3__containerButtons {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 1000px) {
+  .section3__content,
+  .section3__content.alternate-layout {
+    max-width: 1200px;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+      "box-1"
+      "box-2"
+      "box-4"
+      "box-3";
+    gap: 1rem;
+
+    & .section3__image-container {
+      margin-right: unset;
+    }
+  }
+
+  .section3__containerButtons {
+    margin-top: 1rem;
+    justify-content: center;
+  }
+}

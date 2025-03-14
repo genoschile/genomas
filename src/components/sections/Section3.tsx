@@ -1,7 +1,9 @@
-"use client"
+"use client";
 
-import React, { useEffect, useRef } from 'react';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useEffect, useRef, useState } from "react";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import "./section3.css";
+import Section from "./section";
 
 export default function Section3() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
@@ -12,80 +14,85 @@ export default function Section3() {
 
   const { observe, unobserve, entries } = useIntersectionObserver();
 
+  const [isH2Visible, setIsH2Visible] = useState(false);
+  const [isPVisible, setIsPVisible] = useState(false);
+  const [isImgVisible, setIsImgVisible] = useState(false);
+  const [isButton1Visible, setIsButton1Visible] = useState(false);
+  const [isButton2Visible, setIsButton2Visible] = useState(false);
+
   useEffect(() => {
-    const elements = [h2Ref.current, pRef.current, imgRef.current, button1Ref.current, button2Ref.current];
-    elements.forEach((element) => {
-      if (element) observe(element);
-    });
+    const elements = [
+      { ref: h2Ref, setVisible: setIsH2Visible },
+      { ref: pRef, setVisible: setIsPVisible },
+      { ref: imgRef, setVisible: setIsImgVisible },
+      { ref: button1Ref, setVisible: setIsButton1Visible },
+      { ref: button2Ref, setVisible: setIsButton2Visible },
+    ];
+
+    elements.forEach(({ ref }) => ref.current && observe(ref.current));
 
     return () => {
-      elements.forEach((element) => {
-        if (element) unobserve(element);
-      });
+      elements.forEach(({ ref }) => ref.current && unobserve(ref.current));
     };
   }, [observe, unobserve]);
 
-  const isVisible = (ref: React.RefObject<HTMLElement>) =>
-    entries.some((entry) => entry.target === ref.current && entry.isIntersecting);
+  useEffect(() => {
+    entries.forEach((entry) => {
+      if (entry.target === h2Ref.current) setIsH2Visible(entry.isIntersecting);
+      if (entry.target === pRef.current) setIsPVisible(entry.isIntersecting);
+      if (entry.target === imgRef.current)
+        setIsImgVisible(entry.isIntersecting);
+      if (entry.target === button1Ref.current)
+        setIsButton1Visible(entry.isIntersecting);
+      if (entry.target === button2Ref.current)
+        setIsButton2Visible(entry.isIntersecting);
+    });
+  }, [entries]);
 
   return (
-    <section className="container mx-auto px-8 py-8 md:h-screen flex flex-col items-center md:flex-row">
-      {/* Contenido Izquierdo */}
-      <div className="flex-1 text-left space-y-6">
+    <Section className="section3">
+      <div className="section3__content">
         <h2
           ref={h2Ref}
-          className={`${
-            isVisible(h2Ref) ? 'visibleElement' : 'hiddenElement'
-          } text-3xl md:text-4xl font-bold text-gray-800 leading-tight transition-opacity duration-500`}
+          className={`section3__title ${
+            isH2Visible ? "visibleElement" : "hiddenElement"
+          }`}
         >
           Turn Your Genomic Data Into Actionable Insights
         </h2>
         <p
           ref={pRef}
-          className={`${
-            isVisible(pRef) ? 'visibleElement' : 'hiddenElement'
-          } text-base md:text-lg text-gray-600 leading-relaxed max-w-lg transition-opacity duration-500`}
+          className={`section3__description ${
+            isPVisible ? "visibleElement" : "hiddenElement"
+          }`}
         >
-          Stop spending hours interpreting complex genetic files. With GENOMAS, gain reliable,
-          data-driven answers using advanced AI tailored for genomic analysis. Through GENOMAS,
-          you can interact with your own digital expert to uncover accurate, trustworthy insights
-          instantly. GENOMAS is built on cutting-edge methodologies you can depend on.
+          Stop spending hours interpreting complex genetic files. With GENOMAS,
+          gain reliable, data-driven answers using advanced AI tailored for
+          genomic analysis.
         </p>
-        {/* Botón para pantallas medianas y grandes */}
-        <div className="hidden md:block">
+
+        <div className="section3__containerButtons">
           <button
             ref={button1Ref}
-            className={`${
-              isVisible(button1Ref) ? 'visibleElement' : 'hiddenElement'
-            } px-6 py-3 bg-color-primary text-white font-semibold rounded-lg shadow-md hover:bg-color-primary-dark transition-opacity duration-500`}
+            className={`section3__button ${
+              isButton1Visible ? "visibleElement" : "hiddenImage"
+            }`}
           >
             See more
           </button>
         </div>
-      </div>
 
-      {/* Imagen Derecha */}
-      <div className="flex-1 flex flex-col items-center mt-8 md:mt-0">
-        <img
-          ref={imgRef}
-          src="/images/reportfile.png"
-          alt="Genomic Report"
-          className={`${
-            isVisible(imgRef) ? 'visibleElement' : 'hiddenElement'
-          } w-full max-w-xs md:max-w-md object-cover transition-opacity duration-500`}
-        />
-        {/* Botón para pantallas pequeñas */}
-        <div className="mt-6 md:hidden">
-          <button
-            ref={button2Ref}
-            className={`${
-              isVisible(button2Ref) ? 'visibleElement' : 'hiddenElement'
-            } px-6 py-3 bg-color-primary text-white font-semibold rounded-lg shadow-md hover:bg-color-primary-dark transition-opacity duration-500`}
-          >
-            See more
-          </button>
-        </div>
+        <figure className="section3__image-container">
+          <img
+            ref={imgRef}
+            src="/images/reportfile.png"
+            alt="Genomic Report"
+            className={`section3__image ${
+              isImgVisible ? "visibleImage" : "hiddenImageRight"
+            }`}
+          />
+        </figure>
       </div>
-    </section>
+    </Section>
   );
 }
