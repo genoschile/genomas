@@ -1,0 +1,50 @@
+"use client";
+
+import "./footerLanding.css";
+import { FaLinkedin } from "react-icons/fa";
+
+export default function Footer() {
+  return (
+    <footer className="footer" role="contentinfo">
+      <div
+        className="social-container"
+        role="navigation"
+        aria-labelledby="social-heading"
+      >
+        <h3 id="social-heading" className="sr-only">
+          Follow us on social media
+        </h3>
+        <div className="social">
+          <a href="#">
+            <FaLinkedin />
+          </a>
+          <a href="#">
+            <FaLinkedin />
+          </a>
+          <a href="#">
+            <FaLinkedin />
+          </a>
+        </div>
+      </div>
+
+      <hr className="footer-break" />
+
+      <p className="copyright">© 2025 Demo of a footer. Some Rights Reserved</p>
+
+      {/* Botón de Subir con posición absoluta */}
+      <ScrollToTopButton />
+    </footer>
+  );
+}
+
+const ScrollToTopButton = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <button className="scroll-to-top" onClick={scrollToTop}>
+      ↑ Subir
+    </button>
+  );
+};

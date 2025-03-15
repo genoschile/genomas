@@ -9,6 +9,12 @@
   > * {
     flex: 0 0 100%;
   }
+  
+  &:hover {
+    & .group {
+      animation-play-state: paused;
+    }
+  }
 }
 
 .carousel_::before,

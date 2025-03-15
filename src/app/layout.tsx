@@ -11,7 +11,7 @@ import { inter } from "@/lib/fonts/fonts";
 /* components */
 import { ToastContainer } from "react-toastify";
 import HeaderLanding from "@/components/headers/HeaderLanding";
-import Footer from "@/components/Footer";
+import Footer from "@/components/footer/FooterLanding";
 import { unstable_ViewTransition as ViewTransition } from "react";
 
 export const metadata: Metadata = {
