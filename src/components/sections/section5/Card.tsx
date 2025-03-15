@@ -7,9 +7,9 @@ interface Member {
   image: string;
 }
 
-export default function Card({ member, key }: { member: Member; key: number }) {
+export default function Card({ member }: { member: Member }) {
   return (
-    <div key={key} className="card">
+    <div className="card">
       <main className="card__info">
         <h3>{member.name}</h3>
         <p>{member.title}</p>
@@ -22,9 +22,15 @@ export default function Card({ member, key }: { member: Member; key: number }) {
       <div className="card__footer">
         <hr />
         <div className="logos">
-            <FaLinkedin />
-            <FaLinkedin />
-            <FaLinkedin />
+          <a href="#">
+            <FaLinkedin size={24} color="black" />
+          </a>
+          <a href="#">
+            <FaLinkedin size={24} color="black" />
+          </a>
+          <a href="#">
+            <FaLinkedin size={24} color="black" />
+          </a>
         </div>
       </div>
     </div>

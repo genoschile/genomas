@@ -1,11 +1,11 @@
 import FeaturesHeader from "@/components/FeaturesHeader";
 import FormLogin from "@/components/FormLogin";
-
+import "./page.css"
 export default function page() {
   return (
     <>
       <FeaturesHeader />
-      <div className="h-screen grid place-content-center">
+      <div className="login__container">
       <FormLogin />
       </div>
     </>

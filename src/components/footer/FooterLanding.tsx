@@ -16,13 +16,13 @@ export default function Footer() {
         </h3>
         <div className="social">
           <a href="#">
-            <FaLinkedin />
+            <FaLinkedin size={24} color="black" />
           </a>
           <a href="#">
-            <FaLinkedin />
+            <FaLinkedin size={24} color="black" />
           </a>
           <a href="#">
-            <FaLinkedin />
+            <FaLinkedin size={24} color="black" />
           </a>
         </div>
       </div>
@@ -31,7 +31,6 @@ export default function Footer() {
 
       <p className="copyright">© 2025 Demo of a footer. Some Rights Reserved</p>
 
-      {/* Botón de Subir con posición absoluta */}
       <ScrollToTopButton />
     </footer>
   );
@@ -44,7 +43,7 @@ const ScrollToTopButton = () => {
 
   return (
     <button className="scroll-to-top" onClick={scrollToTop}>
-      ↑ Subir
+      ↑
     </button>
   );
 };

@@ -11,6 +11,9 @@ import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
 
+/* styles */
+import "./formLogin.css"
+
 const initialState: ActionResponseWithoutRepeatPassword = {
   success: false,
   message: "",
@@ -18,13 +21,13 @@ const initialState: ActionResponseWithoutRepeatPassword = {
 
 export default function FormLogin() {
   const [state, actions, isPending] = useActionState(submitLogin, initialState);
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (!isPending) {
       if (state.success) {
         toast.success(state.message || "Login successful!");
-        router.push('/user')
+        router.push("/user");
       } else if (state.message) {
         toast.error(state.message || "Something went wrong!");
       }
@@ -32,64 +35,56 @@ export default function FormLogin() {
   }, [isPending, state.success, state.message]);
 
   return (
-    <section className="flex items-center justify-center shrink-0">
-      <div className="w-full max-w-md p-4 rounded-lg shadow-lg">
-        <div className="flex justify-center">
+    <section className="login">
+      <div className="login__container">
+        <div className="login__logo">
           <img
             src="/images/genomas.png"
-            className="w-6/12 h-3/6 object-contain mb-6"
             alt="logo genomas"
+            className="login__image"
           />
         </div>
 
         {/* Título */}
-        <h2 className="text-2xl font-semibold text-text text-center mb-6">
-          Login
-        </h2>
+        <h2 className="login__title">Login</h2>
 
         {/* Formulario */}
-        <form action={actions} className="space-y-4">
+        <form action={actions} className="login__form">
           {/* Campo de Email */}
-          <div>
+          <div className="login__field">
             <input
               type="email"
               id="email"
               name="email"
               defaultValue={state?.input?.email}
               placeholder="Enter your email"
-              className="mt-1 block w-full px-4 py-2 border border-color-secondary rounded-lg shadow-xs placeholder:text-color-placeholder"
+              className="login__input"
             />
-
             {state?.error?.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {state.error.email[0]}
-              </p>
+              <p className="login__error">{state.error.email[0]}</p>
             )}
           </div>
 
           {/* Campo de Contraseña */}
-          <div>
+          <div className="login__field">
             <input
               type="password"
               id="password"
               name="password"
               defaultValue={state?.input?.password}
               placeholder="Enter your password"
-              className="mt-1 block w-full px-4 py-2 border border-color-secondary rounded-lg shadow-xs placeholder:text-color-placeholder"
+              className="login__input"
             />
-
             {state?.error?.password && (
-              <p className="text-red-500 text-sm mt-1">
-                {state.error.password[0]}
-              </p>
+              <p className="login__error">{state.error.password[0]}</p>
             )}
           </div>
 
           {/* Botón de Crear Cuenta */}
-          <div className="flex items-center justify-center">
+          <div className="login__button-container">
             <button
               type="submit"
-              className="w-[50%] py-2 bg-btn-blue text-white font-semibold rounded-xs shadow-md hover:outline-dotted outline-white"
+              className="login__button"
               disabled={isPending}
             >
               Create Account
@@ -98,12 +93,9 @@ export default function FormLogin() {
         </form>
 
         {/* Texto de Login */}
-        <p className="text-sm font-semibold text-text text-center mt-4">
+        <p className="login__text">
           Are you not in GENOMAS yet?{" "}
-          <a
-            href="/login"
-            className="text-color-secondary font-bold hover:underline"
-          >
+          <a href="/login" className="login__link">
             Sign up
           </a>
         </p>

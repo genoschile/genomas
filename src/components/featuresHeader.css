@@ -1,0 +1,44 @@
+/* Estilos generales del header */
+.features-header {
+  width: 100%;
+  background-color: var(--color-primary);
+  color: white;
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Contenedor del header */
+.features-header__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 0 16px;
+}
+
+/* Texto del header */
+.features-header__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Botón */
+.features-header__button {
+  padding: 8px 16px;
+  background-color: var(--color-secondary);
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: outline 0.2s ease-in-out;
+}
+
+.features-header__button:hover {
+  outline: 2px dotted white;
+}

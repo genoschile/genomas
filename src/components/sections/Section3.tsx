@@ -10,7 +10,6 @@ export default function Section3() {
   const pRef = useRef<HTMLParagraphElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const button1Ref = useRef<HTMLButtonElement | null>(null);
-  const button2Ref = useRef<HTMLButtonElement | null>(null);
 
   const { observe, unobserve, entries } = useIntersectionObserver();
 
@@ -18,7 +17,6 @@ export default function Section3() {
   const [isPVisible, setIsPVisible] = useState(false);
   const [isImgVisible, setIsImgVisible] = useState(false);
   const [isButton1Visible, setIsButton1Visible] = useState(false);
-  const [isButton2Visible, setIsButton2Visible] = useState(false);
 
   useEffect(() => {
     const elements = [
@@ -26,7 +24,6 @@ export default function Section3() {
       { ref: pRef, setVisible: setIsPVisible },
       { ref: imgRef, setVisible: setIsImgVisible },
       { ref: button1Ref, setVisible: setIsButton1Visible },
-      { ref: button2Ref, setVisible: setIsButton2Visible },
     ];
 
     elements.forEach(({ ref }) => ref.current && observe(ref.current));
@@ -44,8 +41,6 @@ export default function Section3() {
         setIsImgVisible(entry.isIntersecting);
       if (entry.target === button1Ref.current)
         setIsButton1Visible(entry.isIntersecting);
-      if (entry.target === button2Ref.current)
-        setIsButton2Visible(entry.isIntersecting);
     });
   }, [entries]);
 

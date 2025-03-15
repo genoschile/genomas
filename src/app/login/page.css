@@ -1,0 +1,6 @@
+.login__container {
+    display: grid;
+    place-content: center;
+    height: 100dvh;
+    margin-bottom: auto;
+}
