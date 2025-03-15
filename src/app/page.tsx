@@ -1,4 +1,4 @@
-import TeamCarrousel from "@/components/TeamCarrousel";
+import TeamCarrousel from "@/components/sections/section5/TeamCarrousel";
 import Section1 from "@/components/sections/Section1";
 import Section2 from "@/components/sections/Section2";
 import Section3 from "@/components/sections/Section3";

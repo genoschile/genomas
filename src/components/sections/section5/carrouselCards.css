@@ -1,0 +1,54 @@
+.carousel_ {
+  margin: 0 auto;
+  padding: 20px 0;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+
+  > * {
+    flex: 0 0 100%;
+  }
+}
+
+.carousel_::before,
+.carousel_::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 50px; 
+  height: 100%;
+  pointer-events: none; 
+}
+
+.carousel_::before {
+  left: 0;
+  mask-image: linear-gradient(to right, black, red);
+}
+
+.carousel_::after {
+  right: 0;
+  mask-image: linear-gradient(to left, black, red);
+}
+
+.group {
+  display: flex;
+  gap: 20px;
+  /* Add padding to the right to create a gap between the last and first card. */
+  padding-right: 20px;
+}
+
+.group {
+  /* ... */
+  will-change: transform; /* We should be nice to the browser - let it know what we're going to animate. */
+  animation: scrolling 10s linear infinite;
+}
+
+@keyframes scrolling {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
