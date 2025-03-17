@@ -16,6 +16,12 @@ const buttons = [
   { text: "Bla Variants Analysis", href: "/bla-variants" },
 ];
 
+const InfoSection = {
+  title: "Discover How GENOMAS Can Empower You",
+  description:
+    "          GENOMAS offers a centralized platform for all your genomic data,          ensuring your analyses are always synchronized, accessible, and           secure.",
+};
+
 export default function sectionTwo2() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
   const pRef = useRef<HTMLParagraphElement | null>(null);
@@ -62,7 +68,7 @@ export default function sectionTwo2() {
             isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          Discover How GENOMAS Can Empower You
+          {InfoSection.title}
         </h2>
 
         {/* Párrafo */}
@@ -72,9 +78,7 @@ export default function sectionTwo2() {
             isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          GENOMAS offers a centralized platform for all your genomic data,
-          ensuring your analyses are always synchronized, accessible, and
-          secure.
+          {InfoSection.description}
         </p>
 
         {/* Botones */}

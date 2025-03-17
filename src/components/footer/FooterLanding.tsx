@@ -2,6 +2,7 @@
 
 import "./footerLanding.css";
 import { FaLinkedin } from "react-icons/fa";
+import ScrollToTopButton from "./ScrollToTopButton";
 
 export default function Footer() {
   return (
@@ -35,15 +36,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-const ScrollToTopButton = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  return (
-    <button className="scroll-to-top" onClick={scrollToTop}>
-      ↑
-    </button>
-  );
-};

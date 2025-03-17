@@ -6,6 +6,12 @@ import CarrouselCards from "./CarrouselCards";
 import "./section5.css";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
+const InfoSection = {
+  title: "Meet the Team Behind GENOMAS",
+  description:
+    "          Our interdisciplinary team of bioinformaticians, clinical physicians,           engineers, and researchers brings diverse expertise and insights.           Together, we deliver innovative solutions informed by experience and           tailored to address complex challenges in healthcare and genomics.",
+};
+
 const TeamSection = () => {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
   const pRef = useRef<HTMLParagraphElement | null>(null);
@@ -44,15 +50,15 @@ const TeamSection = () => {
             isH2Visible ? "visibleImage" : "hiddenImage"
           }`}
         >
-          Meet the Team Behind GENOMAS
+          {InfoSection.title}
         </h2>
-        <p ref={pRef} className={`team-section__description ${
+        <p
+          ref={pRef}
+          className={`team-section__description ${
             isPVisible ? "visibleImageRight" : "hiddenImageRight"
-          }`}>
-          Our interdisciplinary team of bioinformaticians, clinical physicians,
-          engineers, and researchers brings diverse expertise and insights.
-          Together, we deliver innovative solutions informed by experience and
-          tailored to address complex challenges in healthcare and genomics.
+          }`}
+        >
+          {InfoSection.description}
         </p>
         <CarrouselCards />
       </div>

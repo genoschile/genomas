@@ -6,6 +6,12 @@ import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import Section from "./section";
 import "./section1.css";
 
+const InfoSection = {
+  title: "Genomics, Bioinformatics, AI Shaping the future of health",
+  description:
+    "Genomas is an AI-powered platform for decoding genetic data. It offers functional variant annotations, diagnostic insights,  treatment options, and an interactive chat to explore automated     reports with ease.",
+};
+
 export default function Section1() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
   const pRef = useRef<HTMLParagraphElement | null>(null);
@@ -54,9 +60,7 @@ export default function Section1() {
               isH2Visible ? "visibleElement" : "hiddenElement"
             }`}
           >
-            Genomics, Bioinformatics, AI
-            <br />
-            Shaping the future of health
+            {InfoSection.title}
           </h2>
 
           {/* Descripción */}
@@ -66,10 +70,7 @@ export default function Section1() {
               isPVisible ? "visibleElement" : "hiddenElement"
             }`}
           >
-            Genomas is an AI-powered platform for decoding genetic data. It
-            offers functional variant annotations, diagnostic insights,
-            treatment options, and an interactive chat to explore automated
-            reports with ease.
+            {InfoSection.description}
           </p>
         </div>
 

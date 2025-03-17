@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import "./HeaderLanding.css";
+import ButtonPrimary from "../buttons/ButtonPrimary";
 
 const Header = () => {
   const [scrolling, setScrolling] = useState(false);
@@ -65,12 +66,12 @@ const Header = () => {
             Resources
           </a>
           <div className="header-landing__auth">
-            <a href="/login" className="header-landing__auth-link">
-              Login
-            </a>
-            <a href="#" className="header-landing__auth-signup">
-              Sign Up
-            </a>
+            <ButtonPrimary
+              link="/login"
+              text="Login"
+              className="header-landing__auth-link"
+            />
+            <ButtonPrimary text="Sign up" link="#" />
           </div>
         </nav>
       </div>

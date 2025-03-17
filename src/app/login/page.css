@@ -1,6 +1,5 @@
-.login__container {
+.loginLayout {
     display: grid;
     place-content: center;
     height: 100dvh;
-    margin-bottom: auto;
 }

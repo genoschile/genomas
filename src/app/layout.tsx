@@ -27,9 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter} antialiased`}>
-        <HeaderLanding />
         <ViewTransition name="page">{children}</ViewTransition>
-        <Footer />
         <ToastContainer position="top-right" autoClose={5000} />
       </body>
     </html>

@@ -5,12 +5,17 @@ import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import "./section4.css";
 import Section from "./section";
 
+const InfoSection = {
+  title: "Turn Your Genomic Data Into Actionable Insights",
+  description:
+    "          Stop spending hours interpreting complex genetic files. With GENOMAS,           gain reliable, data-driven answers using advanced AI tailored for           genomic analysis.",
+};
+
 export default function Section4() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
   const pRef = useRef<HTMLParagraphElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const button1Ref = useRef<HTMLButtonElement | null>(null);
-  const button2Ref = useRef<HTMLButtonElement | null>(null);
 
   const { observe, unobserve, entries } = useIntersectionObserver();
 
@@ -18,7 +23,6 @@ export default function Section4() {
   const [isPVisible, setIsPVisible] = useState(false);
   const [isImgVisible, setIsImgVisible] = useState(false);
   const [isButton1Visible, setIsButton1Visible] = useState(false);
-  const [isButton2Visible, setIsButton2Visible] = useState(false);
 
   useEffect(() => {
     const elements = [
@@ -26,7 +30,6 @@ export default function Section4() {
       { ref: pRef, setVisible: setIsPVisible },
       { ref: imgRef, setVisible: setIsImgVisible },
       { ref: button1Ref, setVisible: setIsButton1Visible },
-      { ref: button2Ref, setVisible: setIsButton2Visible },
     ];
 
     elements.forEach(({ ref }) => ref.current && observe(ref.current));
@@ -44,8 +47,6 @@ export default function Section4() {
         setIsImgVisible(entry.isIntersecting);
       if (entry.target === button1Ref.current)
         setIsButton1Visible(entry.isIntersecting);
-      if (entry.target === button2Ref.current)
-        setIsButton2Visible(entry.isIntersecting);
     });
   }, [entries]);
 
@@ -58,7 +59,7 @@ export default function Section4() {
             isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          Turn Your Genomic Data Into Actionable Insights
+          {InfoSection.title}
         </h2>
         <p
           ref={pRef}
@@ -66,9 +67,7 @@ export default function Section4() {
             isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          Stop spending hours interpreting complex genetic files. With GENOMAS,
-          gain reliable, data-driven answers using advanced AI tailored for
-          genomic analysis.
+          {InfoSection.description}
         </p>
 
         <div className="section3__containerButtons">
