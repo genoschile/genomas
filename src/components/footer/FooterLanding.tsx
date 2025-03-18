@@ -4,9 +4,9 @@ import "./footerLanding.css";
 import { FaLinkedin } from "react-icons/fa";
 import ScrollToTopButton from "./ScrollToTopButton";
 
-export default function Footer() {
+export default function Footer({ className = "" }: { className?: string }) {
   return (
-    <footer className="footer" role="contentinfo">
+    <footer className={`footer ${className}`} role="contentinfo">
       <div
         className="social-container"
         role="navigation"

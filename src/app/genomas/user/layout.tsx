@@ -1,3 +1,4 @@
+import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
 import { AuthContextProvider } from "@/context/authContext";
 import { UserContextProvider } from "@/context/userContext";
 
@@ -8,7 +9,10 @@ export default function userLayout({
 }) {
   return (
     <AuthContextProvider>
-      <UserContextProvider>{children}</UserContextProvider>
+      <UserContextProvider>
+        <HeaderUserWorkspace />
+        <div className="">{children}</div>
+      </UserContextProvider>
     </AuthContextProvider>
   );
 }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import "./HeaderLanding.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
+import Logo from "@components/logo/Logo";
 
 const Header = () => {
   const [scrolling, setScrolling] = useState(false);
@@ -46,9 +47,7 @@ const Header = () => {
   return (
     <header className={`header-landing ${scrolling ? "scrolled" : ""}`}>
       <div className="header-landing__container">
-        <a className="header-landing__brand" href="#">
-          Genomas
-        </a>
+        <Logo />
 
         <input className="side-menu" type="checkbox" id="side-menu" />
         <label className="hamb" htmlFor="side-menu">

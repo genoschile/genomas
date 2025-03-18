@@ -1,0 +1,29 @@
+.user-options {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  gap: 24px; /* Equivalente a gap-6 */
+  padding: 0 16px; /* Equivalente a px-4 */
+  margin-left: auto; /* Equivalente a ml-auto */
+  cursor: pointer;
+}
+
+.user-options__dropdown-container {
+  position: relative;
+}
+
+.user-options__avatar {
+  height: 32px; /* Equivalente a h-8 */
+  width: 32px; /* Equivalente a w-8 */
+  border-radius: 50%; /* Equivalente a rounded-full */
+}
+
+.user-options__dropdown-fallback {
+  position: absolute;
+  right: 0;
+  margin-top: 8px; /* Equivalente a mt-2 */
+  width: 192px; /* Equivalente a w-48 */
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalente a shadow-lg */
+  border-radius: 8px; /* Equivalente a rounded-md */
+  color: black;
+}

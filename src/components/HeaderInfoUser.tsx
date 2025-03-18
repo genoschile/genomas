@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, Suspense, lazy } from "react";
-import { WelcomeUser } from "@components/WelcomeUser";
+import { WelcomeUser } from "@/components/headers/WelcomeUser";
 
 // Cargar el Dropdown de manera diferida
-const DropdownMenu = lazy(() => import("./DropdownUser"));
+const DropdownMenu = lazy(() => import("./dropdowns/DropdownUser"));
 
 export default function HeaderInfoUser() {
   const [dropdownVisible, setDropdownVisible] = useState(false);

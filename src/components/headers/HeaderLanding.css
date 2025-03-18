@@ -33,15 +33,6 @@
   margin: 0 auto;
   width: 100%;
   gap: 0.25rem;
-
-  & .header-landing__brand {
-    font-size: 2rem;
-    flex: 1;
-    font-weight: bold;
-    line-height: 1.2;
-    text-decoration: none;
-    color: #333;
-  }
 }
 
 .header-landing__nav {

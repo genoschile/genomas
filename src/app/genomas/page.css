@@ -1,0 +1,53 @@
+.container--genomas {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container--genomas__main {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+
+  & > *:first-child {
+    align-self: center;
+  }
+}
+
+.container--genomas__main figure {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+  & img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+/* Estilos de la lista */
+.container--genomas__main ul {
+  margin-top: 4rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  & li {
+    padding: 0;
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -12,31 +12,46 @@
   }
 
   &:hover {
+    filter: grayscale(50%);
+
     & .group {
       animation-play-state: paused;
-      filter: grayscale(1);
+      filter: unset;
+
+      & .card {
+        filter: grayscale(0%);
+      }
     }
   }
-}
 
-.carousel_::before,
-.carousel_::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 50px;
-  height: 100%;
-  pointer-events: none;
-}
+  &::before,
+  &::after {
+    content: "";
+    height: 100px;
+    position: absolute;
+    width: 200px;
+    z-index: 2;
+  }
 
-.carousel_::before {
-  left: 0;
-  mask-image: linear-gradient(to right, black, red);
-}
+  &::before {
+    left: 0;
+    top: 0;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 
-.carousel_::after {
-  right: 0;
-  mask-image: linear-gradient(to left, black, red);
+  &::after {
+    right: 0;
+    top: 0;
+    background: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 }
 
 .group {

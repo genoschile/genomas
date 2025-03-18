@@ -43,6 +43,8 @@
 
     --card-background: #f5f5f5;
     --card-background-hover: #e6e6e6;
+    --bg-color-f9: #F9F9F9;
+    --bg-color-yellow: #F5BF47;
 
     --bg-linear-gradient-full: linear-gradient(90deg, #9ce3d6 0%, #cca1f4 100%);
     --bg-linear-gradient-full-hover: linear-gradient(

@@ -1,0 +1,8 @@
+.header-landing__brand {
+  font-size: 2rem;
+  flex: 1;
+  font-weight: bold;
+  line-height: 1.2;
+  text-decoration: none;
+  color: #333;
+}

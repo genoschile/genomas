@@ -1,0 +1,21 @@
+.headerUserWorkspace {
+  background-color: var(--primary-color);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  & .headerUserWorkspace__container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & figure {
+    & figcaption {
+      display: none;
+    }
+  }
+}
