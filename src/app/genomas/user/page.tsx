@@ -1,9 +1,3 @@
-
-
-
-import SidebarUser from "@/components/sidebar/SidebarUser";
-
 export default function page() {
-  return <SidebarUser />;
+  return <h1>hola</h1>;
 }
-

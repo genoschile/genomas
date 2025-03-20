@@ -1,13 +1,15 @@
 .sidebar {
-  position: fixed;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  min-height: 100vh;
   width: max-content;
-  overflow: hidden;
+  height: 100vh;
   background-color: var(--bg-color-f9);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100%;
 
   &.expanded .sidebar__element {
     grid-template-columns: 20px 1fr;
@@ -46,6 +48,7 @@
   color: #526581;
   transition: grid-template-columns 0.4s ease, color 0.2s ease-in-out,
     background-color 0.3s ease-in-out;
+
   &:hover {
     background-color: var(--placeholder-color-hover);
     color: white;
@@ -91,35 +94,6 @@
     &:hover {
       outline: 1px solid black;
       outline-offset: -2px;
-    }
-  }
-}
-
-.sidebar__header {
-  background-color: var(--bg-color-yellow);
-  height: 100%;
-  width: 100%;
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .sidebar__header--button {
-    background: transparent;
-    border: transparent;
-    padding: 1.2rem 0.8rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    &:hover {
-      outline: 1px solid black;
-      outline-offset: -2px;
-    }
-
-    & h3 {
-      text-wrap: wrap;
     }
   }
 }

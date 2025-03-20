@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import FeaturesContainer from "./FeaturesContainer";
 import UserOptions from "./UserOptions";
 
-export function HeaderUserWorkspace() {
+export function HeaderUserWorkspace({ className = "" }: { className?: string }) {
   const currentPath = usePathname();
 
   const isUserOrGenomaPath =
@@ -15,7 +15,7 @@ export function HeaderUserWorkspace() {
   const isGenomasPath = currentPath === "/genomas";
 
   return (
-    <header className="headerUserWorkspace">
+    <header className={`headerUserWorkspace ${className}`}>
       <div className="headerUserWorkspace__container">
         {isUserOrGenomaPath ? (
           <figure>

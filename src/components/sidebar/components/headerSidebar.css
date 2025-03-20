@@ -1,0 +1,68 @@
+.sidebar__header {
+  background-color: var(--bg-color-yellow);
+  height: 100%;
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; 
+
+  .sidebar__header--button {
+    background: transparent;
+    border: transparent;
+    padding: 1.2rem 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      outline: 1px solid black;
+      outline-offset: -2px;
+    }
+
+    & h3 {
+      text-wrap: wrap;
+    }
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 200px; /* Ajusta el ancho según tus necesidades */
+  background-color: rgb(255, 0, 0);
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown__content {
+  padding: 10px;
+}
+
+
+/* Dropdown.css */
+.dropdown {
+    position: absolute;
+    top: 100%;
+    z-index: 10;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+  
+  .dropdown[data-position="right"] {
+    right: 0;
+  }
+  
+  .dropdown[data-position="left"] {
+    left: 0;
+  }
+  
+  .dropdown__content {
+    padding: 10px;
+  }

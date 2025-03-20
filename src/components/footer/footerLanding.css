@@ -3,10 +3,9 @@
   background: var(--bg-linear-gradient-full-hover);
   color: white;
   gap: 1rem;
-  position: relative;
   display: block;
   margin: 0 auto;
-  height: 100%;
+  height: max-content;
   display: flex;
   flex-direction: column;
 
