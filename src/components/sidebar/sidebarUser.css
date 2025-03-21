@@ -34,6 +34,20 @@
   padding: 1.4rem 1rem;
   width: 100%;
   height: 100%;
+
+  & .sidebar__list--li {
+    width: 100%;
+
+    & > a {
+      text-decoration: none;
+      
+      &.active {
+        background-color: var(--placeholder-color-hover);
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .sidebar__element {
