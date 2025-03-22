@@ -1,9 +1,12 @@
 .upload-files {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0.8rem;
+  padding: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .upload-files {
+    flex-direction: column;
+  }
 }
 
 /* article 1 */
@@ -20,47 +23,38 @@
   }
 
   & .upload-files__files-section {
-
-  }
-  & .upload-files__tags-section {
-    background-color: var(--border-color);
-    max-width: 800px;
-    width: 500px;
-    border-radius: 1rem;
-    padding: 0.5rem;
-    overflow: hidden;
+    padding: 1rem;
     display: flex;
+    gap: 0.4rem;
     flex-direction: column;
 
-    & h2 {
-      align-self: center;
-      font-size: 1.2rem;
-      text-align: center;
-      white-space: wrap;
+    & .upload-files__title {
+      font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);
+      font-weight: 400;
+      margin-bottom: 0.4rem;
     }
 
-    & textarea {
-      align-self: center;
-      flex-grow: 0;
-      width: 100%;
-      max-width: 400px;
-      min-height: 50px;
-      height: 100%;
-      padding: 0.2rem;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      background-color: white;
-      color: black;
-      outline: none;
-      font-size: 16px;
-      resize: vertical;
-      overflow-y: auto;
-      word-wrap: break-word;
+    & .upload-files__warnings {
+      & > * {
+        display: block;
+        text-wrap: wrap;
+        text-align: start;
+      }
+
+      /* footer */
+      .upload-files__warning-text {
+        /*small*/
+        font-size: clamp(0.8rem, calc(1vw + 0.2rem), 1rem);
+        font-weight: 500;
+      }
+
+      .upload-files__example-link {
+        /*strong*/
+        margin-top: 0.4rem;
+        font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);
+        font-weight: bold;
+        color: var(--primary-color);
+      }
     }
   }
-}
-
-/* article 2 */
-.upload-files__clinical-form {
-  background-color: red;
 }

@@ -1,0 +1,40 @@
+/* tags */
+.upload-files__tags-section {
+  padding: 1rem;
+  background-color: var(--border-color);
+  max-width: 800px;
+  width: 500px;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  gap: 0.4rem;
+  flex-direction: column;
+
+  & h2 {
+    align-self: center;
+    font-size: 1.2rem;
+    text-align: center;
+    white-space: wrap;
+  }
+
+  & textarea {
+    align-self: center;
+    flex-grow: 0;
+    width: 100%;
+    max-width: 400px;
+    min-height: 50px;
+    height: 100%;
+    padding: 0.2rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: black;
+    outline: none;
+    font-size: 16px;
+    resize: vertical;
+    overflow-y: auto;
+    word-wrap: break-word;
+    field-sizing: content;
+  }
+}

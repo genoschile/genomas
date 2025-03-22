@@ -1,0 +1,56 @@
+/* article 2 */
+.upload-files__clinical-form {
+  padding: 1rem;
+  width: 100%;
+
+  & .upload-files__clinical-form-title {
+    font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+  }
+
+  & .upload-files__form {
+    /* form */
+    display: flex;
+    flex-flow: column wrap;
+    gap: 0.5rem;
+    background-color: var(--card-background);
+    padding: 0.2rem;
+    border-radius: 1rem;
+    padding-block: 1rem;
+
+    & .upload-files__form-group {
+      /*div container labels and inputs*/
+      display: flex;
+      gap: 0.4rem;
+
+      & .upload-files__form-label {
+        flex: 1;
+        padding: 0.2rem;
+        min-width: 110px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        & span {
+          text-wrap: nowrap;
+        }
+      }
+
+      & div {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 3rem;
+
+        & .upload-files__form-textarea {
+          width: 100%;
+          resize: none;
+          overflow: hidden;
+          border-radius: 0.4rem;
+          border: transparent;
+          padding: 0.4rem;
+        }
+      }
+    }
+  }
+}
