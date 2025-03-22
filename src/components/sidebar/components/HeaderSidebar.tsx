@@ -20,30 +20,29 @@ const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
       className="sidebar__header"
       data-expanded={isExpanded ? "true" : "false"}
     >
-      {isExpanded ? (
-        <>
-          <button className="sidebar__header--button" onClick={toggleDropdown}>
+      <button className="sidebar__header--button" onClick={toggleDropdown}>
+        {isExpanded ? (
+          <>
             <h4 className="sidebar__header-title">Karen's Workspace</h4>
             <FaChevronRight />
-          </button>
-          <Dropdown
-            isVisible={dropdownVisible}
-            onClose={() => setDropdownVisible(false)}
-            position="right"
-          >
-            <p>Opciones del workspace</p>
-          </Dropdown>
-        </>
-      ) : (
-        <button className="sidebar__header--button">
+          </>
+        ) : (
           <FaHome className="sidebar__icon" />
-        </button>
-      )}
+        )}
+      </button>
+      {
+        <Dropdown
+          isVisible={dropdownVisible}
+          onClose={() => setDropdownVisible(false)}
+          position="right"
+        >
+          <p>Opciones del workspace</p>
+        </Dropdown>
+      }
     </header>
   );
 };
 
-// import "./Dropdown.css";
 
 interface DropdownProps {
   isVisible: boolean;

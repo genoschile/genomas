@@ -1,4 +1,7 @@
+/* icons */
 import { IoMdArrowRoundUp } from "react-icons/io";
+
+/* style */
 import "./scrollToTopButton.css"
 
 const ScrollToTopButton = () => {

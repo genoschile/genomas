@@ -2,9 +2,8 @@
   position: sticky;
   top: 0;
   align-self: flex-start;
-  min-height: 100vh;
   width: max-content;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--bg-color-f9);
   display: flex;
   justify-content: center;
