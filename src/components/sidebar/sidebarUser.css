@@ -3,7 +3,7 @@
   top: 0;
   align-self: flex-start;
   width: max-content;
-  min-height: 100vh;
+  min-block-size: 100vh;
   background-color: var(--bg-color-f9);
   display: flex;
   justify-content: center;
