@@ -1,5 +1,3 @@
-import "./page.css"
-
 export default function page() {
-  return <div>hola</div>;
+  return <div>page</div>;
 }

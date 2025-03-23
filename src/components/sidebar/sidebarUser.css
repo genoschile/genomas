@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  z-index: 5;
 
   &.expanded .sidebar__element {
     grid-template-columns: 20px 1fr;
