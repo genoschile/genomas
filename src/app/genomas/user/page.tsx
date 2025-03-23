@@ -9,7 +9,10 @@ interface Task {
 }
 
 export default function Page() {
+  
+  /* task active */
   const [draggedTask, setDraggedTask] = useState<string | null>(null);
+
   const [dragOverTask, setDragOverTask] = useState<string | null>(null);
   const [tasks, setTasks] = useState<Task[]>([
     { id: "1", title: "Task 1", status: "todo" },
@@ -104,7 +107,7 @@ export default function Page() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: "300px 350px 400px", //Tamaños diferentes para cada columna
           gap: "8px",
         }}
       >
@@ -133,6 +136,9 @@ export default function Page() {
           </div>
         ))}
       </div>
+
+      <small>El id de drag es: {draggedTask}</small>
+      
     </div>
   );
 }
