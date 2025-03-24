@@ -1,0 +1,75 @@
+.workspace-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  height: 100%;
+  border: transparent;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  justify-content: center;
+
+  & .error-icon {
+    margin-right: 8px;
+  }
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+
+  & > * {
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  & .skip-button {
+    background: transparent;
+    padding: 10px 16px;
+    color: var(--secondary-color);
+    font-weight: bold;
+    &:hover {
+      background: #f0f0f0;
+      border-color: black;
+    }
+  }
+
+  & .create-button {
+    background: var(--secondary-color);
+    padding: 10px 16px;
+    color: white;
+
+    &:hover {
+      background: var(--secondary-color-hover);
+    }
+  }
+}

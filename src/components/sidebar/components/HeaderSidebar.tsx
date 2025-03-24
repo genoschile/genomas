@@ -5,15 +5,17 @@ import { FaChevronRight, FaHome, FaTimes } from "react-icons/fa";
 import "./headerSidebar.css";
 import Link from "next/link";
 
+import { DropdownWorkspace } from "@/components/sidebar/components/DropdownWorkspace";
+
 interface HeaderSidebarProps {
   isExpanded: boolean;
 }
 
-const path = "genomas/user"
+const path = "genomas/user";
 
 const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLElement>(null);
 
   // Cierra el dropdown al hacer clic fuera
   useEffect(() => {
@@ -53,7 +55,9 @@ const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
           onClick={() => setIsOpen(!isOpen)}
         >
           <h4 className="sidebar__header-title">Karen's Workspace</h4>
-          <FaChevronRight className={`sidebar-arrow ${isOpen? "dropdown--active" : ""}`} />
+          <FaChevronRight
+            className={`sidebar-arrow ${isOpen ? "dropdown--active" : ""}`}
+          />
         </button>
       ) : (
         <Link href={`/${path}/`}>
@@ -62,25 +66,11 @@ const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
       )}
 
       {isOpen && (
-        <div ref={dropdownRef} className="dropdown-menu">
-          <button className="dropdown-close" onClick={() => setIsOpen(false)}>
-            <FaTimes className="dropdown-icon" />
-          </button>
-          <ul>
-            <li>Opción 1</li>
-            <li>Opción 2</li>
-            <li>Opción 3</li>
-          </ul>
-
-          <div className="buttons">
-            <button>
-              buenas
-            </button>
-            <button>
-              buenas x2
-            </button>
-          </div>
-        </div>
+        <DropdownWorkspace
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          dropdownRef={dropdownRef as React.RefObject<HTMLDivElement>}
+        />
       )}
     </header>
   );

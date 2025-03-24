@@ -65,6 +65,7 @@ export default function FileUpload() {
               ? `Archivo: ${file.name}`
               : "Arrastra y suelta tu archivo aquí o haz clic para subirlo"}
           </h3>
+
           <input
             className="upload-input"
             id="file-upload"
@@ -72,7 +73,10 @@ export default function FileUpload() {
             onChange={handleFileChange}
           />
         </label>
-
+        <hr />
+        <div className="upload-file-formats">
+          <small>Formatos permitidos: .fastq, .vcf, .mafft </small>
+        </div>
         <div className="upload-buttons">
           <button
             className={`${isUploading ? "loading" : ""}`}
