@@ -8,7 +8,7 @@
     "header  header"
     "aside   main"
     "footer  footer";
-    z-index: -1;
+  z-index: -1;
 }
 
 .wu-header {

@@ -3,13 +3,14 @@
   top: 0;
   align-self: flex-start;
   width: max-content;
-  min-block-size: 100vh;
   background-color: var(--bg-color-f9);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   z-index: 5;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
 
   &.expanded .sidebar__element {
     grid-template-columns: 20px 1fr;

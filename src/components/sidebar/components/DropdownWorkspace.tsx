@@ -1,15 +1,13 @@
 "use client";
 
 import "./dropdownWorkspace.css";
-
 import { IoPersonOutline } from "react-icons/io5";
 import { MdOutlineWorkspaces } from "react-icons/md";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
 import { Modal } from "@/components/modals/Modal";
 import { WorkspaceForm } from "./Workspaceform";
-
-const title = "Create new Workspace";
+import { MembersForm } from "./MembersForm";
 
 export const DropdownWorkspace = ({
   isOpen,
@@ -20,22 +18,37 @@ export const DropdownWorkspace = ({
   setIsOpen: (value: boolean) => void;
   dropdownRef: React.RefObject<HTMLDivElement>;
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Estados para cada modal
+  const [isWorkspaceModalOpen, setIsWorkspaceModalOpen] = useState(false);
+  const [isMembersModalOpen, setIsMembersModalOpen] = useState(false);
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+  // Funciones para abrir y cerrar los modales
+  const openWorkspaceModal = () => setIsWorkspaceModalOpen(true);
+  const closeWorkspaceModal = () => setIsWorkspaceModalOpen(false);
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const openMembersModal = () => setIsMembersModalOpen(true);
+  const closeMembersModal = () => setIsMembersModalOpen(false);
 
   if (!isOpen) return null;
 
   return (
     <>
-      <Modal title={title} isOpen={isModalOpen} onClose={handleCloseModal}>
+      {/* Modal para Crear Workspace */}
+      <Modal
+        title="Create new Workspace"
+        isOpen={isWorkspaceModalOpen}
+        onClose={closeWorkspaceModal}
+      >
         <WorkspaceForm />
+      </Modal>
+
+      {/* Modal para Invitar Miembros */}
+      <Modal
+        title="Invite Member(s) to Workspace"
+        isOpen={isMembersModalOpen}
+        onClose={closeMembersModal}
+      >
+        <MembersForm />
       </Modal>
 
       <nav
@@ -63,16 +76,24 @@ export const DropdownWorkspace = ({
             role="toolbar"
             aria-label="Workspace Actions"
           >
+            {/* Botón para abrir el modal de Crear Workspace */}
             <button
               role="menuitem"
               aria-label="Action create workspace"
-              onClick={handleOpenModal}
+              onClick={openWorkspaceModal}
             >
               <MdOutlineWorkspaces className="buttons-icons" />
               Create workspace
             </button>
-            <button role="menuitem" aria-label="Action invite members">
-              <IoPersonOutline className="buttons-icons" /> Invite member(s)
+
+            {/* Botón para abrir el modal de Invitar Miembros */}
+            <button
+              role="menuitem"
+              aria-label="Action invite members"
+              onClick={openMembersModal}
+            >
+              <IoPersonOutline className="buttons-icons" />
+              Invite member(s)
             </button>
           </div>
         </div>

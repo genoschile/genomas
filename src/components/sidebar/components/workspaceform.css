@@ -1,29 +1,30 @@
 .workspace-form {
-  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
   background: #fff;
   border-radius: 8px;
-}
+  width: 600px;
+  & .input-group {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid black;
+  }
 
-.input-group {
-  margin-bottom: 20px;
-  border: 1px solid black;
-}
+  & input,
+  textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    height: 100%;
+    border: transparent;
+  }
 
-input,
-textarea {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  box-sizing: border-box;
-  height: 100%;
-  border: transparent;
-}
-
-textarea {
-  height: 100px;
-  resize: vertical;
+  & textarea {
+    height: 100px;
+    width: 100%;
+    resize: none;
+  }
 }
 
 .error-message {

@@ -9,7 +9,9 @@ export const WorkspaceForm = () => {
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!workspaceName.trim()) {
       setError("Workspace name is required.");
       return;
@@ -19,7 +21,7 @@ export const WorkspaceForm = () => {
   };
 
   return (
-    <div className="workspace-form">
+    <form className="workspace-form" onSubmit={handleSubmit}>
       <div className="input-group">
         <input
           type="text"
@@ -45,11 +47,13 @@ export const WorkspaceForm = () => {
       )}
 
       <div className="button-group">
-        <button className="skip-button">Skip for now</button>
-        <button className="create-button" onClick={handleSubmit}>
+        <button type="button" className="skip-button">
+          Skip for now
+        </button>
+        <button type="submit" className="create-button">
           Create
         </button>
       </div>
-    </div>
+    </form>
   );
 };
