@@ -23,6 +23,13 @@
   & > :not(:first-child):not(:last-child) {
     flex: 2;
   }
+
+  &:not(.expanded) .sidebar__element:hover {
+    &::after {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 }
 
 .sidebar__list {
@@ -41,7 +48,7 @@
 
     & > a {
       text-decoration: none;
-      
+
       &.active {
         background-color: var(--placeholder-color-hover);
         color: white;
@@ -63,11 +70,32 @@
   color: #526581;
   transition: grid-template-columns 0.4s ease, color 0.2s ease-in-out,
     background-color 0.3s ease-in-out;
+  position: relative;
 
   &:hover {
     background-color: var(--placeholder-color-hover);
     color: white;
     cursor: pointer;
+  }
+
+  /* Tooltip */
+  &::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 50%;
+    left: 180%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.656);
+    color: white;
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 100;
+    pointer-events: none;
   }
 
   & figure {

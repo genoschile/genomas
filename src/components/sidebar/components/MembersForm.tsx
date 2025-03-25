@@ -51,8 +51,8 @@ export const MembersForm = () => {
         size={52}
         className="warning-icon" />
         <p>
-          All content across the workspace is shared with all users of the
-          workspace. Please share responsibly. We will take down illegally
+          All content across the project is shared with all users of the
+          project. Please share responsibly. We will take down illegally
           distributed content and terminate the associated workspace account for
           copyright infringement.
         </p>

@@ -35,7 +35,7 @@ export const DropdownWorkspace = ({
     <>
       {/* Modal para Crear Workspace */}
       <Modal
-        title="Create new Workspace"
+        title="Create new Project"
         isOpen={isWorkspaceModalOpen}
         onClose={closeWorkspaceModal}
       >
@@ -44,7 +44,7 @@ export const DropdownWorkspace = ({
 
       {/* Modal para Invitar Miembros */}
       <Modal
-        title="Invite Member(s) to Workspace"
+        title="Invite Member(s) to Project"
         isOpen={isMembersModalOpen}
         onClose={closeMembersModal}
       >
@@ -52,21 +52,21 @@ export const DropdownWorkspace = ({
       </Modal>
 
       <nav
-        aria-label="Workspace Options"
+        aria-label="Project Options"
         ref={dropdownRef}
         className="dropdown-menu"
       >
         <button
-          aria-label="Close Workspace Options"
+          aria-label="Close Project Options"
           className="dropdown-close"
           onClick={() => setIsOpen(false)}
         >
           <FaTimes className="dropdown-icon" />
         </button>
-        <h3>All Workspaces</h3>
+        <h3>All Projects</h3>
 
         <div className="dropdown-content">
-          <ul role="menu" aria-label="Workspace List">
+          <ul role="menu" aria-label="project List">
             <li role="menuitem" className="dropdown-item">
               <input type="text" placeholder="olivia@petal.org" />
             </li>
@@ -74,16 +74,16 @@ export const DropdownWorkspace = ({
           <div
             className="buttons"
             role="toolbar"
-            aria-label="Workspace Actions"
+            aria-label="project Actions"
           >
             {/* Botón para abrir el modal de Crear Workspace */}
             <button
               role="menuitem"
-              aria-label="Action create workspace"
+              aria-label="Action create project"
               onClick={openWorkspaceModal}
             >
               <MdOutlineWorkspaces className="buttons-icons" />
-              Create workspace
+              Create project
             </button>
 
             {/* Botón para abrir el modal de Invitar Miembros */}

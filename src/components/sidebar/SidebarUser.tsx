@@ -56,7 +56,8 @@ const SidebarUser = ({ className = "" }: { className?: string }) => {
           return (
             <li key={index} className="sidebar__list--li">
               <Link
-                href={item.href}
+                href={item.href} 
+                data-text={item.text}
                 className={`sidebar__element ${isActive ? "active" : ""}`}
               >
                 {item.icon}

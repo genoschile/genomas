@@ -5,6 +5,8 @@ import { FaChevronRight, FaHome, FaTimes } from "react-icons/fa";
 import "./headerSidebar.css";
 import Link from "next/link";
 
+const nameProject = "Karen's Project"
+
 import { DropdownWorkspace } from "@/components/sidebar/components/DropdownWorkspace";
 
 interface HeaderSidebarProps {
@@ -54,7 +56,7 @@ const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
           className="sidebar__header--button"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <h4 className="sidebar__header-title">Karen's Workspace</h4>
+          <h4 className="sidebar__header-title">{nameProject}</h4>
           <FaChevronRight
             className={`sidebar-arrow ${isOpen ? "dropdown--active" : ""}`}
           />

@@ -2,23 +2,36 @@
   width: 100%;
   min-block-size: 100vh;
   min-block-size: 100dvh;
-  background-color: red;
-  padding: 4rem;
+  padding-block: 2rem;
+  padding-inline: 4rem;
+  height: 100vh;
+}
 
-  & header {
-    .navigation {
-      display: flex;
-      gap: 1rem;
+.table__inputs_files {
+  outline: 1px solid black;
+  height: max-content;
+  padding: 2rem;
+  border-radius: 0.3rem;
+
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+
+    & caption {
+      font-size: 1.5em;
+      color: black;
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    & thead {
+      & tr {
+        & th {
+          padding: 1rem;
+          text-align: left;
+          border-bottom: 1px solid black;
+        }
+      }
     }
   }
-}
-
-.search-section {
-    display: flex;
-    justify-content: center;
-}
-
-.search-form {
-    display: flex;
-    gap: 1rem;
 }

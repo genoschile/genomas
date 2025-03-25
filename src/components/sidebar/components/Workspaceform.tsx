@@ -13,11 +13,11 @@ export const WorkspaceForm = () => {
     e.preventDefault();
 
     if (!workspaceName.trim()) {
-      setError("Workspace name is required.");
+      setError("Project name is required.");
       return;
     }
     setError("");
-    alert("Workspace created!");
+    alert("Project created!");
   };
 
   return (
@@ -25,7 +25,7 @@ export const WorkspaceForm = () => {
       <div className="input-group">
         <input
           type="text"
-          placeholder="Workspace Name"
+          placeholder="Project Name"
           value={workspaceName}
           onChange={(e) => setWorkspaceName(e.target.value)}
         />
@@ -33,7 +33,7 @@ export const WorkspaceForm = () => {
 
       <div className="input-group">
         <textarea
-          placeholder="Workspace Description (Optional)"
+          placeholder="Project Description (Optional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
