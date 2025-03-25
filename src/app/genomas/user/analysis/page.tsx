@@ -1,14 +1,12 @@
 import { SearchSection } from "@/components/analysis/searchs/SearchSection";
 import "./page.css";
-import { HeaderTabs } from "@/components/analysis/headerTabs/HeaderTabs";
 import { SearchFilterTable } from "@/components/analysis/searchs/SearchFilterTable";
 
 const headerTables = ["File", "Workflow", "Id process", "Status"];
 
 export default function page() {
   return (
-    <section className="analysys-container">
-      <HeaderTabs />
+    <>
       <SearchSection />
 
       <article className="table__inputs_files">
@@ -79,6 +77,6 @@ export default function page() {
           </tfoot>
         </table>
       </article> */}
-    </section>
+    </>
   );
 }

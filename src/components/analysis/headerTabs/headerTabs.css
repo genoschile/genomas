@@ -18,13 +18,21 @@
       text-decoration: none;
       color: var(--foreground);
       font-weight: bold;
-
+      outline: 1px solid transparent;
+      transition: outline 0.3s ease, color 0.3s ease, background-color 0.3s ease;
       &:visited {
         color: var(--foreground);
       }
 
       &:hover {
         background-color: var(--bg-color-yellow-hover);
+      }
+
+      &.active {
+        outline-color: black;
+        outline-offset: -2px;
+        color: white;
+        box-shadow: 0px 0px 0px 2px #fff;
       }
     }
   }

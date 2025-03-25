@@ -52,11 +52,12 @@ const SidebarUser = ({ className = "" }: { className?: string }) => {
 
       <ul className="sidebar__list">
         {sidebarItems.map((item, index) => {
-          const isActive = pathname === item.href;
+          const isActive = pathname.startsWith(item.href);
+
           return (
             <li key={index} className="sidebar__list--li">
               <Link
-                href={item.href} 
+                href={item.href}
                 data-text={item.text}
                 className={`sidebar__element ${isActive ? "active" : ""}`}
               >

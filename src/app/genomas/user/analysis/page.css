@@ -1,11 +1,3 @@
-.analysys-container {
-  width: 100%;
-  min-block-size: 100vh;
-  min-block-size: 100dvh;
-  padding-block: 2rem;
-  padding-inline: 4rem;
-  height: 100vh;
-}
 
 .table__inputs_files {
   outline: 1px solid black;
