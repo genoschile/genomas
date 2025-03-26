@@ -1,4 +1,4 @@
-import "./featuresContainer.css"
+import "./featuresContainer.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 
 export default function FeaturesContainer() {

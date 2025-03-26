@@ -1,0 +1,6 @@
+.loginLayout {
+  display: grid;
+  place-content: center;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}

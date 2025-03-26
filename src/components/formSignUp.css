@@ -1,0 +1,215 @@
+.sign-up {
+  min-block-size: 100vh;
+  min-inline-size: 100vw;
+
+  & .sign-up__container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    & > *:nth-child(1) {
+      flex: 1;
+    }
+
+    & > *:nth-child(2) {
+      flex: 2;
+    }
+  }
+}
+
+/* first child */
+.sign-up__logo-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  &:hover {
+    & figcaption {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  & figcaption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.656);
+    color: white;
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  & .sign-up__logo {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+
+    min-width: 200px;
+    max-width: 400px;
+  }
+}
+
+/* second child */
+.sign-up__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+
+  & fieldset {
+    border: 1px solid transparent;
+    width: 50%;
+    max-width: 400px;
+    min-width: 300px;
+
+    & .sign-up__title {
+      margin: 0;
+      padding: 0;
+      font-size: 2em;
+      font-weight: 600;
+      color: #433f65;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    & .sign-up__button-container {
+      padding: 2rem;
+      margin-top: 1rem;
+      display: flex;
+      width: 100%;
+      flex-flow: column wrap;
+      align-items: center;
+      justify-content: center;
+
+      & .sign-up__submit-button {
+        padding: 0.5rem 1rem;
+        background-color: var(--secondary-color);
+        color: white;
+        border: 0px solid transparent;
+        outline: 1px solid transparent;
+        font-size: 1.3em;
+        font-weight: normal;
+        cursor: pointer;
+        border-radius: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: outline-color 0.3s ease, background-color 0.3s ease;
+
+        &:hover {
+          outline-color: black;
+          background-color: var(--secondary-color-hover);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      & .sign-up__login-text {
+        font-size: 1.25em;
+        font-weight: normal;
+        color: #333;
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      & .sign-up__login-link {
+        color: #065dfe;
+        font-size: 1.25em;
+        font-weight: 700;
+        text-decoration: none;
+        transition: text-decoration 0.3s ease;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    & > .sign-up__input-group:not(:first-child) {
+      margin-top: 1rem;
+    }
+
+    & .sign-up__input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      width: 100%;
+      position: relative;
+
+      &:has(.sign-up__input--error) {
+        & .sign-up__input {
+          border-color: red;
+        }
+
+        & .sign-up__input::placeholder {
+          color: red;
+        }
+
+        & .sign-up__error-message {
+          display: block;
+        }
+      }
+
+      &:has(:hover) {
+        & label {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+
+      & label {
+        position: absolute;
+        top: 10%;
+        right: 100%;
+        transform: translateX(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.656);
+        color: white;
+        padding: 0.4rem;
+        font-size: 0.8em;
+        border-radius: 4px;
+        white-space: nowrap;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s, visibility 0.3s;
+        z-index: 100;
+        pointer-events: none;
+      }
+
+      & input {
+        font-size: 1.25em;
+        border: 2px solid var(--secondary-color);
+        border-radius: 0;
+        margin-top: 0.25rem;
+        padding: 0.5rem 1rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        color: #333;
+        transition: border-color 0.3s ease;
+
+        &::placeholder {
+          color: var(--secondary-color);
+        }
+        &:hover {
+          border-color: var(--secondary-color-hover);
+        }
+      }
+    }
+  }
+}
+
+.sign-up__error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}

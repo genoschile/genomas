@@ -2,23 +2,30 @@
 .features-header__container {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: min(2em, 5%);
   padding: 0 16px;
+  margin: 0 auto;
+  justify-content: center;
+  font-size: clamp(1em,calc(1vw + 0.2rem), 1.5em);
+  font-weight: bold;
+  min-width: 350px;
 }
 
 .features-header__title {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: inherit;
+  font-weight: inherit;
+  text-wrap: balance;
+  text-align: center;
 }
 
 .features-header__button {
   padding: 8px 16px;
   background-color: var(--secondary-color);
   color: white;
-  font-weight: 600;
+  font-size: inherit;
+  font-weight: inherit;
   border-radius: 6px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   border: none;
   cursor: pointer;
-  transition: outline 0.2s ease-in-out;
+  transition: outline 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }

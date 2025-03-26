@@ -1,5 +1,5 @@
 /* styles */
-import "./page.css";
+import "./page.css"
 
 import Footer from "@/components/footer/FooterLanding";
 import FeaturesHeader from "@/components/headers/FeaturesHeader";
@@ -12,7 +12,7 @@ export default function LoginLayout({
   return (
     <>
       <FeaturesHeader />
-      {children}
+      <div className="loginLayout">{children}</div>
       <Footer />
     </>
   );
