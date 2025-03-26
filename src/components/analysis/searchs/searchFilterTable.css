@@ -1,18 +1,57 @@
 .table-filters {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: start;
-  margin-bottom: 1rem;
+  width: 100%;
 
-  & button,
-  & select {
-    padding: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-  }
+  & fieldset {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
 
-  & select {
-    width: 150px;
+    & > label {
+      padding: 0.3rem;
+      border-radius: 50%;
+
+      & > :hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    & > button {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+      padding: 0.5rem 0.9rem;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-radius: 0.5rem;
+      color: var(--button-blue);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    & .exportButtonFilterTable {
+      border-color: var(--button-blue);
+    }
+
+    & .moveTrashButtonFilterTable {
+      text-decoration: underline;
+    }
+
+    & .dateCreatedButtonFilterTable {
+      & .dateCreated--icon {
+        transition: transform 0.3s ease;
+
+        &.filter-asc-desc {
+          transform: rotate(-180deg);
+        }
+      }
+    }
   }
 }

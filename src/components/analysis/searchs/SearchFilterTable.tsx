@@ -4,33 +4,44 @@ import { FaArrowDownLong } from "react-icons/fa6";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { RiMenu5Line } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
+
+/* style */
 import "./searchFilterTable.css";
 
 export function SearchFilterTable() {
   return (
     <search className="table-filters">
-      <CheckboxButton />
-      <DateCreatedButton />
-      <FiltersButton />
-      <ExportButton />
-      <MoveTrashButton />
+      <fieldset>
+        <legend
+          style={{
+            display: "none",
+          }}
+        >
+          Filtros table
+        </legend>
+        <CheckboxButtonFilterTable />
+        <DateCreatedButtonFilterTable />
+        <FiltersButtonFilterTable />
+        <ExportButtonFilterTable />
+        <MoveTrashButtonFilterTable />
+      </fieldset>
     </search>
   );
 }
 
-const CheckboxButton = () => {
+export const CheckboxButtonFilterTable = () => {
   return (
-    <label htmlFor="">
-      <input type="checkbox" />
+    <label htmlFor="checkboxButtonFilterTable">
+      <input type="checkbox" id="CheckboxButtonFilterTable" />
     </label>
   );
 };
 
-const MoveTrashButton = () => {
-  return <button>Move to Trash</button>;
+export const MoveTrashButtonFilterTable = () => {
+  return <button className="moveTrashButtonFilterTable">Move to Trash</button>;
 };
 
-const DateCreatedButton = () => {
+export const DateCreatedButtonFilterTable = () => {
   const [isAscending, setIsAscending] = useState(true);
 
   const toggleOrder = () => {
@@ -38,15 +49,17 @@ const DateCreatedButton = () => {
   };
 
   return (
-    <button onClick={toggleOrder}>
+    <button className="dateCreatedButtonFilterTable" onClick={toggleOrder}>
       <BiMenuAltLeft />
       Date Create
-      <FaArrowDownLong className={`${isAscending ? "hola" : ""}`} />
+      <FaArrowDownLong
+        className={`dateCreated--icon ${isAscending ? "filter-asc-desc" : ""}`}
+      />
     </button>
   );
 };
 
-const FiltersButton = () => {
+export const FiltersButtonFilterTable = () => {
   return (
     <button>
       <RiMenu5Line />
@@ -55,9 +68,9 @@ const FiltersButton = () => {
   );
 };
 
-const ExportButton = () => {
+export const ExportButtonFilterTable = () => {
   return (
-    <button>
+    <button className="exportButtonFilterTable">
       Export
       <IoIosArrowDown />
     </button>

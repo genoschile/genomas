@@ -1,3 +1,11 @@
+import { SearchSection } from "@/components/analysis/searchs/SearchSection";
+import { TableJobHistory } from "@/components/analysis/tables/TableJobHistory";
+
 export default function page() {
-  return <div>page</div>;
+  return (
+    <>
+      <SearchSection />
+      <TableJobHistory />
+    </>
+  );
 }

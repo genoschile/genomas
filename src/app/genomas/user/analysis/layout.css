@@ -4,5 +4,13 @@
   min-block-size: 100dvh;
   padding-block: 2rem;
   padding-inline: 4rem;
-  height: 100vh;
+  height: max-content;
+
+  & > *:nth-child(3) {
+    margin-top: 2rem;
+  }
+
+  & > *:nth-child(4) {
+    margin-top: 2rem;
+  }
 }
