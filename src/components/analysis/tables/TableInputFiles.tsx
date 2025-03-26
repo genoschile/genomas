@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { SearchFilterTable } from "../searchs/SearchFilterTable";
-import "./tableInputFiles.css"
+import "./tableInputFiles.css";
+import { Pagination } from "./Pagination";
 
 const headerTables = ["File", "Workflow", "Id process", "Status"];
 
@@ -14,9 +15,9 @@ interface TableRow {
 }
 
 const statusColors: { [key: string]: string } = {
-  done: "green",
-  running: "orange",
-  fail: "red",
+  done: "#BFE39C",
+  running: "#9CE3D6",
+  fail: "#EC9191",
   pending: "lightblue",
 };
 
@@ -45,18 +46,85 @@ const tableData: TableRow[] = [
     idprocess: "PID-101",
     status: "pending",
   },
+  {
+    nombrefile: "Archivo_E.txt",
+    workflow: "Proceso_5",
+    idprocess: "PID-102",
+    status: "done",
+  },
+  {
+    nombrefile: "Archivo_F.pdf",
+    workflow: "Proceso_6",
+    idprocess: "PID-103",
+    status: "running",
+  },
+  {
+    nombrefile: "Archivo_G.csv",
+    workflow: "Proceso_7",
+    idprocess: "PID-104",
+    status: "fail",
+  },
+  {
+    nombrefile: "Archivo_H.csv",
+    workflow: "Proceso_8",
+    idprocess: "PID-105",
+    status: "pending",
+  },
+  {
+    nombrefile: "Archivo_I.txt",
+    workflow: "Proceso_9",
+    idprocess: "PID-106",
+    status: "done",
+  },
+  {
+    nombrefile: "Archivo_J.pdf",
+    workflow: "Proceso_10",
+    idprocess: "PID-107",
+    status: "running",
+  },
+  {
+    nombrefile: "Archivo_K.csv",
+    workflow: "Proceso_11",
+    idprocess: "PID-108",
+    status: "fail",
+  },
+  {
+    nombrefile: "Archivo_L.csv",
+    workflow: "Proceso_12",
+    idprocess: "PID-109",
+    status: "pending",
+  },
 ];
 
 export const TableInputFiles = () => {
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 5;
 
-  const handleCheckboxChange = (index: number) => {
-    if (selectedRows.includes(index)) {
-      setSelectedRows(selectedRows.filter((row) => row !== index));
+  const handleCheckboxChange = (idprocess: string) => {
+    if (selectedIds.includes(idprocess)) {
+      setSelectedIds(selectedIds.filter((id) => id !== idprocess));
     } else {
-      setSelectedRows([...selectedRows, index]);
+      setSelectedIds([...selectedIds, idprocess]);
     }
   };
+
+  const handleFavoriteClick = (idprocess: string) => {
+    if (favoriteIds.includes(idprocess)) {
+      setFavoriteIds(favoriteIds.filter((id) => id !== idprocess));
+    } else {
+      setFavoriteIds([...favoriteIds, idprocess]);
+    }
+  };
+
+  const handleDeleteSelected = () => {
+    console.log("Eliminar filas con IDs:", selectedIds);
+  };
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = tableData.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <article className="table__inputs_files">
@@ -69,31 +137,33 @@ export const TableInputFiles = () => {
             </th>
           </tr>
           <tr>
-            <th style={{ visibility: "hidden" }}>Select</th>
+            <th>Select</th>
             {headerTables.map((header, index) => (
               <th key={index}>{header}</th>
             ))}
           </tr>
         </thead>
-
         <tbody>
-          {tableData.map((row, index) => (
-            <tr key={index}>
-              <td
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  maxWidth: "50px",
-                  justifyContent: "space-around",
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedRows.includes(index)}
-                  onChange={() => handleCheckboxChange(index)}
-                />
-                <FaStar />
+          {currentPosts.map((row) => (
+            <tr
+              key={row.idprocess}
+              className={selectedIds.includes(row.idprocess) ? "selected" : ""}
+            >
+              <td>
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.includes(row.idprocess)}
+                    onChange={() => handleCheckboxChange(row.idprocess)}
+                  />
+                  <FaStar
+                  size={20}
+                    onClick={() => handleFavoriteClick(row.idprocess)}
+                    className={
+                      favoriteIds.includes(row.idprocess) ? "favorite" : ""
+                    }
+                  />
+                </div>
               </td>
               <td data-cell="File">
                 <div>{row.nombrefile}</div>
@@ -112,10 +182,16 @@ export const TableInputFiles = () => {
             </tr>
           ))}
         </tbody>
-
         <tfoot>
           <tr>
-            <td colSpan={headerTables.length + 1}>End of table -</td>
+            <td colSpan={headerTables.length + 1}>
+              <Pagination
+                totalPosts={tableData.length}
+                postsPerPage={postsPerPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
+            </td>
           </tr>
         </tfoot>
       </table>

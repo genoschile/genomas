@@ -9,10 +9,11 @@
       border-collapse: collapse;
   
       & caption {
-        font-size: 1.5em;
+        font-size: 1.875em;
+        font-weight: bold;
         color: black;
         text-align: left;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
       }
   
       & thead {
