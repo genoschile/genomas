@@ -1,8 +1,8 @@
-.sign-up {
+.auth-form {
   min-block-size: 100vh;
-  min-inline-size: 100vw;
+  min-inline-size: 99vw;
 
-  & .sign-up__container {
+  & .auth-form__container {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -17,49 +17,8 @@
   }
 }
 
-/* first child */
-.sign-up__logo-container {
-  display: flex;
-  justify-content: center;
-  position: relative;
-
-  &:hover {
-    & figcaption {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
-
-  & figcaption {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.656);
-    color: white;
-    padding: 0.4rem;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    white-space: nowrap;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s, visibility 0.3s;
-    z-index: 100;
-    pointer-events: none;
-  }
-
-  & .sign-up__logo {
-    width: 70%;
-    height: auto;
-    object-fit: contain;
-
-    min-width: 200px;
-    max-width: 400px;
-  }
-}
-
 /* second child */
-.sign-up__form {
+.auth-form__form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,7 +32,7 @@
     max-width: 400px;
     min-width: 300px;
 
-    & .sign-up__title {
+    & .auth-form__title {
       margin: 0;
       padding: 0;
       font-size: 2em;
@@ -83,7 +42,7 @@
       margin-bottom: 1.5rem;
     }
 
-    & .sign-up__button-container {
+    & .auth-form__button-container {
       padding: 2rem;
       margin-top: 1rem;
       display: flex;
@@ -92,7 +51,7 @@
       align-items: center;
       justify-content: center;
 
-      & .sign-up__submit-button {
+      & .auth-form__submit-button {
         padding: 0.5rem 1rem;
         background-color: var(--secondary-color);
         color: white;
@@ -116,7 +75,7 @@
         }
       }
 
-      & .sign-up__login-text {
+      & .auth-form__login-text {
         font-size: 1.25em;
         font-weight: normal;
         color: #333;
@@ -124,7 +83,8 @@
         margin-top: 1rem;
       }
 
-      & .sign-up__login-link {
+      & .auth-form__login-link {
+        margin-left: 0.3rem;
         color: #065dfe;
         font-size: 1.25em;
         font-weight: 700;
@@ -137,27 +97,27 @@
       }
     }
 
-    & > .sign-up__input-group:not(:first-child) {
+    & > .auth-form__input-group:not(:first-child) {
       margin-top: 1rem;
     }
 
-    & .sign-up__input-group {
+    & .auth-form__input-group {
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
       width: 100%;
       position: relative;
 
-      &:has(.sign-up__input--error) {
-        & .sign-up__input {
+      &:has(.auth-form__input--error) {
+        & .auth-form__input {
           border-color: red;
         }
 
-        & .sign-up__input::placeholder {
+        & .auth-form__input::placeholder {
           color: red;
         }
 
-        & .sign-up__error-message {
+        & .auth-form__error-message {
           display: block;
         }
       }
@@ -208,8 +168,9 @@
   }
 }
 
-.sign-up__error-message {
-  color: red;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
+.auth-form__error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 0.25rem;
+  }
+  

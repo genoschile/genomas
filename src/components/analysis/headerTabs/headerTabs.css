@@ -9,7 +9,7 @@
     background-color: var(--card-background);
 
     & a {
-      background-color: var(--bg-color-yellow);
+      background-color: var(--deactive-tab);
       font-size: 1.5em;
       border: none;
       padding: 0.5rem 1rem;
@@ -19,7 +19,8 @@
       color: var(--foreground);
       font-weight: bold;
       outline: 1px solid transparent;
-      transition: outline 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+      transition: background-color 0.3s ease;
+
       &:visited {
         color: var(--foreground);
       }
@@ -29,10 +30,9 @@
       }
 
       &.active {
-        outline-color: black;
-        outline-offset: -2px;
-        color: white;
+        background-color: var(--bg-color-yellow);
         box-shadow: 0px 0px 0px 2px #fff;
+        outline-color: black;
       }
     }
   }

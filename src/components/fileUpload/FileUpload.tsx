@@ -62,8 +62,8 @@ export default function FileUpload() {
           />
           <h3 className="transition-colors duration-300 font-bold">
             {file
-              ? `Archivo: ${file.name}`
-              : "Arrastra y suelta tu archivo aquí o haz clic para subirlo"}
+              ? `File: ${file.name}`
+              : "Drag and drop your file here or click to upload it"}
           </h3>
 
           <input
@@ -75,7 +75,7 @@ export default function FileUpload() {
         </label>
         <hr />
         <div className="upload-file-formats">
-          <small>Formatos permitidos: .fastq, .vcf, .mafft </small>
+          <small>Allowed formats: .fastq, .vcf, .mafft</small>
         </div>
         <div className="upload-buttons">
           <button
@@ -83,14 +83,14 @@ export default function FileUpload() {
             disabled={isUploading}
             onClick={handleUpload}
           >
-            <span className="text">{isUploading ? "" : "Cargar"}</span>
+            <span className="text">{isUploading ? "" : "Load"}</span>
             {isUploading && (
               <span className="spinner">
                 <img src="/loader.svg" alt="loader" />
               </span>
             )}
           </button>
-          <button onClick={handleClean}>Limpiar</button>
+          <button onClick={handleClean}>Clean</button>
         </div>
       </div>
     </>

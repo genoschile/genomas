@@ -51,8 +51,17 @@
 
       &.active {
         background-color: var(--placeholder-color-hover);
-        color: white;
+        color: #433F65;
         cursor: pointer;
+
+        & .sidebar__icon {
+          color: #433F65;
+        }
+      }
+
+      & > .sidebar__icon {
+        transition: color 0.3s ease;
+        color: var(--primary-color);
       }
     }
   }
@@ -74,8 +83,12 @@
 
   &:hover {
     background-color: var(--placeholder-color-hover);
-    color: white;
+    color: #433F65;
     cursor: pointer;
+
+    & .sidebar__icon {
+      color: #433F65;
+    }
   }
 
   /* Tooltip */

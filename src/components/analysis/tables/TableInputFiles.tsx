@@ -7,6 +7,18 @@ import { Pagination } from "./Pagination";
 
 const headerTables = ["File", "Workflow", "Id process", "Status"];
 
+/* extends files */
+
+const pipeline_map = {
+  ".fastq": "Run Alignment & Mapping", // W1
+  ".fq": "Run Alignment & Mapping", // W1 (alternativa)
+  ".sam": "Variant Calling Only", // W1 intermedio posible
+  ".bam": "Variant Calling Only", // W1 intermedio posible
+  ".vcf": "Run Onco-KB annotation", // W2
+  ".maf": "Report Generation", // parte de W2
+  ".pdf": "End of Pipeline",
+};
+
 interface TableRow {
   nombrefile: string;
   workflow: string;
@@ -157,7 +169,7 @@ export const TableInputFiles = () => {
                     onChange={() => handleCheckboxChange(row.idprocess)}
                   />
                   <FaStar
-                  size={20}
+                    size={20}
                     onClick={() => handleFavoriteClick(row.idprocess)}
                     className={
                       favoriteIds.includes(row.idprocess) ? "favorite" : ""

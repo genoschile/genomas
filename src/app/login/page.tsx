@@ -1,5 +1,4 @@
-import FormLogin from "@/components/FormLogin";
-import "./page.css";
+import FormLogin from "@/components/forms/FormLogin";
 
 export default function page() {
   return <FormLogin />;

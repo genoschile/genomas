@@ -1,0 +1,40 @@
+/* first child */
+.auth-form__logo-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  &:hover {
+    & figcaption {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  & figcaption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.656);
+    color: white;
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  & .auth-form__logo {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+
+    min-width: 200px;
+    max-width: 400px;
+  }
+}

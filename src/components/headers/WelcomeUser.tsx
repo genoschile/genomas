@@ -8,7 +8,7 @@ export function WelcomeUser() {
 
   return (
     <p className="welcomeUser">
-      {name ? `Bienvenido, ${name}!` : `Bienvenido: ${email}`}
+      {name ? `Welcome, ${name}!` : `Welcome: ${email}`}
     </p>
   );
 }

@@ -16,7 +16,7 @@
   html {
     font-family: sans-serif;
     color: #333;
-  } 
+  }
 
   :root {
     color-scheme: light;
@@ -37,7 +37,7 @@
     --sky-blue-hover: #062f5c;
 
     --placeholder-color: #909bdd;
-    --placeholder-color-hover: #7b86c6;
+    --placeholder-color-hover: rgba(105, 119, 210, 0.2);
 
     --button-blue: #254fab;
     --button-blue-hover: #1f4190;
@@ -69,6 +69,9 @@
 
     /* color analysis page*/
     --hover-row-table: #065dfe5e;
+
+    /* colors tab desactive */
+    --deactive-tab: #f5be47a1;
   }
 
   body {
@@ -190,4 +193,11 @@
   :root {
     color-scheme: light;
   }
+}
+
+.login_signup--Layout {
+  display: grid;
+  place-content: center;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
 }

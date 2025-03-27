@@ -11,7 +11,10 @@ import { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-import "./formSignUp.css";
+/* styles */
+import "./form.css";
+import { AuthFormLogo } from "./components/AuthFormLogo";
+import { AuthLink } from "./components/AuthLink";
 
 const initialState: ActionResponse = {
   success: false,
@@ -43,36 +46,29 @@ export function FormSignUp() {
   }, [isPending, state.success, state.message]);
 
   return (
-    <section className="sign-up">
-      <div className="sign-up__container">
-        <figure className="sign-up__logo-container">
-          <img
-            src="/images/genomas.png"
-            className="sign-up__logo"
-            alt="logo genomas"
-          />
-          <figcaption>Logo genomas</figcaption>
-        </figure>
+    <section className="auth-form">
+      <div className="auth-form__container">
+        <AuthFormLogo />
 
-        <form action={actions} className="sign-up__form">
+        <form action={actions} className="auth-form__form">
           <fieldset>
-            <legend className="sign-up__title">Sign Up</legend>
-            <div className="sign-up__input-group">
-              <label htmlFor="email">Email:</label> 
+            <legend className="auth-form__title">Sign Up</legend>
+            <div className="auth-form__input-group">
+              <label htmlFor="email">Email:</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 defaultValue={state?.input?.email}
                 placeholder="Enter your email"
-                className="sign-up__input"
+                className="auth-form__input"
               />
               {state?.error?.email && (
-                <p className="sign-up__error-message">{state.error.email[0]}</p>
+                <p className="auth-form__error-message">{state.error.email[0]}</p>
               )}
             </div>
 
-            <div className="sign-up__input-group">
+            <div className="auth-form__input-group">
               <label htmlFor="password">Password:</label>
               <input
                 type="password"
@@ -80,16 +76,16 @@ export function FormSignUp() {
                 name="password"
                 defaultValue={state?.input?.password}
                 placeholder="Enter your password"
-                className="sign-up__input"
+                className="auth-form__input"
               />
               {state?.error?.password && (
-                <p className="sign-up__error-message">
+                <p className="auth-form__error-message">
                   {state.error.password[0]}
                 </p>
               )}
             </div>
 
-            <div className="sign-up__input-group">
+            <div className="auth-form__input-group">
               <label htmlFor="repeat-password">Repeat Password:</label>
               <input
                 type="password"
@@ -97,32 +93,25 @@ export function FormSignUp() {
                 name="repeatPassword"
                 defaultValue={state?.input?.repeatPassword}
                 placeholder="Repeat your password"
-                className="sign-up__input"
+                className="auth-form__input"
               />
               {state?.error?.repeatPassword && (
-                <p className="sign-up__error-message">
+                <p className="auth-form__error-message">
                   {state.error.repeatPassword[0]}
                 </p>
               )}
             </div>
 
-            <div className="sign-up__button-container">
+            <div className="auth-form__button-container">
               <button
                 type="submit"
-                className="sign-up__submit-button"
+                className="auth-form__submit-button"
                 disabled={isPending}
               >
                 Create Account
               </button>
 
-              <div>
-                <p className="sign-up__login-text">
-                  Already in GENOMAS?{" "}
-                  <a href="/login" className="sign-up__login-link">
-                    Login
-                  </a>
-                </p>
-              </div>
+              <AuthLink text="Already in GENOMAS?" textPost="Login" href="/login" />
             </div>
           </fieldset>
         </form>
