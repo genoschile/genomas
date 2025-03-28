@@ -46,7 +46,7 @@ export const WorkspaceForm = () => {
         </div>
       )}
 
-      <div className="button-group">
+      <div className="workspace-form--button-group">
         <button type="button" className="skip-button">
           Skip for now
         </button>

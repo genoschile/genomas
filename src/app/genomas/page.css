@@ -16,38 +16,25 @@
   gap: 1rem;
   padding: 2rem;
 
-  & > *:first-child {
-    align-self: center;
-  }
-}
-
-.container--genomas__main figure {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-
-  & img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-}
-
-/* Estilos de la lista */
-.container--genomas__main ul {
-  margin-top: 4rem;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  & li {
-    padding: 0;
-    flex: 1;
-    width: 100%;
+  & ul {
+    margin-top: 4rem;
+    list-style: none;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    & li {
+      padding: 0;
+      flex: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  & > *:first-child {
+    margin-top: 1rem;
+    width: 100%;
   }
 }

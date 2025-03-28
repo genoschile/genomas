@@ -6,7 +6,15 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "./dropdownMenu.css"; // Importa el CSS
 
-export default function DropdownMenu() {
+export function DropdownMenu({
+  setDropdownVisible,
+  dropdownVisible,
+  dropdownRef,
+}: {
+  dropdownVisible: boolean;
+  setDropdownVisible: (value: boolean) => void;
+  dropdownRef: React.RefObject<HTMLElement>;
+}) {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -49,16 +57,26 @@ export default function DropdownMenu() {
     }
   };
 
+  if (!dropdownVisible) {
+    return null;
+  }
+
   return (
-    <div className="dropdown-menu">
-      <ul className="dropdown-menu__list">
-        <li className="dropdown-menu__item">
-          <button className="dropdown-menu__button" onClick={handleLogout}>
+    <nav aria-label="Menú de usuario" className="dropdownUser--menu">
+      <ul role="menu">
+        <li role="menuitem">
+          <button onClick={handleLogout}>
             <FaSignOutAlt className="dropdown-menu__icon" />
             Cerrar sesión
           </button>
         </li>
+        <li>
+          <button>
+            <FaSignOutAlt className="dropdown-menu__icon" />
+            profile
+          </button>
+        </li>
       </ul>
-    </div>
+    </nav>
   );
 }

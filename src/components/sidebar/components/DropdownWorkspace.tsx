@@ -71,11 +71,7 @@ export const DropdownWorkspace = ({
               <input type="text" placeholder="olivia@petal.org" />
             </li>
           </ul>
-          <div
-            className="buttons"
-            role="toolbar"
-            aria-label="project Actions"
-          >
+          <div className="buttons" role="toolbar" aria-label="project Actions">
             {/* Botón para abrir el modal de Crear Workspace */}
             <button
               role="menuitem"

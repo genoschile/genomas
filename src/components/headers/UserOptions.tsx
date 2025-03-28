@@ -1,29 +1,58 @@
-import { useState } from "react";
-import DropdownMenu from "../dropdowns/DropdownUser";
-import { WelcomeUser } from "./WelcomeUser";
+import { useEffect, useRef, useState } from "react";
+import { DropdownMenu } from "./components/dropdowns/DropdownUser";
+import { WelcomeUser } from "./components/WelcomeUser";
 import "./userOptions.css";
+import { FaChevronRight } from "react-icons/fa";
 
 export default function UserOptions() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownRef = useRef<HTMLElement>(null);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
+  const srcImg = "/images/user.png";
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownVisible(false);
+      }
+    };
+
+    if (dropdownVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownVisible]);
+
   return (
     <div className="user-options">
       <WelcomeUser />
       <div className="user-options__dropdown-container">
-        <img
-          src="/images/user.png"
-          alt="User"
-          className="user-options__avatar"
+        <button
+          className="user-options__avatar-button"
+          aria-haspopup="true"
+          aria-expanded={dropdownVisible}
           onClick={toggleDropdown}
-        />
+          aria-label="Menú de usuario"
+        >
+          <img src={srcImg} alt="User" className="user-options__avatar" />
+          <FaChevronRight className={`${dropdownVisible ?  "active" : ""}`} />
+        </button>
         {dropdownVisible && (
-          <div className="user-options__dropdown-fallback">
-            <DropdownMenu />
-          </div>
+          <DropdownMenu
+            dropdownVisible={dropdownVisible}
+            setDropdownVisible={setDropdownVisible}
+            dropdownRef={dropdownRef as React.RefObject<HTMLElement>}
+          />
         )}
       </div>
     </div>

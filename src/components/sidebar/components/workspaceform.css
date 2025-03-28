@@ -4,6 +4,7 @@
   background: #fff;
   border-radius: 8px;
   width: 600px;
+
   & .input-group {
     width: 100%;
     margin-bottom: 20px;
@@ -25,6 +26,41 @@
     width: 100%;
     resize: none;
   }
+
+  & .workspace-form--button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+
+    & > * {
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    & .skip-button {
+      background: transparent;
+      padding: 10px 16px;
+      color: var(--secondary-color);
+      font-weight: bold;
+      &:hover {
+        background: #f0f0f0;
+        border-color: black;
+      }
+    }
+
+    & .create-button {
+      background: var(--secondary-color);
+      padding: 10px 16px;
+      color: white;
+
+      &:hover {
+        background: var(--secondary-color-hover);
+      }
+    }
+  }
 }
 
 .error-message {
@@ -37,40 +73,5 @@
 
   & .error-icon {
     margin-right: 8px;
-  }
-}
-
-.button-group {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-
-  & > * {
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    border: 1px solid transparent;
-  }
-
-  & .skip-button {
-    background: transparent;
-    padding: 10px 16px;
-    color: var(--secondary-color);
-    font-weight: bold;
-    &:hover {
-      background: #f0f0f0;
-      border-color: black;
-    }
-  }
-
-  & .create-button {
-    background: var(--secondary-color);
-    padding: 10px 16px;
-    color: white;
-
-    &:hover {
-      background: var(--secondary-color-hover);
-    }
   }
 }

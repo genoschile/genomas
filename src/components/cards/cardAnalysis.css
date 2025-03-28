@@ -1,15 +1,19 @@
 .card--analysis {
-  font-size: Inter;
   background-color: var(--card-background);
-  border: 2px solid var(--secondary-color);
-  padding: 1rem;
+  border: 1px solid var(--secondary-color);
+  padding: 1.3rem;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
   text-decoration: none;
   cursor: pointer;
-  transition: box-shadow 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out,background-color 0.3s ease-in-out;
   width: 100%;
+  max-width: 450px;
+  min-width: 300px;
+  max-height: 159px;
+  height: auto;
 
   &:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -19,9 +23,9 @@
   & .card--analysis__image {
     width: 36px;
     height: 36px;
-    max-width: 100%; 
+    max-width: 100%;
     overflow: hidden;
-    
+
     & img {
       width: 100%;
       height: 100%;
@@ -32,17 +36,17 @@
 
 .card--analysis__title {
   text-align: center;
-  font-size: clamp(1.3rem, calc(0.3vw + 1rem), 2.2rem);
+  font-size: clamp(1em, calc(0.3vw + 1em), 1.5em);
   font-weight: bold;
   margin-top: 0.5rem;
   color: var(--text-color);
-  
 }
 
 .card--analysis__description {
-  font-size: clamp(1rem, calc(0.2vw + 1rem), 1.8rem);
+  font-size: clamp(0.8em, calc(0.2vw + 1em), 1em);
+  font-weight: 600;
   text-wrap: wrap;
-  color: var(--text-color);
   text-align: center;
   margin-top: 0.25rem;
+  color: var(--secondary-color);
 }
