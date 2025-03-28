@@ -15,9 +15,9 @@ export default function Page() {
 
   const [dragOverTask, setDragOverTask] = useState<string | null>(null);
   const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", title: "Task 1", status: "todo" },
-    { id: "2", title: "Task 2", status: "todo" },
-    { id: "3", title: "Task 3", status: "todo" },
+    { id: "1", title: "Tag 1", status: "todo" },
+    { id: "2", title: "Tag 2", status: "todo" },
+    { id: "3", title: "Tag 3", status: "todo" },
   ]);
 
   const handleDragStart = (

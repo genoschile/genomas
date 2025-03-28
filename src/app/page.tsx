@@ -23,7 +23,7 @@ export default function Home() {
     <>
       <div className="layout">
         <HeaderLanding />
-        <div className="box">
+        {/* <div className="box">
           {squares.map((i) => {
             const side = Math.random() < 0.5 ? "left" : "right"; // Lado aleatorio
             const randomY = Math.random() * 100; // Posición aleatoria en Y (vh)
@@ -52,7 +52,7 @@ export default function Home() {
               ></div>
             );
           })}
-        </div>
+        </div> */}
         <Section1 />
         <Section2 />
         <Section3 />

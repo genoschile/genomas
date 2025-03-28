@@ -9,7 +9,7 @@ export default function FeaturesContainer() {
   return (
     <div
       className={`features-header__container ${
-        pathname === "/login" ? "login--" : ""
+        pathname === "/login" || pathname === "/signup" ? "login--" : ""
       }`}
     >
       <p className="features-header__title">New Features on GENOMAS</p>

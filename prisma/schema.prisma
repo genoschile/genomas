@@ -33,45 +33,48 @@ enum DocumentType {
   CLINICO
 }
 
+// workspace => acumulación de project
+// cada uno de esos user tiene por default su propio workspace aloja project y lo que es invitado, que cada project tendrá un creador
+// ahora tenemos workspace y project 
+
 // Modelos principales
 
-model Workplace {
-  id             Int             @id @default(autoincrement())
-  name           String
-  permissions    String[]        
-  userWorkplaces UserWorkplace[]
+model Project {
+  id          Int           @id @default(autoincrement())
+  name        String
+  permissions String[]
+  userProject UserProject[]
+  documents   Document[]
+}
+
+model UserProject {
+  id Int @id @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
 }
 
 model User {
-  id                Int             @id @default(autoincrement())
+  id                Int    @id @default(autoincrement())
   name              String
-  email             String          @unique
-  encryptedPassword String          // Contraseña encriptada
+  email             String @unique
+  encryptedPassword String // Contraseña encriptada
 
-  userType          UserType        @default(CLIENT)
-  permissions       String[]        
+  userType    UserType @default(CLIENT)
+  permissions String[]
 
-  userWorkplaces    UserWorkplace[]
-  samples           Sample[]
+  userProjects UserProject[]
 
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-}
-
-model UserWorkplace {
-  id           Int        @id @default(autoincrement())
-
-  userId       Int
-  user         User       @relation(fields: [userId], references: [id])
-
-  workplaceId  Int
-  workplace    Workplace  @relation(fields: [workplaceId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Sample, Gene, Variant
-
 model Sample {
-  id             Int             @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   sampleName     String
   reportDate     DateTime
   sampleType     InputSource
@@ -79,49 +82,46 @@ model Sample {
   disease        String
   folioNumber    Int
 
-  userId         Int
-  user           User           @relation(fields: [userId], references: [id])
-
-  genes          Gene[]
+  genes           Gene[]
   sampleDocuments SampleDocument[]
 
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Gene {
-  id                Int       @id @default(autoincrement())
-  types             String[]
-  impacts           String[]
-  significances     String[]
-  description       String
+  id            Int      @id @default(autoincrement())
+  types         String[]
+  impacts       String[]
+  significances String[]
+  description   String
 
   // Relación con Sample (1-N)
-  sampleId          Int
-  sample            Sample     @relation(fields: [sampleId], references: [id])
+  sampleId Int
+  sample   Sample @relation(fields: [sampleId], references: [id])
 
   // Un Gene puede tener múltiples Variant
-  variants          Variant[]
+  variants         Variant[]
   // M:N
-  activePrinciples  ActivePrincipleOnGene[]
+  activePrinciples ActivePrincipleOnGene[]
 }
 
 model Variant {
-  id       Int    @id @default(autoincrement())
-  name     String
+  id   Int    @id @default(autoincrement())
+  name String
 
   // Relación con Gene (1-N)
-  geneId   Int
-  gene     Gene  @relation(fields: [geneId], references: [id])
+  geneId Int
+  gene   Gene @relation(fields: [geneId], references: [id])
 }
 
 // ActivePrinciple
 model ActivePrinciple {
-  id                 Int                         @id @default(autoincrement())
-  name               String
+  id                  Int     @id @default(autoincrement())
+  name                String
   availabilityInChile Boolean
-  enterprise         String?
-  pharmaceutical     String?
+  enterprise          String?
+  pharmaceutical      String?
 
   activePrinciplesOnGene ActivePrincipleOnGene[]
 }
@@ -140,32 +140,35 @@ model ActivePrincipleOnGene {
 // Document, SampleDocument, Tag, DocumentTag
 
 model Document {
-  id            Int           @id @default(autoincrement())
+  id            Int          @id @default(autoincrement())
   docType       DocumentType
-  encryptedData String         
+  encryptedData String
 
   // Relación M:N explícita con Sample
   sampleDocuments SampleDocument[]
 
   // Relación M:N con Tag
-  documentTags  DocumentTag[]
+  documentTags DocumentTag[]
 
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  projectId    Int
+  project      Project       @relation(fields: [projectId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model SampleDocument {
-  id         Int       @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  sampleId   Int
-  sample     Sample    @relation(fields: [sampleId], references: [id])
+  sampleId Int
+  sample   Sample @relation(fields: [sampleId], references: [id])
 
   documentId Int
-  document   Document  @relation(fields: [documentId], references: [id])
+  document   Document @relation(fields: [documentId], references: [id])
 }
 
 model Tag {
-  id   Int     @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String
 
   documentTags DocumentTag[]
@@ -178,5 +181,5 @@ model DocumentTag {
   document   Document @relation(fields: [documentId], references: [id])
 
   tagId Int
-  tag   Tag       @relation(fields: [tagId], references: [id])
+  tag   Tag @relation(fields: [tagId], references: [id])
 }
