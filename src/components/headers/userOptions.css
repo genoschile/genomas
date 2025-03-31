@@ -12,6 +12,11 @@
     padding: 0.4rem;
     transition: background-color 0.4s ease, outline 0.4s ease;
 
+    &:has(.active) {
+      outline-color: rgba(0, 0, 0, 0.3);
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
     &:hover {
       outline-color: rgba(0, 0, 0, 0.3);
       background-color: rgba(0, 0, 0, 0.1);
@@ -27,7 +32,15 @@
       gap: 0.5rem;
       justify-content: center;
       align-items: center;
-      
+
+      & .user-options__avatar {
+        height: 32px;
+        width: auto;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        object-fit: contain;
+      }
+
       & > *:nth-child(2) {
         transform: rotate(90deg);
         transition: transform 0.2s ease-in-out;
@@ -36,14 +49,6 @@
           transform: rotate(-90deg);
         }
       }
-    }
-
-    & .user-options__avatar {
-      height: 32px;
-      width: auto;
-      aspect-ratio: 1/1;
-      border-radius: 50%;
-      object-fit: contain;
     }
   }
 }

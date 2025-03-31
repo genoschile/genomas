@@ -1,13 +1,7 @@
 .upload-files {
   display: flex;
-  padding: 1rem;
-  padding: 4rem;
-}
-
-@media (max-width: 1200px) {
-  .upload-files {
-    flex-direction: column;
-  }
+  flex-direction: column;
+  width: 100%;
 }
 
 /* article 1 */
@@ -28,6 +22,8 @@
     display: flex;
     gap: 0.4rem;
     flex-direction: column;
+    justify-content: center;
+    width: 100%;
 
     & .upload-files__title {
       font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);

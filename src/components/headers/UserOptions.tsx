@@ -38,7 +38,7 @@ export default function UserOptions() {
       <WelcomeUser />
       <div className="user-options__dropdown-container">
         <button
-          className="user-options__avatar-button"
+          className={`user-options__avatar-button ${dropdownVisible ? "active" : ""}`}
           aria-haspopup="true"
           aria-expanded={dropdownVisible}
           onClick={toggleDropdown}

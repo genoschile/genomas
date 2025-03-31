@@ -36,6 +36,19 @@ enum DocumentType {
 // workspace => acumulación de project
 // cada uno de esos user tiene por default su propio workspace aloja project y lo que es invitado, que cada project tendrá un creador
 // ahora tenemos workspace y project 
+// licencia tabla licencia tipos licencia (perpetua-anual) expiración
+// ind para un numero determinado de pacientes x user mensual, por un numero dado de usuarios anual, ilimitada de pacientes
+//usuarios con accesos agregar
+
+// fastq bam fastqgz
+
+
+// documento => tags (BAM)
+// DOCUMENTO => ID TAGS (AUTOINCREMENTAL UNICO 1 !== ID)
+// OTRA TABLA QUE HAGA ASOCIAC CON SAMPLE
+// EDAD SEXO ENFERMEDAD 
+//
+
 
 // Modelos principales
 

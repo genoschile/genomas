@@ -1,10 +1,15 @@
+.upload-files--init {
+  align-self: center;
+  width: 80%;
+}
+
 .upload-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 20px;
-  border: 2px dashed var(--secondary-color);
+  border: 3px dashed var(--secondary-color);
   border-radius: 10px;
   padding: 20px;
   flex: 2;

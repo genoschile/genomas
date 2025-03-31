@@ -12,7 +12,7 @@ export default function FeaturesContainer() {
         pathname === "/login" || pathname === "/signup" ? "login--" : ""
       }`}
     >
-      <p className="features-header__title">New Features on GENOMAS</p>
+      {/* <p className="features-header__title">New Features on GENOMAS</p> */}
       <ButtonPrimary text="Learn More" link="#" />
     </div>
   );
