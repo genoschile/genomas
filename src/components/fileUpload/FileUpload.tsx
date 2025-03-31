@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FaCheckCircle, FaCloudUploadAlt, FaSpinner } from "react-icons/fa";
 import { toast } from "react-toastify";
-import JSZip from 'jszip'; 
+import JSZip from "jszip";
 
 import "./FileUpload.css";
 
@@ -54,17 +54,18 @@ export default function FileUpload() {
         const decompressedNames: string[] = [];
         for (const file of files) {
           if (file.name.endsWith(".zip")) {
-            const zip = await JSZip.loadAsync(file);
-            setTimeout(() => {
-              console.log("--")
-            }, 5000)
-            zip.forEach((relativePath, zipEntry) => {
-              if (!zipEntry.dir) {
-                decompressedNames.push(zipEntry.name);
-              }
-            });
+            setTimeout(async () => {
+              const zip = await JSZip.loadAsync(file);
+              zip.forEach((relativePath, zipEntry) => {
+                if (!zipEntry.dir) {
+                  decompressedNames.push(zipEntry.name);
+                }
+              });
+
+              console.log("Archivos descomprimidos:", decompressedNames);
+            }, 5000);
           } else if (file.name.endsWith(".tar.gz")) {
-            // .tar.gz 
+            // .tar.gz
             console.log("Descompresión de .tar.gz no implementada.");
           } else if (file.name.endsWith(".rar")) {
             // .rar
@@ -138,14 +139,18 @@ export default function FileUpload() {
         </label>
         <hr />
         <div className="upload-file-formats">
-          <small>Allowed formats: .fastq, .vcf, .mafft, .zip, .tar.gz, .rar</small>
+          <small>
+            Allowed formats: .fastq, .vcf, .mafft, .zip, .tar.gz, .rar
+          </small>
         </div>
         <div className="upload-buttons">
           {uploadStatus === UploadStatus.STAGED ? (
             <button onClick={handleStageToDatabase}>Upload to Database</button>
           ) : (
             <button
-              className={`${uploadStatus === UploadStatus.PENDING ? "loading" : ""}`}
+              className={`${
+                uploadStatus === UploadStatus.PENDING ? "loading" : ""
+              }`}
               disabled={uploadStatus === UploadStatus.PENDING}
               onClick={handleUpload}
             >
