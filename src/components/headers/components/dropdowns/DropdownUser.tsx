@@ -2,9 +2,11 @@
 
 import { deleteSession } from "@/lib/actions/session";
 import { useRouter } from "next/navigation";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "./dropdownMenu.css"; // Importa el CSS
+
+import { useRef } from "react";
 
 export function DropdownMenu({
   setDropdownVisible,
@@ -15,6 +17,30 @@ export function DropdownMenu({
   setDropdownVisible: (value: boolean) => void;
   dropdownRef: React.RefObject<HTMLElement>;
 }) {
+  const router = useRouter();
+
+  if (!dropdownVisible) {
+    return null;
+  }
+
+  return (
+    <nav
+      aria-label="Menú de usuario"
+      className="dropdownUser--menu"
+      ref={dropdownRef}
+    >
+      <ul role="menu">
+        <ItemMenu setDropdownVisible={setDropdownVisible} />
+      </ul>
+    </nav>
+  );
+}
+
+export const ItemMenu = ({
+  setDropdownVisible,
+}: {
+  setDropdownVisible: (value: boolean) => void;
+}) => {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -57,26 +83,25 @@ export function DropdownMenu({
     }
   };
 
-  if (!dropdownVisible) {
-    return null;
-  }
+  const handleProfile = () => {
+    router.push("/profile"); // Reemplaza "/profile" con la ruta correcta
+    setDropdownVisible(false); // Cierra el dropdown después de hacer clic
+  };
 
   return (
-    <nav aria-label="Menú de usuario" className="dropdownUser--menu">
-      <ul role="menu">
-        <li role="menuitem">
-          <button onClick={handleLogout}>
-            <FaSignOutAlt className="dropdown-menu__icon" />
-            Cerrar sesión
-          </button>
-        </li>
-        <li>
-          <button>
-            <FaSignOutAlt className="dropdown-menu__icon" />
-            profile
-          </button>
-        </li>
-      </ul>
-    </nav>
+    <>
+      <li role="menuitem">
+        <button onClick={handleProfile}>
+          <FaUser className="dropdown-menu__icon" />
+          Perfil
+        </button>
+      </li>
+      <li role="menuitem">
+        <button onClick={handleLogout}>
+          <FaSignOutAlt className="dropdown-menu__icon" />
+          Cerrar sesión
+        </button>
+      </li>
+    </>
   );
-}
+};
