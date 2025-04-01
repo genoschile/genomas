@@ -32,10 +32,9 @@
         background-color: rgba(0, 0, 0, 0.2);
       }
 
-      & button {
+      & > * {
         border: none;
         padding: 0.5rem 0.8rem;
-        background-color: transparent;
         text-wrap: nowrap;
         display: flex;
         justify-content: flex-start;
@@ -43,8 +42,28 @@
         gap: 10px;
         cursor: pointer;
         width: 100%;
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        text-align: left;
+      }
+
+      & > a {
+        text-decoration: none;
+      }
+
+      & > button,
+      & > a {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: transparent;
 
         & .dropdown-menu__icon {
+          fill: black;
+          max-width: 32px;
+          height: auto;
+          aspect-ratio: 1/1;
         }
       }
     }

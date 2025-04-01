@@ -45,6 +45,8 @@ export default function FileUpload() {
     setUploadStatus(UploadStatus.IDLE);
   };
 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
   const handleUpload = async () => {
     if (files.length > 0) {
       setUploadStatus(UploadStatus.PENDING);
@@ -54,21 +56,17 @@ export default function FileUpload() {
         const decompressedNames: string[] = [];
         for (const file of files) {
           if (file.name.endsWith(".zip")) {
-            setTimeout(async () => {
-              const zip = await JSZip.loadAsync(file);
-              zip.forEach((relativePath, zipEntry) => {
-                if (!zipEntry.dir) {
-                  decompressedNames.push(zipEntry.name);
-                }
-              });
-
-              console.log("Archivos descomprimidos:", decompressedNames);
-            }, 5000);
+            await delay(5000); 
+            const zip = await JSZip.loadAsync(file);
+            zip.forEach((relativePath, zipEntry) => {
+              if (!zipEntry.dir) {
+                decompressedNames.push(zipEntry.name);
+              }
+            });
+            console.log("Archivos descomprimidos:", decompressedNames);
           } else if (file.name.endsWith(".tar.gz")) {
-            // .tar.gz
             console.log("Descompresión de .tar.gz no implementada.");
           } else if (file.name.endsWith(".rar")) {
-            // .rar
             console.log("Descompresión de .rar no implementada.");
           }
         }
@@ -148,9 +146,7 @@ export default function FileUpload() {
             <button onClick={handleStageToDatabase}>Upload to Database</button>
           ) : (
             <button
-              className={`${
-                uploadStatus === UploadStatus.PENDING ? "loading" : ""
-              }`}
+              className={`${uploadStatus === UploadStatus.PENDING ? "loading" : ""}`}
               disabled={uploadStatus === UploadStatus.PENDING}
               onClick={handleUpload}
             >
