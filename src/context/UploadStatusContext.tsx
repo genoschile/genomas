@@ -6,7 +6,7 @@ import { FaCheckCircle, FaCloudUploadAlt, FaSpinner } from "react-icons/fa";
 export const UploadStatus = {
   IDLE: "idle",
   PENDING: "pending",
-  STAGED: "staged",
+  STAGED: "staged", // ver la tabla
   UPLOAD_DB: "upload_db",
 };
 
@@ -32,7 +32,9 @@ export const UploadStatusContext = createContext<UploadStatusContextType>({
   setUploadStatus: () => {},
   isUploading: false,
   setUploading: () => {},
-  renderUploadIcon: () => <FaCloudUploadAlt size={50} className="file-upload--icon" />,
+  renderUploadIcon: () => (
+    <FaCloudUploadAlt size={50} className="file-upload--icon" />
+  ),
 });
 
 export function UploadStatusProvider({

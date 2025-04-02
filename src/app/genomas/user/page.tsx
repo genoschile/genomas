@@ -1,41 +1,27 @@
 "use client";
 
-import { FaFolder } from "react-icons/fa";
-import { IoIosAdd } from "react-icons/io";
-import { SlOptionsVertical } from "react-icons/sl";
+import "./page.css";
+import { ProjectCardList } from "@/components/project/ProjectCardList";
+import { ProjectHeaderUser } from "@/components/project/ProjectHeaderUser";
+import ProjectUserTable from "@/components/project/table/ProjectUserTable";
 
 export default function Page() {
   return (
     <>
-      <article>
-        <header>
-          <h2>User Project</h2>
-          <nav>
-            <button>
-              {" "}
-              <IoIosAdd /> New
-            </button>
-            <button>Move To Trash</button>
-          </nav>
-        </header>
-
-        <section className="project__list">
-        </section>
+      <article className="project__home--article">
+        <div className="project__home--container">
+          <ProjectHeaderUser />
+          <section className="project__list--container">
+            <ProjectCardList />
+          </section>
+        </div>
       </article>
 
-      <article></article>
+      <article className="project__home--article">
+        <div className="project__home--container">
+          <ProjectUserTable />
+        </div>
+      </article>
     </>
   );
 }
-
-export const ProjectCard = () => {
-  return (
-    <div className="project__list--card">
-      <button>
-        <SlOptionsVertical />
-      </button>
-      <FaFolder />
-      <p></p>
-    </div>
-  );
-};

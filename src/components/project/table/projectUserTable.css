@@ -1,0 +1,15 @@
+.projectUser--table__trash {
+    width: 100%;
+
+    tr {
+        border: 1px solid transparent;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid #e4ded8;
+        }
+
+        td {
+          padding: 11px 32px;
+        }
+      }
+}

@@ -1,0 +1,17 @@
+.project__home--article {
+  display: block;
+  width: 100%;
+  padding: 2rem;
+  min-block-size: 30vh;
+
+  & > div:first-of-type{
+    width: 100%;
+    padding: 0.4rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.4rem;
+
+    & .project__list--container {
+      width: 100%;
+    }
+  }
+}

@@ -1,10 +1,8 @@
-id sample, disease, type of sample, secuencing
-tumor tissue, lung cancer, tumor tissue, wgs
-tumor tissue, lung cancer, tumor tissue, wgs
-tumor tissue, lung cancer, tumor tissue, wgs
-tumor tissue, lung cancer, tumor tissue, wgs
-tumor tissue, lung cancer, tumor tissue, wgs
-tumor tissue, lung cancer, tumor tissue, wgs
-tumor tissue, lung cancer, tumor tissue, wgs
-tumor tissue, lung cancer, tumor tissue, wgs
-tumor tissue, lung cancer, tumor tissue, wgs
+id sample, age, gender, disease, type of sample, secuencing
+1234, 45, male, lung cancer, tumor tissue, wgs
+1234, 45, male, lung cancer, tumor tissue, wgs
+1234, 45, male, lung cancer, tumor tissue, wgs
+1235, 44, male, lung cancer, tumor tissue, wgs
+1235, 44, male, lung cancer, tumor tissue, wgs
+1235, 44, male, lung cancer, tumor tissue, wgs
+

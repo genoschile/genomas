@@ -7,6 +7,8 @@ import os from "os";
 import AdmZip from "adm-zip";
 import * as tar from "tar";
 
+// 10 gb
+
 export async function POST(req: NextRequest) {
   console.log("✅ Recibiendo archivos...");
 
@@ -51,6 +53,8 @@ export async function POST(req: NextRequest) {
         });
       }
     }
+
+    // gz!!
 
     return NextResponse.json(
       {
