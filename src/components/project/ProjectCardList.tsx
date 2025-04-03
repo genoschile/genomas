@@ -1,42 +1,24 @@
+import { useProjectContext } from "@/hooks/useProjectContext";
 import { ProjectCard } from "./ProjectCard";
 import "./projectCardList.css";
 
-const project = {
-  data: {
-    projects: [
-      {
-        name: "karen@genomas.com",
-        description: "Proyecto de análisis genómico basado en IA.",
-      },
-      {
-        name: "bioinformatics-hub",
-        description:
-          "Plataforma colaborativa para investigaciones en bioinformática.",
-      },
-      {
-        name: "med-data-secure",
-        description:
-          "Sistema de almacenamiento seguro para historiales médicos.",
-      },
-      {
-        name: "genome-mapper",
-        description:
-          "Aplicación para mapeo y visualización de secuencias genéticas.",
-      },
-    ],
-  },
-};
-
 export const ProjectCardList = () => {
+  const { projects } = useProjectContext();
+
   return (
     <ul className="project__list">
-      {project.data.projects.map((proj, index) => (
-        <ProjectCard
-          key={index}
-          name={proj.name}
-          description={proj.description}
-        />
-      ))}
+      {projects.length > 0 ? (
+        projects.map((proj, index) => (
+          <ProjectCard
+            key={index}
+            name={proj.name}
+            description={proj.description}
+            sharedWith={proj.sharedWith || []}
+          />
+        ))
+      ) : (
+        <p className="no-projects-message">Aún no tienes proyectos.</p>
+      )}
     </ul>
   );
 };

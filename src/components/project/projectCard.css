@@ -7,9 +7,27 @@
   padding: 0.4rem;
   overflow: hidden;
   border-radius: 0.4rem;
-
   display: flex;
   flex-flow: column nowrap;
+
+  &:not(.selected) {
+    &:hover,
+    &:has(:hover) {
+      background-color: rgba(0, 0, 0, 0.09);
+      outline-offset: -2px;
+      outline-color: black;
+    }
+  }
+
+  &.selected {
+    outline: 2px dashed #007bff;
+    outline-offset: -1px;
+    background-color: rgba(30, 111, 169, 0.1);
+
+    & > *:first-child > *:last-child::after {
+      opacity: 1;
+    }
+  }
 
   & > *:first-child {
     flex: 1;
@@ -20,8 +38,47 @@
       border-radius: 100%;
       padding: 0.4rem;
       cursor: pointer;
-      float: right;
       outline: 0.1px solid transparent;
+      aspect-ratio: 1/1;
+
+      &:first-child {
+        float: right;
+      }
+
+      &:last-child {
+        float: left;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+
+        &::after {
+          position: absolute;
+          content: "✔";
+          font-size: 14px;
+          font-weight: bold;
+          color: white;
+          background-color: green;
+          width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          position: absolute;
+          inset: 0;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          opacity: 0;
+        }
+
+        & input {
+          position: absolute;
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+      }
 
       &:hover {
         outline-color: rgba(0, 0, 0, 0.3);
@@ -38,6 +95,28 @@
     flex: 2;
     display: grid;
     place-content: center;
+    position: relative;
+
+    & button {
+      position: absolute;
+      background-color: transparent;
+      border-radius: 100%;
+      padding: 0.3rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      top: 50%;
+      left: 57%;
+      outline: 1px solid transparent;
+
+      & svg {
+        fill: white;
+      }
+
+      &:hover {
+        outline-color: white;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
 
     & .project__list--icon {
       max-width: 120px;
@@ -58,12 +137,5 @@
       width: 90%;
       margin: 0 auto;
     }
-  }
-
-  &:hover,
-  &:has(:hover) {
-    background-color: rgba(0, 0, 0, 0.09);
-    outline-offset: -2px;
-    outline-color: black;
   }
 }

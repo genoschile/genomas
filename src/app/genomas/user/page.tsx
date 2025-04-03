@@ -1,11 +1,17 @@
 "use client";
 
-import "./page.css";
+/* components */
+
 import { ProjectCardList } from "@/components/project/ProjectCardList";
 import { ProjectHeaderUser } from "@/components/project/ProjectHeaderUser";
 import ProjectUserTable from "@/components/project/table/ProjectUserTable";
 
+/* style */
+import "./page.css";
+
 export default function Page() {
+
+
   return (
     <>
       <article className="project__home--article">

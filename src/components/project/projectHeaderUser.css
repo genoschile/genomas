@@ -7,6 +7,7 @@
   border: 1px solid transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding-block: 0.8rem;
+  margin-bottom: 0.5rem;
 
   & > *:first-child {
     font-size: 1.875em;
@@ -22,15 +23,15 @@
 
     & button {
       display: flex;
-      flex-flow: row nowrap;
+      gap: 0.3rem;
       align-items: center;
-      justify-content: center;
-      text-wrap: nowrap;
-      padding-block: 0.4rem;
-      padding-inline: 0.6rem;
+      padding: 0.5rem 0.9rem;
+      font-size: 1rem;
       cursor: pointer;
-      border-radius: 0.3rem;
+      background-color: transparent;
       border: 1px solid transparent;
+      border-radius: 0.5rem;
+      color: var(--button-blue);
 
       &:first-child {
         color: white;
@@ -43,13 +44,16 @@
       }
 
       &:last-child {
-        background-color: transparent;
         text-decoration: underline;
-        color: var(--button-blue);
-
         &:hover {
-          border-color: black;
           background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          transform: scale(0.95);
+          transition: opacity 0.3s ease, transform 0.3s ease;
         }
       }
     }
