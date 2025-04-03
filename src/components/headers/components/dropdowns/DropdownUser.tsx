@@ -25,8 +25,7 @@ export function DropdownMenu({
       className="dropdownUser--menu"
       ref={dropdownRef}
     >
-  
-        <ItemMenu setDropdownVisible={setDropdownVisible} />
+      <ItemMenu setDropdownVisible={setDropdownVisible} />
     </nav>
   );
 }

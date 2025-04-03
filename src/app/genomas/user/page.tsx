@@ -10,8 +10,6 @@ import ProjectUserTable from "@/components/project/table/ProjectUserTable";
 import "./page.css";
 
 export default function Page() {
-
-
   return (
     <>
       <article className="project__home--article">

@@ -6,6 +6,8 @@ import { FaFolder, FaUser } from "react-icons/fa";
 import { RiGitRepositoryPrivateFill } from "react-icons/ri";
 import { useProjectContext } from "@/hooks/useProjectContext";
 import { useModalContext } from "@/hooks/useModalsProject";
+import { useState, useEffect, useRef } from "react";
+import { MdDriveFileRenameOutline } from "react-icons/md";
 
 export const ProjectCard = ({
   name,
@@ -18,17 +20,37 @@ export const ProjectCard = ({
 }) => {
   const { toggleCardSelection, isSelected } = useProjectContext();
   const { openMembersModal } = useModalContext();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLSpanElement>(null);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     toggleCardSelection(name);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   return (
     <li className={`project__list--card ${isSelected(name) ? "selected" : ""}`}>
       <header>
-        <button>
+        <span ref={dropdownRef} onClick={() => setIsOpen(!isOpen)}>
           <SlOptionsVertical />
-        </button>
+          {isOpen && <DropdownMenuCard />}
+        </span>
         <label>
           <input
             type="checkbox"
@@ -51,5 +73,27 @@ export const ProjectCard = ({
         <p>{name}</p>
       </footer>
     </li>
+  );
+};
+
+export const DropdownMenuCard = () => {
+  return (
+    <ul>
+      <li>
+        <button>
+          <MdDriveFileRenameOutline /> Option 1
+        </button>
+      </li>
+      <li>
+        <button>
+          <MdDriveFileRenameOutline /> Option 2
+        </button>
+      </li>
+      <li>
+        <button>
+          <MdDriveFileRenameOutline /> Option 3
+        </button>
+      </li>
+    </ul>
   );
 };

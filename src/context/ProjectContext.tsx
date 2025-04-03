@@ -47,6 +47,48 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         "Aplicación para mapeo y visualización de secuencias genéticas.",
       sharedWith: ["sofia@genomas.com"],
     },
+    {
+      name: "karen@genomas.com",
+      description: "Proyecto de análisis genómico basado en IA.",
+      sharedWith: ["carlos@genomas.com", "laura@genomas.com"],
+    },
+    {
+      name: "bioinformatics-hub",
+      description:
+        "Plataforma colaborativa para investigaciones en bioinformática.",
+      sharedWith: ["ana@biohub.com", "marco@biohub.com"],
+    },
+    {
+      name: "med-data-secure",
+      description: "Sistema de almacenamiento seguro para historiales médicos.",
+    },
+    {
+      name: "genome-mapper",
+      description:
+        "Aplicación para mapeo y visualización de secuencias genéticas.",
+      sharedWith: ["sofia@genomas.com"],
+    },
+    {
+      name: "karen@genomas.com",
+      description: "Proyecto de análisis genómico basado en IA.",
+      sharedWith: ["carlos@genomas.com", "laura@genomas.com"],
+    },
+    {
+      name: "bioinformatics-hub",
+      description:
+        "Plataforma colaborativa para investigaciones en bioinformática.",
+      sharedWith: ["ana@biohub.com", "marco@biohub.com"],
+    },
+    {
+      name: "med-data-secure",
+      description: "Sistema de almacenamiento seguro para historiales médicos.",
+    },
+    {
+      name: "genome-mapper",
+      description:
+        "Aplicación para mapeo y visualización de secuencias genéticas.",
+      sharedWith: ["sofia@genomas.com"],
+    },
   ]);
 
   const toggleCardSelection = (cardName: string) => {
