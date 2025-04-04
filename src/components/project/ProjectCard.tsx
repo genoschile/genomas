@@ -7,7 +7,7 @@ import { RiGitRepositoryPrivateFill } from "react-icons/ri";
 import { useProjectContext } from "@/hooks/useProjectContext";
 import { useModalContext } from "@/hooks/useModalsProject";
 import { useState, useEffect, useRef } from "react";
-import { MdDriveFileRenameOutline } from "react-icons/md";
+import { DropdownMenuCard } from "./components/DropdownMenuCard";
 
 export const ProjectCard = ({
   name,
@@ -76,24 +76,4 @@ export const ProjectCard = ({
   );
 };
 
-export const DropdownMenuCard = () => {
-  return (
-    <ul>
-      <li>
-        <button>
-          <MdDriveFileRenameOutline /> Option 1
-        </button>
-      </li>
-      <li>
-        <button>
-          <MdDriveFileRenameOutline /> Option 2
-        </button>
-      </li>
-      <li>
-        <button>
-          <MdDriveFileRenameOutline /> Option 3
-        </button>
-      </li>
-    </ul>
-  );
-};
+
