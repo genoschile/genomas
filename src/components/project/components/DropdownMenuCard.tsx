@@ -38,10 +38,13 @@ export const DropdownMenuCard = () => {
             item.type === "info" ? "dropdown-info-item info-container" : ""
           }
         >
-          <button>
+          <button
+            onClick={
+              item.type === "info" ? () => alert("More Info") : undefined
+            }
+          >
             {item.icon} {item.label}
           </button>
-          {item.type === "info" && <small>hola</small>}
         </li>
       ))}
     </ul>

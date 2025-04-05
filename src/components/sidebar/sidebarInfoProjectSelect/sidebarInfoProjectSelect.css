@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 99;
   transition: width 0.3s ease, background-color 0.3s ease, border 0.3s ease;
 
   &.active {
@@ -19,6 +20,7 @@
     margin: 0;
     width: 300px;
     background-color: var(--card-background);
+    border: 1px solid rgba(0, 0, 0, 1);
 
     & > div {
       & > button {
@@ -69,6 +71,7 @@
         width: 48px;
         height: 48px;
         aspect-ratio: 1/1;
+        z-index: 1000;
       }
     }
   }
@@ -80,8 +83,217 @@
     padding-inline: 0.4rem;
     padding-block: 0.8rem;
 
-    & > ul {
-      list-style: none;
+    & > header {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+
+      & > ul {
+        list-style: none;
+
+        --avatar-size: 75px;
+        --column-size: calc(var(--avatar-size) / 2);
+
+        display: grid;
+        grid-template-columns: repeat(var(--avatar-count), var(--column-size));
+        transition: 500ms;
+        transition-delay: 0.2s;
+        overflow-x: auto;
+        scrollbar-color: var(--secondary-color) transparent;
+        scrollbar-width: 10px;
+        padding-block: 1.2rem;
+        padding-inline: 0.4rem;
+
+        &:hover,
+        &:focus-within {
+          --avatar-size: 60px;
+          --column-size: calc(var(--avatar-size) * 1.2);
+        }
+
+        & > li {
+          &:not(:first-child) {
+            margin-left: var(--offset);
+          }
+
+          &:nth-child(2) {
+            --avatar-count: 2;
+            --offset: calc(var(--avatar-size) / 2);
+          }
+
+          width: var(--avatar-size);
+          overflow: hidden;
+          object-fit: cover;
+          outline: 2px solid rgba(0, 0, 0, 0.2);
+          border-radius: 100%;
+          box-shadow: 0.25rem 0.25rem 0.5rem hsl(0, 0%, 0% / 2);
+          width: 100%;
+          max-width: var(--avatar-size);
+          aspect-ratio: 1/1;
+          height: auto;
+          transition: scale 0.3s;
+
+          &:hover,
+          &:focus {
+            outline-color: black;
+            scale: 1.2;
+            z-index: 1.2;
+            outline-offset: -7px;
+          }
+
+          & span {
+            display: grid;
+            place-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 1.5em;
+            color: black;
+          }
+
+          @supports selector(:has(+ *)) {
+            &:hover + .avatar,
+            &:has(+ .avatar:hover) {
+              scale: 1.1;
+            }
+          }
+        }
+
+        & > hr {
+          border: transparent;
+          border-left: 2px solid black;
+          align-content: center;
+          height: 100%;
+          margin: 0 auto;
+          width: 1px;
+        }
+      }
+      & > div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        user-select: none;
+
+        small {
+          display: inline-block;
+          font-size: 0.813em;
+          font-weight: 600;
+          color: var(--text-color);
+
+          &:last-child {
+            margin-left: 5px;
+          }
+        }
+      }
+
+      & > button {
+        background-color: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        font-size: 1em;
+        font-weight: bold;
+        padding-inline: 0.4rem;
+        padding-block: 0.4rem;
+        border-radius: 0.2rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease,
+          border-color 0.3s ease;
+        color: var(--text-color);
+
+        &:hover {
+          background-color: var(--secondary-color);
+          color: var(--card-background);
+          border-color: var(--secondary-color);
+        }
+      }
+    }
+
+    & > section {
+      margin-top: 0.4rem;
+      padding: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: flex-end;
+      justify-content: center;
+      width: 100%;
+
+      & > h2 {
+        text-align: center;
+        align-self: center;
+        width: 100%;
+      }
+
+      & div {
+        width: 100%;
+        padding-block: 0.1rem;
+
+        &:not(:first-child) {
+          border-top: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        & h3,
+        p {
+          width: 100%;
+          text-align: right;
+        }
+      }
+
+      & fieldset {
+        block-size: 100%;
+        inline-size: 100%;
+        display: flex;
+        flex-direction: column;
+        border: transparent;
+
+        & small {
+          font-size: 0.8em;
+          font-weight: 600;
+          color: var(--text-color);
+          text-align: center;
+          margin-bottom: 0.4rem;
+          padding: 0.4rem;
+
+          &.limit {
+            color: red;
+          }
+        }
+
+        & legend {
+          font-size: 1.2em;
+          font-weight: bold;
+          color: var(--text-color);
+          text-align: center;
+          margin-bottom: 0.4rem;
+        }
+
+        & label {
+          width: 100%;
+          padding-block: 0.4rem;
+          background-color: var(--card-background);
+          color: var(--text-color);
+          font-size: 1em;
+          font-weight: bold;
+          position: relative;
+
+          & input {
+            padding: 0.4rem;
+            width: 100%;
+            border: 1px solid transparent;
+
+            &:hover, &:focus {
+              border-color: var(--secondary-color);
+            }
+          }
+
+        }
+
+        & > * {
+          width: 100%;
+        }
+      }
+    }
+
+    & > hr {
+      inline-size: 100%;
     }
   }
 }
