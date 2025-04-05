@@ -28,31 +28,20 @@ const menuItems = [
   },
 ];
 
-const DropdownMenuCardInfo = () => {
-  return (
-    <div className="project--dropdown-menu__options--info-a">
-      <div>
-        <p>Project Name: Project A</p>
-        <p>Created By: User123</p>
-        <p>Members: 5</p>
-        <p>Last Updated: 2023-10-01</p>
-      </div>
-    </div>
-  );
-};
-
 export const DropdownMenuCard = () => {
   return (
     <ul className="project--dropdown-menu__options">
       {menuItems.map((item) => (
         <li
           key={item.id}
-          className={item.type === "info" ? "dropdown-info-item info-container" : ""}
+          className={
+            item.type === "info" ? "dropdown-info-item info-container" : ""
+          }
         >
           <button>
             {item.icon} {item.label}
           </button>
-          {item.type === "info" && <DropdownMenuCardInfo />}
+          {item.type === "info" && <small>hola</small>}
         </li>
       ))}
     </ul>

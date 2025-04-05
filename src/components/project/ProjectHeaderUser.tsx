@@ -3,13 +3,6 @@
 /* icons */
 import { IoIosAdd } from "react-icons/io";
 
-/* components */
-import { Modal } from "../modals/Modal";
-import { WorkspaceForm } from "../sidebar/components/Workspaceform";
-
-/* hooks */
-import { useState } from "react";
-
 /* style */
 import "./projectHeaderUser.css";
 import { useProjectContext } from "@/hooks/useProjectContext";

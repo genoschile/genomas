@@ -8,6 +8,7 @@ import ProjectUserTable from "@/components/project/table/ProjectUserTable";
 
 /* style */
 import "./page.css";
+import { SidebarInfoProjectSelect } from "@/components/sidebar/sidebarInfoProjectSelect/SidebarInfoProjectSelect";
 
 export default function Page() {
   return (
@@ -26,6 +27,8 @@ export default function Page() {
           <ProjectUserTable />
         </div>
       </article>
+
+      <SidebarInfoProjectSelect />
     </>
   );
 }

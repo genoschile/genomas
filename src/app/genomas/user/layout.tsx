@@ -29,7 +29,14 @@ export default function userLayout({
             <div className="userWorkspace--container">
               <HeaderUserWorkspace className="wu-header" />
               <SidebarUser className="wu-aside" />
-              <main className="wu-main">{children}</main>
+              <main
+                style={{
+                  position: "relative",
+                }}
+                className="wu-main"
+              >
+                {children}
+              </main>
               <FooterLanding className="wu-footer" />
             </div>
           </ProjectProvider>

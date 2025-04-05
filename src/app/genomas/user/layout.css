@@ -5,7 +5,7 @@
   grid-template-columns: 100px 1fr;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
-    "header  header"
+    "aside  header"
     "aside   main"
     "footer  footer";
   z-index: -1;

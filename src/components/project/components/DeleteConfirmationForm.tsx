@@ -19,7 +19,7 @@ export const DeleteConfirmationForm = () => {
   };
 
   const handleCancelDelete = () => {
-    console.log("cancelando ...")
+    console.log("cancelando ...");
   };
 
   const handleSubmit = (event: React.FormEvent) => {

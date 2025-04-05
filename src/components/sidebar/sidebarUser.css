@@ -8,9 +8,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  z-index: 5;
+  z-index: 100;
   min-block-size: 100vh;
   min-block-size: 100dvh;
+  min-width: 100px;
 
   &.expanded .sidebar__element {
     grid-template-columns: 20px 1fr;

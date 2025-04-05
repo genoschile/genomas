@@ -19,11 +19,7 @@
   & > *:not(:first-child) {
     border-top: 0.5px solid rgba(0, 0, 0, 1);
   }
-  & li {
-    &:last-child {
-      position: relative;
-    }
-
+  & > li {
     padding: 0.5rem;
     border-radius: 0.5rem;
     border-top-left-radius: 0;
@@ -35,7 +31,7 @@
       background-color: rgba(0, 0, 0, 0.2);
     }
 
-    & > * {
+    & > button {
       border: none;
       padding: 0.5rem 0.8rem;
       text-wrap: nowrap;
@@ -49,6 +45,7 @@
       font-size: inherit;
       color: inherit;
       text-align: left;
+      background-color: red;
     }
 
     & > a {
@@ -69,29 +66,5 @@
         aspect-ratio: 1/1;
       }
     }
-  }
-}
-
-.project--dropdown-menu__options--info-a {
-  overflow: hidden;
-  background-color: white;
-  position: absolute;
-  top: 50%;
-  left: 70%;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: auto;
-  z-index: 9999;
-  height: max-content;
-  padding: unset;
-
-  & div {
-    padding-inline: 0.5rem;
-    padding-block: 0.5rem;
-    background-color: red;
-    width: 200px;
-    height: 200px;
-    aspect-ratio: 1;
   }
 }
