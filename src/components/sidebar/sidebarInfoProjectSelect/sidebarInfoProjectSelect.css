@@ -1,7 +1,7 @@
 .sidebar--infoProjectSelect {
-  position: absolute;
+  position: fixed;
   top: 50%;
-  right: 0;
+  right: 10px;
   transform: translateY(-50%);
   border: 1px solid rgba(0, 0, 0, 0);
   background-color: transparent;
@@ -12,28 +12,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden;
-
   transition: width 0.3s ease, background-color 0.3s ease, border 0.3s ease,
     transform 0.3s ease;
 
   &.active {
-    transform: translateX(0%);
-    overflow-y: auto;
     padding: 0;
     margin: 0;
     width: 300px;
     background-color: var(--card-background);
     border: 1px solid rgba(0, 0, 0, 1);
+    transition: transform 0.3s ease, background-color 0.3s ease,
+      border 0.3s ease;
 
     & > div {
+      overflow: visible;
+
       & > button {
         top: 50%;
         left: -20px;
         transform: translateY(-50%);
-        outline: 2px solid transparent;
-        outline-color: rgba(0, 0, 0, 0.2);
-        animation: outline-dance 1s infinite;
 
         & svg {
           transform: rotate(180deg);
@@ -63,6 +60,10 @@
       aspect-ratio: 1/1;
       cursor: pointer;
 
+      outline: 2px solid transparent;
+      outline-color: rgba(0, 0, 0, 0.2);
+      animation: outline-dance 1s infinite;
+
       &:hover {
         & svg {
           fill: var(--secondary-color);
@@ -75,7 +76,6 @@
         width: 48px;
         height: 48px;
         aspect-ratio: 1/1;
-        z-index: 1000;
       }
     }
   }
@@ -86,131 +86,6 @@
     height: 100%;
     padding-inline: 0.4rem;
     padding-block: 0.8rem;
-
-    & > header {
-      margin-bottom: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-
-      & > ul {
-        list-style: none;
-
-        --avatar-size: 75px;
-        --column-size: calc(var(--avatar-size) / 2);
-
-        display: grid;
-        grid-template-columns: repeat(var(--avatar-count), var(--column-size));
-        transition: 500ms;
-        transition-delay: 0.2s;
-        overflow-x: auto;
-        scrollbar-color: var(--secondary-color) transparent;
-        scrollbar-width: 10px;
-        padding-block: 1.2rem;
-        padding-inline: 0.4rem;
-        transition-delay: 1s;
-
-        &:hover,
-        &:focus-within {
-          --avatar-size: 60px;
-          --column-size: calc(var(--avatar-size) * 1.2);
-        }
-
-        & > li {
-          &:not(:first-child) {
-            margin-left: var(--offset);
-          }
-
-          &:nth-child(2) {
-            --avatar-count: 2;
-            --offset: calc(var(--avatar-size) / 2);
-          }
-
-          width: var(--avatar-size);
-          overflow: hidden;
-          object-fit: cover;
-          outline: 2px solid rgba(0, 0, 0, 0.2);
-          border-radius: 100%;
-          box-shadow: 0.25rem 0.25rem 0.5rem hsl(0, 0%, 0% / 2);
-          width: 100%;
-          max-width: var(--avatar-size);
-          aspect-ratio: 1/1;
-          height: auto;
-          transition-delay: 0.5s;
-          transition: scale 0.3s;
-
-          &:hover,
-          &:focus {
-            outline-color: black;
-            scale: 1.2;
-            z-index: 1.2;
-            outline-offset: -7px;
-          }
-
-          & span {
-            display: grid;
-            place-content: center;
-            width: 100%;
-            height: 100%;
-            font-size: 1.5em;
-            color: black;
-          }
-
-          @supports selector(:has(+ *)) {
-            &:hover + .avatar,
-            &:has(+ .avatar:hover) {
-              scale: 1.1;
-            }
-          }
-        }
-
-        & > hr {
-          border: transparent;
-          border-left: 2px solid black;
-          align-content: center;
-          height: 100%;
-          margin: 0 auto;
-          width: 1px;
-        }
-      }
-      & > div {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        user-select: none;
-
-        small {
-          display: inline-block;
-          font-size: 0.813em;
-          font-weight: 600;
-          color: var(--text-color);
-
-          &:last-child {
-            margin-left: 5px;
-          }
-        }
-      }
-
-      & > button {
-        background-color: transparent;
-        border: 1px solid rgba(0, 0, 0, 0.5);
-        font-size: 1em;
-        font-weight: bold;
-        padding-inline: 0.4rem;
-        padding-block: 0.4rem;
-        border-radius: 0.2rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease,
-          border-color 0.3s ease;
-        color: var(--text-color);
-
-        &:hover {
-          background-color: var(--secondary-color);
-          color: var(--card-background);
-          border-color: var(--secondary-color);
-        }
-      }
-    }
 
     & > section {
       margin-top: 0.4rem;
@@ -280,10 +155,21 @@
           font-weight: bold;
           position: relative;
 
+          & svg {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+          }
+
           & input {
             padding: 0.4rem;
             width: 100%;
             border: 1px solid transparent;
+            padding-left: 2.4rem;
+            white-space: wrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             &:hover,
             &:focus {

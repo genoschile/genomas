@@ -9,8 +9,11 @@ import ProjectUserTable from "@/components/project/table/ProjectUserTable";
 /* style */
 import "./page.css";
 import { SidebarInfoProjectSelect } from "@/components/sidebar/sidebarInfoProjectSelect/SidebarInfoProjectSelect";
+import { useProjectContext } from "@/hooks/useProjectContext";
 
 export default function Page() {
+  const { selectedCards } = useProjectContext();
+
   return (
     <>
       <article className="project__home--article">
@@ -28,7 +31,7 @@ export default function Page() {
         </div>
       </article>
 
-      <SidebarInfoProjectSelect />
+      {selectedCards.length > 0 && <SidebarInfoProjectSelect />}
     </>
   );
 }
