@@ -40,6 +40,19 @@ const fixedGrayScaleColors = [
   "#FDFDFD",
 ];
 
+const colorRandom = () => {
+  if (
+    !Array.isArray(fixedGrayScaleColors) ||
+    fixedGrayScaleColors.length === 0
+  ) {
+    return "#FDFDFD";
+  }
+  const indiceAleatorio = Math.floor(
+    Math.random() * fixedGrayScaleColors.length
+  );
+  return fixedGrayScaleColors[indiceAleatorio];
+};
+
 export const SidebarInfoProjectSelect = () => {
   const { selectedCards } = useProjectContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -121,7 +134,13 @@ export const SidebarInfoProjectSelect = () => {
                         } as React.CSSProperties
                       }
                     >
-                      <span>{user.charAt(0).toUpperCase()}</span>
+                      <span
+                        style={{
+                          backgroundColor: colorRandom(),
+                        }}
+                      >
+                        {user.charAt(0).toUpperCase()}
+                      </span>
                     </li>
                     {index === 0 && <hr />}
                   </React.Fragment>
@@ -180,7 +199,9 @@ export const SidebarInfoProjectSelect = () => {
                     onChange={handleDescriptionChange}
                   />
                 </label>
-                <small className={isLimitReached ? "limit" : ""}>{description.length}/100 characters</small>
+                <small className={isLimitReached ? "limit" : ""}>
+                  {description.length}/100 characters
+                </small>
               </fieldset>
             </section>
 

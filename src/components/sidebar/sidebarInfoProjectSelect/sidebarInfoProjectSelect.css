@@ -12,10 +12,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99;
-  transition: width 0.3s ease, background-color 0.3s ease, border 0.3s ease;
+  overflow-x: hidden;
+
+  transition: width 0.3s ease, background-color 0.3s ease, border 0.3s ease,
+    transform 0.3s ease;
 
   &.active {
+    transform: translateX(0%);
+    overflow-y: auto;
     padding: 0;
     margin: 0;
     width: 300px;
@@ -104,6 +108,7 @@
         scrollbar-width: 10px;
         padding-block: 1.2rem;
         padding-inline: 0.4rem;
+        transition-delay: 1s;
 
         &:hover,
         &:focus-within {
@@ -131,6 +136,7 @@
           max-width: var(--avatar-size);
           aspect-ratio: 1/1;
           height: auto;
+          transition-delay: 0.5s;
           transition: scale 0.3s;
 
           &:hover,
@@ -279,11 +285,11 @@
             width: 100%;
             border: 1px solid transparent;
 
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
               border-color: var(--secondary-color);
             }
           }
-
         }
 
         & > * {
