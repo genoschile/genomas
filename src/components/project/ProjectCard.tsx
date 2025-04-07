@@ -8,6 +8,7 @@ import { useProjectContext } from "@/hooks/useProjectContext";
 import { useModalContext } from "@/hooks/useModalsProject";
 import { useState, useEffect, useRef } from "react";
 import { DropdownMenuCard } from "./components/DropdownMenuCard";
+import { MODAL_IDS } from "@/lib/types/modal";
 
 export const ProjectCard = ({
   name,
@@ -19,7 +20,7 @@ export const ProjectCard = ({
   sharedWith: string[];
 }) => {
   const { toggleCardSelection, isSelected } = useProjectContext();
-  const { openMembersModal } = useModalContext();
+  const { openModal } = useModalContext();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLSpanElement>(null);
 
@@ -60,7 +61,7 @@ export const ProjectCard = ({
         </label>
       </header>
       <figure>
-        <button onClick={openMembersModal}>
+        <button onClick={() => openModal(MODAL_IDS.MEMBERS)}>
           {sharedWith.length > 0 ? (
             <FaUser size={20} />
           ) : (

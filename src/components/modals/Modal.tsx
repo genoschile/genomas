@@ -1,39 +1,45 @@
-import { createPortal } from "react-dom";
-import "./modal.css";
+/* hooks */
+import { useModalContext } from "@/hooks/useModalsProject";
+import { useRef, useEffect } from "react";
+
+/* icons */
 import { FaTimes } from "react-icons/fa";
 
-export interface ModalProps {
-  isOpen: boolean;
-  children: React.ReactNode;
-  onClose: () => void;
-  title: string;
-}
+/* types */
+import type { ModalProps } from "@/lib/types/modal";
 
-export const Modal: React.FC<ModalProps> = ({
-  isOpen,
-  children,
-  onClose,
-  title,
-}) => {
-  if (!isOpen) return null;
+/* styles */
+import "./modal.css";
 
-  return createPortal(
-    <div
-      className="modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-    >
+export const Modal: React.FC<ModalProps> = ({ id, title, children }) => {
+  const { activeModal, closeModal } = useModalContext();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    if (activeModal === id && dialogRef.current) {
+      dialogRef.current.showModal();
+    } else if (activeModal !== id && dialogRef.current?.open) {
+      dialogRef.current.close();
+    }
+  }, [activeModal, id]);
+
+  if (activeModal !== id) return null;
+
+  return (
+    <dialog ref={dialogRef} className="modal">
       <div className="modal__content" onMouseDown={(e) => e.stopPropagation()}>
-        <div className="modal__header">
-          <h4 className="modal__title">{title}</h4>
-          <button className="modal__close-button" onClick={onClose}>
-            <FaTimes />
-          </button>
-        </div>
+        <header className="modal__header">
+          <h4 className="modal__title" aria-labelledby="modal-title">
+            {title}
+          </h4>
+          <form method="dialog">
+            <button className="modal__close-button" onClick={closeModal}>
+              <FaTimes />
+            </button>
+          </form>
+        </header>
         {children}
       </div>
-    </div>,
-    document.body
+    </dialog>
   );
 };

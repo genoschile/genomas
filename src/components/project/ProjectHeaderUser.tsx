@@ -10,17 +10,17 @@ import { useModalContext } from "@/hooks/useModalsProject";
 
 export function ProjectHeaderUser() {
   const { projects, selectedCards } = useProjectContext();
-  const { openWorkspaceModal, openDeleteConfirmationModal } = useModalContext();
+  const { openModal  } = useModalContext();
   return (
     <header className="project__home--header">
       <h2>User Project</h2>
       <nav>
-        <button onClick={openWorkspaceModal}>
+        <button onClick={() => openModal("workspace")}>
           <IoIosAdd size="24" /> New
         </button>
         <button
           disabled={projects.length === 0 || selectedCards.length === 0}
-          onClick={openDeleteConfirmationModal}
+          onClick={() => openModal("delete-confirmation")}
         >
           Move To Trash
         </button>

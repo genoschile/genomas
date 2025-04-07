@@ -1,19 +1,25 @@
 "use client";
 
-import FooterLanding from "@/components/footer/FooterLanding";
-import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
-import SidebarUser from "@/components/sidebar/SidebarUser";
+/* context */
 import { AuthContextProvider } from "@/context/authContext";
 import { UserContextProvider } from "@/context/userContext";
-
-import "./layout.css";
 import { ProjectProvider } from "@/context/ProjectContext";
 import { ModalProvider } from "@/context/ModalsProject";
-import { useModalContext } from "@/hooks/useModalsProject";
+
+/* styles */
+import "./layout.css";
 import { Modal } from "@/components/modals/Modal";
+
+/* components */
 import { WorkspaceForm } from "@/components/sidebar/components/Workspaceform";
 import { DeleteConfirmationForm } from "@/components/project/components/DeleteConfirmationForm";
 import { MembersForm } from "@/components/sidebar/components/MembersForm";
+import FooterLanding from "@/components/footer/FooterLanding";
+import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
+import SidebarUser from "@/components/sidebar/SidebarUser";
+
+/* types */
+import { MODAL_IDS } from "@/lib/types/modal";
 
 export default function userLayout({
   children,
@@ -46,48 +52,20 @@ export default function userLayout({
   );
 }
 
-// ⬇️ Componente separado para manejar los modales ⬇️
 function ModalsContainer() {
-  const {
-    isWorkspaceModalOpen,
-    closeWorkspaceModal,
-    isDeleteConfirmationOpen,
-    closeDeleteConfirmationModal,
-    isMembersModalOpen,
-    closeMembersModal,
-  } = useModalContext();
-
   return (
     <>
-      {isWorkspaceModalOpen && (
-        <Modal
-          title="Create new Project"
-          isOpen={true}
-          onClose={closeWorkspaceModal}
-        >
-          <WorkspaceForm />
-        </Modal>
-      )}
+      <Modal id={MODAL_IDS.WORKSPACE} title="Create new Project">
+        <WorkspaceForm />
+      </Modal>
 
-      {isDeleteConfirmationOpen && (
-        <Modal
-          title="Eliminated Project"
-          isOpen={true}
-          onClose={closeDeleteConfirmationModal}
-        >
-          <DeleteConfirmationForm />
-        </Modal>
-      )}
+      <Modal id={MODAL_IDS.DELETE_CONFIRMATION} title="Eliminated Project">
+        <DeleteConfirmationForm />
+      </Modal>
 
-      {isMembersModalOpen && (
-        <Modal
-          title="Invite Member(s) to Project"
-          isOpen={true}
-          onClose={closeMembersModal}
-        >
-          <MembersForm />
-        </Modal>
-      )}
+      <Modal id={MODAL_IDS.MEMBERS} title="Invite Member(s) to Project">
+        <MembersForm />
+      </Modal>
     </>
   );
 }

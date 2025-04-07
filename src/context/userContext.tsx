@@ -27,29 +27,16 @@ export function UserContextProvider({
       setName(name);
       setEmail(email);
       setId(id);
-
     }
   }, []);
 
   const updateUser = useCallback(
-    ({
-      name,
-      id,
-      email,
-    }: {
-      name: string;
-      id: number;
-      email: string;
-    }) => {
+    ({ name, id, email }: { name: string; id: number; email: string }) => {
       setName(name);
       setEmail(email);
       setId(id);
 
-
-      localStorage.setItem(
-        "genomaUser",
-        JSON.stringify({ name, id, email })
-      );
+      localStorage.setItem("genomaUser", JSON.stringify({ name, id, email }));
     },
     []
   );
