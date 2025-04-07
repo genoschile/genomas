@@ -1,0 +1,170 @@
+"use client";
+
+import { useState } from "react";
+import { FaExclamationTriangle } from "react-icons/fa";
+import "./membersForm.css";
+
+export const MembersForm = () => {
+  const [emails, setEmails] = useState<string[]>([]);
+  const [isValid, setIsValid] = useState(false);
+
+  const projectName = "Project Name";
+
+  return (
+    <form className="members-form">
+      <search className="input-group">
+        <h2>{projectName}</h2>
+        <TextEmailAreaDetected
+          setEmails={setEmails}
+          emails={emails}
+          setIsValid={setIsValid}
+        />
+      </search>
+
+      <div className="seats-info">
+        <div>
+          <span>Guest seats remaining: 3</span>
+          <span>Member seats remaining:</span>
+        </div>
+        <div className="invite-buttons">
+          <button
+            disabled={!isValid}
+            type="button"
+            className="invite-button guest"
+          >
+            Invite as Guest
+          </button>
+          <button
+            disabled={!isValid}
+            type="button"
+            className="invite-button member"
+          >
+            Invite as Member
+          </button>
+        </div>
+      </div>
+
+      <PeopleWithAccess emails={emails} />
+
+      <div role="alert" className="warning">
+        <FaExclamationTriangle size={52} className="warning-icon" />
+        <p>
+          All content across the project is shared with all users of the
+          project. Please share responsibly. We will take down illegally
+          distributed content and terminate the associated workspace account for
+          copyright infringement.
+        </p>
+      </div>
+    </form>
+  );
+};
+
+export const PeopleWithAccess = ({ emails }: { emails: string[] }) => {
+  return (
+    <section className="people-with-access">
+      <h3>
+        <mark>People with access</mark>
+      </h3>
+      <ul>
+        {emails.map((email, index) => (
+          <PeopleWithAccessItem key={index} email={email} />
+        ))}
+      </ul>
+    </section>
+  );
+};
+
+export const PeopleWithAccessItem = ({ email }: { email: string }) => {
+  return (
+    <li>
+      <figure>
+        <img src="https://avatar.iran.liara.run/public" alt="" />
+        <figcaption>
+          <h4>{email}</h4>
+          <p>Member</p>
+        </figcaption>
+      </figure>
+      <PeopleWithAccessItemOptions />
+    </li>
+  );
+};
+
+export const PeopleWithAccessItemOptions = () => {
+  return (
+    <details>
+      <summary>hola</summary>
+      <ul>
+        <li>
+          <button>Remove access</button>
+        </li>
+        <li>
+          <button>Make admin</button>
+        </li>
+        <li>
+          <button>Send reminder</button>
+        </li>
+      </ul>
+    </details>
+  );
+};
+
+export const TextEmailAreaDetected = ({
+  emails,
+  setEmails,
+  setIsValid,
+}: {
+  emails: string[];
+  setEmails: (emails: string[]) => void;
+  setIsValid: (isValid: boolean) => void;
+}) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === "," || e.key === " ") {
+      e.preventDefault();
+      const email = inputValue.trim().replace(/,$/, "");
+      if (isValidEmail(email) && !emails.includes(email)) {
+        const updated = [...emails, email];
+        setEmails(updated);
+        setIsValid(true);
+        setInputValue("");
+      }
+    } else if (e.key === "Backspace" && inputValue === "") {
+      // Eliminar el último email si el input está vacío
+      const updated = emails.slice(0, -1);
+      setEmails(updated);
+      setIsValid(updated.length > 0);
+    }
+  };
+
+  const removeEmail = (email: string) => {
+    const updated = emails.filter((e) => e !== email);
+    setEmails(updated);
+    setIsValid(updated.length > 0);
+  };
+
+  const isValidEmail = (email: string) =>
+    /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(email);
+
+  return (
+    <div className="email-input-wrapper">
+      {emails.map((email) => (
+        <span key={email} className="email-chip">
+          {email}
+          <button onClick={() => removeEmail(email)}>&times;</button>
+        </span>
+      ))}
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        placeholder="Enter emails"
+      />
+    </div>
+  );
+};

@@ -11,9 +11,9 @@ import "./layout.css";
 import { Modal } from "@/components/modals/Modal";
 
 /* components */
-import { WorkspaceForm } from "@/components/sidebar/components/Workspaceform";
+import { WorkspaceForm } from "@/components/forms/Workspaceform";
 import { DeleteConfirmationForm } from "@/components/project/components/DeleteConfirmationForm";
-import { MembersForm } from "@/components/sidebar/components/MembersForm";
+import { MembersForm } from "@/components/forms/MembersForm";
 import FooterLanding from "@/components/footer/FooterLanding";
 import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
 import SidebarUser from "@/components/sidebar/SidebarUser";

@@ -2,12 +2,14 @@
   inset: 0;
   margin: auto;
   width: min(90%, max-content);
-  padding: 3rem 1.5rem;
+  padding-block: 2rem;
+  padding-inline: 1.5rem;
   border-radius: 10px;
   opacity: 0;
   transform: translateY(50%);
   transition: opacity 0.5s, transform 0.5s, display 0.5s, overlay 0.5s;
   transition-behavior: allow-discrete;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.4);
@@ -47,7 +49,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   width: 100%;
 
   & .modal__close-button {
