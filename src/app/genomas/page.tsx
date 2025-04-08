@@ -1,7 +1,7 @@
 import CardAnalysis from "@/components/cards/CardAnalysis";
 import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
 import "./page.css";
-import Footer from "@/components/footer/FooterLanding";
+import { FooterLanding } from "@/components/footer/FooterLanding";
 import { AuthFormLogo } from "@/components/forms/components/AuthFormLogo";
 
 const infoCard = [
@@ -51,7 +51,7 @@ export default function page() {
           </ul>
         </main>
       </div>
-      <Footer />
+      <FooterLanding />
     </>
   );
 }

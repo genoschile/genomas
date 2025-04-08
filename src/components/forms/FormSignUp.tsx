@@ -64,7 +64,9 @@ export function FormSignUp() {
                 className="auth-form__input"
               />
               {state?.error?.email && (
-                <p className="auth-form__error-message">{state.error.email[0]}</p>
+                <p className="auth-form__error-message">
+                  {state.error.email[0]}
+                </p>
               )}
             </div>
 
@@ -111,7 +113,11 @@ export function FormSignUp() {
                 Create Account
               </button>
 
-              <AuthLink text="Already in GENOMAS?" textPost="Login" href="/login" />
+              <AuthLink
+                text="Already in GENOMAS?"
+                textPost="Login"
+                href="/login"
+              />
             </div>
           </fieldset>
         </form>

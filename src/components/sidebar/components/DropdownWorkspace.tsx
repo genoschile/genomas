@@ -5,6 +5,7 @@ import { IoPersonOutline } from "react-icons/io5";
 import { MdOutlineWorkspaces } from "react-icons/md";
 import { FaTimes } from "react-icons/fa";
 import { useModalContext } from "@/hooks/useModalsProject";
+import { MODAL_IDS } from "@/lib/types/modal";
 
 export const DropdownWorkspace = ({
   isOpen,
@@ -15,7 +16,7 @@ export const DropdownWorkspace = ({
   setIsOpen: (value: boolean) => void;
   dropdownRef: React.RefObject<HTMLDivElement>;
 }) => {
-  const { openMembersModal, openWorkspaceModal } = useModalContext();
+  const { openModal } = useModalContext();
 
   if (!isOpen) return null;
 
@@ -45,7 +46,7 @@ export const DropdownWorkspace = ({
           <button
             role="menuitem"
             aria-label="Action create project"
-            onClick={openWorkspaceModal}
+            onClick={() => openModal(MODAL_IDS.WORKSPACE)}
           >
             <MdOutlineWorkspaces className="buttons-icons" />
             Create project
@@ -55,7 +56,7 @@ export const DropdownWorkspace = ({
           <button
             role="menuitem"
             aria-label="Action invite members"
-            onClick={openMembersModal}
+            onClick={() => openModal(MODAL_IDS.MEMBERS)}
           >
             <IoPersonOutline className="buttons-icons" />
             Invite member(s)

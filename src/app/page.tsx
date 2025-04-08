@@ -5,7 +5,7 @@ import Section3 from "@/components/sections/Section3";
 import Section4 from "@/components/sections/Section4";
 import "./page.css";
 import HeaderLanding from "@/components/headers/HeaderLanding";
-import Footer from "@/components/footer/FooterLanding";
+import { FooterLanding } from "@/components/footer/FooterLanding";
 
 const squares = Array.from({ length: 15 }, (_, i) => i);
 
@@ -59,7 +59,7 @@ export default function Home() {
         <Section4 />
         <TeamCarrousel />
       </div>
-      <Footer />
+      <FooterLanding />
     </>
   );
 }
