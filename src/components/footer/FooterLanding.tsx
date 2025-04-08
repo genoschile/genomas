@@ -24,7 +24,7 @@ const socialIcons = [
   },
 ];
 
-export default function Footer({ className = "" }: { className?: string }) {
+export function FooterLanding({ className = "" }: { className?: string }) {
   return (
     <footer className={`footer ${className}`} role="contentinfo">
       <div className="footer-container">

@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
 import "./membersForm.css";
+import { IoMail } from "react-icons/io5";
+import { createPortal } from "react-dom";
+import ReactDOM from "react-dom";
 
 export const MembersForm = () => {
   const [emails, setEmails] = useState<string[]>([]);
@@ -13,7 +16,9 @@ export const MembersForm = () => {
   return (
     <form className="members-form">
       <search className="input-group">
-        <h2>{projectName}</h2>
+        <h2>
+          <mark>{projectName}</mark>
+        </h2>
         <TextEmailAreaDetected
           setEmails={setEmails}
           emails={emails}
@@ -66,9 +71,15 @@ export const PeopleWithAccess = ({ emails }: { emails: string[] }) => {
         <mark>People with access</mark>
       </h3>
       <ul>
-        {emails.map((email, index) => (
-          <PeopleWithAccessItem key={index} email={email} />
-        ))}
+        {emails.length === 0 ? (
+          <li>
+            <p>YOU HAVE NOT INVITED ANYONE YET :D</p>
+          </li>
+        ) : (
+          emails.map((email, index) => (
+            <PeopleWithAccessItem key={index} email={email} />
+          ))
+        )}
       </ul>
     </section>
   );
@@ -89,22 +100,63 @@ export const PeopleWithAccessItem = ({ email }: { email: string }) => {
   );
 };
 
+const OPTIONS = ["Remove access", "Make admin", "Send reminder"];
+
 export const PeopleWithAccessItemOptions = () => {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("Remove access");
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+
+  useEffect(() => {
+    if (open && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+      });
+    }
+  }, [open]);
+
+  const dropdown = (
+    <ul
+      className="dropdown-menu-float"
+      style={{
+        position: "fixed",
+        top: position.top,
+        left: position.left,
+        zIndex: 100000,
+      }}
+    >
+      {OPTIONS.map((option) => (
+        <li key={option}>
+          <button
+            className={`dropdown-option ${selected === option ? "active" : ""}`}
+            onClick={() => {
+              setSelected(option);
+              setOpen(false);
+            }}
+          >
+            {option}
+            {selected === option && <span className="tick">✔</span>}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
-    <details>
-      <summary>hola</summary>
-      <ul>
-        <li>
-          <button>Remove access</button>
-        </li>
-        <li>
-          <button>Make admin</button>
-        </li>
-        <li>
-          <button>Send reminder</button>
-        </li>
-      </ul>
-    </details>
+    <div className="dropdown-details">
+      <button
+        className="dropdown-toggle"
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        ref={buttonRef} // Asocia la referencia al botón
+      >
+        {selected}
+      </button>
+      {open && createPortal(dropdown, document.body)}
+    </div>
   );
 };
 
@@ -152,19 +204,26 @@ export const TextEmailAreaDetected = ({
 
   return (
     <div className="email-input-wrapper">
-      {emails.map((email) => (
-        <span key={email} className="email-chip">
-          {email}
-          <button onClick={() => removeEmail(email)}>&times;</button>
-        </span>
-      ))}
-      <input
-        type="text"
-        value={inputValue}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        placeholder="Enter emails"
-      />
+      <div>
+        {emails.map((email) => (
+          <span key={email} className="email-chip">
+            {email}
+            <button onClick={() => removeEmail(email)}>&times;</button>
+          </span>
+        ))}
+      </div>
+      <fieldset>
+        <legend aria-label="Ingresá los correos electrónicos">
+          <IoMail style={{ marginRight: "0.5rem" }} aria-hidden="true" />
+        </legend>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          placeholder="ej: juan@mail.com, ana@mail.com"
+        />
+      </fieldset>
     </div>
   );
 };

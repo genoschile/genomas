@@ -43,7 +43,7 @@ const sidebarItems = [
   },
 ];
 
-const SidebarUser = ({ className = "" }: { className?: string }) => {
+export const SidebarUser = ({ className = "" }: { className?: string }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const pathname = usePathname();
 
@@ -88,4 +88,3 @@ const SidebarUser = ({ className = "" }: { className?: string }) => {
   );
 };
 
-export default SidebarUser;

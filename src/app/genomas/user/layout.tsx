@@ -8,18 +8,12 @@ import { ModalProvider } from "@/context/ModalsProject";
 
 /* styles */
 import "./layout.css";
-import { Modal } from "@/components/modals/Modal";
 
 /* components */
-import { WorkspaceForm } from "@/components/forms/Workspaceform";
-import { DeleteConfirmationForm } from "@/components/project/components/DeleteConfirmationForm";
-import { MembersForm } from "@/components/forms/MembersForm";
-import FooterLanding from "@/components/footer/FooterLanding";
+import { FooterLanding } from "@/components/footer/FooterLanding";
 import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
-import SidebarUser from "@/components/sidebar/SidebarUser";
-
-/* types */
-import { MODAL_IDS } from "@/lib/types/modal";
+import { SidebarUser } from "@/components/sidebar/SidebarUser";
+import { ModalContainer } from "@/components/modals/ModalContainer";
 
 export default function userLayout({
   children,
@@ -31,7 +25,7 @@ export default function userLayout({
       <UserContextProvider>
         <ModalProvider>
           <ProjectProvider>
-            <ModalsContainer />
+            <ModalContainer />
             <div className="userWorkspace--container">
               <HeaderUserWorkspace className="wu-header" />
               <SidebarUser className="wu-aside" />
@@ -49,23 +43,5 @@ export default function userLayout({
         </ModalProvider>
       </UserContextProvider>
     </AuthContextProvider>
-  );
-}
-
-function ModalsContainer() {
-  return (
-    <>
-      <Modal id={MODAL_IDS.WORKSPACE} title="Create new Project">
-        <WorkspaceForm />
-      </Modal>
-
-      <Modal id={MODAL_IDS.DELETE_CONFIRMATION} title="Eliminated Project">
-        <DeleteConfirmationForm />
-      </Modal>
-
-      <Modal id={MODAL_IDS.MEMBERS} title="Invite Member(s) to Project">
-        <MembersForm />
-      </Modal>
-    </>
   );
 }

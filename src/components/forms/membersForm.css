@@ -1,5 +1,5 @@
 .members-form {
-  max-width: 700px;
+  max-width: 600px;
   max-block-size: 600px;
   min-width: 400px;
   inline-size: auto;
@@ -16,42 +16,103 @@
   margin-bottom: 20px;
 
   & h2 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
     color: #333;
+
+    & mark {
+      display: inline-block;
+      background: var(--secondary-color);
+      padding-inline: 10px;
+      border-radius: 2px;
+      color: #fff;
+      /* mask: repeating-conic-gradient(from 75deg at 30px 50%,#0000,#000 1deg 29deg,#0000 30deg 180deg) -30px 50%/100% 16.08px;     */
+    }
   }
 
-  & div {
+  & > div {
     display: flex;
     flex-wrap: wrap;
     border: 1px solid #ccc;
     padding: 6px;
     border-radius: 6px;
-    gap: 6px;
     align-items: center;
+    block-size: 80px;
+    max-block-size: 80px;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    flex-flow: column nowrap;
+    inline-size: 100%;
 
-    & span {
-      display: flex;
-      align-items: center;
-      background: #e0f0ff;
-      border-radius: 9999px;
-      padding: 4px 8px;
-      font-size: 0.9rem;
+    & > fieldset {
+      flex: 1;
+      border-radius: 6px;
+      position: relative;
+      border: none;
+      margin-top: 10px;
 
-      & button {
-        background: none;
-        border: none;
-        font-size: 1rem;
-        margin-left: 6px;
-        cursor: pointer;
+      & > legend {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        position: absolute;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        color: #555;
       }
-
-      & input {
+      & > input {
         border: none;
         outline: none;
         flex: 1;
         min-width: 120px;
+        inline-size: 100%;
+        block-size: 100%;
+        font-size: 1em;
+        margin-inline: 20px;
+      }
+    }
+
+    & > div {
+      inline-size: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    & span {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.1);
+      color: black;
+      border-radius: 9999px;
+      padding: 4px 8px;
+      inline-size: fit-content;
+      font-size: 0.9em;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      & button {
+        background: transparent;
+        border: none;
+        outline: 1px solid transparent;
         font-size: 1rem;
+        margin-left: 6px;
+        cursor: pointer;
+        color: inherit;
+
+        &:hover,
+        &:focus {
+          background-color: rgba(0, 0, 0, 0.1);
+          transform: scale(0.9);
+          outline-color: white;
+        }
       }
     }
   }
@@ -117,7 +178,6 @@
 }
 
 .warning {
-  margin-top: 10px;
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
@@ -156,18 +216,21 @@
     color: #333;
 
     & mark {
-      background: linear-gradient(transparent 30%, #fff176 60%);
-      padding: 0 2px;
+      display: inline-block;
+      background: var(--secondary-color);
+      padding-inline: 10px;
       border-radius: 2px;
+      color: #fff;
+      /* mask: repeating-conic-gradient(from 75deg at 30px 50%,#0000,#000 1deg 29deg,#0000 30deg 180deg) -30px 50%/100% 16.08px;     */
     }
   }
 
   & ul {
     max-block-size: 140px;
-    min-block-size: 70px;
-    block-size: auto;
+    block-size: 140px;
     overflow-y: auto;
     list-style: none;
+    overflow-y: auto;
   }
 
   & figure {
@@ -221,6 +284,77 @@
         & span {
           font-size: 0.8rem;
           color: #666;
+        }
+      }
+    }
+  }
+}
+
+.dropdown-details {
+  position: relative;
+  display: grid;
+  place-content: center;
+
+  & .dropdown-toggle {
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    z-index: auto;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  & .dropdown-menu-float {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    list-style: none;
+    padding: 0;
+    width: max-content;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  & .dropdown-menu {
+    position: absolute;
+    top: calc(100%);
+    left: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    list-style: none;
+    padding: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 150px;
+
+    & li {
+      & .dropdown-option {
+        width: 100%;
+        padding: 8px 12px;
+        background: none;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:hover {
+          background-color: #f9f9f9;
+        }
+
+        &.active {
+          font-weight: bold;
+          background-color: #e0f7fa;
+        }
+
+        & .tick {
+          margin-left: 10px;
+          color: green;
         }
       }
     }
