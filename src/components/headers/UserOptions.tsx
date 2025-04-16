@@ -35,17 +35,20 @@ export default function UserOptions() {
 
   return (
     <div className="user-options">
+      <I18nButton />
       <WelcomeUser />
       <div className="user-options__dropdown-container">
         <button
-          className={`user-options__avatar-button ${dropdownVisible ? "active" : ""}`}
+          className={`user-options__avatar-button ${
+            dropdownVisible ? "active" : ""
+          }`}
           aria-haspopup="true"
           aria-expanded={dropdownVisible}
           onClick={toggleDropdown}
           aria-label="Menú de usuario"
         >
           <img src={srcImg} alt="User" className="user-options__avatar" />
-          <FaChevronRight className={`${dropdownVisible ?  "active" : ""}`} />
+          <FaChevronRight className={`${dropdownVisible ? "active" : ""}`} />
         </button>
         {dropdownVisible && (
           <DropdownMenu
@@ -58,3 +61,17 @@ export default function UserOptions() {
     </div>
   );
 }
+
+import "./i18nButton.css";
+
+export const I18nButton = () => {
+  return (
+    <div className="select-dropdown">
+      <select>
+        <option value="Option 1">First Option</option>
+        <option value="Option 2">2nd Option</option>
+        <option value="Option 3">Option Number 3</option>
+      </select>
+    </div>
+  );
+};
