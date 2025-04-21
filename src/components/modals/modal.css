@@ -10,7 +10,6 @@
   transition: opacity 0.5s, transform 0.5s, display 0.5s, overlay 0.5s;
   transition-behavior: allow-discrete;
   border: 1px solid rgba(0, 0, 0, 0.2);
-
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.4);
     transform: translate(100%);

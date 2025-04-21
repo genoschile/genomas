@@ -1,11 +1,13 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "@lib/actions/session";
+import { Roles } from "@/lib/types/global";
 
 export default async function middleware(req: NextRequest) {
   const res = NextResponse.next();
+  const currentPath = req.nextUrl.pathname;
 
-  // Lista de orígenes permitidos (incluye localhost para desarrollo)
+  // 1. Orígenes permitidos
   const allowedOrigins = ["http://localhost:3000", "https://varandcode.com"];
   const origin = req.headers.get("origin") || "";
 
@@ -22,35 +24,58 @@ export default async function middleware(req: NextRequest) {
     );
   }
 
-  // Manejar preflight (OPTIONS request)
-  if (req.method === "OPTIONS" && req.nextUrl.pathname.startsWith("/api/")) {
+  // 2. Manejar preflight (OPTIONS request)
+  if (req.method === "OPTIONS" && currentPath.startsWith("/api/")) {
     return new NextResponse(null, { status: 200, headers: res.headers });
   }
 
-  // Proteger rutas específicas
-  const protectedRoutes = ["/admin", "/user"];
-  const currentPath = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(currentPath);
+  // 3. Rutas públicas (no requieren autenticación)
+  const publicRoutes = ["/", "/login", "/register", "/about"];
+  const isPublicRoute = publicRoutes.some((route) =>
+    currentPath.startsWith(route)
+  );
 
-  if (isProtectedRoute) {
-    const cookie = await cookies();
-    const isSession = cookie.get("session")?.value;
+  if (isPublicRoute) {
+    return res; // no hacer nada si es pública
+  }
 
-    if (!isSession) {
+  // 4. Rutas protegidas por prefijo + rol
+  const roleProtectedPrefixes: { prefix: string; role: Roles }[] = [
+    { prefix: "/admin", role: "admin" },
+    { prefix: "/user", role: "user" },
+  ];
+
+  const matchingRoute = roleProtectedPrefixes.find(({ prefix }) =>
+    currentPath.startsWith(prefix)
+  );
+
+  if (matchingRoute) {
+    const cookieStore = await cookies();
+    const sessionCookie = cookieStore.get("session")?.value;
+  
+    if (!sessionCookie) {
       return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
+  
+    const session = await decrypt(sessionCookie);
 
-    const session = await decrypt(isSession);
-
-    if (!session?.userId) {
+    console.log(session);
+  
+    // Validar que exista session, userId y role
+    if (!session || !session.userId || !session.metadata?.role) {
       return NextResponse.redirect(new URL("/login", req.nextUrl));
+    }
+  
+    // Validar que el rol coincida con el requerido por la ruta
+    if (session.metadata.role !== matchingRoute.role) {
+      return NextResponse.redirect(new URL("/unauthorized", req.nextUrl));
     }
   }
 
   return res;
 }
 
-// Aplicar middleware a todas las rutas excepto archivos estáticos
+// 5. Aplicar a todo excepto archivos estáticos
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
