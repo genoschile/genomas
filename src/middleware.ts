@@ -8,7 +8,7 @@ export default async function middleware(req: NextRequest) {
   const currentPath = req.nextUrl.pathname;
 
   // 1. Orígenes permitidos
-  const allowedOrigins = ["http://localhost:3000", "https://varandcode.com"];
+  const allowedOrigins = ["http://localhost:3002", "https://varandcode.com"];
   const origin = req.headers.get("origin") || "";
 
   if (allowedOrigins.includes(origin)) {
