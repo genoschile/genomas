@@ -5,9 +5,10 @@ import "./carrousel.css";
 
 const Carousel = () => {
   const slides = [
-    { id: 1, src: "/images/genomas.png" },
-    { id: 2, src: "https://via.placeholder.com/800x400?text=Slide+2" },
-    { id: 3, src: "https://via.placeholder.com/800x400?text=Slide+3" },
+    { id: 1, src: "/images/carrousel/genomas.svg" },
+    { id: 2, src: "/images/carrousel/car1.svg" },
+    { id: 3, src: "/images/carrousel/car2.svg" },
+    { id: 4, src: "/images/carrousel/car3.svg" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

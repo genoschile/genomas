@@ -4,6 +4,30 @@ import { useEffect, useState } from "react";
 import "./HeaderLanding.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Logo from "@components/logo/Logo";
+import Link from "next/link";
+
+const links = [
+  {
+    label: "Company",
+    href: "#",
+    isNextLink: false,
+  },
+  {
+    label: "Services",
+    href: "#",
+    isNextLink: false,
+  },
+  {
+    label: "Resources",
+    href: "#",
+    isNextLink: false,
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+    isNextLink: true,
+  },
+];
 
 const Header = () => {
   const [scrolling, setScrolling] = useState(false);
@@ -55,15 +79,17 @@ const Header = () => {
         </label>
 
         <nav className="header-landing__nav">
-          <a href="#" className="header-landing__link">
-            Company
-          </a>
-          <a href="#" className="header-landing__link">
-            Services
-          </a>
-          <a href="#" className="header-landing__link">
-            Resources
-          </a>
+          {links.map(({ label, href, isNextLink }, index) =>
+            isNextLink ? (
+              <Link key={index} href={href} className="header-landing__link">
+                {label}
+              </Link>
+            ) : (
+              <a key={index} href={href} className="header-landing__link">
+                {label}
+              </a>
+            )
+          )}
           <div className="header-landing__auth">
             <ButtonPrimary
               link="/login"

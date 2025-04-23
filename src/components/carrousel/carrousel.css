@@ -7,78 +7,83 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* Slides */
-.carousel__slides {
-  position: relative;
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
-}
-
-.carousel__slide {
-  position: absolute;
-  inset: 0;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
-  height: 100%;
-}
-
-.carousel__image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Botones de navegación */
-.carousel__button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.carousel__button--prev {
-  left: 10px;
-}
-
-.carousel__button--next {
-  right: 10px;
-}
-
-.carousel__button:hover {
-  background-color: #555;
-}
-
-/* Puntos de navegación */
-.carousel__dots {
-  display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
 
-.carousel__dot {
-  width: 12px;
-  height: 12px;
-  background-color: #ccc;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-}
+  & img {
+    max-inline-size: 100%;
+  }
 
-.carousel__dot--active {
-  background-color: #007bff;
-}
+  /* Slides */
+  & .carousel__slides {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
 
-.carousel__dot:hover {
-  background-color: #888;
+    & .carousel__slide {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.5s ease-in-out;
+      width: 100%;
+      height: 100%;
+    }
+
+    & .carousel__image {
+      inline-size: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  /* Puntos de navegación */
+  & .carousel__dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1rem;
+
+    .carousel__dot {
+      width: 14px;
+      height: 14px;
+      background-color: #ccc;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      &.carousel__dot--active {
+        background-color: #007bff;
+      }
+
+      &:hover {
+        background-color: #888;
+      }
+    }
+  }
+
+  /* Botones de navegación */
+  & .carousel__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #555;
+    }
+
+    &.carousel__button--prev {
+      left: 10px;
+    }
+
+    &.carousel__button--next {
+      right: 10px;
+    }
+  }
 }
