@@ -4,8 +4,15 @@ import { decrypt } from "@lib/actions/session";
 import { Roles } from "@/lib/types/global";
 
 export default async function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname;
+
+  // Extraer el lang
+  const segments = pathname.split("/");
+
   const res = NextResponse.next();
-  const currentPath = req.nextUrl.pathname;
+  // const currentPath = req.nextUrl.pathname;
+
+  const currentPath = "/" + segments.slice(1).join("/");
 
   // 1. Orígenes permitidos
   const allowedOrigins = ["http://localhost:3002", "https://varandcode.com"];
@@ -52,20 +59,20 @@ export default async function middleware(req: NextRequest) {
   if (matchingRoute) {
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get("session")?.value;
-  
+
     if (!sessionCookie) {
       return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
-  
+
     const session = await decrypt(sessionCookie);
 
     console.log(session);
-  
+
     // Validar que exista session, userId y role
     if (!session || !session.userId || !session.metadata?.role) {
       return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
-  
+
     // Validar que el rol coincida con el requerido por la ruta
     if (session.metadata.role !== matchingRoute.role) {
       return NextResponse.redirect(new URL("/unauthorized", req.nextUrl));

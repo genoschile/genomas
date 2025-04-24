@@ -69,20 +69,20 @@ import "./i18nButton.css";
 
 export const I18nButton = () => {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname(); 
+  const segments = pathname.split("/").filter(Boolean); 
 
-  const currentLang = pathname.split("/")[1]; 
+  const currentLang = segments[0];
+  const restPath = segments.slice(1).join("/"); 
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLang = e.target.value;
-
-    const newPath = pathname.replace(`/${currentLang}`, `/${newLang}`);
-    router.push(newPath);
+    router.push(`/${newLang}/${restPath}`);
   };
 
   return (
     <div className="select-dropdown">
-      <select value={currentLang} onChange={handleChange}>
+      <select onChange={handleChange} value={currentLang}>
         <option value="es">Español</option>
         <option value="en">English</option>
       </select>

@@ -40,6 +40,7 @@ export default async function RootLayout({
   params: Promise<{ lang: Language }>;
 }) {
   const { lang } = await params;
+  
   const { t } = await api.fetch(lang)
 
   return (
