@@ -1,4 +1,4 @@
-import type { JWTPayload } from "jose"; // asegúrate de importar esto donde lo uses
+import type { JWTPayload } from "jose"; 
 
 export type Roles = "admin" | "user";
 

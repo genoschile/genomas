@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
     'https://www.genomas.bnjm.site'
   ],
   async rewrites() {
+    console.log('rewrites() its working.');
     return [
       {
         source: "/:path*",

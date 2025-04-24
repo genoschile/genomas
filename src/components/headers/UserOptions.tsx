@@ -1,4 +1,6 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
+
 import { DropdownMenu } from "./components/dropdowns/DropdownUser";
 import { WelcomeUser } from "./components/WelcomeUser";
 import "./userOptions.css";
@@ -62,15 +64,27 @@ export default function UserOptions() {
   );
 }
 
+import { useRouter, usePathname } from "next/navigation";
 import "./i18nButton.css";
 
 export const I18nButton = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const currentLang = pathname.split("/")[1]; 
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLang = e.target.value;
+
+    const newPath = pathname.replace(`/${currentLang}`, `/${newLang}`);
+    router.push(newPath);
+  };
+
   return (
     <div className="select-dropdown">
-      <select>
-        <option value="Option 1">First Option</option>
-        <option value="Option 2">2nd Option</option>
-        <option value="Option 3">Option Number 3</option>
+      <select value={currentLang} onChange={handleChange}>
+        <option value="es">Español</option>
+        <option value="en">English</option>
       </select>
     </div>
   );
