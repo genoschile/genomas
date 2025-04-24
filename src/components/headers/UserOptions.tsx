@@ -5,6 +5,7 @@ import { DropdownMenu } from "./components/dropdowns/DropdownUser";
 import { WelcomeUser } from "./components/WelcomeUser";
 import "./userOptions.css";
 import { FaChevronRight } from "react-icons/fa";
+import { I18nButton } from "./I18nButton";
 
 export default function UserOptions() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -63,29 +64,3 @@ export default function UserOptions() {
     </div>
   );
 }
-
-import { useRouter, usePathname } from "next/navigation";
-import "./i18nButton.css";
-
-export const I18nButton = () => {
-  const router = useRouter();
-  const pathname = usePathname(); 
-  const segments = pathname.split("/").filter(Boolean); 
-
-  const currentLang = segments[0];
-  const restPath = segments.slice(1).join("/"); 
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLang = e.target.value;
-    router.push(`/${newLang}/${restPath}`);
-  };
-
-  return (
-    <div className="select-dropdown">
-      <select onChange={handleChange} value={currentLang}>
-        <option value="es">Español</option>
-        <option value="en">English</option>
-      </select>
-    </div>
-  );
-};

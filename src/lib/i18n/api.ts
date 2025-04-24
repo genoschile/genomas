@@ -1,4 +1,4 @@
-import type { Language, TranslationKey, TranslationParams } from "./layout";
+import { Language, TranslationKey, TranslationParams } from "./i18n.types";
 
 export const createTranslator = (dictonary: Record<string, string>) => {
   return function t(key: TranslationKey, params?: TranslationParams): string {

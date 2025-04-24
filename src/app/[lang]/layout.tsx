@@ -11,8 +11,9 @@ import { inter } from "@/lib/fonts/fonts";
 /* components */
 import { ToastContainer } from "react-toastify";
 import { unstable_ViewTransition as ViewTransition } from "react";
-import { I18nServerProvider } from "./I18nServerProvider";
-import api from "./api";
+import { I18nServerProvider } from "../../context/I18nServerProvider";
+import api from "@/lib/i18n/api";
+import { Language } from "@/lib/i18n/i18n.types";
 
 export const metadata: Metadata = {
   title: "Genomas",
@@ -27,10 +28,6 @@ export async function generateStaticParams() {
     },
   ];
 }
-
-export type Language = "es" | "en";
-export type TranslationKey = keyof typeof import("./es.json");
-export type TranslationParams = Record<string, string | number>;
 
 export default async function RootLayout({
   children,
@@ -49,7 +46,6 @@ export default async function RootLayout({
         <I18nServerProvider lang={`${lang}`}>
           <ViewTransition name="page">{children}</ViewTransition>
           <ToastContainer position="top-right" autoClose={5000} />
-          {t("layout.copyright")}
         </I18nServerProvider>
       </body>
     </html>

@@ -1,5 +1,5 @@
-import { Language } from "./layout";
-import api from "./api";
+import { Language } from "@/lib/i18n/i18n.types";
+import api from "@/lib/i18n/api";
 import { I18nClientProvider } from "./I18nClientProvider";
 
 export async function I18nServerProvider({
@@ -12,6 +12,6 @@ export async function I18nServerProvider({
   const { dictionary } = await api.fetch(lang);
 
   return (
-    <I18nClientProvider dictionary={dictionary}>{children}</I18nClientProvider>
+    <I18nClientProvider initialDictionary={dictionary}>{children}</I18nClientProvider>
   );
 }

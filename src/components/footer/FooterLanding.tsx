@@ -8,6 +8,7 @@ import { FaLinkedin } from "react-icons/fa";
 
 /* components */
 import ScrollToTopButton from "./ScrollToTopButton";
+import { useTranslations } from "@/context/I18nClientProvider";
 
 const socialIcons = [
   {
@@ -25,6 +26,9 @@ const socialIcons = [
 ];
 
 export function FooterLanding({ className = "" }: { className?: string }) {
+
+  const { t } = useTranslations()
+
   return (
     <footer className={`footer ${className}`} role="contentinfo">
       <div className="footer-container">
@@ -47,7 +51,7 @@ export function FooterLanding({ className = "" }: { className?: string }) {
 
         <hr className="footer-break" />
 
-        <p className="copyright">© 2025 Genomas - Some Rights Reserved</p>
+        <p className="copyright">© 2025 Genomas - {t("layout.copyright")}</p>
 
         <ScrollToTopButton />
       </div>
