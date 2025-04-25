@@ -1,0 +1,53 @@
+.contact--page {
+  display: block;
+  min-block-size: 100vh;
+  block-size: 100vh;
+
+  & > article {
+    margin: 0 auto;
+    inline-size: 1200px;
+    padding-block: 1rem;
+    display: grid;
+    gap: 10px;
+
+    &:first-child {
+      & figure {
+        padding: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        margin: 0 auto;
+        block-size: 400px;
+        inline-size: 100%;
+        aspect-ratio: 1/1;
+        overflow: hidden;
+        outline-offset: 2px;
+        outline: 2px solid rgba(0, 0, 0, 0.2);
+
+        & figcaption {
+          display: none;
+        }
+
+        & img {
+          display: block;
+          max-inline-size: 100%;
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+        }
+      }
+    }
+
+    &:nth-child(2) {
+      & h1 {
+        font-size: 2rem;
+        margin: 0;
+        text-align: center;
+      }
+
+      & p {
+        text-align: center;
+        margin: 0;
+      }
+    }
+  }
+}
