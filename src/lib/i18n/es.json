@@ -1,9 +1,10 @@
 {
-    "layout.copyright": "Todos los derechos reservados",
-    "genomas.card.0.title": "Análisis de Variantes de Cáncer",
-    "genomas.card.0.description": "Anotación con OncoKB y conocimientos impulsados por IA",
-    "genomas.card.1.title": "Análisis de Variantes Germinales",
-    "genomas.card.1.description": "Farmacogenómica e ideas impulsadas por IA",
-    "genomas.card.2.title": "Análisis de Variantes Bla",
-    "genomas.card.2.description": "Próximos análisis en pipeline..."
+  "layout.copyright": "Todos los derechos reservados",
+
+  "genomas.card.0.title": "Análisis de Variantes de Cáncer",
+  "genomas.card.0.description": "Anotación con OncoKB y conocimientos impulsados por IA",
+  "genomas.card.1.title": "Análisis de Variantes Germinales",
+  "genomas.card.1.description": "Farmacogenómica e ideas impulsadas por IA",
+  "genomas.card.2.title": "Análisis de Variantes Bla",
+  "genomas.card.2.description": "Próximos análisis en pipeline..."
 }

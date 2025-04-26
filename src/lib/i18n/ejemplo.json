@@ -1,0 +1,34 @@
+{
+  "common": {
+    "header": {
+      "title": "Bienvenido a nuestra aplicación",
+      "subtitle": "La mejor aplicación para tus necesidades"
+    },
+    "footer": {
+      "copyright": "Todos los derechos reservados",
+      "terms": "Términos de uso",
+      "privacy": "Política de privacidad"
+    }
+  },
+  "home": {
+    "banner": {
+      "title": "Explora nuestras funcionalidades",
+      "subtitle": "Tu solución perfecta para todo lo que necesitas"
+    },
+    "cta": {
+      "button": "Comienza ahora"
+    }
+  },
+  "about": {
+    "title": "Sobre nosotros",
+    "description": "Somos una empresa comprometida con la innovación."
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "description": "Si tienes alguna pregunta, no dudes en contactarnos."
+  },
+  "terms": {
+    "title": "Términos de uso",
+    "content": "Estos son los términos y condiciones de uso de nuestra aplicación."
+  }
+}
