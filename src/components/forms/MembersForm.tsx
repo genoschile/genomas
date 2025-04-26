@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
 import "./membersForm.css";
 import { IoMail } from "react-icons/io5";
-import { createPortal } from "react-dom";
-import ReactDOM from "react-dom";
 
 export const MembersForm = () => {
   const [emails, setEmails] = useState<string[]>([]);
@@ -103,59 +101,30 @@ export const PeopleWithAccessItem = ({ email }: { email: string }) => {
 const OPTIONS = ["Remove access", "Make admin", "Send reminder"];
 
 export const PeopleWithAccessItemOptions = () => {
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState("Remove access");
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [selectedValue, setSelectedValue] = useState<string>(OPTIONS[0]);
 
-  useEffect(() => {
-    if (open && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setPosition({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
-      });
-    }
-  }, [open]);
-
-  const dropdown = (
-    <ul
-      className="dropdown-menu-float"
-      style={{
-        position: "fixed",
-        top: position.top,
-        left: position.left,
-        zIndex: 100000,
-      }}
-    >
-      {OPTIONS.map((option) => (
-        <li key={option}>
-          <button
-            className={`dropdown-option ${selected === option ? "active" : ""}`}
-            onClick={() => {
-              setSelected(option);
-              setOpen(false);
-            }}
-          >
-            {option}
-            {selected === option && <span className="tick">✔</span>}
-          </button>
-        </li>
-      ))}
-    </ul>
-  );
+  const handleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(event.target.value);
+  }, []);
 
   return (
     <div className="dropdown-details">
-      <button
-        className="dropdown-toggle"
-        type="button"
-        onClick={() => setOpen((prev) => !prev)}
-        ref={buttonRef} // Asocia la referencia al botón
+      <select
+        className="dropdown-select"
+        value={selectedValue}
+        onChange={handleChange}
       >
-        {selected}
-      </button>
-      {open && createPortal(dropdown, document.body)}
+        {OPTIONS.map((option) => (
+          <option
+            key={option}
+            value={option}
+            className={`dropdown-option ${selectedValue === option ? "active" : ""}`}
+          >
+            {option}
+            {selectedValue === option && <span className="tick">✔</span>}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
