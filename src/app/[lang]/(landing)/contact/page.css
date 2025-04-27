@@ -42,13 +42,20 @@
 .our-story {
   > header {
     block-size: fit-content;
+    margin-bottom: 0.5rem;
 
     h1 {
-
+      font-size: 3.75em;
+      font-weight: 900;
+      color: #333;
+      text-align: center;
+      margin: 0;
     }
 
     p {
-
+      font-size: 1.6em;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.6);
     }
   }
 
@@ -58,12 +65,12 @@
     max-inline-size: 1200px;
     margin: 0px auto;
     list-style: none;
-  
+
     img {
       max-inline-size: 100%;
       block-size: auto;
     }
-  
+
     &::after {
       content: "";
       position: absolute;
@@ -74,28 +81,50 @@
       margin-left: -3px;
       z-index: -1;
       background-color: #333;
-  
+
       animation: moveline 2s ease-in-out forwards;
     }
-  
+
     & > li {
       padding: 10px 50px;
       position: relative;
       inline-size: 50%;
       display: flex;
       flex-direction: column;
-  
+
       animation: movedown 1s linear forwards;
       opacity: 0;
-  
-      & img {
+
+      & figure {
         position: absolute;
-        width: 40px;
+        width: 45px;
         border-radius: 50%;
         top: 32px;
         z-index: 10;
+
+        & svg {
+          width: 90%;
+          height: 90%;
+          border-radius: 50%;
+          background: var(--bg-linear-gradient-full-hover);
+          padding: 0.1rem;
+          fill: rgb(255, 255, 255);
+
+          animation: movedown 1s linear forwards;
+          opacity: 0;
+
+          outline: 1px solid rgba(0, 0, 0, 0.2);
+          outline-offset: 2px;
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            transform: scale(1.1);
+            outline: 2px solid rgba(0, 0, 0, 0.4);
+            outline-offset: 0px;
+          }
+        }
       }
-  
+
       & .text-box {
         border: 2px solid rgba(0, 0, 0, 0.4);
         padding: 20px 30px;
@@ -104,7 +133,7 @@
         border-radius: 0.6rem;
         font-size: 1rem;
         inline-size: fit-content;
-  
+
         & span {
           position: absolute;
           height: 0;
@@ -116,14 +145,14 @@
         }
       }
     }
-  
+
     & > *:nth-child(even) {
       left: 0;
-  
-      & img {
+
+      & figure {
         right: -20px;
       }
-  
+
       .text-box {
         align-self: flex-end;
         & span {
@@ -132,14 +161,14 @@
         }
       }
     }
-  
+
     & > *:nth-child(odd) {
       left: 50%;
-  
-      & img {
+
+      & figure {
         left: -20px;
       }
-  
+
       .text-box {
         align-self: flex-start;
         & span {
@@ -150,8 +179,6 @@
     }
   }
 }
-
-
 
 @keyframes moveline {
   0% {
