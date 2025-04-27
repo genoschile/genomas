@@ -14,13 +14,11 @@
     &:first-child {
       & figure {
         padding: 10px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        max-width: 200px;
+        max-width: 250px;
         block-size: auto;
         inline-size: 100%;
         aspect-ratio: 1/1;
-        outline-offset: 2px;
-        outline: 2px solid rgba(0, 0, 0, 0.2);
+
 
         & figcaption {
           display: none;
@@ -32,109 +30,15 @@
           width: 100%;
           height: auto;
           object-fit: cover;
-        }
-      }
-    }
-  }
-}
-
-.about-us {
-  & .container-- {
-    inline-size: 100%;
-
-    & .faq-container {
-      inline-size: 960px;
-      max-width: calc(100% - 20px);
-      margin: 0 auto;
-      background-color: red;
-      margin-block: 1rem;
-
-      > .list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        & .item {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 15px;
-          gap: 20px;
-          overflow: hidden;
-
-          border: 1px solid transparent;
-          border-bottom-color: rgba(0, 0, 0, 0.6);
-
-          &:nth-child(1) {
-            border-top-color: rgba(0, 0, 0, 0.6);
-          }
-          
-          &.show {
-            background-color: transparent;
-            box-shadow: inset rgba(0, 0, 0, 0.05) 0 0 0 2px;
-
-            > .content {
-              opacity: 1;
-            }
-          }
-
-          & .title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            & h4 {
-              font-size: 18px;
-              line-height: 30px;
-              font-weight: 500;
-            }
-
-            & button {
-              padding: 5px;
-              border: none;
-              outline: 1px solid transparent;
-              background-color: transparent;
-              border-radius: 100%;
-              transition: background-color 0.5s ease;
-              aspect-ratio: 1/1;
-              cursor: pointer;
-
-              &:hover {
-                background-color: rgba(0, 0, 0, 0.09);
-              
-                & svg {
-                  fill: white
-                }
-              
-              }
-
-              & svg {
-                width: 30px;
-                display: block;
-                transform: rotate(45deg);
-                transition: 0.5 ease;
-                fill: black;
-                transition: fill 0.5s ease;
-              }
-            }
-          }
-
-          & .content {
-            opacity: 0;
-            font-size: 19px;
-            line-height: 30px;
-            font-weight: 400;
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.5s ease, opacity 0.5s ease;
-          }
+          mask: linear-gradient(to bottom, #000 60%, transparent);
         }
       }
 
       > .header {
         text-align: center;
         padding: 0px 10px;
-        margin-bottom: 75px;
+        margin-bottom: 50px;
+        margin-block-start: -3.5rem;
 
         & h1 {
           font-size: 48px;
@@ -150,6 +54,104 @@
           font-weight: 400;
           color: #5c5c5c;
           margin: 0 auto;
+        }
+      }
+    }
+  }
+}
+
+.about-us {
+  & .container-- {
+    inline-size: 100%;
+
+    > .list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      inline-size: 960px;
+      max-width: calc(100% - 20px);
+      margin: 0 auto;
+
+      & .item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 15px;
+        gap: 20px;
+        overflow: hidden;
+
+        border: 1px solid transparent;
+        border-bottom-color: rgba(0, 0, 0, 0.6);
+
+        transition: background-color 0.5s ease, border-color 0.5s ease;
+
+        &:nth-child(1) {
+          border-top-color: rgba(0, 0, 0, 0.6);
+        }
+
+        &.show {
+          background: var(--bg-linear-gradient-semifull-hover);
+          /* box-shadow: inset rgba(0, 0, 0, 0.05) 0 0 0 2px; */
+
+          > .content {
+            opacity: 1;
+          }
+        }
+
+        & .title {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          & h4 {
+            font-size: 18px;
+            line-height: 30px;
+            font-weight: 500;
+          }
+
+          & button {
+            padding: 5px;
+            border: none;
+            outline: 1px solid transparent;
+            background-color: transparent;
+            border-radius: 100%;
+            transition: background-color 0.5s ease;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+
+            &.rotate {
+              & svg {
+                transform: rotate(0deg);
+              }
+            }
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.09);
+
+              & svg {
+                fill: black;
+              }
+            }
+
+            & svg {
+              width: 30px;
+              display: block;
+              transform: rotate(180deg);
+              transition: 0.5 ease;
+              fill: black;
+              transition: fill 0.5s ease, transform 0.5s ease;
+            }
+          }
+        }
+
+        & .content {
+          opacity: 0;
+          font-size: 19px;
+          line-height: 30px;
+          font-weight: 400;
+          overflow: hidden;
+          max-height: 0;
+          transition: max-height 0.5s ease, opacity 0.5s ease;
         }
       }
     }
