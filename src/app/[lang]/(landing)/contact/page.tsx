@@ -15,6 +15,32 @@ import React, { useState, useRef, useEffect } from "react";
 import { IoIosSchool } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 
+
+const faqItems = [
+  {
+    title: "Are you open source?",
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+  },
+  {
+    title: "What happends to the service if Petal closes down?",
+    content:
+"Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+  },
+  {
+    title: "are you owned by a publisher?",
+    content:
+"Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+  },
+  {
+    title: "Will you be free forever?",
+    content:
+"Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+  },
+];
+
+
+
 export const AboutUs = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const contentRefs = useRef<HTMLDivElement[]>([]);
@@ -35,20 +61,6 @@ export const AboutUs = () => {
     });
   }, [openIndex]);
 
-  const faqItems = [
-    {
-      title: "whats service",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
-    },
-    {
-      title: "another question",
-      content:
-        "Este es otro contenido de la pregunta. Puedes agregar más texto aquí.",
-    },
-    // Agrega más items de FAQ aquí
-  ];
-
   return (
     <article className="about-us">
       <figure>
@@ -63,12 +75,10 @@ export const AboutUs = () => {
       <div className="container--">
         <div className="faq-container">
           <div className="header">
-            <h1>fasdkasjdasd askdasd</h1>
+            <h1>About us</h1>
             <h3>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque cum
-              et eaque cumque quasi eum illum veritatis ipsam necessitatibus
-              autem officiis odio veniam placeat, iste ex distinctio asperiores
-              error corrupti.
+              Our vision is to drive engagement, collaboration, and promote the
+              visibility of academic research with the general
             </h3>
           </div>
 

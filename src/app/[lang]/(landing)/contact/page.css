@@ -46,20 +46,29 @@
       inline-size: 960px;
       max-width: calc(100% - 20px);
       margin: 0 auto;
+      background-color: red;
+      margin-block: 1rem;
 
       > .list {
         display: flex;
         flex-direction: column;
         gap: 10px;
+
         & .item {
           display: flex;
           flex-direction: column;
           justify-content: center;
           padding: 15px;
-          background-color: #eff5ff;
           gap: 20px;
           overflow: hidden;
 
+          border: 1px solid transparent;
+          border-bottom-color: rgba(0, 0, 0, 0.6);
+
+          &:nth-child(1) {
+            border-top-color: rgba(0, 0, 0, 0.6);
+          }
+          
           &.show {
             background-color: transparent;
             box-shadow: inset rgba(0, 0, 0, 0.05) 0 0 0 2px;
@@ -75,7 +84,7 @@
             justify-content: space-between;
 
             & h4 {
-              font-size: 24px;
+              font-size: 18px;
               line-height: 30px;
               font-weight: 500;
             }
