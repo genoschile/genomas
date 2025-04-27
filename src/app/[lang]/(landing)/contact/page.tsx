@@ -1,4 +1,5 @@
-import { IoIosSchool } from "react-icons/io";
+"use client";
+
 import "./page.css";
 
 export default function page() {
@@ -10,10 +11,46 @@ export default function page() {
     </section>
   );
 }
+import React, { useState, useRef, useEffect } from "react";
+import { IoIosSchool } from "react-icons/io";
+import { IoAdd } from "react-icons/io5";
 
 export const AboutUs = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const contentRefs = useRef<HTMLDivElement[]>([]);
+
+  const handleClickExpanded = (index: number) => {
+    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  useEffect(() => {
+    contentRefs.current.forEach((ref, index) => {
+      if (ref) {
+        if (index === openIndex) {
+          ref.style.maxHeight = `${ref.scrollHeight}px`;
+        } else {
+          ref.style.maxHeight = "0px";
+        }
+      }
+    });
+  }, [openIndex]);
+
+  const faqItems = [
+    {
+      title: "whats service",
+      content:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+    },
+    {
+      title: "another question",
+      content:
+        "Este es otro contenido de la pregunta. Puedes agregar más texto aquí.",
+    },
+    // Agrega más items de FAQ aquí
+  ];
+
   return (
-    <article>
+    <article className="about-us">
       <figure>
         <img
           src="/images/contact/contact.svg"
@@ -23,20 +60,50 @@ export const AboutUs = () => {
         <figcaption className="contact--page__caption">Contact Us</figcaption>
       </figure>
 
-      <div>
-        <span className="section-icon" aria-hidden="true">
-          🤔
-        </span>
-        <h2 className="section-title">Frequently asked questions</h2>
-      </div>
-      <div className="questions-and-answers">
-        <details>
-          <summary>Can I animate details/summary elements?</summary>
-          <p>
-            This used to be something that was impossible, but now thanks to
-            modern CSS, it's actually pretty easy to do!
-          </p>
-        </details>
+      <div className="container--">
+        <div className="faq-container">
+          <div className="header">
+            <h1>fasdkasjdasd askdasd</h1>
+            <h3>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque cum
+              et eaque cumque quasi eum illum veritatis ipsam necessitatibus
+              autem officiis odio veniam placeat, iste ex distinctio asperiores
+              error corrupti.
+            </h3>
+          </div>
+
+          {/* items */}
+          <ul className="list">
+            {faqItems.map((item, index) => (
+              <li
+                className={`item ${openIndex === index ? "show" : ""}`}
+                key={index}
+              >
+                <div className="title">
+                  <h4>{item.title}</h4>
+                  <button
+                    type="button"
+                    onClick={() => handleClickExpanded(index)}
+                    className="toggle"
+                  >
+                    <IoAdd />
+                  </button>
+                </div>
+                <div
+                  className="content"
+                  ref={(el) => {
+                    if (el) {
+                      contentRefs.current[index] = el;
+                    }
+                  }}
+                >
+                  {item.content}
+                </div>
+              </li>
+            ))}
+          </ul>
+          {/* items */}
+        </div>
       </div>
     </article>
   );
