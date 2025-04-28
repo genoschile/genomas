@@ -1,14 +1,36 @@
 {
   "layout.copyright": "all right",
-  "headers": [
-    {
-      "headerlanding.title": "Genomas"
-    }
-  ],
+
   "genomas.card.0.title": "Cancer Variants Analysis",
   "genomas.card.0.description": "OncoKB-powered annotation and AI-driven insights",
   "genomas.card.1.title": "Germline Variants Analysis",
   "genomas.card.1.description": "Pharmacogenomics and AI-driven insights",
   "genomas.card.2.title": "Bla Variants Analysis",
-  "genomas.card.2.description": "Next Pipelines Analysis..."
+  "genomas.card.2.description": "Next Pipelines Analysis...",
+
+  "auth.login.title": "Login",
+  "auth.login.email.label": "Email:",
+  "auth.login.email.placeholder": "Enter your email",
+  "auth.login.password.label": "Password:",
+  "auth.login.password.placeholder": "Enter your password",
+  "auth.login.button.submit": "Login",
+  "auth.login.link.newUser": "New to Genomas?",
+  "auth.login.button.loading": "Loading ...",
+  "auth.login.link.joinNow": "Join Now",
+
+  "auth.login.toast.success": "Login successful!",
+  "auth.login.toast.error": "Something went wrong!",
+
+  "auth.signup.title": "Sign Up",
+  "auth.signup.email.label": "Email:",
+  "auth.signup.email.placeholder": "Enter your email",
+  "auth.signup.password.label": "Password:",
+  "auth.signup.password.placeholder": "Enter your password",
+  "auth.signup.repeatPassword.label": "Repeat Password:",
+  "auth.signup.repeatPassword.placeholder": "Repeat your password",
+  "auth.signup.button.submit": "Create Account",
+  "auth.signup.link.alreadyUser": "Already in GENOMAS?",
+  "auth.signup.link.loginNow": "Login",
+  "auth.signup.toast.success": "Login successful!",
+  "auth.signup.toast.error": "Something went wrong!"
 }

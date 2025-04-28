@@ -19,7 +19,6 @@
         inline-size: 100%;
         aspect-ratio: 1/1;
 
-
         & figcaption {
           display: none;
         }
@@ -37,7 +36,7 @@
       > .header {
         text-align: center;
         padding: 0px 10px;
-        margin-bottom: 50px;
+        margin-block-end: 50px;
         margin-block-start: -3.5rem;
 
         & h1 {
@@ -163,7 +162,7 @@
     block-size: fit-content;
     margin-bottom: 0.5rem;
 
-    h1 {
+    > h1 {
       font-size: 3.75em;
       font-weight: 900;
       color: #333;
@@ -171,7 +170,7 @@
       margin: 0;
     }
 
-    p {
+    > p {
       font-size: 1.6em;
       font-weight: 400;
       color: rgba(0, 0, 0, 0.6);
@@ -185,7 +184,7 @@
     margin: 0px auto;
     list-style: none;
 
-    img {
+    & img {
       max-inline-size: 100%;
       block-size: auto;
     }
@@ -193,13 +192,13 @@
     &::after {
       content: "";
       position: absolute;
-      width: 6px;
+      width: 2px;
       height: 100%;
       top: 0;
       left: 50%;
       margin-left: -3px;
       z-index: -1;
-      background-color: #333;
+      background-color: rgba(0, 0, 0, 0.4);
 
       animation: moveline 2s ease-in-out forwards;
     }
@@ -214,32 +213,41 @@
       animation: movedown 1s linear forwards;
       opacity: 0;
 
-      & figure {
+      & > figure {
         position: absolute;
         width: 45px;
+        aspect-ratio: 1/1;
         border-radius: 50%;
         top: 32px;
         z-index: 10;
+        display: grid;
+        place-content: center;
+        background: var(--bg-linear-gradient-full);
+        outline: 1px solid transparent;
+        transition: background 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          background: var(--bg-linear-gradient-full-hover);
+          outline: 1px solid rgba(0, 0, 0, 0.6);
+          outline-offset: -2px;
+
+          > svg {
+            fill: rgba(0, 0, 0, 0.6);
+          }
+        }
 
         & svg {
-          width: 90%;
-          height: 90%;
-          border-radius: 50%;
-          background: var(--bg-linear-gradient-full-hover);
-          padding: 0.1rem;
-          fill: rgb(255, 255, 255);
-
-          animation: movedown 1s linear forwards;
           opacity: 0;
-
-          outline: 1px solid rgba(0, 0, 0, 0.2);
-          outline-offset: 2px;
           transition: all 0.3s ease-in-out;
+          width: 24px;
+          height: auto;
+          aspect-ratio: 1/1;
+          fill: rgb(255, 255, 255);
+          animation: movedown 1s linear forwards;
 
           &:hover {
             transform: scale(1.1);
-            outline: 2px solid rgba(0, 0, 0, 0.4);
-            outline-offset: 0px;
           }
         }
       }
@@ -318,7 +326,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
   .timeline {
     padding: 20px;
     margin: 50px auto;

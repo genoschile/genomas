@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import "./form.css";
 import { AuthFormLogo } from "./components/AuthFormLogo";
 import { AuthLink } from "./components/AuthLink";
+import { useTranslations } from "@/context/I18nClientProvider";
 
 const initialState: ActionResponseWithoutRepeatPassword = {
   success: false,
@@ -24,6 +25,23 @@ const initialState: ActionResponseWithoutRepeatPassword = {
 export default function FormLogin() {
   const [state, actions, isPending] = useActionState(submitLogin, initialState);
   const router = useRouter();
+
+  const { t } = useTranslations();
+
+  const authTranslations = {
+    title: t("auth.login.title"),
+    emailLabel: t("auth.login.email.label"),
+    emailPlaceholder: t("auth.login.email.placeholder"),
+    passwordLabel: t("auth.login.password.label"),
+    passwordPlaceholder: t("auth.login.password.placeholder"),
+    submitButtonLabel: t("auth.login.button.submit"),
+    submitButtonLabelPending: t("auth.login.button.loading"),
+    newUserLink: t("auth.login.link.newUser"),
+    joinNowLink: t("auth.login.link.joinNow"),
+    loginSuccessToast: t("auth.login.toast.success"),
+    loginErrorToast: t("auth.login.toast.error"),
+    
+  };
 
   useEffect(() => {
     if (!isPending) {
@@ -44,37 +62,41 @@ export default function FormLogin() {
         {/* Formulario */}
         <form action={actions} className="auth-form__form">
           <fieldset>
-            <legend className="auth-form__title">Login</legend>
+            <legend className="auth-form__title">{authTranslations.title}</legend>
 
             {/* Campo de Email */}
             <div className="auth-form__input-group">
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">{authTranslations.emailLabel}</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 defaultValue={state?.input?.email}
-                placeholder="Enter your email"
+                placeholder={`${authTranslations.emailPlaceholder}`}
                 className="login__input"
               />
               {state?.error?.email && (
-                <p className="auth-form__error-message">{state.error.email[0]}</p>
+                <p className="auth-form__error-message">
+                  {state.error.email[0]}
+                </p>
               )}
             </div>
 
             {/* Campo de Contraseña */}
             <div className="auth-form__input-group">
-              <label htmlFor="password">Password:</label>
+              <label htmlFor="password">{authTranslations.passwordLabel}</label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 defaultValue={state?.input?.password}
-                placeholder="Enter your password"
+                placeholder={`${authTranslations.passwordPlaceholder}`}
                 className="auth-form__input"
               />
               {state?.error?.password && (
-                <p className="auth-form__error-message">{state.error.password[0]}</p>
+                <p className="auth-form__error-message">
+                  {state.error.password[0]}
+                </p>
               )}
             </div>
 
@@ -84,12 +106,14 @@ export default function FormLogin() {
                 className="auth-form__submit-button"
                 disabled={isPending}
               >
-                Login
+                {isPending
+                  ? authTranslations.submitButtonLabelPending
+                  : authTranslations.submitButtonLabel}
               </button>
 
               <AuthLink
-                text="New to Genomas?"
-                textPost="Join Now"
+                text={authTranslations.newUserLink}
+                textPost={authTranslations.joinNowLink}
                 href="/signup"
               />
             </div>

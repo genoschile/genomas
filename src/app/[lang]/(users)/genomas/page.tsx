@@ -16,7 +16,7 @@ export default function page() {
       title: t("genomas.card.0.title"),
       description: t("genomas.card.0.description"),
       href: "/genomas/user",
-      srcImg: "/images/adn.png",
+      srcImg: "/images/adn.png", 
     },
     {
       title: t("genomas.card.1.title"),

@@ -6,5 +6,32 @@
   "genomas.card.1.title": "Análisis de Variantes Germinales",
   "genomas.card.1.description": "Farmacogenómica e ideas impulsadas por IA",
   "genomas.card.2.title": "Análisis de Variantes Bla",
-  "genomas.card.2.description": "Próximos análisis en pipeline..."
+  "genomas.card.2.description": "Próximos análisis en pipeline...",
+
+  "auth.login.title": "Iniciar sesión",
+  "auth.login.email.label": "Correo:",
+  "auth.login.email.placeholder": "Ingresa tu correo electrónico",
+  "auth.login.password.label": "Contraseña:",
+  "auth.login.password.placeholder": "Ingresa tu contraseña",
+  "auth.login.button.submit": "Iniciar sesión",
+  "auth.login.link.newUser": "¿Nuevo en Genomas?",
+  "auth.login.button.loading": "Cargando ...",
+  "auth.login.link.joinNow": "Únete ahora",
+
+  "auth.login.toast.success": "¡Inicio de sesión exitoso!",
+  "auth.login.toast.error": "¡Algo salió mal!",
+
+  "auth.signup.title": "Registrarse",
+  "auth.signup.email.label": "Correo:",
+  "auth.signup.email.placeholder": "Ingresa tu correo electrónico",
+  "auth.signup.password.label": "Contraseña:",
+  "auth.signup.password.placeholder": "Ingresa tu contraseña",
+  "auth.signup.repeatPassword.label": "Repetir contraseña:",
+  "auth.signup.repeatPassword.placeholder": "Repite tu contraseña",
+  "auth.signup.button.submit": "Crear cuenta",
+  "auth.signup.link.alreadyUser": "¿Ya estás en GENOMAS?",
+  "auth.signup.link.loginNow": "Iniciar sesión",
+
+  "auth.signup.toast.success": "¡Registro exitoso!",
+  "auth.signup.toast.error": "¡Algo salió mal!"
 }
