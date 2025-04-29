@@ -14,6 +14,8 @@ import { unstable_ViewTransition as ViewTransition } from "react";
 import { I18nServerProvider } from "../../context/I18nServerProvider";
 import api from "@/lib/i18n/api";
 import { Language } from "@/lib/i18n/i18n.types";
+import HeaderLanding from "@/components/headers/HeaderLanding";
+import { FooterLanding } from "@/components/footer/FooterLanding";
 
 export const metadata: Metadata = {
   title: "Genomas",
@@ -42,7 +44,11 @@ export default async function RootLayout({
     <html lang={`${lang}`}>
       <body className={`${inter} antialiased`}>
         <I18nServerProvider lang={`${lang}`}>
-          <ViewTransition name="page">{children}</ViewTransition>
+          <ViewTransition name="page">
+            <HeaderLanding />
+            {children}
+            <FooterLanding />
+          </ViewTransition>
           <ToastContainer position="top-right" autoClose={5000} />
         </I18nServerProvider>
       </body>

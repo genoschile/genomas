@@ -35,7 +35,6 @@
   "auth.signup.toast.success": "¡Registro exitoso!",
   "auth.signup.toast.error": "¡Algo salió mal!",
 
-  
   "landing.section1.title": "Genómica, Bioinformática e IA Moldeando el Futuro de la Salud",
   "landing.section1.description": "Genomas es una plataforma impulsada por IA para decodificar datos genéticos. Ofrece anotaciones de variantes funcionales, perspectivas de diagnóstico, opciones de tratamiento y un chat interactivo para explorar informes automatizados con facilidad.",
 
@@ -62,7 +61,6 @@
   "landing.section5.card.2.name": "Dr. Felipe",
   "landing.section5.card.2.title": "Investigador de IA",
 
-
   "layout.footer.socialTitle": "Síguenos en redes sociales",
 
   "contact.about.title": "Acerca de nosotros",
@@ -82,29 +80,42 @@
 
   "contact.story.title": "Nuestra Historia",
   "contact.story.subtitle": "Soy Karen, fundadora de Genomas, y esta es nuestra historia",
-
   "contact.story.timeline.0.date": "Feb 2015",
   "contact.story.timeline.0.title": "Fundación de la compañía",
   "contact.story.timeline.0.description": "Genomas se funda con la visión de...",
-
   "contact.story.timeline.1.date": "Mar 2017",
   "contact.story.timeline.1.title": "Primer hito importante",
   "contact.story.timeline.1.description": "Alcanzamos nuestro primer hito significativo...",
-
   "contact.story.timeline.2.date": "Ago 2019",
   "contact.story.timeline.2.title": "Expansión del equipo",
   "contact.story.timeline.2.description": "El equipo de Genomas crece para abordar nuevos desafíos...",
-
   "contact.story.timeline.3.date": "Nov 2021",
   "contact.story.timeline.3.title": "Lanzamiento de nuevo producto",
   "contact.story.timeline.3.description": "Lanzamos nuestra innovadora solución al mercado...",
-
   "contact.story.timeline.4.date": "Ene 2023",
   "contact.story.timeline.4.title": "Reconocimiento de la industria",
   "contact.story.timeline.4.description": "Somos reconocidos por nuestra contribución a...",
-
   "contact.story.timeline.5.date": "Abr 2025",
   "contact.story.timeline.5.title": "Hito actual",
-  "contact.story.timeline.5.description": "Continuamos avanzando y explorando nuevas oportunidades..."
-
+  "contact.story.timeline.5.description": "Continuamos avanzando y explorando nuevas oportunidades...",
+  "contact.team.title": "Business Team",
+  "contact.engineering.title": "Engineering Team",
+  "contact.team.members.1.name": "Hunter",
+  "contact.team.members.1.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.team.members.1.description": "Hunter is responsible for...",
+  "contact.team.members.2.name": "Jason",
+  "contact.team.members.2.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.team.members.2.description": "General role and responsibilities description.",
+  "contact.team.members.3.name": "Karen",
+  "contact.team.members.3.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.team.members.3.description": "General role and responsibilities description.",
+  "contact.engineering.members.1.name": "Chi",
+  "contact.engineering.members.1.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.engineering.members.1.description": "General role and responsibilities description.",
+  "contact.engineering.members.2.name": "Jazmin",
+  "contact.engineering.members.2.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.engineering.members.2.description": "General role and responsibilities description.",
+  "contact.engineering.members.3.name": "Felipe",
+  "contact.engineering.members.3.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.engineering.members.3.description": "General role and responsibilities description."
 }

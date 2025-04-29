@@ -158,6 +158,8 @@
 }
 
 .our-story {
+  display: flex;
+
   > header {
     block-size: fit-content;
     margin-bottom: 0.5rem;
@@ -206,7 +208,7 @@
     & > li {
       padding: 10px 50px;
       position: relative;
-      inline-size: 50%;
+      inline-size: 100%;
       display: flex;
       flex-direction: column;
 
@@ -371,6 +373,125 @@
         & span {
           border-right: 15px solid rgba(0, 0, 0, 0.4);
           left: -15px;
+        }
+      }
+    }
+  }
+}
+
+.teams {
+  inline-size: 100%;
+  margin: 0 auto;
+  max-inline-size: 1200px;
+  display: flex;
+  flex-direction: column;
+
+  gap: 1.4rem;
+
+  & ul {
+    list-style: none;
+  }
+
+  > article {
+    padding: 0.2rem;
+
+    &:not(:last-child) {
+      border: 1px solid transparent;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+    }
+
+    & > article {
+      margin-top: 0.5rem;
+
+      & > * {
+        padding-inline: 0.2rem;
+        padding-block: 0.1rem;
+      }
+
+      & > header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        > div {
+          width: 1px;
+          height: 20px;
+          background-color: rgba(0, 0, 0, 0.2);
+          margin: 0 10px;
+        }
+
+        > small {
+          font-size: 1.175rem;
+          line-height: 1.825rem;
+          color: rgba(0, 0, 0, 0.4);
+        }
+      }
+
+      > div > *:nth-child(1) {
+        overflow: hidden;
+        display: block;
+        min-block-size: 20px;
+        block-size: 80px;
+
+        > p {
+          font-size: 1.175rem;
+          line-height: 1.825rem;
+          color: rgba(0, 0, 0, 0.9);
+        }
+      }
+    }
+
+    > h1 {
+      margin-left: 0.2rem;
+      font-size: 1.875rem;
+      line-height: 2.375rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &:first-child {
+      margin-top: 2rem;
+    }
+
+    &:last-child {
+      margin-bottom: 2rem;
+    }
+
+    > ul {
+      display: flex;
+      flex-flow: row nowrap;
+      overflow: hidden;
+
+      > li {
+        padding-inline: 0.4rem;
+        padding-block: 0.2rem;
+        cursor: pointer;
+
+        border: 1px solid transparent;
+        border-bottom-left-radius: unset;
+        border-top-left-radius: unset;
+        border-radius: 0.4rem;
+
+        &:not(:first-child) {
+          border-left: 1px solid rgba(0, 0, 0, 0.09);
+          margin-left: 0.2rem;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &.active {
+          background-color: rgba(0, 0, 0, 0.2);
+
+          & > span {
+            color: #433f65;
+          }
+        }
+
+        > span {
+          color: rgba(0, 0, 0, 0.4);
+          font-size: 1.175rem;
+          line-height: 1.825rem;
         }
       }
     }

@@ -95,7 +95,34 @@
   "contact.story.timeline.4.description": "We are recognized for our contribution to...",
   "contact.story.timeline.5.date": "Apr 2025",
   "contact.story.timeline.5.title": "Current milestone",
-  "contact.story.timeline.5.description": "We continue to advance and explore new opportunities..."
+  "contact.story.timeline.5.description": "We continue to advance and explore new opportunities...",
+
+
+  "contact.team.title": "Business Team",
+  "contact.engineering.title": "Engineering Team",
+
+  "contact.team.members.1.name": "Hunter",
+  "contact.team.members.1.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.team.members.1.description": "Hunter is responsible for...",
+
+  "contact.team.members.2.name": "Jason",
+  "contact.team.members.2.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.team.members.2.description": "General role and responsibilities description.",
+
+  "contact.team.members.3.name": "Karen",
+  "contact.team.members.3.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.team.members.3.description": "General role and responsibilities description.",
+
+
+  "contact.engineering.members.1.name": "Chi",
+  "contact.engineering.members.1.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.engineering.members.1.description": "General role and responsibilities description.",
+  "contact.engineering.members.2.name": "Jazmin",
+  "contact.engineering.members.2.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.engineering.members.2.description": "General role and responsibilities description.",
+  "contact.engineering.members.3.name": "Felipe",
+  "contact.engineering.members.3.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
+  "contact.engineering.members.3.description": "General role and responsibilities description."
 
 }
 

@@ -36,14 +36,13 @@ const TeamSection = () => {
     });
   }, [entries]);
 
-  const { t } = useTranslations()
+  const { t } = useTranslations();
 
   const InfoSection = {
     title: t("landing.section5.title"),
-    description:
-      t("landing.section5.description"),
+    description: t("landing.section5.description"),
   };
-  
+
   return (
     <Section className="team-section">
       <div className="team-section__content">

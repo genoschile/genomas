@@ -2,11 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 
-import {
-  IoIosArrowDown,
-  IoIosRocket,
-  IoIosSchool,
-} from "react-icons/io";
+import { IoIosArrowDown, IoIosRocket, IoIosSchool } from "react-icons/io";
 
 import { MdOutlineMenuBook } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
@@ -150,7 +146,7 @@ export const OurStory = () => {
         date: t("contact.story.timeline.2.date"),
         title: t("contact.story.timeline.2.title"),
         description: t("contact.story.timeline.2.description"),
-        icon: <FaRegLightbulb />
+        icon: <FaRegLightbulb />,
       },
       {
         date: t("contact.story.timeline.3.date"),
@@ -201,86 +197,116 @@ export const OurStory = () => {
   );
 };
 
-export const titleTeams = [
-  {
-    title: "Business Team",
-    integrantes: [
-      {
-        name: "Hunter",
-        degrees: "Información académica del miembro del equipo de negocios.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-      {
-        name: "Jason",
-        degrees: "Información académica del miembro del equipo de negocios.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-      {
-        name: "Wenjie",
-        degrees: "Información académica del miembro del equipo de negocios.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-      {
-        name: "Olivia",
-        degrees: "Información académica del miembro del equipo de negocios.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-    ],
-  },
-  {
-    title: "Engineering Team",
-    integrantes: [
-      {
-        name: "Chi",
-        degrees: "Información académica del miembro del equipo de ingeniería.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-      {
-        name: "Xin",
-        degrees: "Información académica del miembro del equipo de ingeniería.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-      {
-        name: "Helen",
-        degrees: "Información académica del miembro del equipo de ingeniería.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-      {
-        name: "Yehor",
-        degrees: "Información académica del miembro del equipo de ingeniería.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-      {
-        name: "Michael",
-        degrees: "Información académica del miembro del equipo de ingeniería.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-      {
-        name: "Bryance",
-        degrees: "Información académica del miembro del equipo de ingeniería.",
-        description:
-          "Descripción genérica del rol y responsabilidades dentro del equipo.",
-      },
-    ],
-  },
-];
+interface MemberTeams {
+  name: string;
+  degrees: string;
+  description: string;
+}
 
 export const Team = () => {
+  const { t } = useTranslations();
+
+  const TeamInfoSection = [
+    {
+      title: t("contact.team.title"),
+      members: [
+        {
+          name: t("contact.team.members.1.name"),
+          degrees: t("contact.team.members.1.degrees"),
+          description: t("contact.team.members.1.description"),
+        },
+        {
+          name: t("contact.team.members.2.name"),
+          degrees: t("contact.team.members.2.degrees"),
+          description: t("contact.team.members.2.description"),
+        },
+        {
+          name: t("contact.team.members.3.name"),
+          degrees: t("contact.team.members.3.degrees"),
+          description: t("contact.team.members.3.description"),
+        },
+      ],
+    },
+    {
+      title: t("contact.engineering.title"),
+      members: [
+        {
+          name: t("contact.engineering.members.1.name"),
+          degrees: t("contact.engineering.members.1.degrees"),
+          description: t("contact.engineering.members.1.description"),
+        },
+        {
+          name: t("contact.engineering.members.2.name"),
+          degrees: t("contact.engineering.members.2.degrees"),
+          description: t("contact.engineering.members.2.description"),
+        },
+        {
+          name: t("contact.engineering.members.3.name"),
+          degrees: t("contact.engineering.members.3.degrees"),
+          description: t("contact.engineering.members.3.description"),
+        },
+      ],
+    },
+  ];
+
+  const [selectedMembers, setSelectedMembers] = useState<{
+    [key: number]: MemberTeams;
+  }>({
+    0: TeamInfoSection[0].members[0],
+    1: TeamInfoSection[1].members[0],
+  });
+
+  const handleMemberClick = (teamIndex: number, member: MemberTeams) => {
+    setSelectedMembers((prevSelectedMembers) => ({
+      ...prevSelectedMembers,
+      [teamIndex]: member,
+    }));
+  };
+
   return (
     <section className="teams">
-      <article>
-        <h1>{titleTeams[0]?.title}</h1>
-        <nav>{}</nav>
-      </article>
+      {TeamInfoSection.map((team, index) => (
+        <article key={index}>
+          <h1>{team.title}</h1>
+          <ul className="team">
+            {team.members.map((integrante, memberIndex) => (
+              <li
+                className={`team-member ${
+                  selectedMembers[index]?.name === integrante.name
+                    ? "active"
+                    : ""
+                }`}
+                key={memberIndex}
+              >
+                <span
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleMemberClick(index, integrante);
+                  }}
+                >
+                  {integrante.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <article className="member-details">
+            {selectedMembers[index] ? (
+              <>
+                <header>
+                  <h3>{selectedMembers[index]?.name}</h3>
+                  <div></div>
+                  <small>{selectedMembers[index]?.degrees}</small>
+                </header>
+                <div>
+                  <p>{selectedMembers[index]?.description}</p>
+                </div>
+              </>
+            ) : (
+              <p>Haz clic en un integrante para ver su información.</p>
+            )}
+          </article>
+        </article>
+      ))}
     </section>
   );
 };
