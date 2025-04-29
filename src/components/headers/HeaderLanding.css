@@ -45,11 +45,38 @@
 
   & > a {
     text-decoration: none;
+    position: relative;
+    font-size: 1em;
 
     @media screen and (min-width: 900px) {
       &:first-child {
         margin-left: auto;
       }
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+        background-color: var(--text-color);
+      }
+    }
+
+    &.active {
+      &::after {
+        width: 100%;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform: translateY(4px);
+      height: 4px;
+      width: 0;
+      transition: width 0.5s ease-in-out, background 0.3s ease-in-out;
+      background: rgba(255, 255, 255, 0.6);
     }
   }
 

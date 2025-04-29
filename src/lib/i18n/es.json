@@ -33,5 +33,78 @@
   "auth.signup.link.loginNow": "Iniciar sesión",
 
   "auth.signup.toast.success": "¡Registro exitoso!",
-  "auth.signup.toast.error": "¡Algo salió mal!"
+  "auth.signup.toast.error": "¡Algo salió mal!",
+
+  
+  "landing.section1.title": "Genómica, Bioinformática e IA Moldeando el Futuro de la Salud",
+  "landing.section1.description": "Genomas es una plataforma impulsada por IA para decodificar datos genéticos. Ofrece anotaciones de variantes funcionales, perspectivas de diagnóstico, opciones de tratamiento y un chat interactivo para explorar informes automatizados con facilidad.",
+
+  "landing.section2.title": "Descubre Cómo GENOMAS Puede Empoderarte",
+  "landing.section2.description": "GENOMAS ofrece una plataforma centralizada para todos tus datos genómicos, asegurando que tus análisis estén siempre sincronizados, accesibles y seguros.",
+  "landing.section2.button.0": "Análisis de Variantes de Cáncer",
+  "landing.section2.button.1": "Análisis de Variantes de Línea Germinal",
+  "landing.section2.button.2": "Análisis de Variantes Bla",
+
+  "landing.section3.title": "Convierte Tus Datos Genómicos en Información Útil",
+  "landing.section3.description": "Deja de pasar horas interpretando archivos genéticos complejos. Con GENOMAS, obtén respuestas confiables y basadas en datos utilizando IA avanzada diseñada para el análisis genómico.",
+  "landing.section3.button": "Ver más",
+
+  "landing.section4.title": "Convierte Tus Datos Genómicos en Información Útil",
+  "landing.section4.description": "Deja de pasar horas interpretando archivos genéticos complejos. Con GENOMAS, obtén respuestas confiables y basadas en datos utilizando IA avanzada diseñada para el análisis genómico.",
+  "landing.section4.button": "Ver más",
+
+  "landing.section5.title": "Conoce al Equipo Detrás de GENOMAS",
+  "landing.section5.description": "Nuestro equipo interdisciplinario de bioinformáticos, médicos clínicos, ingenieros e investigadores aporta diversa experiencia y conocimientos. Juntos, ofrecemos soluciones innovadoras basadas en la experiencia y adaptadas para abordar desafíos complejos en la atención médica y la genómica.",
+  "landing.section5.card.0.name": "Dra. Karen Oróstica",
+  "landing.section5.card.0.title": "Doctorado en Bioinformática",
+  "landing.section5.card.1.name": "Dr. Ricardo",
+  "landing.section5.card.1.title": "Médico Clínico",
+  "landing.section5.card.2.name": "Dr. Felipe",
+  "landing.section5.card.2.title": "Investigador de IA",
+
+
+  "layout.footer.socialTitle": "Síguenos en redes sociales",
+
+  "contact.about.title": "Acerca de nosotros",
+  "contact.about.subtitle": "Nuestra visión es impulsar el compromiso, la colaboración y promover la visibilidad de la investigación académica con el público en general",
+
+  "contact.faq.0.title": "¿Son de código abierto?",
+  "contact.faq.0.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+
+  "contact.faq.1.title": "¿Qué sucede con el servicio si Petal cierra?",
+  "contact.faq.1.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+
+  "contact.faq.2.title": "¿Son propiedad de una editorial?",
+  "contact.faq.2.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+
+  "contact.faq.3.title": "¿Será gratuito para siempre?",
+  "contact.faq.3.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+
+  "contact.story.title": "Nuestra Historia",
+  "contact.story.subtitle": "Soy Karen, fundadora de Genomas, y esta es nuestra historia",
+
+  "contact.story.timeline.0.date": "Feb 2015",
+  "contact.story.timeline.0.title": "Fundación de la compañía",
+  "contact.story.timeline.0.description": "Genomas se funda con la visión de...",
+
+  "contact.story.timeline.1.date": "Mar 2017",
+  "contact.story.timeline.1.title": "Primer hito importante",
+  "contact.story.timeline.1.description": "Alcanzamos nuestro primer hito significativo...",
+
+  "contact.story.timeline.2.date": "Ago 2019",
+  "contact.story.timeline.2.title": "Expansión del equipo",
+  "contact.story.timeline.2.description": "El equipo de Genomas crece para abordar nuevos desafíos...",
+
+  "contact.story.timeline.3.date": "Nov 2021",
+  "contact.story.timeline.3.title": "Lanzamiento de nuevo producto",
+  "contact.story.timeline.3.description": "Lanzamos nuestra innovadora solución al mercado...",
+
+  "contact.story.timeline.4.date": "Ene 2023",
+  "contact.story.timeline.4.title": "Reconocimiento de la industria",
+  "contact.story.timeline.4.description": "Somos reconocidos por nuestra contribución a...",
+
+  "contact.story.timeline.5.date": "Abr 2025",
+  "contact.story.timeline.5.title": "Hito actual",
+  "contact.story.timeline.5.description": "Continuamos avanzando y explorando nuevas oportunidades..."
+
 }

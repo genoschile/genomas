@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import "./section3.css";
 import Section from "./section";
+import { useTranslations } from "@/context/I18nClientProvider";
 
 export default function Section3() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
@@ -44,6 +45,15 @@ export default function Section3() {
     });
   }, [entries]);
 
+  const { t } = useTranslations();
+
+  const section3Data = {
+    title: t("landing.section3.title"),
+    description: t("landing.section3.description"),
+    buttonText: t("landing.section3.button"),
+    buttonHref: "/see-more",
+  };
+
   return (
     <Section className="section3">
       <div className="section3__content">
@@ -53,7 +63,7 @@ export default function Section3() {
             isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          Turn Your Genomic Data Into Actionable Insights
+          {section3Data.title}
         </h2>
         <p
           ref={pRef}
@@ -61,9 +71,7 @@ export default function Section3() {
             isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          Stop spending hours interpreting complex genetic files. With GENOMAS,
-          gain reliable, data-driven answers using advanced AI tailored for
-          genomic analysis.
+          {section3Data.description}
         </p>
 
         <div className="section3__containerButtons">
@@ -73,7 +81,7 @@ export default function Section3() {
               isButton1Visible ? "visibleElement" : "hiddenImage"
             }`}
           >
-            See more
+            {section3Data.buttonText}
           </button>
         </div>
 

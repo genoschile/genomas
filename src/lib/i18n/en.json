@@ -1,5 +1,6 @@
 {
   "layout.copyright": "all right",
+  "layout.footer.socialTitle": "Follow us on social media",
 
   "genomas.card.0.title": "Cancer Variants Analysis",
   "genomas.card.0.description": "OncoKB-powered annotation and AI-driven insights",
@@ -32,5 +33,69 @@
   "auth.signup.link.alreadyUser": "Already in GENOMAS?",
   "auth.signup.link.loginNow": "Login",
   "auth.signup.toast.success": "Login successful!",
-  "auth.signup.toast.error": "Something went wrong!"
+  "auth.signup.toast.error": "Something went wrong!",
+
+
+  "landing.section1.title": "Genomics, Bioinformatics, AI Shaping the future of health",
+  "landing.section1.description": "Genomas is an AI-powered platform for decoding genetic data. It offers functional variant annotations, diagnostic insights, treatment options, and an interactive chat to explore automated reports with ease.",
+
+  "landing.section2.title": "Discover How GENOMAS Can Empower You",
+  "landing.section2.description": "GENOMAS offers a centralized platform for all your genomic data, ensuring your analyses are always synchronized, accessible, and secure.",
+  "landing.section2.button.0": "Cancer Variants Analysis",
+  "landing.section2.button.1": "Germline Variants Analysis",
+  "landing.section2.button.2": "Bla Variants Analysis",
+
+  "landing.section3.title": "Turn Your Genomic Data Into Actionable Insights",
+  "landing.section3.description": "Stop spending hours interpreting complex genetic files. With GENOMAS, gain reliable, data-driven answers using advanced AI tailored for genomic analysis.",
+  "landing.section3.button": "See more",
+
+  "landing.section4.title": "Turn Your Genomic Data Into Actionable Insights",
+  "landing.section4.description": "Stop spending hours interpreting complex genetic files. With GENOMAS, gain reliable, data-driven answers using advanced AI tailored for genomic analysis.",
+  "landing.section4.button": "See more",
+
+  "landing.section5.title": "Meet the Team Behind GENOMAS",
+  "landing.section5.description": "Our interdisciplinary team of bioinformaticians, clinical physicians, engineers, and researchers brings diverse expertise and insights. Together, we deliver innovative solutions informed by experience and tailored to address complex challenges in healthcare and genomics.",
+  
+  "landing.section5.card.0.name": "Dra. Karen Oróstica",
+  "landing.section5.card.0.title": "Phd Bioinformatics",
+  "landing.section5.card.1.name": "Dr. Ricardo",
+  "landing.section5.card.1.title": "Clinical Physician",
+  "landing.section5.card.2.name": "Dr. Felipe",
+  "landing.section5.card.2.title": "AI Researcher",
+
+  "contact.about.title": "About us",
+  "contact.about.subtitle": "Our vision is to drive engagement, collaboration, and promote the visibility of academic research with the general",
+
+  "contact.faq.0.title": "Are you open source?",
+  "contact.faq.0.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+  "contact.faq.1.title": "What happens to the service if Petal closes down?",
+  "contact.faq.1.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+  "contact.faq.2.title": "Are you owned by a publisher?",
+  "contact.faq.2.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+  "contact.faq.3.title": "Will you be free forever?",
+  "contact.faq.3.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
+  
+  "contact.story.title": "Our History",
+  "contact.story.subtitle": "I'm Karen, founder Genomas, and this is our history",
+  
+  "contact.story.timeline.0.date": "Feb 2015",
+  "contact.story.timeline.0.title": "Company foundation",
+  "contact.story.timeline.0.description": "Genomas is founded with the vision of...",
+  "contact.story.timeline.1.date": "Mar 2017",
+  "contact.story.timeline.1.title": "First major milestone",
+  "contact.story.timeline.1.description": "We achieve our first significant milestone...",
+  "contact.story.timeline.2.date": "Aug 2019",
+  "contact.story.timeline.2.title": "Team expansion",
+  "contact.story.timeline.2.description": "Genomas' team grows to tackle new challenges...",
+  "contact.story.timeline.3.date": "Nov 2021",
+  "contact.story.timeline.3.title": "New product launch",
+  "contact.story.timeline.3.description": "We launch our innovative solution to the market...",
+  "contact.story.timeline.4.date": "Jan 2023",
+  "contact.story.timeline.4.title": "Industry recognition",
+  "contact.story.timeline.4.description": "We are recognized for our contribution to...",
+  "contact.story.timeline.5.date": "Apr 2025",
+  "contact.story.timeline.5.title": "Current milestone",
+  "contact.story.timeline.5.description": "We continue to advance and explore new opportunities..."
+
 }
+

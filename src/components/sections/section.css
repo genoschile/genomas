@@ -1,13 +1,31 @@
 .container {
   position: relative;
-  width: 100%;
-  max-width: 100%;
+  display: block;
   margin-inline: auto;
   padding-inline: 1rem;
   height: 100vh;
   height: 100dvh;
   min-height: 100vh;
   overflow: hidden;
+
+  &:nth-of-type(2)::before {
+    background: var(--bg-linear-gradient-semifull);
+  }
+
+  &:nth-of-type(4)::before {
+    background: var(--bg-linear-gradient-full);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    z-index: -1;
+    border-radius: 15px;
+  }
 }
 
 @media (min-width: 640px) {
@@ -43,36 +61,4 @@
   .container {
     max-width: 1536px;
   }
-}
-
-/* .container permanece sin cambios */
-.container {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  margin-inline: auto;
-  padding-inline: 1rem;
-  overflow: hidden;
-  height: 100dvh;
-  height: 100vh;
-  min-height: 100vh;
-}
-
-.container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: transparent; 
-  z-index: -1;
-  border-radius: 15px;
-}
-
-.container:nth-of-type(2)::before {
-  background: var(--bg-linear-gradient-semifull);
-}
-
-.container:nth-of-type(4)::before {
-  background:var(--bg-linear-gradient-full);
 }

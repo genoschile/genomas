@@ -1,3 +1,4 @@
+import { useTranslations } from "@/context/I18nClientProvider";
 import Card from "./Card";
 import "./carrouselCards.css";
 
@@ -8,31 +9,33 @@ interface Member {
   image: string;
 }
 
-const teamMembers: Member[] = [
-  {
-    id: 1,
-    name: "Dra. Karen Oróstica",
-    title: "Phd Bioinformatics",
-    image: "https://avatar.iran.liara.run/public",
-  },
-  {
-    id: 2,
-    name: "Dr. Ricardo",
-    title: "Clinical Physician",
-    image: "https://avatar.iran.liara.run/public",
-  },
-  {
-    id: 3,
-    name: "Dr. Felipe",
-    title: "AI Researcher",
-    image: "https://avatar.iran.liara.run/public",
-  },
-];
-
 export default function Carousel() {
   const renderCards = (members: Member[]) => {
     return members.map((member) => <Card key={member.id} member={member} />);
   };
+
+  const { t } = useTranslations()
+
+  const teamMembers: Member[] = [
+    {
+      id: 1,
+      name: t("landing.section5.card.0.name"),
+      title: t("landing.section5.card.0.title"),
+      image: "https://avatar.iran.liara.run/public",
+    },
+    {
+      id: 2,
+      name: t("landing.section5.card.1.name"),
+      title: t("landing.section5.card.1.title"),
+      image: "https://avatar.iran.liara.run/public",
+    },
+    {
+      id: 3,
+      name: t("landing.section5.card.2.name"),
+      title: t("landing.section5.card.2.title"),
+      image: "https://avatar.iran.liara.run/public",
+    },
+  ];
 
   return (
     <div className="carousel_">

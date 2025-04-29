@@ -1,15 +1,17 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+
 import {
   IoIosArrowDown,
   IoIosRocket,
   IoIosSchool,
-  IoIosStar,
 } from "react-icons/io";
+
 import { MdOutlineMenuBook } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
 import "./page.css";
+import { useTranslations } from "@/context/I18nClientProvider";
 
 export default function page() {
   return (
@@ -20,80 +22,6 @@ export default function page() {
     </section>
   );
 }
-
-export const faqItems = [
-  {
-    title: "Are you open source?",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
-  },
-  {
-    title: "What happends to the service if Petal closes down?",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
-  },
-  {
-    title: "are you owned by a publisher?",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
-  },
-  {
-    title: "Will you be free forever?",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
-  },
-];
-
-export const Titles = [
-  {
-    title: "About us",
-    subtitle:
-      "Our vision is to drive engagement, collaboration, and promote the visibility of academic research with the general",
-  },
-  {
-    title: "Our History",
-    subtitle: "I'm Karen, founder Genomas, and this is our history ",
-  },
-];
-
-export const timelineData = [
-  {
-    date: "Feb 2015",
-    title: "Fundación de la empresa",
-    description: "Se establece Genomas con la visión de...",
-    icon: <IoIosSchool />,
-  },
-  {
-    date: "Mar 2017",
-    title: "Primer logro importante",
-    description: "Alcanzamos nuestro primer hito significativo...",
-    icon: <MdOutlineMenuBook />,
-  },
-  {
-    date: "Ago 2019",
-    title: "Expansión del equipo",
-    description: "El equipo de Genomas crece para abordar nuevos desafíos...",
-    icon: <FaRegLightbulb />,
-  },
-  {
-    date: "Nov 2021",
-    title: "Lanzamiento de nuevo producto",
-    description: "Presentamos al mercado nuestra innovadora solución...",
-    icon: <IoIosRocket />,
-  },
-  {
-    date: "Ene 2023",
-    title: "Reconocimiento en la industria",
-    description: "Somos reconocidos por nuestra contribución a...",
-    icon: <IoIosStar />,
-  },
-  {
-    date: "Abr 2025",
-    title: "Hito actual",
-    description: "Continuamos avanzando y explorando nuevas oportunidades...",
-    icon: <IoIosSchool />,
-  },
-];
 
 export const AboutUs = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -114,6 +42,34 @@ export const AboutUs = () => {
       }
     });
   }, [openIndex]);
+
+  const { t } = useTranslations();
+
+  const Titles = [
+    {
+      title: t("contact.about.title"),
+      subtitle: t("contact.about.subtitle"),
+    },
+  ];
+
+  const faqItems = [
+    {
+      title: t("contact.faq.0.title"),
+      content: t("contact.faq.0.content"),
+    },
+    {
+      title: t("contact.faq.1.title"),
+      content: t("contact.faq.1.content"),
+    },
+    {
+      title: t("contact.faq.2.title"),
+      content: t("contact.faq.2.content"),
+    },
+    {
+      title: t("contact.faq.3.title"),
+      content: t("contact.faq.3.content"),
+    },
+  ];
 
   return (
     <article className="about-us">
@@ -171,14 +127,60 @@ export const AboutUs = () => {
 };
 
 export const OurStory = () => {
+  const { t } = useTranslations();
+
+  const dataOurStory = {
+    title: t("contact.story.title"),
+    subtitle: t("contact.story.subtitle"),
+
+    timeline: [
+      {
+        date: t("contact.story.timeline.0.date"),
+        title: t("contact.story.timeline.0.title"),
+        description: t("contact.story.timeline.0.description"),
+        icon: <IoIosSchool />,
+      },
+      {
+        date: t("contact.story.timeline.1.date"),
+        title: t("contact.story.timeline.1.title"),
+        description: t("contact.story.timeline.1.description"),
+        icon: <MdOutlineMenuBook />,
+      },
+      {
+        date: t("contact.story.timeline.2.date"),
+        title: t("contact.story.timeline.2.title"),
+        description: t("contact.story.timeline.2.description"),
+        icon: <FaRegLightbulb />
+      },
+      {
+        date: t("contact.story.timeline.3.date"),
+        title: t("contact.story.timeline.3.title"),
+        description: t("contact.story.timeline.3.description"),
+        icon: <IoIosRocket />,
+      },
+      {
+        date: t("contact.story.timeline.4.date"),
+        title: t("contact.story.timeline.4.title"),
+        description: t("contact.story.timeline.4.description"),
+        icon: <IoIosSchool />,
+      },
+      {
+        date: t("contact.story.timeline.5.date"),
+        title: t("contact.story.timeline.5.title"),
+        description: t("contact.story.timeline.5.description"),
+        icon: <IoIosSchool />,
+      },
+    ],
+  };
+
   return (
     <article className="our-story">
       <header>
-        <h1>{Titles[1]?.title}</h1>
-        <h3>{Titles[1]?.subtitle}</h3>
+        <h1>{dataOurStory.title}</h1>
+        <h3>{dataOurStory.subtitle}</h3>
       </header>
       <ul className="timeline">
-        {timelineData.map((event, index) => (
+        {dataOurStory.timeline.map((event, index) => (
           <li className="container" key={index}>
             <figure>{event.icon}</figure>
             <div className="text-box">
@@ -206,24 +208,28 @@ export const titleTeams = [
       {
         name: "Hunter",
         degrees: "Información académica del miembro del equipo de negocios.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
       },
       {
         name: "Jason",
         degrees: "Información académica del miembro del equipo de negocios.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
       },
       {
         name: "Wenjie",
         degrees: "Información académica del miembro del equipo de negocios.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
       },
       {
         name: "Olivia",
         degrees: "Información académica del miembro del equipo de negocios.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
-      }
-    ]
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
+      },
+    ],
   },
   {
     title: "Engineering Team",
@@ -231,35 +237,41 @@ export const titleTeams = [
       {
         name: "Chi",
         degrees: "Información académica del miembro del equipo de ingeniería.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
       },
       {
         name: "Xin",
         degrees: "Información académica del miembro del equipo de ingeniería.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
       },
       {
         name: "Helen",
         degrees: "Información académica del miembro del equipo de ingeniería.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
       },
       {
         name: "Yehor",
         degrees: "Información académica del miembro del equipo de ingeniería.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
       },
       {
         name: "Michael",
         degrees: "Información académica del miembro del equipo de ingeniería.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
       },
       {
         name: "Bryance",
         degrees: "Información académica del miembro del equipo de ingeniería.",
-        description: "Descripción genérica del rol y responsabilidades dentro del equipo."
-      }
-    ]
-  }
+        description:
+          "Descripción genérica del rol y responsabilidades dentro del equipo.",
+      },
+    ],
+  },
 ];
 
 export const Team = () => {
@@ -267,9 +279,7 @@ export const Team = () => {
     <section className="teams">
       <article>
         <h1>{titleTeams[0]?.title}</h1>
-        <nav>
-          {}
-        </nav>
+        <nav>{}</nav>
       </article>
     </section>
   );

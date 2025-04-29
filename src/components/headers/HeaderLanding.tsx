@@ -5,6 +5,8 @@ import "./HeaderLanding.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Logo from "@components/logo/Logo";
 import Link from "next/link";
+import { I18nButton } from "./I18nButton";
+import { usePathname } from "next/navigation";
 
 const links = [
   {
@@ -31,6 +33,7 @@ const links = [
 
 const Header = () => {
   const [scrolling, setScrolling] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -79,18 +82,25 @@ const Header = () => {
         </label>
 
         <nav className="header-landing__nav">
-          {links.map(({ label, href, isNextLink }, index) =>
-            isNextLink ? (
-              <Link key={index} href={href} className="header-landing__link">
+          {links.map(({ label, href, isNextLink }, index) => {
+            const isActive = pathname.startsWith(href) && href !== "#";
+
+            const linkClass = `header-landing__link ${
+              isActive ? "active" : ""
+            }`;
+
+            return isNextLink ? (
+              <Link key={index} href={href} className={linkClass}>
                 {label}
               </Link>
             ) : (
-              <a key={index} href={href} className="header-landing__link">
+              <a key={index} href={href} className={linkClass}>
                 {label}
               </a>
-            )
-          )}
+            );
+          })}
           <div className="header-landing__auth">
+            <I18nButton />
             <ButtonPrimary
               link="/login"
               text="Login"

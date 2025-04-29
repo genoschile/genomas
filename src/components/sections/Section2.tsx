@@ -9,18 +9,7 @@ import "./section2.css";
 
 /* components */
 import Section from "./section";
-
-const buttons = [
-  { text: "Cancer Variants Analysis", href: "/cancer-variants" },
-  { text: "Germline Variants Analysis", href: "/germline-variants" },
-  { text: "Bla Variants Analysis", href: "/bla-variants" },
-];
-
-const InfoSection = {
-  title: "Discover How GENOMAS Can Empower You",
-  description:
-    "          GENOMAS offers a centralized platform for all your genomic data,          ensuring your analyses are always synchronized, accessible, and           secure.",
-};
+import { useTranslations } from "@/context/I18nClientProvider";
 
 export default function sectionTwo2() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
@@ -58,6 +47,19 @@ export default function sectionTwo2() {
     });
   }, [entries]);
 
+  const { t } = useTranslations();
+
+  const buttonsData = [
+    { text: t("landing.section2.button.0"), href: "/cancer-variants" },
+    { text: t("landing.section2.button.1"), href: "/germline-variants" },
+    { text: t("landing.section2.button.2"), href: "/bla-variants" },
+  ];
+
+  const infoSectionData = {
+    title: t("landing.section2.title"),
+    description: t("landing.section2.description"),
+  };
+
   return (
     <Section>
       <main className="sectionTwo__content">
@@ -68,7 +70,7 @@ export default function sectionTwo2() {
             isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          {InfoSection.title}
+          {infoSectionData.title}
         </h2>
 
         {/* Párrafo */}
@@ -78,12 +80,12 @@ export default function sectionTwo2() {
             isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          {InfoSection.description}
+          {infoSectionData.description}
         </p>
 
         {/* Botones */}
         <div ref={buttonsRefs} className="sectionTwo__buttons">
-          {buttons.map((button, index) => (
+          {buttonsData.map((button, index) => (
             <a
               key={index}
               href={button.href}

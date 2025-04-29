@@ -5,12 +5,7 @@ import Section from "../section";
 import CarrouselCards from "./CarrouselCards";
 import "./section5.css";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-
-const InfoSection = {
-  title: "Meet the Team Behind GENOMAS",
-  description:
-    "          Our interdisciplinary team of bioinformaticians, clinical physicians,           engineers, and researchers brings diverse expertise and insights.           Together, we deliver innovative solutions informed by experience and           tailored to address complex challenges in healthcare and genomics.",
-};
+import { useTranslations } from "@/context/I18nClientProvider";
 
 const TeamSection = () => {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
@@ -41,6 +36,14 @@ const TeamSection = () => {
     });
   }, [entries]);
 
+  const { t } = useTranslations()
+
+  const InfoSection = {
+    title: t("landing.section5.title"),
+    description:
+      t("landing.section5.description"),
+  };
+  
   return (
     <Section className="team-section">
       <div className="team-section__content">

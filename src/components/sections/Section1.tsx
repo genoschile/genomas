@@ -5,12 +5,7 @@ import Carrousel from "../carrousel/Carrousel";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import Section from "./section";
 import "./section1.css";
-
-const InfoSection = {
-  title: "Genomics, Bioinformatics, AI Shaping the future of health",
-  description:
-    "Genomas is an AI-powered platform for decoding genetic data. It offers functional variant annotations, diagnostic insights,  treatment options, and an interactive chat to explore automated     reports with ease.",
-};
+import { useTranslations } from "@/context/I18nClientProvider";
 
 export default function Section1() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
@@ -47,6 +42,13 @@ export default function Section1() {
         setIsDiVisible(entry.isIntersecting);
     });
   }, [entries]);
+
+  const { t } = useTranslations()
+
+  const InfoSection = {
+    title: t("landing.section1.title"),
+    description: t("landing.section1.description")
+  };
 
   return (
     <Section className="section">

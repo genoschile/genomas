@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import "./section4.css";
 import Section from "./section";
+import { useTranslations } from "@/context/I18nClientProvider";
 
 const InfoSection = {
   title: "Turn Your Genomic Data Into Actionable Insights",
@@ -50,6 +51,15 @@ export default function Section4() {
     });
   }, [entries]);
 
+    const { t } = useTranslations();
+  
+    const section4Data = {
+      title: t("landing.section3.title"),
+      description: t("landing.section3.description"),
+      buttonText: t("landing.section3.button"),
+      buttonHref: "/see-more",
+    };
+
   return (
     <Section className="section3">
       <div className="section3__content alternate-layout">
@@ -59,7 +69,7 @@ export default function Section4() {
             isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          {InfoSection.title}
+          {section4Data.title}
         </h2>
         <p
           ref={pRef}
@@ -67,7 +77,7 @@ export default function Section4() {
             isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >
-          {InfoSection.description}
+          {section4Data.description}
         </p>
 
         <div className="section3__containerButtons">
@@ -77,7 +87,7 @@ export default function Section4() {
               isButton1Visible ? "visibleElement" : "hiddenImage"
             }`}
           >
-            See more
+            {section4Data.buttonText}
           </button>
         </div>
 
