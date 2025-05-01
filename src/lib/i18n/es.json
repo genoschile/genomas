@@ -1,5 +1,8 @@
 {
   "layout.copyright": "Todos los derechos reservados",
+  "layout.footer.buttonText": "Contáctanos",
+  "layout.footer.inputPlaceholder": "Suscríbete a nuestro canal",
+  "layout.footer.inputPlaceholder.2": "Ingresa tu correo electrónico",
 
   "genomas.card.0.title": "Análisis de Variantes de Cáncer",
   "genomas.card.0.description": "Anotación con OncoKB y conocimientos impulsados por IA",

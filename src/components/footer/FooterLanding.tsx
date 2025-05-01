@@ -9,49 +9,63 @@ import { FaLinkedin } from "react-icons/fa";
 /* components */
 import ScrollToTopButton from "./ScrollToTopButton";
 import { useTranslations } from "@/context/I18nClientProvider";
+import { IconsHover } from "./IconsHover";
 
 const socialIcons = [
   {
-    icon: <FaLinkedin size={24} color="black" className="social-icons" />,
+    icon: <FaLinkedin size={32} color="black" className="social-icons" />,
     href: "#",
   },
   {
-    icon: <FaLinkedin size={24} color="black" className="social-icons" />,
+    icon: <FaLinkedin size={32} color="black" className="social-icons" />,
     href: "#",
   },
   {
-    icon: <FaLinkedin size={24} color="black" className="social-icons" />,
+    icon: <FaLinkedin size={32} color="black" className="social-icons" />,
     href: "#",
   },
 ];
 
 export function FooterLanding({ className = "" }: { className?: string }) {
+  const { t } = useTranslations();
 
-  const { t } = useTranslations()
+  const currentText = {
+    copyright: t("layout.copyright"),
+    socialMedia: t("layout.footer.socialTitle"),
+    textButton: t("layout.footer.buttonText"),
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const input = event.currentTarget.querySelector("input[name='inputText']");
+  };
 
   return (
     <footer className={`footer ${className}`} role="contentinfo">
       <div className="footer-container">
-        <div
-          className="social-container"
-          role="navigation"
-          aria-labelledby="social-heading"
-        >
-          <h3 id="social-heading" className="sr-only">
-            Follow us on social media
-          </h3>
-          <div className="social">
-            {socialIcons.map((social, index) => (
-              <a key={index} href={social.href}>
-                {social.icon}
-              </a>
-            ))}
+        <fieldset>
+          <legend>{currentText.socialMedia}</legend>
+
+          <div>
+            <input name="inputText" type="text" />
+            <label htmlFor="inputText">
+              <strong>{t("layout.footer.inputPlaceholder")}</strong>
+              <small>{t("layout.footer.inputPlaceholder.2")}</small>
+            </label>
           </div>
+
+          <button onClick={handleSubmit} type="submit">
+            {currentText.textButton}
+          </button>
+        </fieldset>
+
+        <div className="social">
+          {socialIcons.map((social, index) => (
+            <IconsHover key={index} social={social} index={index} />
+          ))}
         </div>
 
-        <hr className="footer-break" />
-
-        <p className="copyright">© 2025 Genomas - {t("layout.copyright")}</p>
+        <small>© 2025 Genomas - {currentText.socialMedia}</small>
 
         <ScrollToTopButton />
       </div>

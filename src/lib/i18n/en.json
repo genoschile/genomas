@@ -1,7 +1,10 @@
 {
   "layout.copyright": "all right",
   "layout.footer.socialTitle": "Follow us on social media",
-
+  "layout.footer.buttonText": "Contact us",
+  "layout.footer.inputPlaceholder": "Subscribe to our channel",
+  "layout.footer.inputPlaceholder.2": "Enter your email",
+  
   "genomas.card.0.title": "Cancer Variants Analysis",
   "genomas.card.0.description": "OncoKB-powered annotation and AI-driven insights",
   "genomas.card.1.title": "Germline Variants Analysis",
@@ -35,7 +38,6 @@
   "auth.signup.toast.success": "Login successful!",
   "auth.signup.toast.error": "Something went wrong!",
 
-
   "landing.section1.title": "Genomics, Bioinformatics, AI Shaping the future of health",
   "landing.section1.description": "Genomas is an AI-powered platform for decoding genetic data. It offers functional variant annotations, diagnostic insights, treatment options, and an interactive chat to explore automated reports with ease.",
 
@@ -55,7 +57,7 @@
 
   "landing.section5.title": "Meet the Team Behind GENOMAS",
   "landing.section5.description": "Our interdisciplinary team of bioinformaticians, clinical physicians, engineers, and researchers brings diverse expertise and insights. Together, we deliver innovative solutions informed by experience and tailored to address complex challenges in healthcare and genomics.",
-  
+
   "landing.section5.card.0.name": "Dra. Karen Oróstica",
   "landing.section5.card.0.title": "Phd Bioinformatics",
   "landing.section5.card.1.name": "Dr. Ricardo",
@@ -74,10 +76,10 @@
   "contact.faq.2.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
   "contact.faq.3.title": "Will you be free forever?",
   "contact.faq.3.content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus provident rerum autem magnam quae et labore saepe. Recusandae placeat tempore tenetur libero, qui porro est hic. Dolore repellendus et quas?",
-  
+
   "contact.story.title": "Our History",
   "contact.story.subtitle": "I'm Karen, founder Genomas, and this is our history",
-  
+
   "contact.story.timeline.0.date": "Feb 2015",
   "contact.story.timeline.0.title": "Company foundation",
   "contact.story.timeline.0.description": "Genomas is founded with the vision of...",
@@ -97,7 +99,6 @@
   "contact.story.timeline.5.title": "Current milestone",
   "contact.story.timeline.5.description": "We continue to advance and explore new opportunities...",
 
-
   "contact.team.title": "Business Team",
   "contact.engineering.title": "Engineering Team",
 
@@ -113,7 +114,6 @@
   "contact.team.members.3.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
   "contact.team.members.3.description": "General role and responsibilities description.",
 
-
   "contact.engineering.members.1.name": "Chi",
   "contact.engineering.members.1.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
   "contact.engineering.members.1.description": "General role and responsibilities description.",
@@ -123,6 +123,4 @@
   "contact.engineering.members.3.name": "Felipe",
   "contact.engineering.members.3.degrees": "B.Eng., SEU (Nanjing); M.S., NYU",
   "contact.engineering.members.3.description": "General role and responsibilities description."
-
 }
-

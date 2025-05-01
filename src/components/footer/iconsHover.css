@@ -1,0 +1,62 @@
+.icons--items {
+  display: grid;
+  place-content: center;
+  padding: 0.4rem;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid transparent;
+  transition: outline 0.4s ease-in;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    background: var(--bg-linear-gradient-full);
+    left: -110%;
+    top: 90%;
+    transform: rotate(45deg);
+  }
+
+  &:hover {
+    outline-color: black;
+    box-shadow: 0 5px 15px -5px #111;
+
+    &::before {
+      animation: animation 0.7s 1 forwards;
+    }
+
+    .social-icons {
+      transform: scale(1.1);
+      color: rgba(0, 0, 0, 0.9);
+      fill: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  & .social-icons {
+    line-height: 90px;
+    font-size: 25px;
+    transition: all 0.2s;
+    fill: rgba(255, 255, 255, 0.9);
+  }
+}
+
+@keyframes animation {
+  0% {
+    left: -110%;
+    top: 90%;
+  }
+
+  80% {
+    left: 13%;
+    top: -30%;
+  }
+
+  100% {
+    left: -10%;
+    top: -10%;
+  }
+}
