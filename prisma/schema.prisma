@@ -42,13 +42,11 @@ enum DocumentType {
 
 // fastq bam fastqgz
 
-
 // documento => tags (BAM)
 // DOCUMENTO => ID TAGS (AUTOINCREMENTAL UNICO 1 !== ID)
 // OTRA TABLA QUE HAGA ASOCIAC CON SAMPLE
 // EDAD SEXO ENFERMEDAD 
 //
-
 
 // Modelos principales
 
