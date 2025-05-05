@@ -12,7 +12,13 @@
     height: 100%;
     display: flex;
     flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
     gap: 0.5rem;
+
+    & > * {
+      outline: 1px solid green;
+    }
 
     & .social {
       padding-block: 0.4rem;
@@ -21,7 +27,7 @@
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       gap: 1rem;
       max-width: 300px;
     }
@@ -31,7 +37,6 @@
       width: 60%;
       display: flex;
       flex-wrap: nowrap;
-      justify-content: flex-start;
       align-items: center;
       padding: 0.2rem 0.5rem;
       border: 1px solid transparent;
@@ -52,15 +57,32 @@
         background-color: rgba(255, 255, 255, 0.8);
         flex: 3;
         position: relative;
+        background-color: red;
 
         > input {
           inline-size: 100%;
-          padding: 1.2rem 0.5rem 0.5rem;
+          padding: 0.5rem 0.5rem;
           border: none;
           background: transparent;
           color: rgba(0, 0, 0, 0.9);
           font-size: 1rem;
           outline: none;
+          background-color: yellow;
+
+          &:focus + label,
+          &:not(:placeholder-shown) + label {
+            top: 0.3rem;
+            transform: translateY(0);
+            font-size: 0.75rem;
+
+            > strong {
+              font-size: 0.75rem;
+            }
+
+            > small {
+              opacity: 1;
+            }
+          }
         }
 
         > label {
@@ -72,7 +94,6 @@
           font-size: 1rem;
           transition: all 0.2s ease-in-out;
           display: flex;
-          flex-direction: column;
           justify-content: center;
           pointer-events: none;
 
@@ -83,24 +104,8 @@
 
           > small {
             font-size: 0.6rem;
-            opacity: 0;
-            transition: opacity 0.2s ease-in-out;
-          }
-        }
-
-        > input:focus + label,
-        > input:not(:placeholder-shown) + label {
-          top: 0.3rem;
-          transform: translateY(0);
-          font-size: 0.75rem;
-          background-color: yellow;
-
-          > strong {
-            font-size: 0.75rem;
-          }
-
-          > small {
             opacity: 1;
+            transition: opacity 0.2s ease-in-out;
           }
         }
       }
