@@ -6,7 +6,8 @@ import { useTranslations } from "@/context/I18nClientProvider";
 import { Language } from "@/lib/i18n/i18n.types";
 import "./i18nButton.css";
 
-const DEFAULT_LANG: Language = (process.env.NEXT_PUBLIC_APP_LANGUAGE as Language) || "es";
+const DEFAULT_LANG: Language =
+  (process.env.NEXT_PUBLIC_APP_LANGUAGE as Language) || "es";
 
 function getCookie(name: string) {
   const value = `; ${document.cookie}`;
@@ -28,9 +29,9 @@ export const I18nButton = () => {
     const savedLang = getCookie("lang") as Language;
     if (savedLang && savedLang !== currentLang) {
       setCurrentLang(savedLang);
-      setLang(savedLang); 
+      setLang(savedLang);
     }
-  }, []); 
+  }, []);
 
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLang = e.target.value as Language;
@@ -38,15 +39,16 @@ export const I18nButton = () => {
 
     setLang(newLang);
     setCurrentLang(newLang);
-    setCookie("lang", newLang); 
+    setCookie("lang", newLang);
     router.refresh();
   };
 
   return (
     <div className="select-dropdown">
       <select value={currentLang} onChange={handleChange}>
-      <option value="es">🇪🇸 Español</option>
-      <option value="en">🇺🇸 English</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="fr">fr Francés</option>
       </select>
     </div>
   );

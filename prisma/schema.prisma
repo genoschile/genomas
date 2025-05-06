@@ -251,46 +251,9 @@ model Sample {
   sequencingType SequenceType
   disease        String
   folioNumber    Int
-  genes          Gene[]
   genomicFiles   GenomicFile[] // Relación inversa
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
-}
-
-model Gene {
-  id               Int                     @id @default(autoincrement())
-  types            String[]
-  impacts          String[]
-  significances    String[]
-  description      String
-  sampleId         Int
-  sample           Sample                  @relation(fields: [sampleId], references: [id])
-  variants         Variant[]
-  activePrinciples ActivePrincipleOnGene[]
-}
-
-model Variant {
-  id     Int    @id @default(autoincrement())
-  name   String
-  geneId Int
-  gene   Gene   @relation(fields: [geneId], references: [id])
-}
-
-model ActivePrinciple {
-  id                     Int                     @id @default(autoincrement())
-  name                   String
-  availabilityInChile    Boolean
-  enterprise             String?
-  pharmaceutical         String?
-  activePrinciplesOnGene ActivePrincipleOnGene[]
-}
-
-model ActivePrincipleOnGene {
-  id                Int             @id @default(autoincrement())
-  gene              Gene            @relation(fields: [geneId], references: [id])
-  geneId            Int
-  activePrinciple   ActivePrinciple @relation(fields: [activePrincipleId], references: [id])
-  activePrincipleId Int
 }
 
 // Sistema de tags

@@ -1,10 +1,17 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "@lib/actions/session";
 import { Roles } from "@/lib/types/global";
 
 export default async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
+
+  const lang = req.headers.get("accept-language")?.split(",")[0] || "es";
+  console.log({ lang });
+
+  if (lang === "ch") {
+    return new NextResponse("chino no soportado", { headers: { "Content-Type": "text/plain" } });
+  }
 
   // Extraer el lang
   const segments = pathname.split("/");
@@ -68,15 +75,6 @@ export default async function middleware(req: NextRequest) {
 
     console.log(session);
 
-    // Validar que exista session, userId y role
-    if (!session || !session.userId || !session.metadata?.role) {
-      return NextResponse.redirect(new URL("/login", req.nextUrl));
-    }
-
-    // Validar que el rol coincida con el requerido por la ruta
-    if (session.metadata.role !== matchingRoute.role) {
-      return NextResponse.redirect(new URL("/unauthorized", req.nextUrl));
-    }
   }
 
   return res;

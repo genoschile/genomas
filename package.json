@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.19.0",
     "@prisma/client": "^6.7.0",
     "adm-zip": "^0.5.16",
     "bcrypt": "^5.1.1",
