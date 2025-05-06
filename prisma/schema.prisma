@@ -1,38 +1,3 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-// Enums
-enum InputSource {
-  SOMATIC
-  GERMINAL
-  LIQUID_BIOPSY
-  CLINICAL
-}
-
-enum SequenceType {
-  WHOLE_GENOME
-  WHOLE_EXOME
-  GENOMIC_PANEL
-}
-
-enum UserType {
-  ADMIN
-  CLIENT
-}
-
-enum DocumentType {
-  VCF
-  MAF
-  REPORT
-  CLINICO
-}
-
 // workspace => acumulación de project
 // cada uno de esos user tiene por default su propio workspace aloja project y lo que es invitado, que cada project tendrá un creador
 // ahora tenemos workspace y project 
@@ -50,147 +15,313 @@ enum DocumentType {
 
 // Modelos principales
 
-model Project {
-  id          Int           @id @default(autoincrement())
-  name        String
-  permissions String[]
-  userProject UserProject[]
-  documents   Document[]
+generator client {
+  provider = "prisma-client-js"
 }
 
-model UserProject {
-  id Int @id @default(autoincrement())
-
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
-
-  projectId Int
-  project   Project @relation(fields: [projectId], references: [id])
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model User {
-  id                Int    @id @default(autoincrement())
-  name              String
-  email             String @unique
-  encryptedPassword String // Contraseña encriptada
+// Enums
+enum UserType {
+  ADMIN
+  CLIENT
+}
 
-  userType    UserType @default(CLIENT)
-  permissions String[]
+enum Role {
+  OWNER
+  ADMIN
+  EDITOR
+  VIEWER
+}
 
-  userProjects UserProject[]
+enum PipelineType {
+  CANCER
+  GERMLINE
+  BACTERIA
+}
+
+enum InputSource {
+  SOMATIC
+  GERMINAL
+  LIQUID_BIOPSY
+  CLINICAL
+}
+
+enum SequenceType {
+  WHOLE_GENOME
+  WHOLE_EXOME
+  GENOMIC_PANEL
+}
+
+enum FileType {
+  FASTQ
+  BAM
+  VCF
+  MAF
+  CSV
+  PDF
+}
+
+enum FileRole {
+  INPUT
+  OUTPUT
+  INTERMEDIATE
+  FINAL_REPORT
+}
+
+enum RunStatus {
+  RUNNING
+  DONE
+  FAILED
+  PENDING
+}
+
+enum AccessType {
+  VIEW
+  EDIT
+  ADMIN
+}
+
+enum LicenseType {
+  INDIVIDUAL
+  SMALL_TEAM
+  ORGANIZATION
+}
+
+enum LicenseScope {
+  USER
+  ORGANIZATION
+}
+
+enum TagType {
+  SAMPLE
+  CATEGORY
+  FILETYPE
+  DISEASE
+  CUSTOM
+  ANALYSIS_STAGE
+  QUALITY_FLAG
+  PRIORITY
+}
+
+// Licencias
+model License {
+  id            String       @id @default(cuid())
+  licenseType   LicenseType
+  licenseScope  LicenseScope
+  maxUsers      Int
+  assignedUsers Int          @default(0)
+  startDate     DateTime
+  endDate       DateTime
+  isActive      Boolean      @default(true)
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @unique
+
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?       @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-// Sample, Gene, Variant
+// Organización
+model Organization {
+  id         String      @id @default(cuid())
+  name       String
+  users      User[]
+  workspaces Workspace[]
+  license    License?
+}
+
+// Usuario
+model User {
+  id                String            @id @default(cuid())
+  email             String            @unique
+  name              String?
+  encryptedPassword String
+  userType          UserType          @default(CLIENT)
+  organizationId    String
+  organization      Organization      @relation(fields: [organizationId], references: [id])
+  groupId           String?
+  group             Group?            @relation(fields: [groupId], references: [id])
+  workspacesOwned   Workspace[]       @relation("OwnedWorkspaces")
+  workspaceMembers  WorkspaceMember[]
+  sharedProjects    ProjectShare[]
+  ownedProjects     Project[]
+  license           License?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}
+
+// Grupos con roles
+model Group {
+  id    String @id @default(cuid())
+  name  String
+  role  Role
+  users User[]
+}
+
+// Workspace
+model Workspace {
+  id             String            @id @default(cuid())
+  name           String
+  pipelineType   PipelineType
+  organizationId String?
+  organization   Organization?     @relation(fields: [organizationId], references: [id])
+  ownerId        String
+  owner          User              @relation("OwnedWorkspaces", fields: [ownerId], references: [id])
+  projects       Project[]
+  members        WorkspaceMember[]
+}
+
+// Relación usuario - workspace (acceso)
+model WorkspaceMember {
+  id          String @id @default(cuid())
+  userId      String
+  workspaceId String
+  role        Role
+
+  user      User      @relation(fields: [userId], references: [id])
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+
+  @@unique([userId, workspaceId]) // Evita duplicados
+}
+
+// Proyecto
+model Project {
+  id          String         @id @default(cuid())
+  name        String
+  description String?
+  workspaceId String
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id])
+  ownerId     String
+  owner       User           @relation(fields: [ownerId], references: [id])
+  sharedWith  ProjectShare[]
+  inputFiles  GenomicFile[]
+  executions  PipelineRun[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @default(now())
+}
+
+// Compartir proyecto con otros usuarios
+model ProjectShare {
+  id        String     @id @default(cuid())
+  userId    String
+  projectId String
+  access    AccessType
+
+  user    User    @relation(fields: [userId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@unique([userId, projectId]) // Evita compartir duplicado
+}
+
+// Archivos genómicos
+model GenomicFile {
+  id         String   @id @default(cuid())
+  filename   String
+  path       String
+  fileType   FileType
+  fileRole   FileRole
+  project    Project  @relation(fields: [projectId], references: [id])
+  projectId  String
+  sampleId   Int?
+  sample     Sample?  @relation(fields: [sampleId], references: [id])
+  uploadedAt DateTime @default(now())
+
+  pipelineRun   PipelineRun? @relation("PipelineRunLink", fields: [pipelineRunId], references: [id])
+  pipelineRunId String?
+
+  inputForRun   PipelineRun? @relation("InputFiles", fields: [inputForRunId], references: [id])
+  inputForRunId String?
+
+  outputOfRun   PipelineRun? @relation("OutputFiles", fields: [outputOfRunId], references: [id])
+  outputOfRunId String?
+
+  documentTags DocumentTag[]
+}
+
+model PipelineRun {
+  id          String        @id @default(cuid())
+  startedAt   DateTime
+  endedAt     DateTime?
+  status      RunStatus
+  workflow    String
+  inputFiles  GenomicFile[] @relation("InputFiles")
+  outputFiles GenomicFile[] @relation("OutputFiles")
+  project     Project       @relation(fields: [projectId], references: [id])
+  projectId   String
+
+  pipelineFiles GenomicFile[] @relation("PipelineRunLink")
+}
+
+// Datos genómicos
 model Sample {
-  id             Int          @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   sampleName     String
   reportDate     DateTime
   sampleType     InputSource
   sequencingType SequenceType
   disease        String
   folioNumber    Int
-
-  genes           Gene[]
-  sampleDocuments SampleDocument[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  genes          Gene[]
+  genomicFiles   GenomicFile[] // Relación inversa
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 }
 
 model Gene {
-  id            Int      @id @default(autoincrement())
-  types         String[]
-  impacts       String[]
-  significances String[]
-  description   String
-
-  // Relación con Sample (1-N)
-  sampleId Int
-  sample   Sample @relation(fields: [sampleId], references: [id])
-
-  // Un Gene puede tener múltiples Variant
+  id               Int                     @id @default(autoincrement())
+  types            String[]
+  impacts          String[]
+  significances    String[]
+  description      String
+  sampleId         Int
+  sample           Sample                  @relation(fields: [sampleId], references: [id])
   variants         Variant[]
-  // M:N
   activePrinciples ActivePrincipleOnGene[]
 }
 
 model Variant {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  // Relación con Gene (1-N)
+  id     Int    @id @default(autoincrement())
+  name   String
   geneId Int
-  gene   Gene @relation(fields: [geneId], references: [id])
+  gene   Gene   @relation(fields: [geneId], references: [id])
 }
 
-// ActivePrinciple
 model ActivePrinciple {
-  id                  Int     @id @default(autoincrement())
-  name                String
-  availabilityInChile Boolean
-  enterprise          String?
-  pharmaceutical      String?
-
+  id                     Int                     @id @default(autoincrement())
+  name                   String
+  availabilityInChile    Boolean
+  enterprise             String?
+  pharmaceutical         String?
   activePrinciplesOnGene ActivePrincipleOnGene[]
 }
 
-// Gene - ActivePrinciple
 model ActivePrincipleOnGene {
-  id Int @id @default(autoincrement())
-
-  geneId Int
-  gene   Gene @relation(fields: [geneId], references: [id])
-
-  activePrincipleId Int
+  id                Int             @id @default(autoincrement())
+  gene              Gene            @relation(fields: [geneId], references: [id])
+  geneId            Int
   activePrinciple   ActivePrinciple @relation(fields: [activePrincipleId], references: [id])
+  activePrincipleId Int
 }
 
-// Document, SampleDocument, Tag, DocumentTag
-
-model Document {
-  id            Int          @id @default(autoincrement())
-  docType       DocumentType
-  encryptedData String
-
-  // Relación M:N explícita con Sample
-  sampleDocuments SampleDocument[]
-
-  // Relación M:N con Tag
-  documentTags DocumentTag[]
-
-  projectId    Int
-  project      Project       @relation(fields: [projectId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model SampleDocument {
-  id Int @id @default(autoincrement())
-
-  sampleId Int
-  sample   Sample @relation(fields: [sampleId], references: [id])
-
-  documentId Int
-  document   Document @relation(fields: [documentId], references: [id])
-}
-
+// Sistema de tags
 model Tag {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  documentTags DocumentTag[]
+  id        String        @id @default(cuid())
+  name      String
+  type      TagType
+  documents DocumentTag[]
 }
 
 model DocumentTag {
-  id Int @id @default(autoincrement())
-
-  documentId Int
-  document   Document @relation(fields: [documentId], references: [id])
-
-  tagId Int
-  tag   Tag @relation(fields: [tagId], references: [id])
+  id     String      @id @default(cuid())
+  file   GenomicFile @relation(fields: [fileId], references: [id])
+  fileId String
+  tag    Tag         @relation(fields: [tagId], references: [id])
+  tagId  String
 }
