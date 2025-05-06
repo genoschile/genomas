@@ -1,20 +1,3 @@
-// workspace => acumulación de project
-// cada uno de esos user tiene por default su propio workspace aloja project y lo que es invitado, que cada project tendrá un creador
-// ahora tenemos workspace y project 
-// licencia tabla licencia tipos licencia (perpetua-anual) expiración
-// ind para un numero determinado de pacientes x user mensual, por un numero dado de usuarios anual, ilimitada de pacientes
-//usuarios con accesos agregar
-
-// fastq bam fastqgz
-
-// documento => tags (BAM)
-// DOCUMENTO => ID TAGS (AUTOINCREMENTAL UNICO 1 !== ID)
-// OTRA TABLA QUE HAGA ASOCIAC CON SAMPLE
-// EDAD SEXO ENFERMEDAD 
-//
-
-// Modelos principales
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -325,3 +308,55 @@ model DocumentTag {
   tag    Tag         @relation(fields: [tagId], references: [id])
   tagId  String
 }
+
+/**
+ * tips
+ * // DOCUMENTO => ID TAGS (AUTOINCREMENTAL UNICO 1 !== ID)
+ * // OTRA TABLA QUE HAGA ASOCIAC CON SAMPLE
+ * // EDAD SEXO ENFERMEDAD
+ * limites asociados (rol de propietario, revisa licencia)
+ */
+
+ // añadir nuevo lenguaje
+
+/**
+ * Un User pertenece a una Organization (1:N), puede tener una License directa (1:1) o usar la de su organización (1:1). El usuario crea o pertenece a uno o más Workspaces (1:N mediante Workspace.ownerId y WorkspaceMember) donde puede tener distintos Roles. Cada Workspace agrupa varios Projects (1:N), de los cuales el usuario puede ser owner o estar compartido vía ProjectShare (M:N con AccessType).
+ * Dentro de un Project, el usuario sube GenomicFiles (1:N), que pueden estar vinculados a un Sample (opcional, 1:N), y usar esos archivos como input/output de PipelineRun (N:M). Los resultados y archivos pueden etiquetarse mediante la relación DocumentTag con Tag (M:N).
+ * cada Sample puede tener varios Genes (1:N), cada Gene varias Variants (1:N), y asociarse a múltiples ActivePrinciples mediante la tabla puente ActivePrincipleOnGene (M:N).
+ * En conjunto, el recorrido fluye desde User → Workspace → Project → GenomicFile → PipelineRun/Sample → Gene → Variant/ActivePrinciple, permitiendo acceso, colaboración y trazabilidad controlada por roles, licencias y relaciones compartidas.
+ */
+
+/**
+ * ¿cómo trackear archivos de diferentes ejecuciones?
+ * R:
+ * ¿la licencia debería estar relacionada a los usuarios/grupos/depto u organización?
+ * R:
+ * ¿Cuáles serán los archivos de entrada y salida para cada pipeline?
+ * R:
+ * ¿Usaremos una base única para todos los clientes o una por organización?
+ * R:
+ * ¿La licencia debe limitar solo usuarios o también proyectos/espacios de trabajo?
+ * R:
+ * ¿Queremos controlar el número de proyectos activos por tipo de licencia?
+ * R:
+ * ¿Queremos permitir que usuarios sin organización trabajen colaborativamente (por invitación directa a proyectos)?
+ * R:
+ * ¿Cada proyecto tendrá solo un Clinical Data (inputfiles) o podría necesitar varios (por fases, versiones)?
+ * R:
+ * ¿Los roles actuales (OWNER, ADMIN, EDITOR, VIEWER) cubren todos los escenarios o falta alguno?
+ * R:
+ * ¿Cada proyecto tendrá un solo pipeline o podría haber múltiples ejecuciones paralelas?
+ * R:
+ * Si un paso falla, ¿qué nivel de detalle queremos mostrar al usuario?
+ * R:
+ * ¿Mostrar logs técnicos?
+ * R:
+ * ¿Un mensaje básico de error?
+ * R:
+ * ¿Permitir descarga de logs?
+ * R:
+ * ¿Queremos permitir tags definidas sólo globalmente o también personalizadas por la organización?
+ * R:
+ * ¿Queremos limitar el tamaño máximo de archivos subidos o el almacenamiento total por usuario/organización/licencia?
+ * R:
+ */
