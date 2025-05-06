@@ -6,7 +6,14 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start:migrate:prod": "prisma migrate deploy && rpm run start:prod",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:generate": "prisma generate",
+    "prisma:studio": "prisma studio",
+    "prisma:reset": "prisma migrate reset",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:validate": "npx prisma validate "
   },
   "dependencies": {
     "@clerk/nextjs": "^6.19.0",
