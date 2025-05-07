@@ -3,6 +3,8 @@
 import "./featuresContainer.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import { usePathname } from "next/navigation";
+import { I18nButton } from "./I18nButton";
+import Logo from "../logo/Logo";
 
 export default function FeaturesContainer() {
   const pathname = usePathname();
@@ -12,8 +14,11 @@ export default function FeaturesContainer() {
         pathname === "/login" || pathname === "/signup" ? "login--" : ""
       }`}
     >
-      {/* <p className="features-header__title">New Features on GENOMAS</p> */}
-      <ButtonPrimary text="Learn More" link="#" />
+      <Logo />
+      <div>
+        <ButtonPrimary text="Learn More" link="#" />
+        <I18nButton />
+      </div>
     </div>
   );
 }

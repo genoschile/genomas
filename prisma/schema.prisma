@@ -138,6 +138,9 @@ model User {
   license           License?
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
+  File              File[]
+  PipelineRun       PipelineRun[]
+  Sample            Sample[]
 }
 
 // Grupos con roles
@@ -184,7 +187,7 @@ model Project {
   ownerId     String
   owner       User           @relation(fields: [ownerId], references: [id])
   sharedWith  ProjectShare[]
-  inputFiles  GenomicFile[]
+  inputFiles  File[]
   executions  PipelineRun[]
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @default(now())
@@ -200,60 +203,75 @@ model ProjectShare {
   user    User    @relation(fields: [userId], references: [id])
   project Project @relation(fields: [projectId], references: [id])
 
-  @@unique([userId, projectId]) // Evita compartir duplicado
+  createdAt DateTime @default(now())
+
+  @@unique([userId, projectId])
 }
 
 // Archivos genómicos
-model GenomicFile {
+model File {
   id         String   @id @default(cuid())
   filename   String
   path       String
   fileType   FileType
   fileRole   FileRole
-  project    Project  @relation(fields: [projectId], references: [id])
+  uploadedAt DateTime @default(now())
   projectId  String
+  project    Project  @relation(fields: [projectId], references: [id])
   sampleId   Int?
   sample     Sample?  @relation(fields: [sampleId], references: [id])
-  uploadedAt DateTime @default(now())
 
-  pipelineRun   PipelineRun? @relation("PipelineRunLink", fields: [pipelineRunId], references: [id])
   pipelineRunId String?
-
-  inputForRun   PipelineRun? @relation("InputFiles", fields: [inputForRunId], references: [id])
+  pipelineRun   PipelineRun? @relation("PipelineRunLink", fields: [pipelineRunId], references: [id])
   inputForRunId String?
-
-  outputOfRun   PipelineRun? @relation("OutputFiles", fields: [outputOfRunId], references: [id])
+  inputForRun   PipelineRun? @relation("InputFiles", fields: [inputForRunId], references: [id])
   outputOfRunId String?
+  outputOfRun   PipelineRun? @relation("OutputFiles", fields: [outputOfRunId], references: [id])
+
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   documentTags DocumentTag[]
 }
 
 model PipelineRun {
-  id          String        @id @default(cuid())
+  id          String    @id @default(cuid())
   startedAt   DateTime
   endedAt     DateTime?
   status      RunStatus
   workflow    String
-  inputFiles  GenomicFile[] @relation("InputFiles")
-  outputFiles GenomicFile[] @relation("OutputFiles")
-  project     Project       @relation(fields: [projectId], references: [id])
+  name        String? // Ej. "Run HG-001 - Tumor"
+  description String? // Para contexto adicional
   projectId   String
+  project     Project   @relation(fields: [projectId], references: [id])
 
-  pipelineFiles GenomicFile[] @relation("PipelineRunLink")
+  inputFiles    File[] @relation("InputFiles")
+  outputFiles   File[] @relation("OutputFiles")
+  pipelineFiles File[] @relation("PipelineRunLink")
+
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 // Datos genómicos
 model Sample {
-  id             Int           @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   sampleName     String
   reportDate     DateTime
   sampleType     InputSource
   sequencingType SequenceType
   disease        String
   folioNumber    Int
-  genomicFiles   GenomicFile[] // Relación inversa
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  genomicFiles   File[]
+
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 // Sistema de tags
@@ -265,61 +283,9 @@ model Tag {
 }
 
 model DocumentTag {
-  id     String      @id @default(cuid())
-  file   GenomicFile @relation(fields: [fileId], references: [id])
+  id     String @id @default(cuid())
+  file   File   @relation(fields: [fileId], references: [id])
   fileId String
-  tag    Tag         @relation(fields: [tagId], references: [id])
+  tag    Tag    @relation(fields: [tagId], references: [id])
   tagId  String
 }
-
-/**
- * tips
- * // DOCUMENTO => ID TAGS (AUTOINCREMENTAL UNICO 1 !== ID)
- * // OTRA TABLA QUE HAGA ASOCIAC CON SAMPLE
- * // EDAD SEXO ENFERMEDAD
- * limites asociados (rol de propietario, revisa licencia)
- */
-
- // añadir nuevo lenguaje
-
-/**
- * Un User pertenece a una Organization (1:N), puede tener una License directa (1:1) o usar la de su organización (1:1). El usuario crea o pertenece a uno o más Workspaces (1:N mediante Workspace.ownerId y WorkspaceMember) donde puede tener distintos Roles. Cada Workspace agrupa varios Projects (1:N), de los cuales el usuario puede ser owner o estar compartido vía ProjectShare (M:N con AccessType).
- * Dentro de un Project, el usuario sube GenomicFiles (1:N), que pueden estar vinculados a un Sample (opcional, 1:N), y usar esos archivos como input/output de PipelineRun (N:M). Los resultados y archivos pueden etiquetarse mediante la relación DocumentTag con Tag (M:N).
- * cada Sample puede tener varios Genes (1:N), cada Gene varias Variants (1:N), y asociarse a múltiples ActivePrinciples mediante la tabla puente ActivePrincipleOnGene (M:N).
- * En conjunto, el recorrido fluye desde User → Workspace → Project → GenomicFile → PipelineRun/Sample → Gene → Variant/ActivePrinciple, permitiendo acceso, colaboración y trazabilidad controlada por roles, licencias y relaciones compartidas.
- */
-
-/**
- * ¿cómo trackear archivos de diferentes ejecuciones?
- * R:
- * ¿la licencia debería estar relacionada a los usuarios/grupos/depto u organización?
- * R:
- * ¿Cuáles serán los archivos de entrada y salida para cada pipeline?
- * R:
- * ¿Usaremos una base única para todos los clientes o una por organización?
- * R:
- * ¿La licencia debe limitar solo usuarios o también proyectos/espacios de trabajo?
- * R:
- * ¿Queremos controlar el número de proyectos activos por tipo de licencia?
- * R:
- * ¿Queremos permitir que usuarios sin organización trabajen colaborativamente (por invitación directa a proyectos)?
- * R:
- * ¿Cada proyecto tendrá solo un Clinical Data (inputfiles) o podría necesitar varios (por fases, versiones)?
- * R:
- * ¿Los roles actuales (OWNER, ADMIN, EDITOR, VIEWER) cubren todos los escenarios o falta alguno?
- * R:
- * ¿Cada proyecto tendrá un solo pipeline o podría haber múltiples ejecuciones paralelas?
- * R:
- * Si un paso falla, ¿qué nivel de detalle queremos mostrar al usuario?
- * R:
- * ¿Mostrar logs técnicos?
- * R:
- * ¿Un mensaje básico de error?
- * R:
- * ¿Permitir descarga de logs?
- * R:
- * ¿Queremos permitir tags definidas sólo globalmente o también personalizadas por la organización?
- * R:
- * ¿Queremos limitar el tamaño máximo de archivos subidos o el almacenamiento total por usuario/organización/licencia?
- * R:
- */

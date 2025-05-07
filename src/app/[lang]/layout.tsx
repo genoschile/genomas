@@ -12,7 +12,6 @@ import { inter } from "@/lib/fonts/fonts";
 import { ToastContainer } from "react-toastify";
 
 import { I18nServerProvider } from "../../context/I18nServerProvider";
-import api from "@/lib/i18n/api";
 import { Language } from "@/lib/i18n/i18n.types";
 
 export const metadata: Metadata = {
@@ -37,12 +36,12 @@ export default async function RootLayout({
   params: Promise<{ lang: Language }>;
 }) {
   const { lang } = await params;
-  // const { t } = await api.fetch(lang);
+  
   return (
     <html lang={`${lang}`}>
       <body className={`${inter} antialiased`}>
         <I18nServerProvider lang={`${lang}`}>
-            {children}
+          {children}
           <ToastContainer position="top-right" autoClose={5000} />
         </I18nServerProvider>
       </body>

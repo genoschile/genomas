@@ -47,10 +47,13 @@ export function FooterLanding({ className = "" }: { className?: string }) {
           <legend>{currentText.socialMedia}</legend>
 
           <div>
-            <input name="inputText" type="text" />
+            <input name="inputText" placeholder=" " type="text" />
             <label htmlFor="inputText">
-              <strong>{t("layout.footer.inputPlaceholder")}</strong>
-              <small>{t("layout.footer.inputPlaceholder.2")}</small>
+              <p>
+                <strong>{t("layout.footer.inputPlaceholder")}</strong>
+                
+                {t("layout.footer.inputPlaceholder.2")}
+              </p>
             </label>
           </div>
 

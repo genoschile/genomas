@@ -1,35 +1,45 @@
 .features-header__container {
-  width: 100%;
   display: flex;
-  align-items: center;
-  gap: min(2em, 5%);
-  padding: 0 16px;
+  inline-size: 100%;
+  max-inline-size: 1200px;
   margin: 0 auto;
-  font-size: clamp(1em, calc(1vw + 0.2rem), 1.5em);
-  font-weight: bold;
-  min-width: 350px;
+  align-items: center;
 
-  &.login-- {
-    justify-content: center;
+  > a {
+    margin-right: auto;
   }
 
-  & .features-header__title {
-    font-size: inherit;
-    font-weight: inherit;
-    text-wrap: balance;
-    text-align: center;
-    color: white;
-  }
-
-  .features-header__button {
-    padding: 8px 16px;
-    background-color: var(--secondary-color);
-    color: white;
-    font-size: inherit;
-    font-weight: inherit;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: outline 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  > div {
+    display: flex;
+    align-items: center;
+    gap: min(2em, 5%);
+    padding: 0 16px;
+    font-size: clamp(1em, calc(1vw + 0.2rem), 1.5em);
+    font-weight: bold;
+    min-width: 350px;
+  
+    &.login-- {
+      justify-content: center;
+    }
+  
+    & .features-header__title {
+      font-size: inherit;
+      font-weight: inherit;
+      text-wrap: balance;
+      text-align: center;
+      color: white;
+    }
+  
+    .features-header__button {
+      padding: 8px 16px;
+      background-color: var(--secondary-color);
+      color: white;
+      font-size: inherit;
+      font-weight: inherit;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: outline 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    }
   }
 }

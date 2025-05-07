@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
-import { IoIosArrowDown, IoIosRocket, IoIosSchool } from "react-icons/io";
+import { IoIosRocket, IoIosSchool } from "react-icons/io";
 
 import { MdOutlineMenuBook } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
 import "./page.css";
 import { useTranslations } from "@/context/I18nClientProvider";
+import { AccordionList } from "@/components/accordion/AccordionList";
+import { Timeline } from "@/components/timeline/Timeline";
 
 export default function page() {
   return (
@@ -20,25 +22,6 @@ export default function page() {
 }
 
 export const AboutUs = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const contentRefs = useRef<HTMLDivElement[]>([]);
-
-  const handleClickExpanded = (index: number) => {
-    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
-  };
-
-  useEffect(() => {
-    contentRefs.current.forEach((ref, index) => {
-      if (ref) {
-        if (index === openIndex) {
-          ref.style.maxHeight = `${ref.scrollHeight}px`;
-        } else {
-          ref.style.maxHeight = "0px";
-        }
-      }
-    });
-  }, [openIndex]);
-
   const { t } = useTranslations();
 
   const Titles = [
@@ -69,54 +52,16 @@ export const AboutUs = () => {
 
   return (
     <article className="about-us">
-      <figure>
-        <img
-          src="/images/contact/contact.svg"
-          alt="Contact Us"
-          className="contact--page__image"
-        />
-        <figcaption className="contact--page__caption">Contact Us</figcaption>
-      </figure>
-
-      <header className="header">
-        <h1>{Titles[0]?.title}</h1>
-        <h3>{Titles[0]?.subtitle}</h3>
-      </header>
+      <SectionIntro
+        imageSrc="/images/contact/contact.svg"
+        imageAlt="Contact Us"
+        caption="Contact Us"
+        title={Titles[0]?.title}
+        subtitle={Titles[0]?.subtitle}
+      />
 
       <div className="container--">
-        {/* items */}
-        <ul className="list">
-          {faqItems.map((item, index) => (
-            <li
-              className={`item ${openIndex === index ? "show" : ""}`}
-              key={index}
-            >
-              <div className="title">
-                <h4>{item.title}</h4>
-                <button
-                  type="button"
-                  onClick={() => handleClickExpanded(index)}
-                  className={`toggle ${`item ${
-                    openIndex === index ? "rotate" : ""
-                  }`}`}
-                >
-                  <IoIosArrowDown />
-                </button>
-              </div>
-              <div
-                className="content"
-                ref={(el) => {
-                  if (el) {
-                    contentRefs.current[index] = el;
-                  }
-                }}
-              >
-                {item.content}
-              </div>
-            </li>
-          ))}
-        </ul>
-        {/* items */}
+        <AccordionList items={faqItems} />;
       </div>
     </article>
   );
@@ -175,24 +120,7 @@ export const OurStory = () => {
         <h1>{dataOurStory.title}</h1>
         <h3>{dataOurStory.subtitle}</h3>
       </header>
-      <ul className="timeline">
-        {dataOurStory.timeline.map((event, index) => (
-          <li className="container" key={index}>
-            <figure>{event.icon}</figure>
-            <div className="text-box">
-              <h2>{event.title}</h2>{" "}
-              <dl>
-                <dt>{event.date}</dt>
-                <dd>{event.title}</dd>
-                {event.description && (
-                  <dd className="description">{event.description}</dd>
-                )}
-              </dl>
-              <span className="arrow"></span>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <Timeline dataOurStory={dataOurStory} />
     </article>
   );
 };
@@ -202,6 +130,9 @@ interface MemberTeams {
   degrees: string;
   description: string;
 }
+
+import { useEffect } from "react";
+import { SectionIntro } from "@/components/sections/sectionTitle/SectionTitle";
 
 export const Team = () => {
   const { t } = useTranslations();
@@ -256,34 +187,92 @@ export const Team = () => {
     1: TeamInfoSection[1].members[0],
   });
 
-  const handleMemberClick = (teamIndex: number, member: MemberTeams) => {
-    setSelectedMembers((prevSelectedMembers) => ({
-      ...prevSelectedMembers,
+  const sliderRefs = useRef<Array<HTMLUListElement | null>>([]);
+  const [sliderStyles, setSliderStyles] = useState<{
+    [key: number]: React.CSSProperties;
+  }>({});
+
+  const handleMemberClick = (
+    teamIndex: number,
+    member: MemberTeams,
+    e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+  ) => {
+    setSelectedMembers((prev) => ({
+      ...prev,
       [teamIndex]: member,
     }));
+
+    const li = e.currentTarget.closest("li");
+    const container = sliderRefs.current[teamIndex];
+
+    if (li && container) {
+      const liRect = li.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      setSliderStyles((prev) => ({
+        ...prev,
+        [teamIndex]: {
+          left: liRect.left - containerRect.left + "px",
+          width: liRect.width + "px",
+        },
+      }));
+    }
   };
+
+  useEffect(() => {
+    TeamInfoSection.forEach((team, index) => {
+      const member = selectedMembers[index];
+      const container = sliderRefs.current[index];
+      if (!container) return;
+      const lis = container.querySelectorAll("li");
+      const activeLi = Array.from(lis).find((li) =>
+        li.textContent?.includes(member.name)
+      );
+      if (activeLi) {
+        const liRect = activeLi.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        setSliderStyles((prev) => ({
+          ...prev,
+          [index]: {
+            left: liRect.left - containerRect.left + "px",
+            width: liRect.width + "px",
+          },
+        }));
+      }
+    });
+  }, []);
 
   return (
     <section className="teams">
+      
+      <SectionIntro
+        imageSrc="/images/contact/contact.svg"
+        imageAlt="Contact Us"
+        caption="Contact Us"
+        title={"Teams"}
+        subtitle={""}
+      />
+
       {TeamInfoSection.map((team, index) => (
         <article key={index}>
           <h1>{team.title}</h1>
-          <ul className="team">
+          <ul className="team" ref={(el) => (sliderRefs.current[index] = el)}>
+            <div
+              className="slider"
+              style={{
+                left: sliderStyles[index]?.left || 0,
+                width: sliderStyles[index]?.width || 0,
+              }}
+            />
             {team.members.map((integrante, memberIndex) => (
               <li
+                key={memberIndex}
                 className={`team-member ${
                   selectedMembers[index]?.name === integrante.name
                     ? "active"
                     : ""
                 }`}
-                key={memberIndex}
               >
-                <span
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleMemberClick(index, integrante);
-                  }}
-                >
+                <span onClick={(e) => handleMemberClick(index, integrante, e)}>
                   {integrante.name}
                 </span>
               </li>
@@ -293,12 +282,11 @@ export const Team = () => {
             {selectedMembers[index] ? (
               <>
                 <header>
-                  <h3>{selectedMembers[index]?.name}</h3>
-                  <div></div>
-                  <small>{selectedMembers[index]?.degrees}</small>
+                  <h3>{selectedMembers[index].name}</h3>
+                  <small>{selectedMembers[index].degrees}</small>
                 </header>
                 <div>
-                  <p>{selectedMembers[index]?.description}</p>
+                  <p>{selectedMembers[index].description}</p>
                 </div>
               </>
             ) : (

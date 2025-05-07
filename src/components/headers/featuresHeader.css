@@ -1,10 +1,10 @@
-/* Estilos generales del header */
+
 .features-header {
-  width: 100%;
   background-color: var(--primary-color);
   color: white;
   padding: 12px 0;
   position: sticky;
   top: 0;
   z-index: 10;
+  display: block;
 }

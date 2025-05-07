@@ -1,9 +1,10 @@
+import Link from "next/link";
 import "./logo.css";
 
 export default function Logo() {
   return (
-    <a className={`header-landing__brand`} href="#">
+    <Link className={`header-landing__brand`} href="/">
       Genomas
-    </a>
+    </Link>
   );
 }

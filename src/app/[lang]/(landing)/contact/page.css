@@ -1,7 +1,7 @@
 .contact--page {
   display: block;
 
-  & > article {
+  & > :is(article, section) {
     margin: 0 auto;
     max-inline-size: 1200px;
     padding-block-start: 1rem;
@@ -10,52 +10,6 @@
     align-items: center;
     gap: 10px;
     min-block-size: 100vh;
-
-    &:first-child {
-      & figure {
-        padding: 10px;
-        max-width: 250px;
-        block-size: auto;
-        inline-size: 100%;
-        aspect-ratio: 1/1;
-
-        & figcaption {
-          display: none;
-        }
-
-        & img {
-          display: block;
-          max-inline-size: 100%;
-          width: 100%;
-          height: auto;
-          object-fit: cover;
-          mask: linear-gradient(to bottom, #000 60%, transparent);
-        }
-      }
-
-      > .header {
-        text-align: center;
-        padding: 0px 10px;
-        margin-block-end: 50px;
-        margin-block-start: -3.5rem;
-
-        & h1 {
-          font-size: 48px;
-          line-height: 58px;
-          font-weight: 600;
-          margin-bottom: 15px;
-        }
-
-        & h3 {
-          max-width: 714px;
-          font-size: 18px;
-          line-height: 30px;
-          font-weight: 400;
-          color: #5c5c5c;
-          margin: 0 auto;
-        }
-      }
-    }
   }
 }
 
@@ -90,7 +44,6 @@
 
         &.show {
           background: var(--bg-linear-gradient-semifull-hover);
-          /* box-shadow: inset rgba(0, 0, 0, 0.05) 0 0 0 2px; */
 
           > .content {
             opacity: 1;
@@ -178,223 +131,29 @@
       color: rgba(0, 0, 0, 0.6);
     }
   }
-
-  > .timeline {
-    inline-size: 100%;
-    position: relative;
-    max-inline-size: 1200px;
-    margin: 0px auto;
-    list-style: none;
-
-    & img {
-      max-inline-size: 100%;
-      block-size: auto;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      width: 2px;
-      height: 100%;
-      top: 0;
-      left: 50%;
-      margin-left: -3px;
-      z-index: -1;
-      background-color: rgba(0, 0, 0, 0.4);
-
-      animation: moveline 2s ease-in-out forwards;
-    }
-
-    & > li {
-      padding: 10px 50px;
-      position: relative;
-      inline-size: 100%;
-      display: flex;
-      flex-direction: column;
-
-      animation: movedown 1s linear forwards;
-      opacity: 0;
-
-      & > figure {
-        position: absolute;
-        width: 45px;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
-        top: 32px;
-        z-index: 10;
-        display: grid;
-        place-content: center;
-        background: var(--bg-linear-gradient-full);
-        outline: 1px solid transparent;
-        transition: background 0.3s ease;
-        cursor: pointer;
-
-        &:hover {
-          background: var(--bg-linear-gradient-full-hover);
-          outline: 1px solid rgba(0, 0, 0, 0.6);
-          outline-offset: -2px;
-
-          > svg {
-            fill: rgba(0, 0, 0, 0.6);
-          }
-        }
-
-        & svg {
-          opacity: 0;
-          transition: all 0.3s ease-in-out;
-          width: 24px;
-          height: auto;
-          aspect-ratio: 1/1;
-          fill: rgb(255, 255, 255);
-          animation: movedown 1s linear forwards;
-
-          &:hover {
-            transform: scale(1.1);
-          }
-        }
-      }
-
-      & .text-box {
-        border: 2px solid rgba(0, 0, 0, 0.4);
-        padding: 20px 30px;
-        background-color: #fff;
-        position: relative;
-        border-radius: 0.6rem;
-        font-size: 1rem;
-        inline-size: fit-content;
-
-        & span {
-          position: absolute;
-          height: 0;
-          width: 0;
-          top: 1rem;
-          z-index: 1;
-          border-top: 15px solid transparent;
-          border-bottom: 15px solid transparent;
-        }
-      }
-    }
-
-    & > *:nth-child(even) {
-      left: 0;
-
-      & figure {
-        right: -20px;
-      }
-
-      .text-box {
-        align-self: flex-end;
-        & span {
-          border-left: 15px solid rgba(255, 0, 0, 0.4);
-          right: -15px;
-        }
-      }
-    }
-
-    & > *:nth-child(odd) {
-      left: 50%;
-
-      & figure {
-        left: -20px;
-      }
-
-      .text-box {
-        align-self: flex-start;
-        & span {
-          border-right: 15px solid rgba(0, 0, 0, 0.4);
-          left: -15px;
-        }
-      }
-    }
-  }
-}
-
-@keyframes moveline {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: 100%;
-  }
-}
-
-@keyframes movedown {
-  0% {
-    transform: translateY(-50px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .timeline {
-    padding: 20px;
-    margin: 50px auto;
-
-    &::after {
-      left: 40px;
-    }
-
-    & > li {
-      inline-size: 100%;
-      padding-left: 80px;
-      padding-right: 30px;
-    }
-
-    & > *:nth-child(even) {
-      left: 0;
-
-      & img {
-        right: unset;
-        left: -3px;
-      }
-
-      .text-box {
-        align-self: flex-start;
-        & span {
-          border-left: 15px solid rgba(255, 0, 0, 0.4);
-          border-left: unset;
-          border-right: 15px solid rgba(255, 0, 0, 0.4);
-          left: -15px;
-        }
-      }
-    }
-
-    & > *:nth-child(odd) {
-      left: 0%;
-
-      & img {
-        left: -3px;
-      }
-
-      .text-box {
-        & span {
-          border-right: 15px solid rgba(0, 0, 0, 0.4);
-          left: -15px;
-        }
-      }
-    }
-  }
 }
 
 .teams {
-  inline-size: 100%;
-  margin: 0 auto;
-  max-inline-size: 1200px;
-  display: flex;
-  flex-direction: column;
-
-  gap: 1.4rem;
+  margin-top: 2rem;
 
   & ul {
     list-style: none;
+    position: relative;
+
+    .slider {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
   }
 
   > article {
     padding: 0.2rem;
-
+    align-self: flex-start;
     &:not(:last-child) {
       border: 1px solid transparent;
       border-bottom: 1px solid rgba(0, 0, 0, 0.09);
@@ -471,6 +230,13 @@
         border-top-left-radius: unset;
         border-radius: 0.4rem;
 
+        position: relative;
+        z-index: 1;
+
+        &.active {
+          font-weight: 800;
+        }
+
         &:not(:first-child) {
           border-left: 1px solid rgba(0, 0, 0, 0.09);
           margin-left: 0.2rem;
@@ -480,18 +246,11 @@
           background-color: rgba(0, 0, 0, 0.1);
         }
 
-        &.active {
-          background-color: rgba(0, 0, 0, 0.2);
-
-          & > span {
-            color: #433f65;
-          }
-        }
-
         > span {
           color: rgba(0, 0, 0, 0.4);
           font-size: 1.175rem;
           line-height: 1.825rem;
+          background: transparent;
         }
       }
     }

@@ -1,11 +1,10 @@
 .footer {
   background: var(--bg-linear-gradient-full-hover);
-  color: rgba(255, 255, 255);
   display: block;
   inline-size: 100%;
 
   & .footer-container {
-    padding-block: 0.4rem;
+    padding-block: 0.3rem;
     padding-inline: 1rem;
     position: relative;
     width: 100%;
@@ -15,10 +14,6 @@
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-
-    & > * {
-      outline: 1px solid green;
-    }
 
     & .social {
       padding-block: 0.4rem;
@@ -51,61 +46,61 @@
       }
 
       > div {
-        border: none;
         border-top-left-radius: 1rem;
         border-bottom-left-radius: 1rem;
         background-color: rgba(255, 255, 255, 0.8);
         flex: 3;
         position: relative;
-        background-color: red;
+        overflow: hidden;
 
         > input {
           inline-size: 100%;
-          padding: 0.5rem 0.5rem;
+          padding: 0.5rem;
           border: none;
+          outline: none;
           background: transparent;
           color: rgba(0, 0, 0, 0.9);
           font-size: 1rem;
-          outline: none;
-          background-color: yellow;
 
           &:focus + label,
           &:not(:placeholder-shown) + label {
             top: 0.3rem;
+            left: 0.5rem;
             transform: translateY(0);
             font-size: 0.75rem;
-
-            > strong {
-              font-size: 0.75rem;
-            }
-
-            > small {
-              opacity: 1;
-            }
+            opacity: 0;
           }
         }
 
         > label {
           position: absolute;
-          left: 0.5rem;
           top: 50%;
+          left: 0.5rem;
           transform: translateY(-50%);
-          color: rgba(0, 0, 0, 0.9);
           font-size: 1rem;
+          color: rgba(0, 0, 0, 0.9);
           transition: all 0.2s ease-in-out;
-          display: flex;
-          justify-content: center;
           pointer-events: none;
+          opacity: 1;
 
-          > strong {
-            font-weight: 600;
-            transition: font-size 0.2s ease-in-out;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 100%;
+
+          padding-inline: 0.5rem;
+
+          > * {
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+            color: black;
           }
 
-          > small {
-            font-size: 0.6rem;
-            opacity: 1;
-            transition: opacity 0.2s ease-in-out;
+          > p {
+            font-weight: 700;
+            font-size: 0.8rem;
+            transition: font-size 0.2s ease-in-out;
           }
         }
       }
@@ -135,15 +130,17 @@
         margin-bottom: auto;
         flex: 1;
         margin-bottom: 0.5rem;
+        text-align: center;
       }
     }
   }
 
   & small {
     margin-top: 15px;
-    font-size: 1em;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 1);
     margin-bottom: 0;
+    align-self: center;
   }
 }
 
