@@ -32,7 +32,8 @@
     .social-icons {
       transform: scale(1.1);
       color: rgba(0, 0, 0, 0.9);
-      fill: rgba(0, 0, 0, 0.9);
+      fill: rgba(255, 255, 255, 1);
+
     }
   }
 
@@ -40,7 +41,6 @@
     line-height: 90px;
     font-size: 25px;
     transition: all 0.2s;
-    fill: rgba(255, 255, 255, 0.9);
   }
 }
 

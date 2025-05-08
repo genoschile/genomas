@@ -1,3 +1,4 @@
+import { IconsHover } from "@/components/footer/IconsHover";
 import "./card.css";
 import { FaLinkedin } from "react-icons/fa";
 
@@ -6,6 +7,21 @@ interface Member {
   title: string;
   image: string;
 }
+
+const socialIcons = [
+  {
+    icon: <FaLinkedin size={24} color="black" className="social-icons" />,
+    href: "#",
+  },
+  {
+    icon: <FaLinkedin size={24} color="black" className="social-icons" />,
+    href: "#",
+  },
+  {
+    icon: <FaLinkedin size={24} color="black" className="social-icons" />,
+    href: "#",
+  },
+];
 
 export default function Card({ member }: { member: Member }) {
   return (
@@ -22,15 +38,9 @@ export default function Card({ member }: { member: Member }) {
       <div className="card__footer">
         <hr />
         <div className="logos">
-          <a href="#">
-            <FaLinkedin size={24} color="black" />
-          </a>
-          <a href="#">
-            <FaLinkedin size={24} color="black" />
-          </a>
-          <a href="#">
-            <FaLinkedin size={24} color="black" />
-          </a>
+          {socialIcons.map((social, index) => (
+            <IconsHover key={index} color="black" social={social} index={index} />
+          ))}
         </div>
       </div>
     </div>
