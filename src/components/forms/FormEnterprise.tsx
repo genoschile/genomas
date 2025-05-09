@@ -1,30 +1,28 @@
 "use client";
 
-/* server actions */
-import { submitLogin } from "@/lib/actions/auth";
+import "./form.css";
 
-/* types */
-import type { ActionResponseWithoutRepeatPassword } from "@/lib/types/formTypes";
+import Link from "next/link";
+import { AuthLink } from "./components/AuthLink";
+import { AuthFormLogo } from "./components/AuthFormLogo";
+import { toast } from "react-toastify";
+import { useActionState, useEffect } from "react";
+import { useTranslations } from "@/context/I18nClientProvider";
 import { useRouter } from "next/navigation";
 
-/* hooks */
-import { useActionState, useEffect } from "react";
-import { toast } from "react-toastify";
-
-/* styles */
-import "./form.css";
-import { AuthFormLogo } from "./components/AuthFormLogo";
-import { AuthLink } from "./components/AuthLink";
-import { useTranslations } from "@/context/I18nClientProvider";
-import Link from "next/link";
+import { ActionResponseWithoutRepeatPassword } from "@/lib/types/formTypes";
+import { submitLoginEnterprise } from "@/core/use-cases/organization/auth";
 
 const initialState: ActionResponseWithoutRepeatPassword = {
   success: false,
   message: "",
 };
 
-export default function FormLogin() {
-  const [state, actions, isPending] = useActionState(submitLogin, initialState);
+export const FormEnterprice = () => {
+  const [state, actions, isPending] = useActionState(
+    submitLoginEnterprise,
+    initialState
+  );
   const router = useRouter();
 
   const { t } = useTranslations();
@@ -63,7 +61,7 @@ export default function FormLogin() {
         <form action={actions} className="auth-form__form">
           <fieldset>
             <legend className="auth-form__title">
-              {authTranslations.title}
+              {authTranslations.title} <small>enterprise</small>
             </legend>
 
             {/* Campo de Email */}
@@ -134,4 +132,4 @@ export default function FormLogin() {
       </div>
     </section>
   );
-}
+};

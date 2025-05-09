@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import "./form.css";
 import { AuthFormLogo } from "./components/AuthFormLogo";
 import { AuthLink } from "./components/AuthLink";
-import { FormSignUpSkeleton } from "@/app/[lang]/(auth)/signup/FormSignUpSkeleton";
 
 const initialState: ActionResponse = {
   success: false,
@@ -45,10 +44,6 @@ export function FormSignUp() {
       }
     }
   }, [isPending, state.success, state.message]);
-
-  if (isPending && !state.success) {
-    return <FormSignUpSkeleton />;
-  }
 
   return (
     <section className="auth-form">

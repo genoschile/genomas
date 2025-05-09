@@ -16,7 +16,6 @@
     padding: 0 16px;
     font-size: clamp(1em, calc(1vw + 0.2rem), 1.5em);
     font-weight: bold;
-    min-width: 350px;
   
     &.login-- {
       justify-content: center;

@@ -9,7 +9,7 @@ export default function LoginLayout({
   return (
     <>
       <FeaturesHeader />
-      <div className="login_signup--Layout">{children}</div>
+      <main className="login_signup--Layout">{children}</main>
       <FooterLanding />
     </>
   );

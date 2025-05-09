@@ -11,12 +11,12 @@ export const userRepository = {
         userType: MapToPrismaUserType(user.userType), // dominio → prisma
         organizationId: user.organizationId,
         groupId: user.groupId,
-        encryptedPassword: "hashed", 
+        encryptedPassword: "hashed",
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
     });
-  
-    return  mapToIUser(prismaUser);
-  }
+
+    return mapToIUser(prismaUser);
+  },
 };
