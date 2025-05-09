@@ -3,15 +3,15 @@
 import { usePathname, useRouter } from "next/navigation";
 import { IconType } from "react-icons";
 
-import { FiHome, FiPaperclip, FiUser } from "react-icons/fi";
+import { FiHome, FiUser } from "react-icons/fi";
+import { MdGroups2 } from "react-icons/md";
+import { GiGlowingHands } from "react-icons/gi";
 
 const routes = [
-  { Icon: FiHome, title: "Overview", path: "/workspace/admin/overview" },
-  { Icon: FiUser, title: "Users", path: "/workspace/admin/users" },
-  { Icon: FiPaperclip, title: "Settings", path: "/workspace/admin/products" },
-  { Icon: FiUser, title: "Users", path: "/workspace/admin/users" },
-  { Icon: FiUser, title: "Contact", path: "/workspace/admin/contact" },
-  { Icon: FiUser, title: "Patient", path: "/workspace/admin/patient" },
+  { Icon: FiHome, title: "Home", path: "#" },
+  { Icon: FiUser, title: "Users", path: "#" },
+  { Icon: MdGroups2, title: "Groups", path: "#" },
+  { Icon: GiGlowingHands, title: "AI Suggestions", path: "#" },
 ];
 
 export function RouteSelect() {
