@@ -52,12 +52,12 @@ const Route = ({
   };
 
   return (
-    <button
+    <li
       onClick={handleClick}
       className={`${selected ? "button--selected" : "button--unselected"}`}
     >
       <Icon className={`${selected ? "icon--selected" : ""}`} />
       <span>{title}</span>
-    </button>
+    </li>
   );
 };

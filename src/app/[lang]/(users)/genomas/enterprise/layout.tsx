@@ -11,19 +11,13 @@ export default function EnterpriseLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <main className="enterpriselayout">
-        <SidebarOrganization />
+    <main className="enterpriselayout">
+      <SidebarOrganization />
 
-        <div>
-          <TopBar />
-          <section>
-            <Suspense fallback={<p> Loading ... </p>}>{children}</Suspense>
-          </section>
-        </div>
-      </main>
-
-      <FooterLanding />
-    </>
+      <TopBar />
+      <section>
+        <Suspense fallback={<p> Loading ... </p>}>{children}</Suspense>
+      </section>
+    </main>
   );
 }

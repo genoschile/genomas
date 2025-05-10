@@ -4,6 +4,7 @@ export function TopBar() {
   return (
     <div
       style={{
+        gridArea: "header",
         backgroundColor: "rgba(255, 255, 255, 0.5)",
         borderBottom: "1px solid #E5E7EB",
         paddingInline: "1rem",
