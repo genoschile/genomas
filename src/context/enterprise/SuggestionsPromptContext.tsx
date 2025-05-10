@@ -2,32 +2,54 @@
 
 import { createContext, useContext, useState } from "react";
 
-type IAStatus = "idle" | "waiting_prompt" | "waiting_response" | "done" | "error";
+type IAStatus =
+  | "idle"
+  | "waiting_prompt"
+  | "waiting_response"
+  | "done"
+  | "error";
+
+type Message = {
+  role: "user" | "assistant";
+  content: string;
+};
 
 interface SuggestionsContextType {
   currentPrompt: string | null;
   suggestions: string[];
   status: IAStatus;
   getSuggestions: (prompt: string) => Promise<string[]>;
+  history: Message[];
 }
 
-const SuggestionsContext = createContext<SuggestionsContextType | undefined>(undefined);
+const SuggestionsContext = createContext<SuggestionsContextType | undefined>(
+  undefined
+);
 
-export const SuggestionsProvider = ({ children }: { children: React.ReactNode }) => {
+export const SuggestionsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [currentPrompt, setCurrentPrompt] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [status, setStatus] = useState<IAStatus>("idle");
+  const [history, setHistory] = useState<Message[]>([]);
 
   const getSuggestions = async (prompt: string) => {
     setStatus("waiting_prompt");
     setCurrentPrompt(prompt);
+
+    const newMessage: Message = { role: "user", content: prompt };
+    const updatedHistory = [...history, newMessage];
+    setHistory(updatedHistory);
 
     try {
       setStatus("waiting_response");
 
       const res = await fetch("/api/suggestions/enterprise", {
         method: "POST",
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ messages: updatedHistory }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -41,12 +63,18 @@ export const SuggestionsProvider = ({ children }: { children: React.ReactNode })
         throw new Error("Suggestions not found in response");
       }
 
-      setSuggestions(data.suggestions);
+      setSuggestions(data.suggestions); // ✅ ¡Agregado!
+
+      const aiMessage: Message = {
+        role: "assistant",
+        content: data.suggestions.join("\n"),
+      };
+
+      setHistory([...updatedHistory, aiMessage]);
       setStatus("done");
 
       return data.suggestions;
     } catch (error) {
-      console.error("Failed to fetch suggestions:", error);
       setStatus("error");
       return [];
     }
@@ -54,15 +82,12 @@ export const SuggestionsProvider = ({ children }: { children: React.ReactNode })
 
   return (
     <SuggestionsContext.Provider
-      value={{ currentPrompt, suggestions, status, getSuggestions }}
+      value={{ currentPrompt, suggestions, status, getSuggestions, history }}
     >
       {children}
     </SuggestionsContext.Provider>
   );
 };
-
-
-
 
 export const useSuggestions = () => {
   const context = useContext(SuggestionsContext);

@@ -112,18 +112,25 @@ export const FormSuggestions = () => {
 };
 
 export const IASuggestions = () => {
-  const { currentPrompt, status, suggestions } = useSuggestions();
+  const { currentPrompt, status, suggestions, history } = useSuggestions();
   return (
     <div>
       {status === "idle" && <p>Waiting for prompt input...</p>}
       {status === "waiting_prompt" && <p>Sending prompt to AI...</p>}
       {status === "waiting_response" && <p>Waiting for AI response...</p>}
       {status === "done" && (
-        <ul>
-          {suggestions.map((s, i) => (
-            <li key={i}>{s}</li>
+        <div>
+          {history.map((msg, idx: number) => (
+            <div key={idx} className={`msg ${msg.role}`}>
+              <p>{msg.content}</p>
+            </div>
           ))}
-        </ul>
+          <ul>
+            {suggestions.map((s, i) => (
+              <li key={i}>{s}</li>
+            ))}
+          </ul>
+        </div>
       )}
       {status === "error" && <p>There was an error fetching suggestions.</p>}
     </div>
