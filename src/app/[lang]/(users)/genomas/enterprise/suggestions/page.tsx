@@ -26,6 +26,8 @@ export default function page() {
 }
 
 export const Suggestions = () => {
+  const { history, suggestions } = useSuggestions();
+
   return (
     <fieldset className="suggestions">
       <legend>Suggested Groups</legend>
@@ -35,8 +37,122 @@ export const Suggestions = () => {
         your
       </p>
 
-      <IASuggestions />
+      <div className="suggestions-chat">
+        <IASuggestionsStatus />
+        <div className="suggestions-chat--messages">
+          <ul>
+            {history.map((msg, idx: number) => (
+              <li key={idx} className={`msg ${msg.role}`}>
+                {msg.role === "user" ? (
+                  <span className="msg--user">User</span>
+                ) : (
+                  <SuggestionsList
+                    data={{
+                      usuario: ["Soldado", "Cabo"],
+                      grupos: ["Infantería"],
+                      acceso: ["Total"],
+                    }}
+                    onSelect={(category, value) => {
+                      console.log(
+                        `Seleccionaste ${value} de la categoría ${category}`
+                      );
+                    }}
+                  />
+                )}
+                <p>{msg.content}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </fieldset>
+  );
+};
+
+export const IASuggestionsStatus = () => {
+  const { status } = useSuggestions();
+  return (
+    <div className="suggestions-chat--info">
+      {status === "idle" && <p>Waiting for prompt input...</p>}
+      {status === "waiting_prompt" && <p>Sending prompt to AI...</p>}
+      {status === "waiting_response" && <p>Waiting for AI response...</p>}
+      {status === "done" && <p>AI Resposne ok</p>}
+      {status === "error" && <p>There was an error fetching suggestions.</p>}
+    </div>
+  );
+};
+
+interface SuggestionData {
+  usuario?: string[];
+  grupos?: string[];
+  acceso?: string[];
+}
+
+interface Props {
+  data: SuggestionData;
+  onSelect: (category: string, value: string) => void;
+}
+
+export const SuggestionsList = ({ data, onSelect }: Props) => {
+  return (
+    <div className="space-y-6">
+      {data.usuario?.length > 0 && (
+        <ButtonSuggestion
+          title="Usuario"
+          values={data.usuario}
+          category="usuario"
+          onSelect={onSelect}
+        />
+      )}
+
+      {data.grupos?.length > 0 && (
+        <ButtonSuggestion
+          title="Grupos"
+          values={data.grupos}
+          category="grupos"
+          onSelect={onSelect}
+        />
+      )}
+
+      {data.acceso?.length > 0 && (
+        <ButtonSuggestion
+          title="Acceso"
+          values={data.acceso}
+          category="acceso"
+          onSelect={onSelect}
+        />
+      )}
+    </div>
+  );
+};
+
+interface SectionProps {
+  title: string;
+  values: string[];
+  category: string;
+  onSelect: (category: string, value: string) => void;
+}
+
+const ButtonSuggestion = ({ title, values, category, onSelect }: SectionProps) => {
+  return (
+    <>
+      {values.map((value) => (
+        <button
+          key={value}
+          onClick={() => onSelect(category, value)}
+          style={{
+            padding: "0.5rem 1rem",
+            backgroundColor: "#3b82f6",
+            color: "#fff",
+            borderRadius: "0.375rem",
+            cursor: "pointer",
+            transition: "background-color 0.3s ease",
+          }}
+        >
+          {value}
+        </button>
+      ))}
+    </>
   );
 };
 
@@ -58,12 +174,16 @@ export const FormSuggestions = () => {
       console.log("something fields are required");
       return;
     }
-    const prompt = `Generate a list of groups based on the following information, solo debes responder con los nombres de los grupos, no es necesario dar explicaciones ni detalles adicionales:
-    User Roles: ${userprompt}
-    Access Rights: ${accessPromt}
-    Groups Assignments: ${groupsPromt}`;
+    const prompt = `${userprompt} ${accessPromt} ${groupsPromt}`;
 
     const suggestions = await getSuggestions(prompt);
+
+    console.log("Suggestions:", suggestions);
+
+    if (suggestions.length === 0) {
+      console.log("No suggestions found");
+      return;
+    }
   };
 
   return (
@@ -108,31 +228,5 @@ export const FormSuggestions = () => {
         </button>
       </form>
     </fieldset>
-  );
-};
-
-export const IASuggestions = () => {
-  const { currentPrompt, status, suggestions, history } = useSuggestions();
-  return (
-    <div>
-      {status === "idle" && <p>Waiting for prompt input...</p>}
-      {status === "waiting_prompt" && <p>Sending prompt to AI...</p>}
-      {status === "waiting_response" && <p>Waiting for AI response...</p>}
-      {status === "done" && (
-        <div>
-          {history.map((msg, idx: number) => (
-            <div key={idx} className={`msg ${msg.role}`}>
-              <p>{msg.content}</p>
-            </div>
-          ))}
-          <ul>
-            {suggestions.map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {status === "error" && <p>There was an error fetching suggestions.</p>}
-    </div>
   );
 };

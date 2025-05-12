@@ -110,4 +110,57 @@
 
 .suggestions {
   flex: 2;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    font-size: 1.25em;
+    font-weight: 600;
+    color: #00000085;
+    margin-block-start: 1rem;
+    margin-block-end: 0.5rem;
+
+    display: inline-block;
+    text-align: center;
+  }
+
+  .suggestions-chat {
+    flex: 1;
+    position: relative;
+    border: 1px dashed rgba(0, 0, 0, 0.3);
+    border-radius: 0.25rem;
+
+    & > .suggestions-chat--info{
+      position: absolute;
+      bottom: 10px;
+      right: 50%;
+      width: 80%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      transform: translateX(50%);
+
+      background-color: transparent;
+      padding-inline: 0.5rem;
+      padding-block: 0.25rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        right: 50%;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid rgba(0, 0, 0, 0.3);
+        transform: translateX(50%);
+      }
+    }
+  }
 }

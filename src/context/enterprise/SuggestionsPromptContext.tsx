@@ -49,9 +49,11 @@ export const SuggestionsProvider = ({
 
       const res = await fetch("/api/suggestions/enterprise", {
         method: "POST",
-        body: JSON.stringify({ messages: updatedHistory }),
+        body: JSON.stringify({ messages: newMessage }),
         headers: { "Content-Type": "application/json" },
       });
+
+      console.log("Response:", res);
 
       if (!res.ok) {
         throw new Error(`Server responded with status ${res.status}`);
@@ -63,7 +65,7 @@ export const SuggestionsProvider = ({
         throw new Error("Suggestions not found in response");
       }
 
-      setSuggestions(data.suggestions); // ✅ ¡Agregado!
+      setSuggestions(data.suggestions);
 
       const aiMessage: Message = {
         role: "assistant",
@@ -75,6 +77,8 @@ export const SuggestionsProvider = ({
 
       return data.suggestions;
     } catch (error) {
+      console.error("Error fetching suggestions:", error);
+
       setStatus("error");
       return [];
     }
