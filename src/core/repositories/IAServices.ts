@@ -8,28 +8,35 @@ const model = "gemini-2.0-flash";
 
 export class OpenAIService implements IAService {
   async suggestGroups(prompt: string): Promise<IAResponse> {
-    // const response = await ai.models.generateContent({
-    //   model: model,
-    //   contents: `${prompt}`,
-    // });
+    return new Promise((resolve) => {
+      setTimeout(async () => {
+        // Simulación de la llamada a la API (descomenta tu código real cuando lo necesites)
+        // const response = await ai.models.generateContent({
+        //   model: model,
+        //   contents: `${prompt}`,
+        // });
 
-    // if (response.text === undefined) {
-    //   console.error("Error:", response);
-    //   return {
-    //     success: false,
-    //     error:
-    //       "No se pudo procesar la consulta o no se encontró información relevante.",
-    //   };
-    // }
+        // if (response.text === undefined) {
+        //   console.error("Error:", response);
+        //   resolve({
+        //     success: false,
+        //     error:
+        //       "No se pudo procesar la consulta o no se encontró información relevante.",
+        //   });
+        //   return;
+        // }
 
-    // console.log("Response:", { response });
+        // console.log("Response:", { response });
 
-    // const groups = response.text
-    //   .split("\n")
-    //   .map((s) => s.trim())
-    //   .filter((s) => s !== "");
+        // const groups = response.text
+        //   .split("\n")
+        //   .map((s) => s.trim())
+        //   .filter((s) => s !== "");
 
-    return { ...resType, success: true };
+        const simulatedResponse: IAResponse = { ...resType, success: true };
+        resolve(simulatedResponse);
+      }, 2000);
+    });
   }
 }
 

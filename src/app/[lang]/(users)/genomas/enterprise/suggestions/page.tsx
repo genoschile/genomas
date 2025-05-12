@@ -26,7 +26,7 @@ export default function page() {
 }
 
 export const Suggestions = () => {
-  const { history, suggestions } = useSuggestions();
+  const { history, status } = useSuggestions();
 
   return (
     <fieldset className="suggestions">
@@ -44,28 +44,46 @@ export const Suggestions = () => {
             {history.map((msg, idx: number) => (
               <li key={idx} className={`msg ${msg.role}`}>
                 {msg.role === "user" ? (
-                  <span className="msg--user">User</span>
+                  <>
+                    <MessageUserSuggestions />
+                    <p>{msg.content}</p>
+                  </>
                 ) : (
-                  <SuggestionsList
-                    data={{
-                      usuario: ["Soldado", "Cabo"],
-                      grupos: ["Infantería"],
-                      acceso: ["Total"],
-                    }}
-                    onSelect={(category, value) => {
-                      console.log(
-                        `Seleccionaste ${value} de la categoría ${category}`
-                      );
-                    }}
-                  />
+                  <>
+                    <MessageIaSuggestions
+                      data={{
+                        usuario: ["Soldado", "Cabo"],
+                        grupos: ["Infantería"],
+                        acceso: ["Total"],
+                      }}
+                      onSelect={(category, value) => {
+                        console.log(
+                          `Seleccionaste ${value} de la categoría ${category}`
+                        );
+                      }}
+                    />
+                    <p>{msg.content}</p>
+                  </>
                 )}
-                <p>{msg.content}</p>
               </li>
             ))}
+            {status === "waiting_response" && (
+              <li className="msg msg--bot">
+                <TypingDots />
+              </li>
+            )}
           </ul>
         </div>
       </div>
     </fieldset>
+  );
+};
+
+export const MessageUserSuggestions = () => {
+  return (
+    <div className="msg--user">
+      <p>What groups should I add to this user?</p>
+    </div>
   );
 };
 
@@ -82,58 +100,47 @@ export const IASuggestionsStatus = () => {
   );
 };
 
-interface SuggestionData {
-  usuario?: string[];
-  grupos?: string[];
-  acceso?: string[];
-}
-
-interface Props {
-  data: SuggestionData;
+export const MessageIaSuggestions = ({
+  data,
+  onSelect,
+}: {
+  data: Record<string, string[] | undefined>;
   onSelect: (category: string, value: string) => void;
-}
+}) => {
+  const titles: Record<string, string> = {
+    usuario: "Usuario",
+    grupos: "Grupos",
+    acceso: "Acceso",
+  };
 
-export const SuggestionsList = ({ data, onSelect }: Props) => {
   return (
-    <div className="space-y-6">
-      {data.usuario?.length > 0 && (
-        <ButtonSuggestion
-          title="Usuario"
-          values={data.usuario}
-          category="usuario"
-          onSelect={onSelect}
-        />
-      )}
-
-      {data.grupos?.length > 0 && (
-        <ButtonSuggestion
-          title="Grupos"
-          values={data.grupos}
-          category="grupos"
-          onSelect={onSelect}
-        />
-      )}
-
-      {data.acceso?.length > 0 && (
-        <ButtonSuggestion
-          title="Acceso"
-          values={data.acceso}
-          category="acceso"
-          onSelect={onSelect}
-        />
+    <div className="msg--bot">
+      {Object.entries(data).map(([category, values]) =>
+        values && values.length > 0 ? (
+          <ButtonSuggestion
+            key={category}
+            title={titles[category] ?? category}
+            values={values}
+            category={category}
+            onSelect={onSelect}
+          />
+        ) : null
       )}
     </div>
   );
 };
 
-interface SectionProps {
+export const ButtonSuggestion = ({
+  title,
+  values,
+  category,
+  onSelect,
+}: {
   title: string;
   values: string[];
   category: string;
   onSelect: (category: string, value: string) => void;
-}
-
-const ButtonSuggestion = ({ title, values, category, onSelect }: SectionProps) => {
+}) => {
   return (
     <>
       {values.map((value) => (
@@ -157,7 +164,7 @@ const ButtonSuggestion = ({ title, values, category, onSelect }: SectionProps) =
 };
 
 export const FormSuggestions = () => {
-  const { getSuggestions, currentPrompt } = useSuggestions();
+  const { getSuggestions } = useSuggestions();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -230,3 +237,11 @@ export const FormSuggestions = () => {
     </fieldset>
   );
 };
+
+export const TypingDots = () => (
+  <div className="typing-dots">
+    <span>.</span>
+    <span>.</span>
+    <span>.</span>
+  </div>
+);

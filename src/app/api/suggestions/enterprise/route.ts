@@ -48,6 +48,7 @@ export async function POST(req: NextRequest) {
 
   const iaService = new OpenAIService();
   const useCase = new SuggestGroupsUseCase(iaService);
+
   const suggestions = await useCase.execute(prompt(content));
 
   const { success, error, message } = suggestions;
@@ -60,9 +61,9 @@ export async function POST(req: NextRequest) {
   }
 
   if (error) {
-    return NextResponse.json({ error: error }, { status: 400 });
+    return NextResponse.json({ error: error }, {  status: 400 });
   }
   if (message) {
-    return NextResponse.json({ message: message }, { status: 200 });
+    return NextResponse.json({ message: message, suggestions: suggestions }, { status: 200 });
   }
 }

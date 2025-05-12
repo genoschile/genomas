@@ -15,7 +15,6 @@ type Message = {
 };
 
 interface SuggestionsContextType {
-  currentPrompt: string | null;
   suggestions: string[];
   status: IAStatus;
   getSuggestions: (prompt: string) => Promise<string[]>;
@@ -31,14 +30,13 @@ export const SuggestionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [currentPrompt, setCurrentPrompt] = useState<string | null>(null);
+
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [status, setStatus] = useState<IAStatus>("idle");
   const [history, setHistory] = useState<Message[]>([]);
 
   const getSuggestions = async (prompt: string) => {
     setStatus("waiting_prompt");
-    setCurrentPrompt(prompt);
 
     const newMessage: Message = { role: "user", content: prompt };
     const updatedHistory = [...history, newMessage];
@@ -69,13 +67,14 @@ export const SuggestionsProvider = ({
 
       const aiMessage: Message = {
         role: "assistant",
-        content: data.suggestions.join("\n"),
+        content: data.content,
       };
 
       setHistory([...updatedHistory, aiMessage]);
       setStatus("done");
 
       return data.suggestions;
+
     } catch (error) {
       console.error("Error fetching suggestions:", error);
 
@@ -86,7 +85,7 @@ export const SuggestionsProvider = ({
 
   return (
     <SuggestionsContext.Provider
-      value={{ currentPrompt, suggestions, status, getSuggestions, history }}
+      value={{ suggestions, status, getSuggestions, history }}
     >
       {children}
     </SuggestionsContext.Provider>
