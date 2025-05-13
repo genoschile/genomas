@@ -1,0 +1,50 @@
+.suggestion-list {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  gap: 1.25rem;
+  margin-block-start: 1rem;
+  margin-block-end: 1rem;
+  margin-inline: auto;
+  overflow: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  & .suggestion {
+    cursor: pointer;
+    padding: 1.25rem;
+    width: 222px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    border-radius: 0.75rem;
+    justify-content: space-between;
+    background: var(--secondary-color);
+    transition: 0.2s ease;
+
+    &:hover {
+      background: var(--secondary-hover-color);
+    }
+
+    :where(.text, .icon) {
+      font-weight: 400;
+      color: var(--text-color);
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      font-size: 1.3rem;
+      margin-top: 2.5rem;
+      align-self: flex-end;
+      align-items: center;
+      border-radius: 50%;
+      justify-content: center;
+      color: var(--text-color);
+      background: var(--primary-color);
+    }
+  }
+}

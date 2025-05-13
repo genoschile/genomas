@@ -175,7 +175,6 @@
       inline-size: 100%;
       display: flex;
 
-      block-size: 80%;
       > * {
         flex: 1;
       }
