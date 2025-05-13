@@ -1,0 +1,11 @@
+.icon-rounded-full {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  font-size: 1.3rem;
+  align-items: center;
+  border-radius: 50%;
+  justify-content: center;
+  color: var(--text-color);
+  background: var(--primary-color);
+}

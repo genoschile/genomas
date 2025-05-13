@@ -1,0 +1,83 @@
+.sidebar-org--account-header {
+  margin-block: 1rem;
+
+  > button {
+    display: flex;
+    align-items: center;
+    padding: 0.125rem;
+    border-radius: 0.125rem;
+
+    transition-property: background-color, border-color, color, fill, stroke,
+      opacity, box-shadow, transform, filter, backdrop-filter;
+
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+
+    position: relative;
+
+    gap: 0.5rem;
+    inline-size: 100%;
+    border: 1px solid transparent;
+    background-color: var(--primary-color);
+
+    > span {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      background-color: var(--secondary-color);
+
+      display: grid;
+      place-content: center;
+      transform: translateY(-50%);
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 9999px;
+      outline: 1px solid transparent;
+      cursor: pointer;
+
+      .icon {
+        font-size: 1rem;
+        color: var(--text-color);
+        fill: var(--text-color);
+      }
+
+      &:hover {
+        background-color: var(--secondary-hover-color);
+        outline: 2px solid var(--secondary-hover-color);
+        outline-offset: 2px;
+      }
+    }
+
+    > img {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.125rem;
+      flex-shrink: 0;
+      background-color: var(--bg-style-color);
+    }
+
+    > div {
+      text-align: start;
+
+      & > *:first-child {
+        font-size: 0.875rem;
+        font-weight: 600;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--text-color);
+      }
+
+      & > *:last-child {
+        font-size: 0.75rem;
+        display: block;
+        color: var(--subheading-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 10ch;
+      }
+    }
+  }
+}

@@ -6,6 +6,8 @@
   --primary-color: #242424;
   --secondary-color: #383838;
   --secondary-hover-color: #444;
+
+  --bg-style-color: #73e3db;
 }
 
 .light_mode {

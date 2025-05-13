@@ -1,9 +1,11 @@
 import { FiCommand, FiSearch } from "react-icons/fi";
 
+import "./search.css";
+
 export function Search() {
   return (
-    <search>
-      <FiSearch className="icon" />
+    <search className="sidebar-org--search">
+      <FiSearch size={24} className="icon" />
       <input type="text" placeholder="Search" />
 
       <span>

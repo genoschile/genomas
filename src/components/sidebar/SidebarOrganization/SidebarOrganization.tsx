@@ -13,9 +13,7 @@ export function SidebarOrganization() {
       <div className="sidebar-org--container ">
         <AccountToggle />
         <Search />
-        <div className="sidebar-org--routecontainer">
-          <RouteSelect />
-        </div>
+        <RouteSelect />
       </div>
       <Plan />
     </aside>

@@ -3,11 +3,12 @@ import { RiLoopLeftFill } from "react-icons/ri";
 import "./page.css";
 
 import { ChatSuggestionsList } from "@/components/enterprise/suggestionsAI/ChatSuggestionsList";
+import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 
 export default function page() {
   return (
     <>
-      <ChatSuggestionTitle />
+      <ChatSuggestionTitle title="Hello there" description="How can i help you?"/>
 
       <ChatSuggestionsList />
 
@@ -17,15 +18,6 @@ export default function page() {
     </>
   );
 }
-
-export const ChatSuggestionTitle = () => {
-  return (
-    <header className="header">
-      <h1 className="title">Hello, there</h1>
-      <p className="subtitle">How can I help you today?</p>
-    </header>
-  );
-};
 
 export const ChatSuggestionsAI = () => {
   return <div className="chat-list" >

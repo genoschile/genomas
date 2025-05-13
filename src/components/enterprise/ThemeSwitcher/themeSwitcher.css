@@ -1,0 +1,56 @@
+input[type="checkbox"]#theme-toggle {
+  display: none;
+}
+
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  font-size: 1.3rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  border-radius: 9999px;
+  transition: background-color 0.2s ease-in-out, transform 0.4s ease-in-out;
+
+  color: var(--text-color);
+  background: var(--primary-color);
+
+  &:hover {
+    background-color: var(--secondary-hover-color);
+  }
+
+  & .icon {
+    font-size: 1.2rem;
+    display: flex;
+    position: absolute;
+    transition: transform 0.6s, opacity 0.6s;
+    backface-visibility: hidden;
+  }
+
+  & .sun {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+
+  & .moon {
+    transform: rotateY(180deg);
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+body:has(#theme-toggle:checked) .sun {
+  transform: rotateY(-180deg);
+  transform: rotate(360deg);
+  opacity: 0;
+}
+
+body:has(#theme-toggle:checked) .moon {
+  transform: rotateY(0deg);
+  opacity: 1;
+}

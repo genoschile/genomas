@@ -1,0 +1,49 @@
+.sidebar-org--plan {
+  display: flex;
+  flex-direction: column;
+  height: 3rem;
+
+  padding-inline: 0.5rem;
+  padding-block: 0.5rem;
+
+  font-size: 0.75rem;
+
+  margin-block-end: 1rem;
+
+  background-color: var(--primary-color);
+  border-radius: 0.5rem;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > button {
+      font-size: 1rem;
+
+      padding: 0.4rem;
+      font-weight: bold;
+      border-radius: 100%;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition-property: background-color, border-color, color, fill, stroke,
+        opacity, box-shadow, transform, filter, backdrop-filter;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+
+      display: grid;
+      place-content: center;
+
+      &:hover {
+        background-color: var(--secondary-hover-color);
+      }
+    }
+
+    > div {
+      p {
+        font-weight: bold;
+        color: var(--text-color);
+      }
+    }
+  }
+}

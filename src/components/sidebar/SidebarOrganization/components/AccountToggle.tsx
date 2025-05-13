@@ -1,8 +1,10 @@
 import { GrConfigure } from "react-icons/gr";
 
+import "./accountToggle.css";
+
 export function AccountToggle() {
   return (
-    <header>
+    <header className="sidebar-org--account-header">
       <button>
         <img src="https://api.dicebear.com/9.x/notionists/svg" alt="avatar" />
 
@@ -11,7 +13,9 @@ export function AccountToggle() {
           <span>bastudillo.alarcon@gmail.com</span>
         </div>
 
-        <GrConfigure className="icon" />
+        <span>
+          <GrConfigure className="icon" />
+        </span>
       </button>
     </header>
   );
