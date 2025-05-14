@@ -1,0 +1,116 @@
+table {
+  min-block-size: 500px;
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+
+  & input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    aspect-ratio: 1;
+    cursor: pointer;
+  }
+
+  & tr {
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+
+  & tr.selected {
+    background-color: var(--hover-row-table);
+  }
+
+  & caption {
+    font-size: 1.875em;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: center;
+
+    margin-inline: auto;
+    inline-size: 100%;
+    margin-block-end: 1rem;
+
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: "";
+      display: block;
+      bottom: -15px;
+      width: 100%;
+      height: 0.25rem;
+      background-color: var(--primary-color);
+    }
+  }
+
+  & thead {
+    & tr {
+      &:first-child > th:is(:first-child, :last-child) {
+        visibility: hidden;
+      }
+
+      & th {
+        padding: 1rem;
+      }
+    }
+  }
+
+  & tbody {
+    & tr {
+      & td {
+        padding: 0.4rem;
+
+        &:first-child {
+          width: 1rem;
+          text-align: center;
+
+          & svg {
+            margin-left: 0.5rem;
+            stroke: black;
+            stroke-width: 10px;
+            fill: none;
+            cursor: pointer;
+
+            &.favorite {
+              fill: yellow;
+              stroke: yellow;
+            }
+          }
+        }
+
+        & > div {
+          padding: 0.4rem;
+          border-radius: 8px;
+        }
+
+        &[data-cell="File"] {
+          & div {
+            background-color: transparent;
+          }
+        }
+
+        &[data-cell="Workflow"] {
+          & div {
+            background-color: var(--bg-color-yellow);
+          }
+        }
+        &[data-cell="Idprocess"] {
+          & div {
+            background-color: #e6e6e6;
+          }
+        }
+      }
+    }
+  }
+
+  & tfood {
+    width: 100%;
+    margin-top: 1rem;
+    & tr {
+      width: 100%;
+      & td {
+        margin: 0 auto;
+      }
+    }
+  }
+}

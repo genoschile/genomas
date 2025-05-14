@@ -12,17 +12,11 @@
 
   > section {
     grid-area: main;
-    overflow-y: auto;
     min-block-size: 100vh;
     display: block;
     inline-size: 100%;
     padding-inline: 2rem;
     padding-block: 1.5rem;
-
-    h1 {
-      margin-block: 1rem;
-      color: var(--text-color);
-    }
 
     > h1 {
       margin-inline: auto;
@@ -37,10 +31,9 @@
       max-inline-size: 980px;
       margin: 0 auto;
 
-      > h1 {
-        font-size: 1.4rem;
-        color: var(--subheading-color);
-        margin-block-end: 1.2rem;
+      h1 {
+        color: var(--text-color);
+        margin-block: 1rem;
       }
     }
   }
