@@ -1,6 +1,6 @@
 table {
   min-block-size: 500px;
-  width: 100%;
+  inline-size:  100%;
   border-collapse: collapse;
   overflow-x: auto;
 
@@ -14,6 +14,8 @@ table {
   & tr {
     background-color: transparent;
     transition: background-color 0.3s ease;
+    block-size: fit-content;
+
   }
 
   & tr.selected {
@@ -81,23 +83,7 @@ table {
         & > div {
           padding: 0.4rem;
           border-radius: 8px;
-        }
-
-        &[data-cell="File"] {
-          & div {
-            background-color: transparent;
-          }
-        }
-
-        &[data-cell="Workflow"] {
-          & div {
-            background-color: var(--bg-color-yellow);
-          }
-        }
-        &[data-cell="Idprocess"] {
-          & div {
-            background-color: #e6e6e6;
-          }
+          background-color: red;
         }
       }
     }

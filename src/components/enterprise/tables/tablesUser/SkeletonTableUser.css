@@ -1,0 +1,24 @@
+.skeleton {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  width: 100%;
+  height: 20px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-cell {
+  height: 20px;
+  width: 100%;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}

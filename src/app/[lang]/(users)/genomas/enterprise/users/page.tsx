@@ -1,22 +1,34 @@
+"use client";
+
 import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 import "./page.css";
 import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
-import { FaSearch, FaUser } from "react-icons/fa";
-import { TableEnterpriseUser } from "./TableEnterpriseUser";
+import { FaSearch } from "react-icons/fa";
+import { TableEnterpriseUser } from "@/components/enterprise/tables/tablesUser/TableEnterpriseUser";
 import { IoPersonAddSharp } from "react-icons/io5";
-import { SearchFilterTable } from "@/components/analysis/searchs/SearchFilterTable";
+
+import { SearchFilterEnterpriseUser } from "@/components/enterprise/tables/tablesUser/SearchFilterEnterpriseUser";
+import { FiltersTableUserEnterpriseContextProvider } from "@/context/enterprise/FiltersTableUserEnterpriseContext";
+import {
+  DataTableUserEnterpriseProvider,
+  useDataTableUserEnterpriseContext,
+} from "@/context/enterprise/DataTableUserEnterpriseContext";
 
 export default function page() {
   return (
-    <div className="enterprise-users">
-      <ChatSuggestionTitle
-        title="Administra tus usuarios"
-        description="Puedes agregar, editar y eliminar usuarios de tu organización."
-      />
-      <EnterpriseUserHero />
-      <EnterpriseUserFiltersHero />
-      <TableEnterpriseUserContainer />
-    </div>
+    <DataTableUserEnterpriseProvider>
+      <FiltersTableUserEnterpriseContextProvider>
+        <div className="enterprise-users">
+          <ChatSuggestionTitle
+            title="Administra tus usuarios"
+            description="Puedes agregar, editar y eliminar usuarios de tu organización."
+          />
+          <EnterpriseUserHero />
+          <EnterpriseUserFiltersHero />
+          <TableEnterpriseUserContainer />
+        </div>
+      </FiltersTableUserEnterpriseContextProvider>
+    </DataTableUserEnterpriseProvider>
   );
 }
 
@@ -32,7 +44,7 @@ export const EnterpriseUserHero = () => {
 export const EnterpriseUserFiltersHero = () => {
   return (
     <div className="enterprise-users__hero">
-      <SearchFilterTable />
+      <SearchFilterEnterpriseUser />
     </div>
   );
 };
@@ -56,6 +68,8 @@ export const NavActionsEnterpriseUser = () => {
 };
 
 export const SearchSectionEnterpriseUser = () => {
+  const { searchTerm, setSearchTerm } = useDataTableUserEnterpriseContext();
+
   return (
     <search className="enterprise-users__search">
       <label htmlFor="">
@@ -67,6 +81,8 @@ export const SearchSectionEnterpriseUser = () => {
           placeholder="Buscar usuario"
           name="search"
           id="search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </label>
     </search>

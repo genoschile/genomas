@@ -1,0 +1,95 @@
+.table-filters {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1rem;
+
+  :where(.filters-EnterpriseUser, .LabelFilterTableSelect) {
+    font-size: 1rem;
+    flex: 1;
+    background-color: var(--primary-color);
+    border-radius: 0.75rem;
+    gap: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-color);
+
+    &:hover {
+      background-color: var(--secondary-hover-color);
+    }
+  }
+
+  & button {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid transparent;
+  }
+
+  & .moveTrashButtonFilterTable {
+    text-decoration: underline;
+  }
+
+  & .dateCreatedButtonFilterTable {
+    & .dateCreated--icon {
+      transition: transform 0.3s ease;
+
+      &.filter-asc-desc {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+}
+
+.checkboxButtonFilterTable {
+  display: flex;
+  position: relative;
+  padding: 0.2rem;
+
+  .LabelFilterTableSelect {
+    flex: 1;
+    inset: 0;
+    inline-size: 100%;
+    padding: 0.5rem 1rem;
+
+    > :nth-child(1) {
+      display: grid;
+      place-content: center;
+    }
+  }
+
+  .dropdownUlListFilters {
+    list-style: none;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+
+    inline-size: 150px;
+
+    display: flex;
+    flex-direction: column;
+    text-wrap: nowrap;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--secondary-hover-color);
+    border-radius: 0.75rem;
+    z-index: 1;
+
+    border: 1px solid var(--primary-color);
+
+    > li {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.75rem;
+      inline-size: 100%;
+
+      color: var(--text-color);
+
+      &:hover {
+        background-color: var(--secondary-color);
+      }
+    }
+  }
+}
