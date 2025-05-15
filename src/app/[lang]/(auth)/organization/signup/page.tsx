@@ -1,5 +1,9 @@
+import { FormSignUp } from "./components/FormEnterpriseSignUp";
+
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <div>
+      <FormSignUp />
+    </div>
+  );
 }

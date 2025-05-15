@@ -1,0 +1,126 @@
+.groupsCard {
+  display: flex;
+
+  align-items: center;
+  aspect-ratio: 16/9;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  border-radius: 0.75rem;
+
+  flex-direction: column;
+
+  > * {
+    inline-size: 100%;
+    padding-inline: 1rem;
+  }
+
+  > *:not(:last-child, hr) {
+    flex: 1;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-block: 0.25rem;
+
+    background-color: var(--primary-color);
+
+    flex-direction: column;
+
+    gap: 0.3rem;
+
+    > div {
+      display: flex;
+      align-items: center;
+      inline-size: 100%;
+
+      > span {
+        background-color: var(--secondary-color);
+      }
+
+      & > *:nth-child(1) {
+        margin-inline-end: auto;
+      }
+    }
+
+    & > *:nth-child(2) {
+      font-size: 0.8rem;
+      margin-block-end: 1.2rem;
+      color: var(--subheading-color);
+    }
+  }
+
+  button {
+    padding-inline: 0.5rem;
+    padding-block: 0.25rem;
+    border-radius: 0.75rem;
+
+    background-color: var(--secondary-color);
+
+    inline-size: fit-content;
+
+    font-size: 1rem;
+  }
+
+  > footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    margin-block: 0.5rem;
+
+    > div {
+      display: flex;
+      align-items: center;
+
+      gap: 0.5rem;
+
+      margin-inline-end: auto;
+    }
+  }
+
+  > .groupsCardMembers {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.5rem;
+
+    > ul {
+      display: flex;
+      flex: 1;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 0.5rem;
+      inline-size: 100%;
+
+      justify-content: center;
+      background-color: aquamarine;
+
+      li {
+        display: flex;
+        overflow: hidden;
+        background-color: blue;
+
+        div {
+          width: 25px;
+          height: 25px;
+          aspect-ratio: 1/1;
+          border-radius: 50%;
+          background-color: var(--secondary-color);
+          background-color: red;
+
+          span {
+            background-color: red;
+          }
+        }
+      }
+    }
+  }
+}
