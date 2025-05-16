@@ -1,27 +1,33 @@
 .grid-container {
   background-color: transparent;
-
-  --grid-max-col-count: 3;
-  --grid-min-col-size: 180px;
-  --grid-gap: 0.5rem;
-
-  display: grid;
   place-items: center;
-  gap: var(--grid-gap);
-
   inline-size: 100%;
   align-content: center;
 
+  --grid-max-col-count: 3;
+  --grid-min-col-size: 200px;
+  --grid-gap: 1rem;
+
+  --grid-col-size-calc: calc(
+    (100% - var(--grid-gap) * var(--grid-max-col-count)) /
+      var(--grid-max-col-count)
+  );
+  --grid-col-min-size-calc: min(
+    100%,
+    max(var(--grid-min-col-size), var(--grid-col-size-calc))
+  );
+
+  display: grid;
+  gap: var(--grid-gap);
+
   grid-template-columns: repeat(
     auto-fit,
-    minmax(var(--grid-min-col-size), 1fr)
+    minmax(var(--grid-col-min-size-calc), 1fr)
   );
 
   & > .box {
-    min-block-size: 200px;
     height: 100%;
     inline-size: 100%;
-    max-width: 300px;
     border-radius: 0.75rem;
     transform: translateY(0);
     transition: transform 0.3s ease, background-color 0.3s ease,

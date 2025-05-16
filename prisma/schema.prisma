@@ -115,9 +115,16 @@ model License {
 model Organization {
   id         String      @id @default(cuid())
   name       String
+  email      String      @unique
+  password   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  isActive   Boolean     @default(true)
   users      User[]
   workspaces Workspace[]
   license    License?
+  logoUrl    String?
+  domain     String?
 }
 
 // Usuario

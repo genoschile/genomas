@@ -1,6 +1,11 @@
-import { IOrganization } from "@/core/interfaces/IOrganization";
-import { organizationRepository } from "@/core/repositories/organizationRepository";
+import { OrganizationRepository } from "@/core/repositories/organizationRepository";
+import { CreateOrgDTO, OrgDTO } from "./organization";
+import { IOrganizationRepository } from "@/core/interfaces/IOrganization";
 
-export async function createOrganization(data: Omit<IOrganization, "id">): Promise<IOrganization> {
-  return organizationRepository.create(data);
+export class CreateOrganizationUseCase {
+  constructor(private orgRepo: IOrganizationRepository) {}
+
+  async execute(data: CreateOrgDTO): Promise<OrgDTO> {
+    return this.orgRepo.create(data);
+  }
 }

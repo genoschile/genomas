@@ -3,16 +3,39 @@
 /* styles */
 import { AuthFormLogo } from "@/components/forms/components/AuthFormLogo";
 import { AuthLink } from "@/components/forms/components/AuthLink";
+import { submitSignUpEnterprise } from "@/core/use-cases/organization/auth";
+import { useActionState } from "react";
 
 export function FormSignUp() {
+  const [state, action, pending] = useActionState(
+    submitSignUpEnterprise,
+    undefined
+  );
+
+  console.log("state", { state });
+
   return (
     <section className="auth-form">
       <div className="auth-form__container">
         <AuthFormLogo />
 
-        <form className="auth-form__form">
+        <form method="POST" action={action} className="auth-form__form">
           <fieldset>
             <legend className="auth-form__title">Sign Up</legend>
+
+            <div className="auth-form__input-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your name"
+                className="auth-form__input"
+              />
+
+              {state?.errors?.name && <p>{state.errors.name}</p>}
+            </div>
+
             <div className="auth-form__input-group">
               <label htmlFor="email">Email:</label>
               <input
@@ -22,6 +45,8 @@ export function FormSignUp() {
                 placeholder="Enter your email"
                 className="auth-form__input"
               />
+
+              {state?.errors?.email && <p>{state.errors.email}</p>}
             </div>
 
             <div className="auth-form__input-group">
@@ -44,13 +69,24 @@ export function FormSignUp() {
                 placeholder="Repeat your password"
                 className="auth-form__input"
               />
+
+              {state?.errors?.password && (
+                <div>
+                  <p>Password must:</p>
+                  <ul>
+                    {state.errors.password.map((error) => (
+                      <li key={error}>- {error}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
 
             <div className="auth-form__button-container">
               <button
                 type="submit"
                 className="auth-form__submit-button"
-                disabled={true}
+                disabled={pending}
               >
                 Create Account
               </button>

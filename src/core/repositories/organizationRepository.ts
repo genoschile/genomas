@@ -1,7 +1,11 @@
 import prisma from "@/lib/actions/prisma";
-import { IOrganization } from "../interfaces/IOrganization";
+import {
+  IOrganization,
+  IOrganizationRepository,
+} from "../interfaces/IOrganization";
+import { CreateOrgDTO, OrgDTO } from "../use-cases/organization/organization";
 
-export const organizationRepository = {
+export class OrganizationRepository implements IOrganizationRepository {
   async findById(id: string): Promise<IOrganization | null> {
     const org = await prisma.organization.findUnique({
       where: { id },
@@ -17,14 +21,15 @@ export const organizationRepository = {
     return {
       id: org.id,
       name: org.name,
+      email: org.email,
+      password: org.password,
       userIds: org.users.map((u) => u.id),
       workspaceIds: org.workspaces.map((w) => w.id),
       licenseId: org.license?.id,
     };
-  },
+  }
 
-  //   : Promise<IOrganization[]>
-  async findAll() {
+  async findAll(): Promise<IOrganization[]> {
     const orgs = await prisma.organization.findMany({
       include: {
         users: { select: { id: true } },
@@ -33,22 +38,21 @@ export const organizationRepository = {
       },
     });
 
-    console.log(orgs);
-  },
+    return orgs.map((org) => ({
+      id: org.id,
+      name: org.name,
+      userIds: org.users.map((u) => u.id),
+      workspaceIds: org.workspaces.map((w) => w.id),
+      licenseId: org.license?.id,
+    }));
+  }
 
-  async create(data: Omit<IOrganization, "id">): Promise<IOrganization> {
+  async create(data: CreateOrgDTO): Promise<OrgDTO> {
     const org = await prisma.organization.create({
       data: {
         name: data.name,
-        users: {
-          connect: data.userIds.map((id) => ({ id })),
-        },
-        workspaces: {
-          connect: data.workspaceIds.map((id) => ({ id })),
-        },
-        license: data.licenseId
-          ? { connect: { id: data.licenseId } }
-          : undefined,
+        email: data.email,
+        password: data.password,
       },
       include: {
         users: { select: { id: true } },
@@ -60,11 +64,12 @@ export const organizationRepository = {
     return {
       id: org.id,
       name: org.name,
+      email: org.email,
       userIds: org.users.map((u) => u.id),
       workspaceIds: org.workspaces.map((w) => w.id),
       licenseId: org.license?.id,
     };
-  },
+  }
 
   async update(
     id: string,
@@ -74,18 +79,12 @@ export const organizationRepository = {
       where: { id },
       data: {
         name: data.name,
-        users: {
-          connect: data.userIds
-            ? data.userIds.map((id) => ({ id }))
-            : undefined,
-          disconnect: data.userIds ? undefined : [],
-        },
-        workspaces: {
-          connect: data.workspaceIds
-            ? data.workspaceIds.map((id) => ({ id }))
-            : undefined,
-          disconnect: data.workspaceIds ? undefined : [],
-        },
+        users: data.userIds
+          ? { connect: data.userIds.map((id) => ({ id })) }
+          : undefined,
+        workspaces: data.workspaceIds
+          ? { connect: data.workspaceIds.map((id) => ({ id })) }
+          : undefined,
         license: data.licenseId
           ? { connect: { id: data.licenseId } }
           : undefined,
@@ -106,7 +105,7 @@ export const organizationRepository = {
       workspaceIds: org.workspaces.map((w) => w.id),
       licenseId: org.license?.id,
     };
-  },
+  }
 
   async delete(id: string): Promise<IOrganization | null> {
     const org = await prisma.organization.delete({
@@ -118,8 +117,6 @@ export const organizationRepository = {
       },
     });
 
-    if (!org) return null;
-
     return {
       id: org.id,
       name: org.name,
@@ -127,5 +124,5 @@ export const organizationRepository = {
       workspaceIds: org.workspaces.map((w) => w.id),
       licenseId: org.license?.id,
     };
-  },
-};
+  }
+}
