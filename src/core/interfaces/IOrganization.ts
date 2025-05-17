@@ -1,4 +1,4 @@
-import { CreateOrgDTO, OrgDTO } from "../use-cases/organization/organization";
+import { CreateOrgDTO, OrgDTO } from "../use-cases/organization/organizationType";
 
 export interface IOrganization {
   id: string;

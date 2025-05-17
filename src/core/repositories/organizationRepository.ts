@@ -3,7 +3,7 @@ import {
   IOrganization,
   IOrganizationRepository,
 } from "../interfaces/IOrganization";
-import { CreateOrgDTO, OrgDTO } from "../use-cases/organization/organization";
+import { CreateOrgDTO, OrgDTO } from "../use-cases/organization/organizationType";
 
 export class OrganizationRepository implements IOrganizationRepository {
   async findById(id: string): Promise<IOrganization | null> {
@@ -65,6 +65,7 @@ export class OrganizationRepository implements IOrganizationRepository {
       id: org.id,
       name: org.name,
       email: org.email,
+      password: org.password,
       userIds: org.users.map((u) => u.id),
       workspaceIds: org.workspaces.map((w) => w.id),
       licenseId: org.license?.id,

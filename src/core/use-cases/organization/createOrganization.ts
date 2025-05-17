@@ -1,5 +1,4 @@
-import { OrganizationRepository } from "@/core/repositories/organizationRepository";
-import { CreateOrgDTO, OrgDTO } from "./organization";
+import { CreateOrgDTO, OrgDTO } from "./organizationType";
 import { IOrganizationRepository } from "@/core/interfaces/IOrganization";
 
 export class CreateOrganizationUseCase {

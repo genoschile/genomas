@@ -1,55 +1,87 @@
 import { NextResponse } from "next/server";
-
-// import { getOrganization } from "@/domain/use-cases/organization/getOrganization";
-// import { updateOrganization } from "@/domain/use-cases/organization/updateOrganization";
-// import { deleteOrganization } from "@/domain/use-cases/organization/deleteOrganization";
 import { CreateOrganizationUseCase } from "@/core/use-cases/organization/createOrganization";
 import { OrganizationRepository } from "@/core/repositories/organizationRepository";
+import { OrgDTO } from "@/core/use-cases/organization/organizationType";
+import { generateSecurePassword } from "@/core/helpers/randomPwdSecure";
+import { useCaseUsers } from "@/core/use-cases/user/useCaseUsers";
+import { UserRepository } from "@/core/repositories/userRepository";
+import { UserType } from "@/core/interfaces/enums";
 
-// POST /api/organization
+const useCaseOrganization = new CreateOrganizationUseCase(
+  new OrganizationRepository()
+);
 
-const useCase = new CreateOrganizationUseCase(new OrganizationRepository());
+const useCaseUser = new useCaseUsers(new UserRepository());
 
+/* Create a new organization for the first time */
 export async function POST(request: Request) {
   const body = await request.json();
 
   console.log({ body });
 
-  const org = await useCase.execute(body);
+  try {
+    const org: OrgDTO = await useCaseOrganization.execute(body);
 
-  return NextResponse.json(org, { status: 201 });
+    if (!org) {
+      return NextResponse.json(
+        { message: "Organization not created" },
+        { status: 400 }
+      );
+    }
+
+    const { id, name, email } = org;
+
+    const defaultUserPasswordSecure = generateSecurePassword();
+
+    const currentDataUser = {
+      name: name,
+      email: email,
+      encryptedPassword: defaultUserPasswordSecure,
+      organizationId: id,
+      isDefaultAdmin: true,
+      userType: UserType.ADMIN,
+    };
+
+    const currentUser = await useCaseUser.createUser(currentDataUser);
+
+    if (!currentUser) {
+      throw new Error("Error creating default user");
+    }
+
+    if (!defaultUserPasswordSecure) {
+      throw new Error("Error generating secure password");
+    }
+
+    return NextResponse.json({
+      status: 200,
+      data: { id, name, email },
+      success: true,
+      message: "Organization created successfully",
+    });
+  } catch (error) {
+    console.error("Error creating organization:", error);
+
+    return NextResponse.json({
+      message: "Error creating organization",
+      status: 500,
+      success: false,
+    });
+  }
+
+  // const defaultUserAdminOrg = await createDefaultUserAdminOrg(
 }
 
-// PUT /api/organization?id=xxx
-// export async function PUT(request: Request) {
-//   const { searchParams } = new URL(request.url);
-//   const id = searchParams.get("id");
-//   const body = await request.json();
+/*
 
-//   if (!id) return NextResponse.json({ error: "Missing ID" }, { status: 400 });
+await prisma.user.create({
+  data: {
+    email: "admin@example.com",
+    encryptedPassword: "hashed_password",
+    organizationId: newOrg.id,
+    isDefaultAdmin: true,
+    userType: "ADMIN",
+  }
+});
 
-//   const updated = await updateOrganization(id, body);
-//   return NextResponse.json(updated);
-// }
 
-// DELETE /api/organization?id=xxx
-// export async function DELETE(request: Request) {
-//   const { searchParams } = new URL(request.url);
-//   const id = searchParams.get("id");
-
-//   if (!id) return NextResponse.json({ error: "Missing ID" }, { status: 400 });
-
-//   await deleteOrganization(id);
-//   return NextResponse.json({ success: true });
-// }
-
-// GET /api/organization?id=xxx
-// export async function GET(request: Request) {
-//   const { searchParams } = new URL(request.url);
-//   const id = searchParams.get("id");
-
-//   if (!id) return NextResponse.json({ error: "Missing ID" }, { status: 400 });
-
-//   const org = await getOrganization(id);
-//   return NextResponse.json(org);
-// }
+*/
