@@ -1,18 +1,39 @@
 "use client";
 
+import "../../../../../../components/forms/form.css";
 /* styles */
 import { AuthFormLogo } from "@/components/forms/components/AuthFormLogo";
 import { AuthLink } from "@/components/forms/components/AuthLink";
 import { submitSignUpEnterprise } from "@/core/use-cases/organization/auth";
-import { useActionState } from "react";
+import { useOrganizationContext } from "@/hooks/useOrganization";
+import router from "next/router";
+
+import { useActionState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 export function FormSignUp() {
   const [state, action, pending] = useActionState(
     submitSignUpEnterprise,
     undefined
   );
+  const { updateOrganization } = useOrganizationContext();
 
-  console.log("state", { state });
+  useEffect(() => {
+    if (state?.success && state.user) {
+      const { id, name, email } = state.user;
+
+      console.log({ id, name, email });
+
+      updateOrganization({ id: id, name, email });
+    }
+
+    if (state?.success) {
+      toast.success(state.message || "Login successful!");
+      router.push("/genomas/enterprise");
+    } else if (state?.message) {
+      toast.error(state.message || "Something went wrong!");
+    }
+  }, [state, updateOrganization]);
 
   return (
     <section className="auth-form">

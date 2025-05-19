@@ -41,4 +41,5 @@ export interface IUserRepository {
   findAll(): Promise<CreateUserDTO[]>;
   update(id: string, data: Partial<UserDTO>): Promise<CreateUserDTO | null>;
   delete(id: string): Promise<UserDTO | null>;
+  getAllUsersOrganization(id: string): Promise<UserDTO[]>;
 }

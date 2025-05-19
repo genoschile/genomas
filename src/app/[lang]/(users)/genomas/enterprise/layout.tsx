@@ -6,6 +6,7 @@ import { SidebarOrganization } from "@/components/sidebar/SidebarOrganization/Si
 import { TopBar } from "@/components/sidebar/SidebarOrganization/components/TopBar";
 import { SuggestionsProvider } from "@/context/enterprise/SuggestionsPromptContext";
 import { ThemeProvider } from "@/context/enterprise/ThemeContext";
+import { OrganizationContextProvider } from "@/context/OrganizationContext";
 
 export default function EnterpriseLayout({
   children,
@@ -14,15 +15,17 @@ export default function EnterpriseLayout({
 }) {
   return (
     <ThemeProvider>
-      <SuggestionsProvider>
-        <main className="enterpriselayout">
-          <SidebarOrganization />
-          <TopBar />
-          <section>
-            <Suspense fallback={<p> Loading ... </p>}>{children}</Suspense>
-          </section>
-        </main>
-      </SuggestionsProvider>
+      <OrganizationContextProvider>
+        <SuggestionsProvider>
+          <main className="enterpriselayout">
+            <SidebarOrganization />
+            <TopBar />
+            <section>
+              <Suspense fallback={<p> Loading ... </p>}>{children}</Suspense>
+            </section>
+          </main>
+        </SuggestionsProvider>
+      </OrganizationContextProvider>
     </ThemeProvider>
   );
 }

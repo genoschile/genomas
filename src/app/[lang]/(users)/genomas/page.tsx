@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import CardAnalysis from "@/components/cards/CardAnalysis";
 import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
@@ -8,7 +8,6 @@ import { AuthFormLogo } from "@/components/forms/components/AuthFormLogo";
 import { useTranslations } from "../../../../context/I18nClientProvider";
 
 export default function page() {
-
   const { t } = useTranslations();
 
   const infoCard = [
@@ -16,7 +15,7 @@ export default function page() {
       title: t("genomas.card.0.title"),
       description: t("genomas.card.0.description"),
       href: "/genomas/user",
-      srcImg: "/images/adn.png", 
+      srcImg: "/images/adn.png",
     },
     {
       title: t("genomas.card.1.title"),

@@ -1,6 +1,7 @@
 import prisma from "@/lib/actions/prisma";
-import { IUser, IUserRepository } from "@core/interfaces/IUser";
+import { IUser, IUserRepository, UserDTO } from "@core/interfaces/IUser";
 import { mapToIUser, MapToPrismaUserType } from "../mapTypes/userTypes";
+import bcrypt from "bcrypt";
 
 export const userRepository = {
   async create(user: Omit<IUser, "id">): Promise<IUser> {
@@ -22,19 +23,33 @@ export const userRepository = {
 };
 
 export class UserRepository implements IUserRepository {
-  async create(user: Omit<IUser, "id">): Promise<IUser> {
-    const prismaUser = await prisma.user.create({
-      data: {
-        email: user.email,
-        name: user.name,
-        userType: MapToPrismaUserType(user.userType),
-        organizationId: user.organizationId,
-        groupId: user.groupId,
-        encryptedPassword: "hashed",
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
+  async getAllUsersOrganization(id: string): Promise<UserDTO[]> {
+    const users = await prisma.user.findMany({
+      where: {
+        organizationId: id,
       },
     });
+
+    return users.map(mapToIUser);
+  }
+
+  async create(user: Omit<IUser, "id">): Promise<IUser> {
+    const hashedPassword = await bcrypt.hash(user.encryptedPassword, 10);
+
+    const data = {
+      email: user.email,
+      name: user.name,
+      userType: MapToPrismaUserType(user.userType),
+      organizationId: user.organizationId,
+      groupId: user.groupId,
+      encryptedPassword: hashedPassword,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+
+    console.log("UserRepository", { data });
+
+    const prismaUser = await prisma.user.create({ data });
 
     return mapToIUser(prismaUser);
   }
@@ -61,7 +76,7 @@ export class UserRepository implements IUserRepository {
     return user ? mapToIUser(user) : null;
   }
 
-  async delete(id: string): Promise<IUser | null> {   
+  async delete(id: string): Promise<IUser | null> {
     const user = await prisma.user.delete({
       where: { id },
     });

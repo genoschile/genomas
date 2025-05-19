@@ -172,7 +172,7 @@ export const submitSignUpEnterprise = async (
 
   console.log({ message: "User created successfully!" });
 
-  const response = await fetch(`${baseUrl}/api/organization`, {
+  const res = await fetch(`${baseUrl}/api/organization`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -184,14 +184,40 @@ export const submitSignUpEnterprise = async (
     }),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json();
+  // Si falla la petición a nivel HTTP (404, 500, etc.)
+  if (!res.ok) {
+    const errorData: ApiResponse = await res.json();
     return {
+      success: false,
       message: errorData.message || "Failed to create user.",
     };
   }
 
+  // Si llega bien, parseamos el JSON
+  const responseData: ApiResponse<UserData> = await res.json();
+
+  if (!responseData.success) {
+    return {
+      success: false,
+      message: responseData.message || "Something went wrong.",
+    };
+  }
+
   return {
+    success: true,
     message: "User created successfully!",
+    user: responseData.data, 
   };
+};
+type ApiResponse<T = undefined> = {
+  status: number;
+  success: boolean;
+  message: string;
+  data?: T;
+};
+
+type UserData = {
+  id: string;
+  name: string;
+  email: string;
 };

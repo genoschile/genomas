@@ -1,9 +1,10 @@
+import { OrganizationContextProvider } from "@/context/OrganizationContext";
 import { FormSignUp } from "./components/FormEnterpriseSignUp";
 
 export default function page() {
   return (
-    <div>
+    <OrganizationContextProvider>
       <FormSignUp />
-    </div>
+    </OrganizationContextProvider>
   );
 }

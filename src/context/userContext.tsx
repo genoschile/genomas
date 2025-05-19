@@ -1,13 +1,14 @@
 "use client";
 
-import type { UserContextType } from "@/lib/types/contextTypes";
 import { createContext, useState, useCallback, useEffect } from "react";
+import type { UserContextType } from "@/lib/types/contextTypes";
 
 export const UserContext = createContext<UserContextType>({
   name: null,
   email: null,
   updateUser: () => {},
   id: null,
+  logout: () => {},
 });
 
 export function UserContextProvider({
@@ -15,52 +16,53 @@ export function UserContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [name, setName] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
-  const [id, setId] = useState<number | null>(null);
+  const [user, setUser] = useState<{
+    name: string | null;
+    email: string | null;
+    id: number | null;
+  }>({
+    name: null,
+    email: null,
+    id: null,
+  });
 
   useEffect(() => {
     const storedUser = localStorage.getItem("genomaUser");
-
     if (storedUser) {
-      const { name, id } = JSON.parse(storedUser);
-      setName(name);
-      setEmail(email);
-      setId(id);
+      const parsed = JSON.parse(storedUser);
+      setUser({
+        name: parsed.name ?? null,
+        email: parsed.email ?? null,
+        id: parsed.id ?? null,
+      });
     }
   }, []);
 
   const updateUser = useCallback(
-    ({ name, id, email }: { name: string; id: number; email: string }) => {
-      setName(name);
-      setEmail(email);
-      setId(id);
-
-      localStorage.setItem("genomaUser", JSON.stringify({ name, id, email }));
+    ({ name, email, id }: { name: string; email: string; id: number }) => {
+      const updated = { name, email, id };
+      setUser(updated);
+      localStorage.setItem("genomaUser", JSON.stringify(updated));
     },
     []
   );
 
+  const logout = () => {
+    setUser({ name: null, email: null, id: null });
+    localStorage.removeItem("genomaUser");
+  };
+
   return (
-    <UserContext value={{ name, updateUser, email, id }}>
+    <UserContext.Provider
+      value={{
+        logout,
+        name: user.name,
+        email: user.email,
+        id: user.id,
+        updateUser,
+      }}
+    >
       {children}
-    </UserContext>
+    </UserContext.Provider>
   );
 }
-
-/* const [user, setUser] = useState<{
-  name: string | null;
-  email: string | null;
-  id: number | null;
-  isLogged: boolean;
-}>({
-  name: null,
-  email: null,
-  id: null,
-  isLogged: false,
-});
-
-const updateUser = (updates: Partial<typeof user>) => {
-  setUser((prev) => ({ ...prev, ...updates }));
-};
- */

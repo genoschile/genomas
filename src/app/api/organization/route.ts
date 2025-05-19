@@ -13,6 +13,19 @@ const useCaseOrganization = new CreateOrganizationUseCase(
 
 const useCaseUser = new useCaseUsers(new UserRepository());
 
+type ApiResponse<T = undefined> = {
+  status: number;
+  success: boolean;
+  message: string;
+  data?: T;
+};
+
+type UserData = {
+  id: string;
+  name: string;
+  email: string;
+};
+
 /* Create a new organization for the first time */
 export async function POST(request: Request) {
   const body = await request.json();
@@ -42,7 +55,7 @@ export async function POST(request: Request) {
       userType: UserType.ADMIN,
     };
 
-    const currentUser = await useCaseUser.createUser(currentDataUser);
+    const currentUser = await useCaseUser.createUserAdmin(currentDataUser);
 
     if (!currentUser) {
       throw new Error("Error creating default user");
@@ -52,7 +65,7 @@ export async function POST(request: Request) {
       throw new Error("Error generating secure password");
     }
 
-    return NextResponse.json({
+    return NextResponse.json<ApiResponse<UserData>>({
       status: 200,
       data: { id, name, email },
       success: true,
