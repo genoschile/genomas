@@ -12,6 +12,7 @@ import "./layout.css";
 import { FooterLanding } from "@/components/footer/FooterLanding";
 import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
 import { SidebarUser } from "@/components/sidebar/SidebarUser";
+import { ModalContainer } from "@/components/modals/ModalContainer";
 
 export default function userLayout({
   children,
@@ -22,6 +23,7 @@ export default function userLayout({
     <AuthContextProvider>
       <UserContextProvider>
         <ProjectProvider>
+          <ModalContainer />
           <div className="userWorkspace--container">
             <HeaderUserWorkspace className="wu-header" />
             <SidebarUser className="wu-aside" />

@@ -9,7 +9,7 @@ export const containerGroupsListItem = [
   "cat",
   "birth",
   "dog",
-];
+]; 
 
 const getGroupsList = async () => {
   const organizationId = localStorage.getItem("organizationId");

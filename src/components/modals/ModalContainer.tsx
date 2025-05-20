@@ -3,7 +3,7 @@ import { WorkspaceForm } from "../forms/Workspaceform";
 import { Modal } from "./Modal";
 import { DeleteConfirmationForm } from "../project/components/DeleteConfirmationForm";
 import { MembersForm } from "../forms/MembersForm";
-import { AddUserFormEnterprise } from "../forms/AddUserEnterprise";
+import { AddGroupsFormEnterprise } from "../forms/AddUserEnterprise";
 
 export const ModalContainer = () => {
   return (
@@ -22,9 +22,9 @@ export const ModalContainer = () => {
 
       <Modal
         id={MODAL_IDS.ADD_USER_ENTERPRISE}
-        title="Add User(s) to Enterprise"
+        title="Add Groups(s) to Enterprise"
       >
-        <AddUserFormEnterprise />
+        <AddGroupsFormEnterprise />
       </Modal>
     </>
   );

@@ -54,12 +54,16 @@ export const DataTableUserEnterpriseProvider = ({
     const fetchUsers = async () => {
       setLoading(true);
       try {
+        const org = JSON.parse(
+          localStorage.getItem("genomaOrganization") || "{}"
+        );
+
         const res = await fetch("/api/organization/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ id: "cmavbyiqp0007g1kw94qezuiq" }),
+          body: JSON.stringify({ id: org.id }),
         });
 
         if (!res.ok) {
@@ -67,6 +71,8 @@ export const DataTableUserEnterpriseProvider = ({
         }
 
         const data = await res.json();
+
+        console.log("Usuarios obtenidos:", data);
 
         setUsers(data.data || []);
       } catch (err) {

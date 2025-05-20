@@ -184,6 +184,8 @@ export const submitSignUpEnterprise = async (
     }),
   });
 
+  console.log({ res });
+
   // Si falla la petición a nivel HTTP (404, 500, etc.)
   if (!res.ok) {
     const errorData: ApiResponse = await res.json();
