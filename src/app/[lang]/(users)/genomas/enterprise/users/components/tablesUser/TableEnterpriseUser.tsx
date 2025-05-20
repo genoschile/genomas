@@ -32,18 +32,15 @@ export const TableEnterpriseUser = () => {
   if (loading) {
     return <SkeletonTable rows={2} />;
   }
-
   return (
     <table>
       <caption>Enterprise Users</caption>
       <thead>
         <tr>
           <th>Select</th>
-          {["Imagen", "Nombre", "Email", "Role", "Groups"].map(
-            (header, index) => (
-              <th key={index}>{header}</th>
-            )
-          )}
+          {headerTablesEnterpriseUser.map((header, index) => (
+            <th key={index}>{header}</th>
+          ))}
           <th>Actions</th>
         </tr>
       </thead>
@@ -68,16 +65,12 @@ export const TableEnterpriseUser = () => {
               </div>
             </td>
             <td>
-              <img
-                src={user.image}
-                alt="User avatar"
-                style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-              />
+              <img src={user.image} alt="User avatar" />
             </td>
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>{user.role}</td>
-            <td>{user.groups.join(", ")}</td>
+            <td>{user.groups?.join(", ")}</td>
             <td>...</td>
           </tr>
         ))}

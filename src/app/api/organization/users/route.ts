@@ -50,6 +50,7 @@ export async function POST(request: Request) {
       success: true,
       message: "Organization created successfully",
     });
+    
   } catch (error) {
     console.error("Error creating organization:", error);
 

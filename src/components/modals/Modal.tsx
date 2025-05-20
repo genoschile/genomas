@@ -1,3 +1,5 @@
+"use client"
+
 /* hooks */
 import { useModalContext } from "@/hooks/useModalsProject";
 import { useRef, useEffect } from "react";

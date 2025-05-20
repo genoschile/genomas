@@ -1,6 +1,12 @@
+"use client";
+
+import { useModalContext } from "@/hooks/useModalsProject";
+import { MODAL_IDS } from "@/lib/types/modal";
 import { FaSearch, FaAddressCard } from "react-icons/fa";
 
 export const ContainerGroupsHeader = () => {
+  const { openModal } = useModalContext();
+
   return (
     <nav>
       <search className="enterprise-groups__search">
@@ -18,7 +24,12 @@ export const ContainerGroupsHeader = () => {
       </search>
 
       <button>
-        <FaAddressCard className="icon" />
+        <FaAddressCard
+          className="icon"
+          onClick={() => {
+            return openModal(MODAL_IDS.ADD_USER_ENTERPRISE);
+          }}
+        />
       </button>
     </nav>
   );

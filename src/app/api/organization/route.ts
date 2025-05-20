@@ -27,7 +27,7 @@ type UserData = {
 };
 
 /* Create a new organization for the first time */
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   const body = await request.json();
 
   console.log({ body });
@@ -83,18 +83,3 @@ export async function POST(request: Request) {
 
   // const defaultUserAdminOrg = await createDefaultUserAdminOrg(
 }
-
-/*
-
-await prisma.user.create({
-  data: {
-    email: "admin@example.com",
-    encryptedPassword: "hashed_password",
-    organizationId: newOrg.id,
-    isDefaultAdmin: true,
-    userType: "ADMIN",
-  }
-});
-
-
-*/

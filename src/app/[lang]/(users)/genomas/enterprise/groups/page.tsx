@@ -26,7 +26,6 @@ export default function page() {
       <ContainerGroups>
         <ContainerGroupsList />
       </ContainerGroups>
-
     </>
   );
 }

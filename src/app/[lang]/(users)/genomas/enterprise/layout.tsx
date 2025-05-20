@@ -1,3 +1,4 @@
+
 import { Suspense } from "react";
 import "./style.css";
 import "./layout.css";
@@ -7,6 +8,7 @@ import { TopBar } from "@/components/sidebar/SidebarOrganization/components/TopB
 import { SuggestionsProvider } from "@/context/enterprise/SuggestionsPromptContext";
 import { ThemeProvider } from "@/context/enterprise/ThemeContext";
 import { OrganizationContextProvider } from "@/context/OrganizationContext";
+import { ModalContainer } from "@/components/modals/ModalContainer";
 
 export default function EnterpriseLayout({
   children,
@@ -17,6 +19,7 @@ export default function EnterpriseLayout({
     <ThemeProvider>
       <OrganizationContextProvider>
         <SuggestionsProvider>
+          <ModalContainer />
           <main className="enterpriselayout">
             <SidebarOrganization />
             <TopBar />

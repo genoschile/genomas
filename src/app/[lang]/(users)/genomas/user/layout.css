@@ -21,6 +21,7 @@
 }
 
 .wu-main {
+  position: relative;
   grid-area: main;
 }
 

@@ -16,4 +16,5 @@ export interface IOrganizationRepository {
   findAll(): Promise<OrgDTO[]>;
   update(id: string, data: Partial<OrgDTO>): Promise<OrgDTO | null>;
   delete(id: string): Promise<OrgDTO | null>;
+  findGroupsByOrgId(orgId: string): Promise<OrgDTO | null>;
 }

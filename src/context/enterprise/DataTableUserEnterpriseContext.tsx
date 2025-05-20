@@ -17,33 +17,6 @@ type User = {
   groups: string[];
 };
 
-const mockUsersFromAPI: User[] = [
-  {
-    id: "1",
-    image: "https://example.com/image1.jpg",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Admin",
-    groups: ["Group 1", "Group 2"],
-  },
-  {
-    id: "2",
-    image: "https://example.com/image2.jpg",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    role: "User",
-    groups: ["Group A"],
-  },
-  {
-    id: "3",
-    image: "https://example.com/image3.jpg",
-    name: "Carlos Pérez",
-    email: "carlos@example.com",
-    role: "Editor",
-    groups: ["Group 1", "Group 3"],
-  },
-];
-
 type TableContextType = {
   users: User[];
   selectedIds: string[];
@@ -75,26 +48,43 @@ export const DataTableUserEnterpriseProvider = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const postsPerPage = 2;
+  const postsPerPage = 3;
 
   useEffect(() => {
-    setLoading(true);
-    const fetchUsers = () => {
-      setTimeout(() => {
-        setUsers(mockUsersFromAPI);
+    const fetchUsers = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/organization/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: "cmavbyiqp0007g1kw94qezuiq" }),
+        });
+
+        if (!res.ok) {
+          throw new Error("Error al obtener los usuarios");
+        }
+
+        const data = await res.json();
+
+        setUsers(data.data || []);
+      } catch (err) {
+        console.error("Error al cargar usuarios:", err);
+      } finally {
         setLoading(false);
-      }, 2000);
+      }
     };
 
     fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter((user) => {
-    return [user.name, user.email, user.role]
+  const filteredUsers = users.filter((user) =>
+    [user.name, user.email, user.role]
       .join(" ")
       .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-  });
+      .includes(searchTerm.toLowerCase())
+  );
 
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) =>

@@ -47,6 +47,25 @@ export class OrganizationRepository implements IOrganizationRepository {
     }));
   }
 
+  async findGroupsByOrgId(orgId: string): Promise<IOrganization | null> {
+    const org = await prisma.organization.findUnique({
+      where: { id: orgId },
+      include: {
+        groups: true,
+      },
+    });
+
+    if (!org) return null;
+
+    return {
+      id: org.id,
+      name: org.name,
+      userIds: org.users.map((u) => u.id),
+      workspaceIds: org.workspaces.map((w) => w.id),
+      licenseId: org.license?.id,
+    };
+  }
+
   async create(data: CreateOrgDTO): Promise<OrgDTO> {
     const org = await prisma.organization.create({
       data: {

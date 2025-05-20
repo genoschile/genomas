@@ -1,8 +1,8 @@
 table {
-  min-block-size: 500px;
-  inline-size:  100%;
-  border-collapse: collapse;
+  inline-size: 100%;
   overflow-x: auto;
+
+  border-collapse: collapse;
 
   & input[type="checkbox"] {
     width: 1rem;
@@ -11,14 +11,31 @@ table {
     cursor: pointer;
   }
 
-  & tr {
-    background-color: transparent;
-    transition: background-color 0.3s ease;
-    block-size: fit-content;
+  & td {
+    vertical-align: top;
 
+    & img {
+      height: 40px;
+      aspect-ratio: 1/1;
+      max-inline-size: 100%;
+
+      border-radius: 100%;
+
+      object-fit: cover;
+      background-color: red;
+      background-size: cover;
+      display: block;
+      margin: 0 auto;
+    }
   }
 
-  & tr.selected {
+  & tr {
+    height: auto;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+
+  & tr.selected td {
     background-color: var(--hover-row-table);
   }
 
@@ -58,6 +75,9 @@ table {
   }
 
   & tbody {
+    display: table-row-group;
+    vertical-align: top;
+    inline-size: 100%;
     & tr {
       & td {
         padding: 0.4rem;
@@ -81,9 +101,12 @@ table {
         }
 
         & > div {
-          padding: 0.4rem;
-          border-radius: 8px;
-          background-color: red;
+          padding: 0.25rem;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
         }
       }
     }

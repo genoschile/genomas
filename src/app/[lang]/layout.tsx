@@ -13,6 +13,8 @@ import { ToastContainer } from "react-toastify";
 
 import { I18nServerProvider } from "../../context/I18nServerProvider";
 import { Language } from "@/lib/i18n/i18n.types";
+import { ModalProvider } from "@/context/ModalsProject";
+import { ModalContainer } from "@/components/modals/ModalContainer";
 
 export const metadata: Metadata = {
   title: "Genomas",
@@ -36,13 +38,15 @@ export default async function RootLayout({
   params: Promise<{ lang: Language }>;
 }) {
   const { lang } = await params;
-  
+
   return (
     <html lang={`${lang}`}>
       <body className={`${inter} antialiased`}>
         <I18nServerProvider lang={`${lang}`}>
-          {children}
-          <ToastContainer position="top-right" autoClose={5000} />
+          <ModalProvider>
+            {children}
+            <ToastContainer position="top-right" autoClose={5000} />
+          </ModalProvider>
         </I18nServerProvider>
       </body>
     </html>

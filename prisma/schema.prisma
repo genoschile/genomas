@@ -125,6 +125,8 @@ model Organization {
   license    License?
   logoUrl    String?
   domain     String?
+
+  groups Group[]
 }
 
 // Usuario
@@ -159,6 +161,9 @@ model Group {
   name  String
   role  Role
   users User[]
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
 }
 
 // Workspace

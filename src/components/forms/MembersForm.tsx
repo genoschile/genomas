@@ -103,9 +103,12 @@ const OPTIONS = ["Remove access", "Make admin", "Send reminder"];
 export const PeopleWithAccessItemOptions = () => {
   const [selectedValue, setSelectedValue] = useState<string>(OPTIONS[0]);
 
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedValue(event.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedValue(event.target.value);
+    },
+    []
+  );
 
   return (
     <div className="dropdown-details">
@@ -118,7 +121,9 @@ export const PeopleWithAccessItemOptions = () => {
           <option
             key={option}
             value={option}
-            className={`dropdown-option ${selectedValue === option ? "active" : ""}`}
+            className={`dropdown-option ${
+              selectedValue === option ? "active" : ""
+            }`}
           >
             {option}
             {selectedValue === option && <span className="tick">✔</span>}

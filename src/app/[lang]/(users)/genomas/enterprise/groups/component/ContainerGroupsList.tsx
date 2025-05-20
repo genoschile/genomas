@@ -11,6 +11,17 @@ export const containerGroupsListItem = [
   "dog",
 ];
 
+const getGroupsList = async () => {
+  const organizationId = localStorage.getItem("organizationId");
+
+  if (!organizationId) {
+    throw new Error("No organization ID found in localStorage");
+  }
+
+  const res = await fetch(`/api/organization/${organizationId}/groups`);
+  return await res.json();
+};
+
 export const ContainerGroupsList = () => {
   return (
     <div className="containerGroupsList">

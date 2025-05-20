@@ -1,7 +1,7 @@
 "use client"
 
 import { ModalContext } from "@/context/ModalsProject";
-import { useContext, use } from "react";
+import { use } from "react";
 
 export const useModalContext = () => {
   const context = use(ModalContext);
