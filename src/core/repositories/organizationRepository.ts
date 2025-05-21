@@ -1,71 +1,15 @@
 import prisma from "@/lib/actions/prisma";
 import {
+  CreateOrgDTO,
   IOrganization,
   IOrganizationRepository,
+  OrgDTO,
 } from "../interfaces/IOrganization";
-import { CreateOrgDTO, OrgDTO } from "../use-cases/organization/organizationType";
+import { CreateGroupDTO, ResponseGroupDTO } from "../interfaces/IGroup";
+import { mapToIUser } from "../mapTypes/userTypes";
+import { mapToDomainRoles } from "../mapTypes/rolesTypes";
 
 export class OrganizationRepository implements IOrganizationRepository {
-  async findById(id: string): Promise<IOrganization | null> {
-    const org = await prisma.organization.findUnique({
-      where: { id },
-      include: {
-        users: { select: { id: true } },
-        workspaces: { select: { id: true } },
-        license: { select: { id: true } },
-      },
-    });
-
-    if (!org) return null;
-
-    return {
-      id: org.id,
-      name: org.name,
-      email: org.email,
-      password: org.password,
-      userIds: org.users.map((u) => u.id),
-      workspaceIds: org.workspaces.map((w) => w.id),
-      licenseId: org.license?.id,
-    };
-  }
-
-  async findAll(): Promise<IOrganization[]> {
-    const orgs = await prisma.organization.findMany({
-      include: {
-        users: { select: { id: true } },
-        workspaces: { select: { id: true } },
-        license: { select: { id: true } },
-      },
-    });
-
-    return orgs.map((org) => ({
-      id: org.id,
-      name: org.name,
-      userIds: org.users.map((u) => u.id),
-      workspaceIds: org.workspaces.map((w) => w.id),
-      licenseId: org.license?.id,
-    }));
-  }
-
-  async findGroupsByOrgId(orgId: string): Promise<IOrganization | null> {
-    const org = await prisma.organization.findUnique({
-      where: { id: orgId },
-      include: {
-        groups: true,
-      },
-    });
-
-    if (!org) return null;
-
-    return {
-      id: org.id,
-      name: org.name,
-      userIds: org.users.map((u) => u.id),
-      workspaceIds: org.workspaces.map((w) => w.id),
-      licenseId: org.license?.id,
-    };
-  }
-
   async create(data: CreateOrgDTO): Promise<OrgDTO> {
     const org = await prisma.organization.create({
       data: {
@@ -91,58 +35,38 @@ export class OrganizationRepository implements IOrganizationRepository {
     };
   }
 
-  async update(
-    id: string,
-    data: Partial<IOrganization>
-  ): Promise<IOrganization | null> {
-    const org = await prisma.organization.update({
-      where: { id },
-      data: {
-        name: data.name,
-        users: data.userIds
-          ? { connect: data.userIds.map((id) => ({ id })) }
-          : undefined,
-        workspaces: data.workspaceIds
-          ? { connect: data.workspaceIds.map((id) => ({ id })) }
-          : undefined,
-        license: data.licenseId
-          ? { connect: { id: data.licenseId } }
-          : undefined,
-      },
+  async findGroupsByOrgId(orgId: string): Promise<ResponseGroupDTO[]> {
+    const orgWithGroups = await prisma.organization.findUnique({
+      where: { id: orgId },
       include: {
-        users: { select: { id: true } },
-        workspaces: { select: { id: true } },
-        license: { select: { id: true } },
+        groups: {
+          include: {
+            users: true,
+          },
+        },
       },
     });
 
-    if (!org) return null;
+    if (!orgWithGroups) return [];
 
-    return {
-      id: org.id,
-      name: org.name,
-      userIds: org.users.map((u) => u.id),
-      workspaceIds: org.workspaces.map((w) => w.id),
-      licenseId: org.license?.id,
-    };
+    return orgWithGroups.groups.map(
+      (group): ResponseGroupDTO => ({
+        id: group.id,
+        name: group.name,
+        role: mapToDomainRoles(group.role),
+        organizationId: group.organizationId,
+        description: group.description || undefined,
+        createdAt: group.createdAt,
+        updatedAt: group.updatedAt,
+        isActive: group.isActive,
+        users: group.users
+          .map(mapToIUser)
+          .map(({ encryptedPassword, ...safeUser }) => safeUser),
+      })
+    );
   }
 
-  async delete(id: string): Promise<IOrganization | null> {
-    const org = await prisma.organization.delete({
-      where: { id },
-      include: {
-        users: { select: { id: true } },
-        workspaces: { select: { id: true } },
-        license: { select: { id: true } },
-      },
-    });
-
-    return {
-      id: org.id,
-      name: org.name,
-      userIds: org.users.map((u) => u.id),
-      workspaceIds: org.workspaces.map((w) => w.id),
-      licenseId: org.license?.id,
-    };
+  async addGroupToOrg(orgId: string, data: CreateGroupDTO): Promise<void> {
+    console.log(`Adding group to organization with ID: ${orgId}`);
   }
 }

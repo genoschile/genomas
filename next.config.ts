@@ -10,20 +10,25 @@ const nextConfig: NextConfig = {
     viewTransition: true,
   },
   allowedDevOrigins: [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'https://genomas.bnjm.site',
-    'https://www.genomas.bnjm.site'
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://genomas.bnjm.site",
+    "https://www.genomas.bnjm.site",
   ],
   async rewrites() {
-    console.log('rewrites() its working.');
+    console.log("rewrites() its working.");
     return [
+      // ❗ NO
+      {
+        source: "/api/:path*",
+        destination: "/api/:path*",
+      },
       {
         source: "/:path*",
         destination: `/${APP_LANGUAGE}/:path*`,
-      }
-    ]
-  }
+      },
+    ];
+  },
 };
 
 export default nextConfig;

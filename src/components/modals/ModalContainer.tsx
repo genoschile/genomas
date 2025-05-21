@@ -3,7 +3,7 @@ import { WorkspaceForm } from "../forms/Workspaceform";
 import { Modal } from "./Modal";
 import { DeleteConfirmationForm } from "../project/components/DeleteConfirmationForm";
 import { MembersForm } from "../forms/MembersForm";
-import { AddGroupsFormEnterprise } from "../forms/AddUserEnterprise";
+import { AddGroupsFormEnterprise } from "../forms/AddGroupsEnterprise";
 
 export const ModalContainer = () => {
   return (

@@ -1,20 +1,34 @@
-import { CreateOrgDTO, OrgDTO } from "../use-cases/organization/organizationType";
+import { CreateGroupDTO, ResponseGroupDTO } from "./IGroup";
 
 export interface IOrganization {
   id: string;
   name: string;
-  email: string
+  email: string;
   userIds: string[];
   password: string;
   workspaceIds: string[];
   licenseId?: string;
 }
 
+export interface CreateOrgDTO {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface OrgDTO {
+  id: string;
+  name: string;
+  email: string;
+  userIds: string[];
+  workspaceIds: string[];
+  licenseId?: string;
+  password: string;
+}
+
 export interface IOrganizationRepository {
   create(data: CreateOrgDTO): Promise<OrgDTO>;
-  findById(id: string): Promise<OrgDTO | null>;
-  findAll(): Promise<OrgDTO[]>;
-  update(id: string, data: Partial<OrgDTO>): Promise<OrgDTO | null>;
-  delete(id: string): Promise<OrgDTO | null>;
-  findGroupsByOrgId(orgId: string): Promise<OrgDTO | null>;
+
+  findGroupsByOrgId(orgId: string): Promise<ResponseGroupDTO[] | null>;
+  addGroupToOrg(orgId: string, data: CreateGroupDTO): Promise<void>;
 }

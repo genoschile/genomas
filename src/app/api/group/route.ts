@@ -1,8 +1,5 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-// POST: create groups
-export async function POST(request: NextRequest) {
-
-    
-
+export function GET() {
+  return NextResponse.json({ message: 'Hello from test API!' });
 }

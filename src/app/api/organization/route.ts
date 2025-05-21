@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { CreateOrganizationUseCase } from "@/core/use-cases/organization/createOrganization";
+import { useCaseOrganizationUseCase } from "@/core/use-cases/organization/useCaseOrganization";
 import { OrganizationRepository } from "@/core/repositories/organizationRepository";
-import { OrgDTO } from "@/core/use-cases/organization/organizationType";
 import { generateSecurePassword } from "@/core/helpers/randomPwdSecure";
 import { useCaseUsers } from "@/core/use-cases/user/useCaseUsers";
 import { UserRepository } from "@/core/repositories/userRepository";
 import { UserType } from "@/core/interfaces/enums";
+import { OrgDTO } from "@/core/interfaces/IOrganization";
 
-const useCaseOrganization = new CreateOrganizationUseCase(
+const useCaseOrganization = new useCaseOrganizationUseCase(
   new OrganizationRepository()
 );
 
@@ -80,6 +80,4 @@ export async function POST(request: Request) {
       success: false,
     });
   }
-
-  // const defaultUserAdminOrg = await createDefaultUserAdminOrg(
 }

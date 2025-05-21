@@ -1,7 +1,8 @@
 "use client";
 
-import { Suspense, use, useState } from "react";
-import "./AddUserEnterprise.css";
+import { Suspense, use, useState, useTransition } from "react";
+import "./addGroupsEnterprise.css";
+import { localStorageIdOrganization } from "@/lib/utils/localStorageIdOrganization";
 
 const getUsers = async () => {
   const org = JSON.parse(localStorage.getItem("genomaOrganization") || "{}");
@@ -18,10 +19,58 @@ const getUsers = async () => {
 };
 
 export const AddGroupsFormEnterprise = () => {
+  const [isPending, startTransition] = useTransition();
+  const [message, setMessage] = useState<string | null>(null);
   const promiseUsers = getUsers();
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    // Extracción de campos
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    const organizationId = localStorageIdOrganization();
+    const roles = formData.getAll("roles"); // array de strings
+    const userIds = formData.getAll("userIds"); // array de strings
+
+    // Crear el objeto DTO sin importar tipos del backend
+    const dto = {
+      name,
+      role: roles,
+      organizationId,
+      description: description || undefined,
+      users: userIds.map((id) => ({ id })),
+    };
+
+    if (!dto.organizationId) {
+      setMessage("Error al cargar la organización");
+      return;
+    }
+
+    console.log("DTO", { dto });
+
+    // startTransition(async () => {
+    //   try {
+    //     const res = await fetch("/api/groups", {
+    //       method: "POST",
+    //       body: formData,
+    //     });
+
+    //     if (!res.ok) throw new Error("Error al crear el grupo");
+
+    //     const data = await res.json();
+    //     setMessage(`✅ Grupo creado: ${data.message || data.id}`);
+    //   } catch (err) {
+    //     console.error(err);
+    //     setMessage("❌ Ocurrió un error al crear el grupo.");
+    //   }
+    // });
+  };
+
   return (
-    <form className="add-groups-enterprise">
+    <form className="add-groups-enterprise" onSubmit={handleSubmit}>
       <fieldset>
         <legend>Crear Nuevo Grupo</legend>
 
@@ -51,7 +100,11 @@ export const AddGroupsFormEnterprise = () => {
         </div>
       </fieldset>
 
-      <button type="submit">Crear Grupo</button>
+      <button type="submit" disabled={isPending}>
+        {isPending ? "Creando grupo..." : "Crear Grupo"}
+      </button>
+
+      {message && <p className="form-message">{message}</p>}
     </form>
   );
 };
@@ -94,7 +147,7 @@ export const AddGroupsFormEnterpriseListUsers = ({
       <select
         className="select-list"
         id="users"
-        name="users[]"
+        name="userIds"
         multiple
         onChange={handleSelect}
       >
@@ -117,7 +170,6 @@ const RoleSelector = () => {
     );
     setSelectedRoles(options);
   };
-
   const removeRole = (role: string) => {
     setSelectedRoles((prev) => prev.filter((r) => r !== role));
   };
@@ -138,8 +190,10 @@ const RoleSelector = () => {
       <select
         className="select-list"
         id="roles"
-        name="role[]"
+        name="roles"
+        value={selectedRoles}
         onChange={handleChange}
+        multiple
       >
         <optgroup label="Roles">
           <option value="ADMIN">Admin</option>

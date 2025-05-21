@@ -42,6 +42,7 @@ export class UserRepository implements IUserRepository {
       userType: MapToPrismaUserType(user.userType),
       organizationId: user.organizationId,
       groupId: user.groupId,
+      isDefaultAdmin: user.isDefaultAdmin,
       encryptedPassword: hashedPassword,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,

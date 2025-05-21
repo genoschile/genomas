@@ -10,7 +10,9 @@ export default async function middleware(req: NextRequest) {
   console.log({ lang });
 
   if (lang === "ch") {
-    return new NextResponse("chino no soportado", { headers: { "Content-Type": "text/plain" } });
+    return new NextResponse("chino no soportado", {
+      headers: { "Content-Type": "text/plain" },
+    });
   }
 
   // Extraer el lang
@@ -20,6 +22,11 @@ export default async function middleware(req: NextRequest) {
   // const currentPath = req.nextUrl.pathname;
 
   const currentPath = "/" + segments.slice(1).join("/");
+
+  // Evitar control de rutas para /api/*
+  if (currentPath.startsWith("/api/")) {
+    return res; // no aplicar control de sesión ni redirecciones
+  }
 
   // 1. Orígenes permitidos
   const allowedOrigins = ["http://localhost:3002", "https://varandcode.com"];
@@ -74,7 +81,6 @@ export default async function middleware(req: NextRequest) {
     const session = await decrypt(sessionCookie);
 
     console.log(session);
-
   }
 
   return res;

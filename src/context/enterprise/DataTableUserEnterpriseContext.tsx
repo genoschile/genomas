@@ -1,5 +1,6 @@
 "use client";
 
+import { localStorageIdOrganization } from "@/lib/utils/localStorageIdOrganization";
 import React, {
   createContext,
   useContext,
@@ -54,9 +55,11 @@ export const DataTableUserEnterpriseProvider = ({
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const org = JSON.parse(
-          localStorage.getItem("genomaOrganization") || "{}"
-        );
+        const org = localStorageIdOrganization();
+
+        if (!org) {
+          return 
+        }
 
         const res = await fetch("/api/organization/users", {
           method: "POST",

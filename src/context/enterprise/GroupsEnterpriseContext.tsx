@@ -26,12 +26,13 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
       );
       if (!organization.id) throw new Error("No organization ID found");
 
-      const res = await fetch(`${baseUrl}/${organization.id}/groups`);
+      const res = await fetch(`/api/organization/${organization.id}/groups`);
 
       console.log("Response from API:", res);
 
       if (!res.ok) {
         console.log(`Error HTTP: ${res.status}`);
+        return 
       }
 
       const data = await res.json();
