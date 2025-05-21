@@ -6,7 +6,6 @@
   font-size: 0.9rem;
   color: var(--text-color);
   border-radius: 0.75rem;
-
   flex-direction: column;
 
   > * {

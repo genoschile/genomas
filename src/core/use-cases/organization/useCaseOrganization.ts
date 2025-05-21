@@ -9,14 +9,17 @@ export class useCaseOrganizationUseCase {
   constructor(private orgRepo: IOrganizationRepository) {}
 
   async execute(data: CreateOrgDTO): Promise<OrgDTO> {
-    return this.orgRepo.create(data);
+    return await this.orgRepo.create(data);
   }
 
   async findGroupsByOrgId(orgId: string): Promise<ResponseGroupDTO[] | null> {
-    return this.orgRepo.findGroupsByOrgId(orgId);
+    return await this.orgRepo.findGroupsByOrgId(orgId);
   }
 
-  async addGroupToOrg(orgId: string, data: CreateGroupDTO): Promise<void> {
-    return this.orgRepo.addGroupToOrg(orgId, data);
+  async addGroupToOrg(
+    orgId: string,
+    data: CreateGroupDTO
+  ): Promise<ResponseGroupDTO | null> {
+    return await this.orgRepo.addGroupToOrg(orgId, data);
   }
 }

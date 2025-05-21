@@ -6,7 +6,12 @@ export interface IGroup {
   id: string;
   name: string;
   role: Role[];
-  users: Omit<IUser, "encryptedPassword">[];
+  users: {
+    user: Omit<IUser, "encryptedPassword">;
+    // metadata opcional del enlace
+    addedAt?: Date;
+    addedById?: string;
+  }[];
   organizationId: string;
   organization: IOrganization;
   description?: string;
@@ -15,22 +20,25 @@ export interface IGroup {
   isActive: boolean;
 }
 
-export interface CreateGroupDTO {
-  name: string;
-  role: Role[];
-  organizationId: string;
-  description?: string;
-  users?: Omit<IUser, "encryptedPassword">[];
-}
-
 export interface ResponseGroupDTO {
   id: string;
   name: string;
-  role: Role[];
-  organizationId: string;
+  role: Role[]; // Mapeado a tu dominio
   description?: string;
+  organizationId: string;
+  users: {
+    user: Omit<IUser, "encryptedPassword">; // Tu tipo de usuario mapeado
+    addedAt: Date;
+    addedById?: string; // Si este campo existe en UserGroup
+  }[];
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
-  users: Omit<IUser, "encryptedPassword">[];
+}
+
+export interface CreateGroupDTO {
+  name: string;
+  role: Role[]; 
+  description?: string;
+  users?: { id: string; addedById?: string }[]; 
 }

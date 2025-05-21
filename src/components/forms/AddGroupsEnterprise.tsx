@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, use, useState, useTransition } from "react";
+import { Suspense, use, useEffect, useState, useTransition } from "react";
 import "./addGroupsEnterprise.css";
 import { localStorageIdOrganization } from "@/lib/utils/localStorageIdOrganization";
 
@@ -21,53 +21,62 @@ const getUsers = async () => {
 export const AddGroupsFormEnterprise = () => {
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
-  const promiseUsers = getUsers();
+
+  const [usersPromise, setUsersPromise] = useState<Promise<any> | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    // Extracción de campos
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
-    const organizationId = localStorageIdOrganization();
-    const roles = formData.getAll("roles"); // array de strings
-    const userIds = formData.getAll("userIds"); // array de strings
+    const roles = formData.getAll("roles");
+    const userIds = formData.getAll("userIds");
 
-    // Crear el objeto DTO sin importar tipos del backend
     const dto = {
       name,
       role: roles,
-      organizationId,
+
       description: description || undefined,
       users: userIds.map((id) => ({ id })),
     };
 
-    if (!dto.organizationId) {
+    console.log("submitting", dto);
+
+    const { id } = localStorageIdOrganization();
+
+    if (!id) {
       setMessage("Error al cargar la organización");
       return;
     }
 
-    console.log("DTO", { dto });
+    startTransition(async () => {
+      try {
+        console.log("i'm in fetch");
 
-    // startTransition(async () => {
-    //   try {
-    //     const res = await fetch("/api/groups", {
-    //       method: "POST",
-    //       body: formData,
-    //     });
+        const res = await fetch(`/api/organization/${id}/groups`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dto),
+        });
 
-    //     if (!res.ok) throw new Error("Error al crear el grupo");
+        if (!res.ok) throw new Error("Error al crear el grupo");
 
-    //     const data = await res.json();
-    //     setMessage(`✅ Grupo creado: ${data.message || data.id}`);
-    //   } catch (err) {
-    //     console.error(err);
-    //     setMessage("❌ Ocurrió un error al crear el grupo.");
-    //   }
-    // });
+        const data = await res.json();
+        setMessage(`rupo creado: ${data.message || data.id}`);
+      } catch (err) {
+        console.error(err);
+        setMessage("Ocurrió un error al crear el grupo.");
+      }
+    });
   };
+
+  useEffect(() => {
+    setUsersPromise(getUsers());
+  }, []);
 
   return (
     <form className="add-groups-enterprise" onSubmit={handleSubmit}>
@@ -94,9 +103,9 @@ export const AddGroupsFormEnterprise = () => {
           <RoleSelector />
 
           <label htmlFor="users">Usuarios:</label>
-          <Suspense fallback={<div>Cargando usuarios...</div>}>
-            <AddGroupsFormEnterpriseListUsers promiseUser={promiseUsers} />
-          </Suspense>
+          {usersPromise && (
+            <AddGroupsFormEnterpriseListUsers promiseUser={usersPromise} />
+          )}
         </div>
       </fieldset>
 

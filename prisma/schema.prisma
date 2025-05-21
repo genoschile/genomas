@@ -129,46 +129,61 @@ model Organization {
   groups Group[]
 }
 
-// Usuario
 model User {
   id String @id @default(cuid())
 
   isDefaultAdmin Boolean @default(false)
 
-  email             String            @unique
+  email             String       @unique
   name              String?
   encryptedPassword String
-  userType          UserType          @default(CLIENT)
+  userType          UserType     @default(CLIENT)
   organizationId    String
-  organization      Organization      @relation(fields: [organizationId], references: [id])
-  groupId           String?
-  group             Group?            @relation(fields: [groupId], references: [id])
-  workspacesOwned   Workspace[]       @relation("OwnedWorkspaces")
-  workspaceMembers  WorkspaceMember[]
-  sharedProjects    ProjectShare[]
-  ownedProjects     Project[]
-  license           License?
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  File              File[]
-  PipelineRun       PipelineRun[]
-  Sample            Sample[]
+  organization      Organization @relation(fields: [organizationId], references: [id])
+
+  groups Group[] @relation("UserGroups")
+
+  workspacesOwned  Workspace[]       @relation("OwnedWorkspaces")
+  workspaceMembers WorkspaceMember[]
+  sharedProjects   ProjectShare[]
+  ownedProjects    Project[]
+  license          License?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  File             File[]
+  PipelineRun      PipelineRun[]
+  Sample           Sample[]
+  UserGroup        UserGroup[]
 }
 
-// Grupos con roles
 model Group {
-  id    String @id @default(cuid())
-  name  String
-  role  Role[]
-  users User[]
+  id   String @id @default(cuid())
+  name String
+  role Role[]
+
+  users User[] @relation("UserGroups")
 
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id])
 
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  isActive    Boolean  @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  isActive    Boolean     @default(true)
+  UserGroup   UserGroup[]
+}
+
+model UserGroup {
+  userId  String
+  groupId String
+
+  user  User  @relation(fields: [userId], references: [id])
+  group Group @relation(fields: [groupId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, groupId]) // Clave primaria compuesta evita duplicados
 }
 
 // Workspace

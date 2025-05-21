@@ -5,15 +5,30 @@ import { GroupsCardMembers } from "./GroupsCardMembers";
 import { GroupsCardHeader } from "./GroupsCardHeader";
 import { MdDelete } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
+import { Group } from "@/context/enterprise/GroupsEnterpriseContext";
 
-export const GroupsCard = ({ item }: { item: string; key: number }) => {
+export const GroupsCard = ({ item }: { item: Group }) => {
   return (
     <li className="groupsCard">
-      <GroupsCardHeader />
+      <GroupsCardHeader name={item.name} description={item.description} />
 
-      <GroupsCardMembers />
+      {item.users && item.users.length > 0 ? (
+        <GroupsCardMembers
+          members={item.users.map((u: any) => ({ id: u.id, name: u.name }))}
+        />
+      ) : (
+        <div className="noMembers">
+          <span>
+            <FaUser />
+          </span>
+          No hay miembros
+        </div>
+      )}
 
-      <article></article>
+      <article>
+        <small>Roles</small>
+        {item.role}
+      </article>
 
       <hr />
 

@@ -1,3 +1,6 @@
+"use client";
+
+import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
 import { GroupsCard } from "./ContainerGroupList/GroupsCard";
 
 export const containerGroupsListItem = [
@@ -9,26 +12,28 @@ export const containerGroupsListItem = [
   "cat",
   "birth",
   "dog",
-]; 
-
-const getGroupsList = async () => {
-  const organizationId = localStorage.getItem("organizationId");
-
-  if (!organizationId) {
-    throw new Error("No organization ID found in localStorage");
-  }
-
-  const res = await fetch(`/api/organization/${organizationId}/groups`);
-  return await res.json();
-};
+];
 
 export const ContainerGroupsList = () => {
+  const { groups, loading } = useGroupsContext();
+
+  console.log(groups);
+
+  if (loading) {
+    return <div className="loading">Cargando grupos...</div>;
+    // También podés poner un spinner CSS o un componente <Spinner />
+  }
+
+  if (!groups || groups.length === 0) {
+    return <div className="no-results">No hay grupos disponibles.</div>;
+  }
+
   return (
     <div className="containerGroupsList">
       <ul>
-        {containerGroupsListItem.map((item, index) => {
-          return <GroupsCard key={index} item={`${item}`} />;
-        })}
+        {groups.map((group, index) => (
+          <GroupsCard key={index} item={group}/>
+        ))}
       </ul>
     </div>
   );

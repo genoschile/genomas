@@ -30,5 +30,8 @@ export interface IOrganizationRepository {
   create(data: CreateOrgDTO): Promise<OrgDTO>;
 
   findGroupsByOrgId(orgId: string): Promise<ResponseGroupDTO[] | null>;
-  addGroupToOrg(orgId: string, data: CreateGroupDTO): Promise<void>;
+  addGroupToOrg(
+    orgId: string,
+    data: CreateGroupDTO
+  ): Promise<ResponseGroupDTO | null>;
 }

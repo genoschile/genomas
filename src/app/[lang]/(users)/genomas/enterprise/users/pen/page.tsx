@@ -1,5 +1,8 @@
+"use client"
+
 import { Suspense, use } from "react";
 import "./page.css";
+import { AddGroupsFormEnterprise } from "@/components/forms/AddGroupsEnterprise";
 
 const getUsers = async () => {
   const response = await fetch("http://localhost:3000/api/organization/users", {
@@ -14,14 +17,11 @@ const getUsers = async () => {
 };
 
 export default function page() {
-  const promiseUsers = getUsers();
 
   return (
     <div className="pen">
       <h1>hola!</h1>
-      <Suspense fallback={<div>Loading...</div>}>
-        <DraftListUsers promiseUser={promiseUsers} />
-      </Suspense>
+      <AddGroupsFormEnterprise />
     </div>
   );
 }

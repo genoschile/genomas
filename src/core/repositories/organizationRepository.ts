@@ -36,37 +36,88 @@ export class OrganizationRepository implements IOrganizationRepository {
   }
 
   async findGroupsByOrgId(orgId: string): Promise<ResponseGroupDTO[]> {
-    const orgWithGroups = await prisma.organization.findUnique({
+    const organizationWithGroups = await prisma.organization.findUnique({
       where: { id: orgId },
       include: {
         groups: {
           include: {
-            users: true,
+            UserGroup: {
+              include: {
+                user: true,
+              },
+            },
           },
         },
       },
     });
 
-    if (!orgWithGroups) return [];
+    if (!organizationWithGroups) {
+      return [];
+    }
 
-    return orgWithGroups.groups.map(
-      (group): ResponseGroupDTO => ({
+    return organizationWithGroups.groups.map((group) => {
+      const usersInGroup = group.UserGroup.map((userGroupEntry) => ({
+        user: mapToIUser(userGroupEntry.user),
+        addedAt: userGroupEntry.createdAt,
+      }));
+
+      return {
         id: group.id,
         name: group.name,
         role: mapToDomainRoles(group.role),
         organizationId: group.organizationId,
-        description: group.description || undefined,
+        description: group.description ?? undefined,
         createdAt: group.createdAt,
         updatedAt: group.updatedAt,
         isActive: group.isActive,
-        users: group.users
-          .map(mapToIUser)
-          .map(({ encryptedPassword, ...safeUser }) => safeUser),
-      })
-    );
+        users: usersInGroup,
+      };
+    });
   }
 
-  async addGroupToOrg(orgId: string, data: CreateGroupDTO): Promise<void> {
-    console.log(`Adding group to organization with ID: ${orgId}`);
+  async addGroupToOrg(
+    orgId: string,
+    data: CreateGroupDTO
+  ): Promise<ResponseGroupDTO | null> {
+    const group = await prisma.group.create({
+      data: {
+        name: data.name,
+        role: data.role,
+        description: data.description,
+        organizationId: orgId,
+        UserGroup: data.users?.length
+          ? {
+              create: data.users.map((user) => ({
+                userId: user.id,
+              })),
+            }
+          : undefined,
+      },
+      include: {
+        UserGroup: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+
+    console.log("group", group);
+
+    // Asegúrate de que group.UserGroup existe antes de mapearlo
+    const usersInGroup = group.UserGroup
+      ? group.UserGroup.map((ug) => ({
+          user: mapToIUser(ug.user),
+          addedAt: ug.createdAt, // Asumiendo que addedAt es createdAt en UserGroup
+          // addedById: ug.addedById, // Si 'addedById' existe en UserGroup
+        }))
+      : [];
+
+    return {
+      ...group,
+      role: mapToDomainRoles(group.role), // Asegúrate de que mapToDomainRoles está bien definido
+      description: group.description ?? undefined,
+      users: usersInGroup,
+    };
   }
 }

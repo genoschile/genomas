@@ -5,17 +5,44 @@ import { IGroup } from "@/core/interfaces/IGroup";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface GroupsContextType {
-  groups: IGroup[];
+  groups: GroupList;
   loading: boolean;
   refreshGroups: () => Promise<void>;
 }
 
 const GroupsContext = createContext<GroupsContextType | undefined>(undefined);
 
-const baseUrl = "/api/organization";
+export type Group = {
+  id: string;
+  name: string;
+  role: string[];
+  users?: string[];
+  organizationId: string;
+  description: string;
+  createdAt: string; // o Date 
+  updatedAt: string; // o Date 
+  isActive: boolean;
+};
+
+type GroupList = Group[];
+
+const groups: GroupList = [
+  {
+    id: "cmay13geb0001g10z3miqwxxq",
+    name: "benja_e_e@hotmail.com",
+    role: ["ADMIN"],
+    organizationId: "cmawkntgi0000g1eo76p5zufg",
+    description: "z<zx<zx",
+    createdAt: "2025-05-21T14:18:44.145Z",
+    updatedAt: "2025-05-21T14:18:44.145Z",
+    isActive: true,
+  },
+];
+
+
 
 export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [groups, setGroups] = useState<IGroup[]>([]);
+  const [groups, setGroups] = useState<GroupList>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchGroups = async () => {
@@ -38,7 +65,13 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
       const data = await res.json();
       console.log("Data from API:", data);
 
-      setGroups(data);
+      if (!data.success) {
+        console.log(`Error: ${data.message}`);
+        return;
+      }
+
+      setGroups(data.data);
+
     } catch (err) {
       console.error("Error fetching groups:", err);
     } finally {

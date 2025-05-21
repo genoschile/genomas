@@ -1,8 +1,6 @@
 import { OrganizationRepository } from "@/core/repositories/organizationRepository";
 import { useCaseOrganizationUseCase } from "@/core/use-cases/organization/useCaseOrganization";
-import { stat } from "fs";
 import { NextResponse } from "next/server";
-import { u } from "tar";
 
 const useCaseOrganization = new useCaseOrganizationUseCase(
   new OrganizationRepository()
@@ -39,22 +37,21 @@ export async function POST(
   try {
     // verify id is valid
     const { id } = await params;
-
     const body = await request.json();
+    console.log("currentGroup");
+    const currentGroup = await useCaseOrganization.addGroupToOrg(id, body);
 
-    console.log({ body, id });
-
-    // useCaseOrganization.addGroupToOrg(id);
+    console.log({ currentGroup });
 
     return NextResponse.json({
       message: "Añadiendo un grupo",
       success: true,
-      data: [],
+      data: currentGroup,
       status: 200,
     });
   } catch (error) {
     return NextResponse.json({
-      message: "Error creating group",
+      message: `Error creating  ${error}`,
       success: false,
       status: 500,
     });

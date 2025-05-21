@@ -14,14 +14,14 @@ import { Timeline } from "@/components/timeline/Timeline";
 export default function page() {
   return (
     <section className="contact--page">
-      <AboutUs />
+      <AboutUsContainer />
       <OurStory />
       <Team />
     </section>
   );
 }
 
-export const AboutUs = () => {
+export const AboutUsContainer = () => {
   const { t } = useTranslations();
 
   const Titles = [
