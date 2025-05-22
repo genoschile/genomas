@@ -1,14 +1,23 @@
-import { useMemo } from "react"
+// import { useMemo } from "react";
 
-export function useHasScope(user, license, role) {
-  const scopes = useMemo(() => {
-    if (!user || !license || !role) return []
-    return getUserScopes(user, license, role)
-  }, [user, license, role])
+// type Scope = string; // O enum si tienes uno
+// type User = { ... };
+// type License = { ... };
+// type Role = string;
 
-  function has(scope: Scope | string) {
-    return scopes.includes(scope)
-  }
+// export function useHasScope(
+//   user: User | null,
+//   license: License | null,
+//   role: Role | null
+// ) {
+//   const scopes = useMemo(() => {
+//     if (!user || !license || !role) return [];
+//     return getUserScopes(user, license, role);
+//   }, [user, license, role]);
 
-  return { has, scopes }
-}
+//   function has(scope: Scope) {
+//     return scopes.includes(scope);
+//   }
+
+//   return { has, scopes };
+// }

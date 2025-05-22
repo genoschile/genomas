@@ -1,5 +1,5 @@
-import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
-import { FaUser } from "react-icons/fa";
+import { GroupsCardMembersContainer } from "./GroupsCardMembersContainer";
+import { GroupsCardMembersImg } from "./GroupsCardMembersImg";
 
 export const GroupsCardMembers = ({
   members,
@@ -7,25 +7,17 @@ export const GroupsCardMembers = ({
   members: { id: string; name?: string }[];
 }) => {
   return (
-    <article className="groupsCardMembers">
-      <small>Miembros</small>
-      <ul>
+    <GroupsCardMembersContainer
+      title="Miembros"
+      currentQuantityMembers={members.length}
+    >
+      <ul className="groupsCardMembersList">
         {members.map(({ id, name }) => (
           <li key={id}>
-            <GroupsCardMembersImg userId={id} />
-            <span>{name ?? id}</span>
+            <GroupsCardMembersImg userId={id} userName={name} />
           </li>
         ))}
       </ul>
-    </article>
-  );
-};
-
-export const GroupsCardMembersImg = ({ userId }: { userId: string }) => {
-  return (
-    <div>
-      <IconRoundedFull icon={<FaUser />} />
-      <span>Member 1</span>
-    </div>
+    </GroupsCardMembersContainer>
   );
 };

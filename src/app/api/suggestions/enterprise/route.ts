@@ -2,7 +2,7 @@ import { OpenAIService } from "@/core/repositories/IAServices";
 import { SuggestGroupsUseCase } from "@/core/use-cases/suggestionsIA/suggestionsGroups";
 import { NextRequest, NextResponse } from "next/server";
 
-export const prompt = (
+const prompt = (
   userInput: string
 ) => `Quiero que la respuesta sea un objeto JSON con la siguiente estructura:
 

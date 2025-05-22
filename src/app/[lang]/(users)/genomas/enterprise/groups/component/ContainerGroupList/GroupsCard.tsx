@@ -1,11 +1,14 @@
 import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
 import "./groupsCard.css";
-import { FaEdit, FaUser } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import { GroupsCardMembers } from "./GroupsCardMembers";
 import { GroupsCardHeader } from "./GroupsCardHeader";
 import { MdDelete } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import { Group } from "@/context/enterprise/GroupsEnterpriseContext";
+import { GroupsCardMembersNoMembers } from "./GroupsCardMembersNoMembers";
+import { GroupsCardMembersContainer } from "./GroupsCardMembersContainer";
+import { GroupsCardRolesList } from "./GroupsCardRolesList";
 
 export const GroupsCard = ({ item }: { item: Group }) => {
   return (
@@ -14,21 +17,21 @@ export const GroupsCard = ({ item }: { item: Group }) => {
 
       {item.users && item.users.length > 0 ? (
         <GroupsCardMembers
-          members={item.users.map((u: any) => ({ id: u.id, name: u.name }))}
+          members={item.users.map((u: any) => ({
+            id: u.user.id,
+            name: u.user.name,
+          }))}
         />
       ) : (
-        <div className="noMembers">
-          <span>
-            <FaUser />
-          </span>
-          No hay miembros
-        </div>
+        <GroupsCardMembersNoMembers />
       )}
 
-      <article>
-        <small>Roles</small>
-        {item.role}
-      </article>
+      <GroupsCardMembersContainer
+        title="Roles"
+        currentQuantityMembers={item.role.length}
+      >
+        <GroupsCardRolesList role={item.role} />
+      </GroupsCardMembersContainer>
 
       <hr />
 

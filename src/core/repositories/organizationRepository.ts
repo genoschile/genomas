@@ -79,10 +79,12 @@ export class OrganizationRepository implements IOrganizationRepository {
     orgId: string,
     data: CreateGroupDTO
   ): Promise<ResponseGroupDTO | null> {
+    console.log("Roles", data.role);
+
     const group = await prisma.group.create({
       data: {
         name: data.name,
-        role: data.role,
+        role: mapToDomainRoles(data.role),
         description: data.description,
         organizationId: orgId,
         UserGroup: data.users?.length
@@ -102,20 +104,19 @@ export class OrganizationRepository implements IOrganizationRepository {
       },
     });
 
-    console.log("group", group);
+    if (!group) throw new Error("No se pudo crear el grupo");
 
-    // Asegúrate de que group.UserGroup existe antes de mapearlo
     const usersInGroup = group.UserGroup
       ? group.UserGroup.map((ug) => ({
           user: mapToIUser(ug.user),
-          addedAt: ug.createdAt, // Asumiendo que addedAt es createdAt en UserGroup
+          addedAt: ug.createdAt,
           // addedById: ug.addedById, // Si 'addedById' existe en UserGroup
         }))
       : [];
 
     return {
       ...group,
-      role: mapToDomainRoles(group.role), // Asegúrate de que mapToDomainRoles está bien definido
+      role: mapToDomainRoles(group.role),
       description: group.description ?? undefined,
       users: usersInGroup,
     };

@@ -205,9 +205,10 @@ const RoleSelector = () => {
         multiple
       >
         <optgroup label="Roles">
-          <option value="ADMIN">Admin</option>
-          <option value="USER">User</option>
-          <option value="GUEST">Guest</option>
+          <option value="ADMIN">ADMIN</option>
+          <option value="OWNER">OWNER</option>
+          <option value="EDITOR">EDITOR</option>
+          <option value="VIEWER">VIEWER</option>
         </optgroup>
       </select>
     </>

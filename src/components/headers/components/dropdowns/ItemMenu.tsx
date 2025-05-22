@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
@@ -9,7 +10,7 @@ import { deleteSession } from "@/lib/actions/session";
 
 interface MenuItem {
   label: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
   type: "button" | "link";
   onClick?: () => void;
   href?: string;

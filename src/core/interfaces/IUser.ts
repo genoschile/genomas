@@ -8,8 +8,6 @@ export interface IUser {
   userType: UserType;
   organizationId: string;
   encryptedPassword: string;
-  groupId: string | null;
-
   createdAt: Date;
   updatedAt: Date;
 }
@@ -30,7 +28,6 @@ export interface UserDTO {
   isDefaultAdmin: boolean;
   userType: UserType;
   organizationId: string;
-  groupId: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

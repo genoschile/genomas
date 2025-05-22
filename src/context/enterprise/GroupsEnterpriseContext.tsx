@@ -26,21 +26,6 @@ export type Group = {
 
 type GroupList = Group[];
 
-const groups: GroupList = [
-  {
-    id: "cmay13geb0001g10z3miqwxxq",
-    name: "benja_e_e@hotmail.com",
-    role: ["ADMIN"],
-    organizationId: "cmawkntgi0000g1eo76p5zufg",
-    description: "z<zx<zx",
-    createdAt: "2025-05-21T14:18:44.145Z",
-    updatedAt: "2025-05-21T14:18:44.145Z",
-    isActive: true,
-  },
-];
-
-
-
 export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
   const [groups, setGroups] = useState<GroupList>([]);
   const [loading, setLoading] = useState<boolean>(true);

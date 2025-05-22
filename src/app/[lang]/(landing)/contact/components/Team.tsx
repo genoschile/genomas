@@ -128,7 +128,12 @@ export const Team = () => {
       {TeamInfoSection.map((team, index) => (
         <article key={index}>
           <h1>{team.title}</h1>
-          <ul className="team" ref={(el) => (sliderRefs.current[index] = el)}>
+          <ul
+            className="team"
+            ref={(el) => {
+              sliderRefs.current[index] = el;
+            }}
+          >
             <div
               className="slider"
               style={{

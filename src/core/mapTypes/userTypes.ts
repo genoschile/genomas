@@ -35,7 +35,6 @@ export const mapToIUser = (user: PrismaUser): IUser => ({
   userType: MapToDomainUserType(user.userType),
   organizationId: user.organizationId,
   isDefaultAdmin: user.isDefaultAdmin,
-  groupId: user.groupId,
   encryptedPassword: user.encryptedPassword,
   createdAt: user.createdAt,
   updatedAt: user.updatedAt,

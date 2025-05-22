@@ -11,7 +11,6 @@ export const userRepository = {
         name: user.name,
         userType: MapToPrismaUserType(user.userType), // dominio → prisma
         organizationId: user.organizationId,
-        groupId: user.groupId,
         encryptedPassword: "hashed",
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
@@ -41,7 +40,6 @@ export class UserRepository implements IUserRepository {
       name: user.name,
       userType: MapToPrismaUserType(user.userType),
       organizationId: user.organizationId,
-      groupId: user.groupId,
       isDefaultAdmin: user.isDefaultAdmin,
       encryptedPassword: hashedPassword,
       createdAt: user.createdAt,
@@ -102,10 +100,13 @@ export class UserRepository implements IUserRepository {
   }
 
   async findByGroupId(groupId: string): Promise<IUser[]> {
-    const users = await prisma.user.findMany({
+    const userGroups = await prisma.userGroup.findMany({
       where: { groupId },
+      include: {
+        user: true, 
+      },
     });
 
-    return users.map(mapToIUser);
+    return userGroups.map((ug) => mapToIUser(ug.user));
   }
 }

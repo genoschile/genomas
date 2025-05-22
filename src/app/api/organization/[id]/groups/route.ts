@@ -1,16 +1,16 @@
 import { OrganizationRepository } from "@/core/repositories/organizationRepository";
 import { useCaseOrganizationUseCase } from "@/core/use-cases/organization/useCaseOrganization";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const useCaseOrganization = new useCaseOrganizationUseCase(
   new OrganizationRepository()
 );
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const id = (await params).id;
 
   const orgGroupsList = await useCaseOrganization.findGroupsByOrgId(id);
 
@@ -32,28 +32,39 @@ export async function GET(
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // verify id is valid
-    const { id } = await params;
+    const id = (await params).id;
     const body = await request.json();
-    console.log("currentGroup");
+
     const currentGroup = await useCaseOrganization.addGroupToOrg(id, body);
 
-    console.log({ currentGroup });
+    if (!currentGroup) {
+      throw new Error("Error al crear el grupo");
+    }
 
-    return NextResponse.json({
-      message: "Añadiendo un grupo",
-      success: true,
-      data: currentGroup,
-      status: 200,
-    });
+    return NextResponse.json(
+      {
+        message: "Grupo añadido correctamente",
+        success: true,
+        data: currentGroup,
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    return NextResponse.json({
-      message: `Error creating  ${error}`,
-      success: false,
-      status: 500,
-    });
+
+    console.error("Error in POST /api/organization/[id]/groups", error);
+
+    return NextResponse.json(
+      {
+        message: `Error: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+        success: false,
+      },
+      { status: 500 }
+    );
   }
 }

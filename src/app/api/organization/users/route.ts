@@ -19,7 +19,6 @@ type UserData = {
   email: string;
   userType: UserType;
   organizationId: string;
-  groupId: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
