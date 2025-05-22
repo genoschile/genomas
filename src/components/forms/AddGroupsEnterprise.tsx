@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, use, useEffect, useState, useTransition } from "react";
+import { use, useEffect, useState, useTransition } from "react";
 import "./addGroupsEnterprise.css";
 import { localStorageIdOrganization } from "@/lib/utils/localStorageIdOrganization";
 
