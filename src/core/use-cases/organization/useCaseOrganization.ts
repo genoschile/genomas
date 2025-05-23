@@ -22,4 +22,10 @@ export class useCaseOrganizationUseCase {
   ): Promise<ResponseGroupDTO | null> {
     return await this.orgRepo.addGroupToOrg(orgId, data);
   }
+
+  async findWorkspacesByOrgId(
+    orgId: string
+  ): Promise<ResponseWorkspacesDTO[] | null> {
+    return await this.orgRepo.findWorkspacesByOrgId(orgId);
+  }
 }

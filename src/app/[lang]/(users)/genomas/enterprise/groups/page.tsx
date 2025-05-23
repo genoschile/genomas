@@ -6,6 +6,7 @@ import "./page.css";
 import { ContainerGroupsHeader } from "./component/ContainerGroupsHeader";
 import { ContainerGroupsList } from "./component/ContainerGroupsList";
 import { ContainerGroupsFilters } from "./component/ContainerGroupsFilters";
+import { ContainerDefaultEnterprise } from "../components/ContainerDefaultEnterprise";
 
 export default function page() {
   return (
@@ -15,17 +16,17 @@ export default function page() {
         description="Puedes agregar, editar y eliminar usuarios de tu organización."
       />
 
-      <ContainerGroups>
+      <ContainerDefaultEnterprise dinamicStyle="enterprise-groups__hero">
         <ContainerGroupsHeader />
-      </ContainerGroups>
+      </ContainerDefaultEnterprise>
 
-      <ContainerGroups>
+      <ContainerDefaultEnterprise dinamicStyle="enterprise-groups__hero">
         <ContainerGroupsFilters />
-      </ContainerGroups>
+      </ContainerDefaultEnterprise>
 
-      <ContainerGroups>
+      <ContainerDefaultEnterprise dinamicStyle="enterprise-groups__hero">
         <ContainerGroupsList />
-      </ContainerGroups>
+      </ContainerDefaultEnterprise>
     </>
   );
 }

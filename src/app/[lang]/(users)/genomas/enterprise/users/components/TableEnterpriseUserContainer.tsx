@@ -1,9 +1,10 @@
 import { TableEnterpriseUser } from "@/app/[lang]/(users)/genomas/enterprise/users/components/tablesUser/TableEnterpriseUser";
+import { ContainerDefaultEnterprise } from "../../components/ContainerDefaultEnterprise";
 
 export const TableEnterpriseUserContainer = () => {
   return (
-    <div className="enterprise-users__table">
+    <ContainerDefaultEnterprise dinamicStyle="enterprise-users__hero">
       <TableEnterpriseUser />
-    </div>
+    </ContainerDefaultEnterprise>
   );
 };

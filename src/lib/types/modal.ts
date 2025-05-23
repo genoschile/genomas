@@ -1,5 +1,6 @@
 export const MODAL_IDS = {
   WORKSPACE: "workspace",
+  WORKSPACE_ENTERPRISE: "workspace-enterprise",
   DELETE_CONFIRMATION: "delete-confirmation",
   MEMBERS: "members",
   ADD_USER_ENTERPRISE: "add_user_enterprise",

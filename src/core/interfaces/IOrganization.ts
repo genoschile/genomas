@@ -28,6 +28,9 @@ export interface OrgDTO {
 
 export interface IOrganizationRepository {
   create(data: CreateOrgDTO): Promise<OrgDTO>;
+  
+  
+  findWorkspacesByOrgId(orgId: string): Promise<ResponseWorkspacesDTO[] | null>;
 
   findGroupsByOrgId(orgId: string): Promise<ResponseGroupDTO[] | null>;
   addGroupToOrg(

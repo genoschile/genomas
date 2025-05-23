@@ -4,6 +4,7 @@ import { Modal } from "./Modal";
 import { DeleteConfirmationForm } from "../project/components/DeleteConfirmationForm";
 import { MembersForm } from "../forms/MembersForm";
 import { AddGroupsFormEnterprise } from "../forms/AddGroupsEnterprise";
+import { AddWorkspacesEnterpriseForm } from "../forms/AddWorkspacesEnterpriseForm";
 
 export const ModalContainer = () => {
   return (
@@ -19,12 +20,22 @@ export const ModalContainer = () => {
       <Modal id={MODAL_IDS.MEMBERS} title="Invite Member(s) to Project">
         <MembersForm />
       </Modal>
+    </>
+  );
+};
 
+export const ModalContainerEnterprise = () => {
+  return (
+    <>
       <Modal
         id={MODAL_IDS.ADD_USER_ENTERPRISE}
         title="Add Groups(s) to Enterprise"
       >
         <AddGroupsFormEnterprise />
+      </Modal>
+
+      <Modal id={MODAL_IDS.WORKSPACE_ENTERPRISE} title="Create new Workspace">
+        <AddWorkspacesEnterpriseForm />
       </Modal>
     </>
   );

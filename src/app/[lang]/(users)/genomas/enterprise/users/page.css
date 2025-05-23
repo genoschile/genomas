@@ -4,25 +4,7 @@
   display: block;
   overflow: hidden;
 
-  > * {
-    max-inline-size: 980px;
-    margin: 0 auto;
-  }
-
   .enterprise-users__hero {
-    display: flex;
-    inline-size: 100%;
-    margin-block-end: 2rem;
-
-    background-color: var(--secondary-color);
-    border-radius: 0.75rem;
-
-    align-items: center;
-    justify-content: center;
-
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
-
     .enterprise-users__search {
       margin-inline-end: auto;
 
@@ -101,11 +83,11 @@
         cursor: pointer;
         outline: 3px solid transparent;
         border-radius: 100%;
-        background-color: none;
+        background-color: transparent;
+        border: none;
 
         &:hover {
-          outline-color: var(--primary-color);
-          outline-offset: 2px;
+          background-color: var(--secondary-color);
         }
 
         > svg {
@@ -113,11 +95,5 @@
         }
       }
     }
-  }
-
-  .enterprise-users__table {
-    background-color: var(--secondary-color);
-    padding: 0.75rem;
-    border-radius: 0.75rem;
   }
 }

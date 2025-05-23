@@ -1,10 +1,11 @@
-.container__workspaces {
+.default-container-enterprise {
   display: flex;
 
   background-color: var(--secondary-color);
   border-radius: 0.75rem;
 
   align-items: center;
+  justify-content: center;
 
   padding-inline: 1rem;
   padding-block: 0.5rem;
@@ -13,4 +14,7 @@
   max-inline-size: 980px;
   margin: 0 auto;
   margin-block-end: 2rem;
+
+  color: var(--text-color);
+  fill: var(--text-color);
 }

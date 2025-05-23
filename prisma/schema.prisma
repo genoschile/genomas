@@ -129,33 +129,6 @@ model Organization {
   groups Group[]
 }
 
-model User {
-  id String @id @default(cuid())
-
-  isDefaultAdmin Boolean @default(false)
-
-  email             String       @unique
-  name              String?
-  encryptedPassword String
-  userType          UserType     @default(CLIENT)
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id])
-
-  groups Group[] @relation("UserGroups")
-
-  workspacesOwned  Workspace[]       @relation("OwnedWorkspaces")
-  workspaceMembers WorkspaceMember[]
-  sharedProjects   ProjectShare[]
-  ownedProjects    Project[]
-  license          License?
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  File             File[]
-  PipelineRun      PipelineRun[]
-  Sample           Sample[]
-  UserGroup        UserGroup[]
-}
-
 model Group {
   id   String @id @default(cuid())
   name String
@@ -186,17 +159,42 @@ model UserGroup {
   @@id([userId, groupId]) // Clave primaria compuesta evita duplicados
 }
 
+model User {
+  id String @id @default(cuid())
+
+  isDefaultAdmin Boolean @default(false)
+
+  email             String       @unique
+  name              String?
+  encryptedPassword String
+  userType          UserType     @default(CLIENT)
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id])
+
+  groups Group[] @relation("UserGroups")
+
+  workspaceMembers WorkspaceMember[]
+  sharedProjects   ProjectShare[]
+  ownedProjects    Project[]
+  license          License?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  File             File[]
+  PipelineRun      PipelineRun[]
+  Sample           Sample[]
+  UserGroup        UserGroup[]
+}
+
 // Workspace
 model Workspace {
-  id             String            @id @default(cuid())
+  id             String        @id @default(cuid())
   name           String
   pipelineType   PipelineType
   organizationId String?
-  organization   Organization?     @relation(fields: [organizationId], references: [id])
-  ownerId        String
-  owner          User              @relation("OwnedWorkspaces", fields: [ownerId], references: [id])
-  projects       Project[]
-  members        WorkspaceMember[]
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  projects Project[]
+  members  WorkspaceMember[]
 }
 
 // Relación usuario - workspace (acceso)
@@ -205,6 +203,10 @@ model WorkspaceMember {
   userId      String
   workspaceId String
   role        Role
+
+  assignedAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  isActive   Boolean  @default(true)
 
   user      User      @relation(fields: [userId], references: [id])
   workspace Workspace @relation(fields: [workspaceId], references: [id])

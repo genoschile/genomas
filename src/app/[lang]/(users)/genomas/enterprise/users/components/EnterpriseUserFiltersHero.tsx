@@ -1,9 +1,10 @@
 import { SearchFilterEnterpriseUser } from "@/app/[lang]/(users)/genomas/enterprise/users/components/tablesUser/SearchFilterEnterpriseUser";
+import { ContainerDefaultEnterprise } from "../../components/ContainerDefaultEnterprise";
 
 export const EnterpriseUserFiltersHero = () => {
   return (
-    <div className="enterprise-users__hero">
+    <ContainerDefaultEnterprise dinamicStyle="enterprise-users__hero">
       <SearchFilterEnterpriseUser />
-    </div>
+    </ContainerDefaultEnterprise>
   );
 };

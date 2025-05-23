@@ -1,20 +1,4 @@
 .enterprise-groups__hero {
-  display: flex;
-
-  background-color: var(--secondary-color);
-  border-radius: 0.75rem;
-
-  align-items: center;
-  justify-content: center;
-
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
-
-  inline-size: 100%;
-  max-inline-size: 980px;
-  margin: 0 auto;
-  margin-block-end: 2rem;
-
   > nav {
     inline-size: 100%;
     display: flex;
