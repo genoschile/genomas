@@ -109,7 +109,5 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     isSelected,
   };
 
-  return (
-    <ProjectContext value={value}>{children}</ProjectContext>
-  );
+  return <ProjectContext value={value}>{children}</ProjectContext>;
 };

@@ -1,7 +1,6 @@
 "use server";
 
 import { z } from "zod";
-import bcrypt from "bcrypt";
 
 /* types */
 import type {
@@ -11,7 +10,6 @@ import type {
 
 /* actions */
 import { createSession } from "@lib/actions/session";
-import prisma from "@lib/actions/prisma";
 
 const signUpSchema = z
   .object({
@@ -58,34 +56,28 @@ export async function submitLogin(
 
     const { email, password } = validatedData.data;
 
-    const isExistUser = await prisma.user.findUnique({
-      where: {
-        email: email,
+    const baseUrl = "http://localhost:3000";
+
+    const response = await fetch(`${baseUrl}/api/users/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ email, password }),
     });
 
-    if (!isExistUser) {
+    const result = await response.json();
+
+    if (!result.success) {
       return {
         success: false,
-        message: "User does not exist",
+        message: result.message,
+        error: result.error,
         input: rawData,
       };
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      isExistUser.password
-    );
-
-    if (!isPasswordValid) {
-      return {
-        success: false,
-        message: "Invalid email or password",
-        input: rawData,
-      };
-    }
-
-    await createSession(isExistUser.id);
+    // await createSession(isExistUser.id);
 
     return {
       success: true,
@@ -124,39 +116,8 @@ export async function submitSignUp(
 
     const { email, password } = validatedData.data;
 
-    const isExistUser = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
-
-    console.log(isExistUser);
-
-    if (isExistUser) {
-      return {
-        success: false,
-        message: "User already exists in the database",
-        input: rawData,
-      };
-    }
-
-    // Generar hash de contraseña
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Crear usuario en la base de datos
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name: "",
-      },
-    });
-
-    console.log(newUser);
-
     // Crear sesión para el usuario
-    const route = await createSession(newUser.id);
+    // const route = await createSession(newUser.id);
 
     return {
       success: true,

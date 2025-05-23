@@ -6,12 +6,14 @@ import { AuthFormLogo } from "@/components/forms/components/AuthFormLogo";
 import { AuthLink } from "@/components/forms/components/AuthLink";
 import { submitSignUpEnterprise } from "@/core/use-cases/organization/auth";
 import { useOrganizationContext } from "@/hooks/useOrganization";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 import { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 export function FormSignUp() {
+  const router = useRouter();
+
   const [state, action, pending] = useActionState(
     submitSignUpEnterprise,
     undefined

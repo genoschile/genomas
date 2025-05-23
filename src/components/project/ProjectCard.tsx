@@ -8,7 +8,7 @@ import { useProjectContext } from "@/hooks/useProjectContext";
 import { useModalContext } from "@/hooks/useModalsProject";
 import { useState, useEffect, useRef } from "react";
 import { DropdownMenuCard } from "./components/DropdownMenuCard";
-import { MODAL_IDS } from "@/lib/types/modal";
+import { MODAL_IDS } from "@/context/ModalsProject";
 
 export const ProjectCard = ({
   name,

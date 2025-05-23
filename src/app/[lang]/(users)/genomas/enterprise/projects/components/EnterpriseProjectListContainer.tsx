@@ -1,14 +1,21 @@
-import { ContainerDefaultEnterprise } from "../../components/ContainerDefaultEnterprise";
+"use client";
 
+import { useProjectsContextEnterprise } from "@/context/enterprise/ProjectContextEnterprise";
+import { ContainerDefaultEnterprise } from "../../components/ContainerDefaultEnterprise";
+import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
 import "./enterpriseProjectListContainer.css";
 
 const headers = ["Nombre", "Fecha de creación", "Dueño", "Acciones", "Estado"];
-const data = [
-  ["Proyecto 1", "2024-05-01", "Juan", "Ver"],
-  ["Proyecto 2", "2024-06-15", "Ana", "Editar"],
-];
 
 export const EnterpriseProjectListContainer = () => {
+  const { selectedWorkspaceId } = useWorkspacesContext();
+
+  const { projectsByWorkspace } = useProjectsContextEnterprise();
+
+  const projects = selectedWorkspaceId
+    ? projectsByWorkspace[selectedWorkspaceId] ?? []
+    : [];
+
   return (
     <ContainerDefaultEnterprise dinamicStyle="enterprise-projects__list">
       <div className="table">
@@ -24,22 +31,44 @@ export const EnterpriseProjectListContainer = () => {
             <li key={index}>{header}</li>
           ))}
         </ul>
-
         {/* Filas */}
-        {data.map((row, rowIndex) => (
+        {projects.length === 0 ? (
           <ul
             className="table-row"
-            key={rowIndex}
             style={{
               display: "grid",
               gridTemplateColumns: `repeat(${headers.length}, 1fr)`,
             }}
           >
-            {row.map((cell, cellIndex) => (
-              <li key={cellIndex}>{cell}</li>
-            ))}
+            <li
+              style={{
+                gridColumn: `span ${headers.length}`,
+                textAlign: "center",
+              }}
+            >
+              No hay proyectos disponibles.
+            </li>
           </ul>
-        ))}
+        ) : (
+          projects.map((project) => (
+            <ul
+              className="table-row"
+              key={project.id}
+              style={{
+                display: "grid",
+                gridTemplateColumns: `repeat(${headers.length}, 1fr)`,
+              }}
+            >
+              <li>{project.name}</li>
+              <li>{new Date(project.createdAt).toLocaleDateString()}</li>
+              <li>{project.ownerId}</li>
+              <li>
+                <button>Ver</button>
+              </li>
+              <li>Activo</li>
+            </ul>
+          ))
+        )}
       </div>
     </ContainerDefaultEnterprise>
   );

@@ -1,7 +1,8 @@
 "use client";
 
+import { MODAL_IDS } from "@/context/ModalsProject";
 import { useModalContext } from "@/hooks/useModalsProject";
-import { MODAL_IDS } from "@/lib/types/modal";
+
 import { FaSearch, FaAddressCard } from "react-icons/fa";
 
 export const ContainerGroupsHeader = () => {
@@ -23,13 +24,12 @@ export const ContainerGroupsHeader = () => {
         </label>
       </search>
 
-      <button>
-        <FaAddressCard
-          className="icon"
-          onClick={() => {
-            return openModal(MODAL_IDS.ADD_USER_ENTERPRISE);
-          }}
-        />
+      <button
+        onClick={() => {
+          openModal(MODAL_IDS.ADD_GROUPS_ENTERPRISE);
+        }}
+      >
+        <FaAddressCard className="icon" />
       </button>
     </nav>
   );

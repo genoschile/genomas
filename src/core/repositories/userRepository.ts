@@ -3,24 +3,6 @@ import { IUser, IUserRepository, UserDTO } from "@core/interfaces/IUser";
 import { mapToIUser, MapToPrismaUserType } from "../mapTypes/userTypes";
 import bcrypt from "bcrypt";
 
-export const userRepository = {
-  async create(user: Omit<IUser, "id">): Promise<IUser> {
-    const prismaUser = await prisma.user.create({
-      data: {
-        email: user.email,
-        name: user.name,
-        userType: MapToPrismaUserType(user.userType), // dominio → prisma
-        organizationId: user.organizationId,
-        encryptedPassword: "hashed",
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      },
-    });
-
-    return mapToIUser(prismaUser);
-  },
-};
-
 export class UserRepository implements IUserRepository {
   async getAllUsersOrganization(id: string): Promise<UserDTO[]> {
     const users = await prisma.user.findMany({
@@ -103,10 +85,53 @@ export class UserRepository implements IUserRepository {
     const userGroups = await prisma.userGroup.findMany({
       where: { groupId },
       include: {
-        user: true, 
+        user: true,
       },
     });
 
     return userGroups.map((ug) => mapToIUser(ug.user));
+  }
+
+  async addUserToOrg(
+    orgId: string,
+    data?: Omit<IUser, "id"> & { userId?: string }
+  ): Promise<IUser> {
+    if (data?.userId) {
+      await prisma.user.update({
+        where: { id: data.userId },
+        data: { organizationId: orgId },
+      });
+
+      const updatedUser = await prisma.user.findUnique({
+        where: { id: data.userId },
+      });
+
+      if (!updatedUser) throw new Error("User not found after update.");
+
+      return mapToIUser(updatedUser);
+    }
+
+    if (!data) {
+      throw new Error(
+        "No data provided to add or assign user to organization."
+      );
+    }
+
+    // Crear nuevo usuario
+    const hashedPassword = await bcrypt.hash(data.encryptedPassword, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        email: data.email,
+        name: data.name,
+        userType: MapToPrismaUserType(data.userType),
+        organizationId: orgId,
+        encryptedPassword: hashedPassword,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
+      },
+    });
+
+    return mapToIUser(user);
   }
 }

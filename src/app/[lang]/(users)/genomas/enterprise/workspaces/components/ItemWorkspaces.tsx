@@ -1,49 +1,45 @@
 import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
-import { Fa0 } from "react-icons/fa6";
-
 import "./itemWorkspaces.css";
+import { MdWorkspacesFilled } from "react-icons/md";
+import { Workspace } from "@/context/enterprise/WorkspacesEnterpriseContext";
 
-export const ItemWorkspace = () => {
+export const ItemWorkspace = ({ workspace }: { workspace: Workspace }) => {
   return (
     <li className="container__list-workspaces-item">
       <div>
-        <ItemWorkspaceHeader />
-
+        <ItemWorkspaceHeader
+          name={workspace.name}
+          description={workspace.description}
+        />
         <ItemWorkspaceFigure />
 
         <ItemWorksArticleContainer>
-          <p>Projects ({2}) </p>
-
+          <p>Projects ({workspace.projects?.length === 0 ? "" : "0"})</p>
           <div>
-            <div></div>
-            <div></div>
+            {workspace.projects?.map((_, idx) => (
+              <div key={idx}></div>
+            ))}
           </div>
         </ItemWorksArticleContainer>
 
         <ItemWorksArticleContainer>
-          <p>Assigned Groups ({2}) </p>
-
-          <div>
-            <div></div>
-            <div></div>
-          </div>
+          <p>Assigned Groups (0)</p>
+          <div></div>
         </ItemWorksArticleContainer>
 
         <ItemWorksArticleContainer>
-          <p>Assigned Users ({2}) </p>
-
+          <p>Assigned Users ({workspace.members.length})</p>
           <div>
-            <div></div>
-            <div></div>
+            {workspace.members.map((_, idx) => (
+              <div key={idx}></div>
+            ))}
           </div>
         </ItemWorksArticleContainer>
 
         <ItemWorksArticleContainer>
           <p>Last Activity</p>
-
           <div>
-            <div></div>
-            <div></div>
+            <span>{new Date(workspace.createdAt).toLocaleDateString()}</span>
           </div>
         </ItemWorksArticleContainer>
 
@@ -58,7 +54,6 @@ export const ItemWorkspaceFooter = () => {
   return (
     <footer>
       <div>
-        <button>Delete</button>
         <button>Edit</button>
       </div>
     </footer>
@@ -73,16 +68,20 @@ export const ItemWorkspaceFigure = () => {
   );
 };
 
-import { MdWorkspacesFilled } from "react-icons/md";
-
-export const ItemWorkspaceHeader = () => {
+export const ItemWorkspaceHeader = ({
+  name,
+  description,
+}: {
+  name: string;
+  description?: string;
+}) => {
   return (
     <header>
       <div>
-        <h3>Nombre del workspace</h3>
+        <h3>{name}</h3>
         <IconRoundedFull icon={<MdWorkspacesFilled />} />
       </div>
-      <p>Descripción del workspace</p>
+      <p>{description ?? "No description provided."}</p>
     </header>
   );
 };

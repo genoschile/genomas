@@ -1,23 +1,26 @@
 import { PipelineType, Role } from "@core/interfaces/enums";
+import { IProject } from "./IProject";
+import { IPipelineRun } from "./IPipelineRun";
 
 export interface IWorkspaceResponse {
   id: string;
   name: string;
   pipelineType: PipelineType;
   organizationId?: string;
-  members: WorkspaceMemberResponse[];
-  projects?: ProjectSummaryResponse[];
+  members: IProject[];
+  projects?: IProject[];
 }
 
-export interface WorkspaceMemberResponse {
-  id: string;
-  userId: string;
-  role: Role;
-  isActive: boolean;
-  assignedAt: string;
-}
-
-export interface ProjectSummaryResponse {
+export type ResponseWorkspacesDTO = {
   id: string;
   name: string;
-}   
+  pipelineType: PipelineType;
+  organizationId: string | null;
+  members: {
+    id: string;
+    userId: string;
+    role: Role[];
+    isActive: boolean;
+    assignedAt: Date;
+  }[];
+};

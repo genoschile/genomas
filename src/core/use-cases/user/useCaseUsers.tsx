@@ -1,5 +1,6 @@
 import {
   CreateUserDTO,
+  IUser,
   IUserRepository,
   UserDTO,
 } from "@/core/interfaces/IUser";
@@ -25,5 +26,16 @@ export class useCaseUsers {
 
   async getAllUsersOrganization(id: string): Promise<UserDTO[]> {
     return this.userRepo.getAllUsersOrganization(id);
+  }
+
+  async addUserToOrg(
+    orgId: string,
+    data?: Omit<IUser, "id"> & { userId?: string }
+  ): Promise<UserDTO> {
+    return this.userRepo.addUserToOrg(orgId, data);
+  }
+
+  async findByEmail(email: string): Promise<IUser | null> {
+    return this.userRepo.findByEmail(email);
   }
 }

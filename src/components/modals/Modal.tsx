@@ -8,7 +8,7 @@ import { useRef, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 
 /* types */
-import type { ModalProps } from "@/lib/types/modal";
+import { ModalProps } from "@/context/ModalsProject";
 
 /* styles */
 import "./modal.css";
@@ -17,13 +17,15 @@ export const Modal: React.FC<ModalProps> = ({ id, title, children }) => {
   const { activeModal, closeModal } = useModalContext();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  useEffect(() => {
-    if (activeModal === id && dialogRef.current) {
-      dialogRef.current.showModal();
-    } else if (activeModal !== id && dialogRef.current?.open) {
-      dialogRef.current.close();
-    }
-  }, [activeModal, id]);
+useEffect(() => {
+  console.log("Modal useEffect: ", { activeModal, id });
+
+  if (activeModal === id && dialogRef.current) {
+    dialogRef.current.showModal();
+  } else if (activeModal !== id && dialogRef.current?.open) {
+    dialogRef.current.close();
+  }
+}, [activeModal, id]);
 
   if (activeModal !== id) return null;
 

@@ -12,7 +12,7 @@ export default function page() {
 
       <EnterpriseProjectHero />
 
-      <EnterpriseProjectListContainer />
+      <EnterpriseProjectListContainer  />
     </>
   );
 }

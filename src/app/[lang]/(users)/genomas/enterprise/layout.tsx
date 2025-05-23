@@ -7,11 +7,10 @@ import { TopBar } from "@/components/sidebar/SidebarOrganization/components/TopB
 import { SuggestionsProvider } from "@/context/enterprise/SuggestionsPromptContext";
 import { ThemeProvider } from "@/context/enterprise/ThemeContext";
 import { OrganizationContextProvider } from "@/context/OrganizationContext";
-import {
-  ModalContainer,
-  ModalContainerEnterprise,
-} from "@/components/modals/ModalContainer";
+import { ModalContainer } from "@/components/modals/ModalContainer";
 import { WorkspacesProvider } from "@/context/enterprise/WorkspacesEnterpriseContext";
+import { ProjectsProvider } from "@/context/enterprise/ProjectContextEnterprise";
+import { ModalProvider } from "@/context/ModalsProject";
 
 export default function EnterpriseLayout({
   children,
@@ -23,14 +22,20 @@ export default function EnterpriseLayout({
       <OrganizationContextProvider>
         <SuggestionsProvider>
           <WorkspacesProvider>
-            <ModalContainerEnterprise />
-            <main className="enterpriselayout">
-              <SidebarOrganization />
-              <TopBar />
-              <section>
-                <Suspense fallback={<p> Loading ... </p>}>{children}</Suspense>
-              </section>
-            </main>
+            <ProjectsProvider>
+              <ModalProvider>
+                <ModalContainer />
+                <main className="enterpriselayout">
+                  <SidebarOrganization />
+                  <TopBar />
+                  <section>
+                    <Suspense fallback={<p> Loading ... </p>}>
+                      {children}
+                    </Suspense>
+                  </section>
+                </main>
+              </ModalProvider>
+            </ProjectsProvider>
           </WorkspacesProvider>
         </SuggestionsProvider>
       </OrganizationContextProvider>

@@ -4,6 +4,7 @@ import {
   IOrganizationRepository,
   OrgDTO,
 } from "@/core/interfaces/IOrganization";
+import { ResponseWorkspacesDTO } from "@/core/interfaces/IWorkspace";
 
 export class useCaseOrganizationUseCase {
   constructor(private orgRepo: IOrganizationRepository) {}

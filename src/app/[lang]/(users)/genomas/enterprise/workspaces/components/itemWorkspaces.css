@@ -11,6 +11,9 @@
 
   font-size: 1rem;
 
+  inline-size: 100%;
+
+
   > div {
     padding: 0.75rem;
 

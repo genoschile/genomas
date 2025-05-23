@@ -1,12 +1,16 @@
-import { MODAL_IDS } from "@/lib/types/modal";
+"use client"
+
 import { WorkspaceForm } from "../forms/Workspaceform";
 import { Modal } from "./Modal";
 import { DeleteConfirmationForm } from "../project/components/DeleteConfirmationForm";
 import { MembersForm } from "../forms/MembersForm";
 import { AddGroupsFormEnterprise } from "../forms/AddGroupsEnterprise";
 import { AddWorkspacesEnterpriseForm } from "../forms/AddWorkspacesEnterpriseForm";
+import { MODAL_IDS } from "@/context/ModalsProject";
 
 export const ModalContainer = () => {
+  console.log("ModalContainer: ", MODAL_IDS.ADD_GROUPS_ENTERPRISE);
+
   return (
     <>
       <Modal id={MODAL_IDS.WORKSPACE} title="Create new Project">
@@ -20,18 +24,18 @@ export const ModalContainer = () => {
       <Modal id={MODAL_IDS.MEMBERS} title="Invite Member(s) to Project">
         <MembersForm />
       </Modal>
-    </>
-  );
-};
 
-export const ModalContainerEnterprise = () => {
-  return (
-    <>
       <Modal
-        id={MODAL_IDS.ADD_USER_ENTERPRISE}
+        id={MODAL_IDS.ADD_GROUPS_ENTERPRISE}
         title="Add Groups(s) to Enterprise"
       >
-        <AddGroupsFormEnterprise />
+        <>
+          {console.log(
+            "Rendering ADD_GROUPS_ENTERPRISE modal with ID:",
+            MODAL_IDS.ADD_GROUPS_ENTERPRISE
+          )}
+          <AddGroupsFormEnterprise />
+        </>
       </Modal>
 
       <Modal id={MODAL_IDS.WORKSPACE_ENTERPRISE} title="Create new Workspace">

@@ -16,7 +16,6 @@
     "prisma:validate": "npx prisma validate "
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.19.0",
     "@google/genai": "^0.13.0",
     "@prisma/client": "^6.8.2",
     "adm-zip": "^0.5.16",

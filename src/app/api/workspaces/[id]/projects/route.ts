@@ -1,6 +1,6 @@
-import { useCaseUser } from "@/core/instances";
+import { useCaseProject } from "@/core/instances";
 import { UserType } from "@/core/interfaces/enums";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 type ApiResponse<T = undefined> = {
   status: number;
@@ -19,29 +19,26 @@ type UserData = {
   updatedAt: Date;
 };
 
-export async function POST(request: Request) {
-  const body = await request.json();
-
-  const { id } = body;
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
 
   try {
-    const currentListUsers = (
-      await useCaseUser.getAllUsersOrganization(id)
-    ).map((user) => ({
-      ...user,
-      name: user.name ?? "",
-    }));
+    const projectsWorkspaceId =
+      await useCaseProject.getAllProjectsByWorkspaceId(id);
 
-    if (!currentListUsers) {
+    if (!projectsWorkspaceId) {
       return NextResponse.json(
-        { message: "Organization not created" },
+        { message: "Organization not created", success: false },
         { status: 400 }
       );
     }
 
     return NextResponse.json<ApiResponse<UserData[]>>({
       status: 200,
-      data: currentListUsers,
+      data: projectsWorkspaceId,
       success: true,
       message: "Organization created successfully",
     });

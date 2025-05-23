@@ -4,5 +4,11 @@
 
     font-size: 1rem ;
 
-    
+    display: flex;
+
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+
 }

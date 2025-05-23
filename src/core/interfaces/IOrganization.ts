@@ -1,4 +1,5 @@
 import { CreateGroupDTO, ResponseGroupDTO } from "./IGroup";
+import { ResponseWorkspacesDTO } from "./IWorkspace";
 
 export interface IOrganization {
   id: string;
@@ -28,10 +29,7 @@ export interface OrgDTO {
 
 export interface IOrganizationRepository {
   create(data: CreateOrgDTO): Promise<OrgDTO>;
-  
-  
   findWorkspacesByOrgId(orgId: string): Promise<ResponseWorkspacesDTO[] | null>;
-
   findGroupsByOrgId(orgId: string): Promise<ResponseGroupDTO[] | null>;
   addGroupToOrg(
     orgId: string,

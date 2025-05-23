@@ -5,7 +5,7 @@ import { IoPersonOutline } from "react-icons/io5";
 import { MdOutlineWorkspaces } from "react-icons/md";
 import { FaTimes } from "react-icons/fa";
 import { useModalContext } from "@/hooks/useModalsProject";
-import { MODAL_IDS } from "@/lib/types/modal";
+import { MODAL_IDS } from "@/context/ModalsProject";
 
 export const DropdownWorkspace = ({
   isOpen,

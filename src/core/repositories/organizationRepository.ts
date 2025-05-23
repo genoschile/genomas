@@ -8,31 +8,55 @@ import {
 import { CreateGroupDTO, ResponseGroupDTO } from "../interfaces/IGroup";
 import { mapToIUser } from "../mapTypes/userTypes";
 import { mapToDomainRoles } from "../mapTypes/rolesTypes";
+import { ResponseWorkspacesDTO } from "../interfaces/IWorkspace";
+import { PipelineType } from "../interfaces/enums";
 
 export class OrganizationRepository implements IOrganizationRepository {
   async create(data: CreateOrgDTO): Promise<OrgDTO> {
-    const org = await prisma.organization.create({
-      data: {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      },
-      include: {
-        users: { select: { id: true } },
-        workspaces: { select: { id: true } },
-        license: { select: { id: true } },
-      },
-    });
+    return await prisma.$transaction(async (tx) => {
+      // Paso 1: Crear la organización con include
+      const org = await tx.organization.create({
+        data: {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        },
+        include: {
+          users: { select: { id: true } },
+          workspaces: { select: { id: true } },
+          license: { select: { id: true } },
+        },
+      });
 
-    return {
-      id: org.id,
-      name: org.name,
-      email: org.email,
-      password: org.password,
-      userIds: org.users.map((u) => u.id),
-      workspaceIds: org.workspaces.map((w) => w.id),
-      licenseId: org.license?.id,
-    };
+      const workspaceData = [
+        { name: "Workspace Cáncer", pipelineType: PipelineType.CANCER },
+        { name: "Workspace Germline", pipelineType: PipelineType.GERMLINE },
+        { name: "Workspace Bacteria", pipelineType: PipelineType.BACTERIA },
+      ];
+
+      await Promise.all(
+        workspaceData.map(({ name, pipelineType }) =>
+          tx.workspace.create({
+            data: {
+              name,
+              pipelineType,
+              description: `Este es el workspace para ${pipelineType.toLowerCase()}`,
+              organizationId: org.id,
+            },
+          })
+        )
+      );
+
+      return {
+        id: org.id,
+        name: org.name,
+        email: org.email,
+        password: org.password,
+        userIds: org.users.map((u) => u.id),
+        workspaceIds: org.workspaces.map((w) => w.id),
+        licenseId: org.license?.id ?? undefined,
+      };
+    });
   }
 
   async findWorkspacesByOrgId(
@@ -61,14 +85,14 @@ export class OrganizationRepository implements IOrganizationRepository {
     return organizationWithWorkspaces.workspaces.map((workspace) => ({
       id: workspace.id,
       name: workspace.name,
-      pipelineType: workspace.pipelineType,
+      pipelineType: workspace.pipelineType as PipelineType,
       organizationId: workspace.organizationId,
       members: workspace.members.map((member) => ({
         id: member.id,
         userId: member.userId,
-        role: mapToDomainRoles(member.role),
+        role: mapToDomainRoles([member.role]),
         isActive: member.isActive,
-        assignedAt: member.createdAt,
+        assignedAt: member.user.createdAt,
       })),
     }));
   }
