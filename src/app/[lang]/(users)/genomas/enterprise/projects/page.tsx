@@ -1,6 +1,7 @@
 import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 import { EnterpriseProjectHero } from "./components/EnterpriseProjectHero";
 import { EnterpriseProjectListContainer } from "./components/EnterpriseProjectListContainer";
+import { EnterpriseNavActions } from "./components/EnterpriseNavActions";
 
 export default function page() {
   return (
@@ -11,6 +12,8 @@ export default function page() {
       />
 
       <EnterpriseProjectHero />
+
+      <EnterpriseNavActions />
 
       <EnterpriseProjectListContainer  />
     </>

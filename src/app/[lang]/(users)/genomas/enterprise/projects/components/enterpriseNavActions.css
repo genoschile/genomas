@@ -1,0 +1,27 @@
+.enterprise-projects--nav-actions {
+  > div {
+    flex: 1;
+
+    button {
+      margin-inline-start: auto;
+      background: none;
+      border: none;
+    }
+
+    nav {
+      display: flex;
+      overflow: hidden;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      inline-size: 100%;
+    }
+
+    span {
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--secondary-hover-color);
+      }
+    }
+  }
+}

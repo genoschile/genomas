@@ -10,6 +10,7 @@ export const MODAL_IDS = {
   ADD_USER_ENTERPRISE: "add_user_enterprise",
   ADD_GROUPS_ENTERPRISE: "add_groups_enterprise",
   ADD_WORKSPACE_ENTERPRISE: "add_workspace_enterprise",
+  ADD_PROJECT_ENTERPRISE: "add_project_enterprise",
 } as const;
 
 export type ModalID = (typeof MODAL_IDS)[keyof typeof MODAL_IDS] | null;

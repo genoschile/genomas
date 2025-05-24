@@ -7,6 +7,7 @@ import { MembersForm } from "../forms/MembersForm";
 import { AddGroupsFormEnterprise } from "../forms/AddGroupsEnterprise";
 import { AddWorkspacesEnterpriseForm } from "../forms/AddWorkspacesEnterpriseForm";
 import { MODAL_IDS } from "@/context/ModalsProject";
+import { AddProjectEnterpriseForm } from "../forms/AddProjectEnterpriseForm";
 
 export const ModalContainer = () => {
   console.log("ModalContainer: ", MODAL_IDS.ADD_GROUPS_ENTERPRISE);
@@ -40,6 +41,10 @@ export const ModalContainer = () => {
 
       <Modal id={MODAL_IDS.WORKSPACE_ENTERPRISE} title="Create new Workspace">
         <AddWorkspacesEnterpriseForm />
+      </Modal>
+
+      <Modal id={MODAL_IDS.ADD_PROJECT_ENTERPRISE} title="Add Workspace">
+        <AddProjectEnterpriseForm />
       </Modal>
     </>
   );
