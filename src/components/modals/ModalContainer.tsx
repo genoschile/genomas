@@ -43,7 +43,7 @@ export const ModalContainer = () => {
         <AddWorkspacesEnterpriseForm />
       </Modal>
 
-      <Modal id={MODAL_IDS.ADD_PROJECT_ENTERPRISE} title="Add Workspace">
+      <Modal id={MODAL_IDS.ADD_PROJECT_ENTERPRISE} title="Add Projects">
         <AddProjectEnterpriseForm />
       </Modal>
     </>

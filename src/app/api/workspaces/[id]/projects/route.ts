@@ -23,11 +23,11 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = (await params).id;
+  const currentWorkspacesid = (await params).id;
 
   try {
     const projectsWorkspaceId =
-      await useCaseProject.getAllProjectsByWorkspaceId(id);
+      await useCaseProject.getAllProjectsByWorkspaceId(currentWorkspacesid);
 
     if (!projectsWorkspaceId) {
       return NextResponse.json(
@@ -39,6 +39,42 @@ export async function GET(
     return NextResponse.json<ApiResponse<UserData[]>>({
       status: 200,
       data: projectsWorkspaceId,
+      success: true,
+      message: "Organization created successfully",
+    });
+  } catch (error) {
+    console.error("Error creating organization:", error);
+
+    return NextResponse.json({
+      message: "Error creating organization",
+    });
+  }
+}
+
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const currentWorkspacesid = (await params).id;
+
+  try {
+    const body = await request.json();
+
+    const newProject = await useCaseProject.createProject(
+      currentWorkspacesid,
+      body
+    );
+
+    if (!newProject) {
+      return NextResponse.json(
+        { message: "Project not created", success: false },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json<ApiResponse<UserData[]>>({
+      status: 200,
+      data: newProject,
       success: true,
       message: "Organization created successfully",
     });

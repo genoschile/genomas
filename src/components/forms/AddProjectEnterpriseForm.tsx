@@ -1,9 +1,12 @@
 "use client";
 
+import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
 import "./addProjectEnterpriseForm.css";
 import { useState } from "react";
 
 export const AddProjectEnterpriseForm = () => {
+  const { selectedWorkspaceId } = useWorkspacesContext();
+
   const [sharedWith, setSharedWith] = useState([
     { userId: "", permission: "read" },
   ]);
@@ -18,8 +21,41 @@ export const AddProjectEnterpriseForm = () => {
     setSharedWith(updated);
   };
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    
+    const projectData = {
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      workspaceId: selectedWorkspaceId,
+      ownerId: formData.get("ownerId") as string,
+      sharedWith: sharedWith.map((entry) => ({
+        userId: entry.userId,
+        permission: entry.permission,
+      })),
+    };
+
+    try {
+      const response = await fetch("/api/workspaces/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(projectData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al crear el proyecto");
+      }
+      console.log("Proyecto creado exitosamente");
+    } catch (error) {
+      console.error("Error al crear el proyecto:", error);
+    }
+  }
+
   return (
-    <form action="">
+    <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>Nuevo Proyecto</legend>
 
@@ -31,16 +67,6 @@ export const AddProjectEnterpriseForm = () => {
         <div className="form-group">
           <label htmlFor="description">Descripción</label>
           <textarea id="description" name="description" rows={4}></textarea>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="workspaceId">Workspace ID</label>
-          <input type="text" id="workspaceId" name="workspaceId" required />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="ownerId">Owner ID</label>
-          <input type="text" id="ownerId" name="ownerId" required />
         </div>
 
         <fieldset className="form-group">
