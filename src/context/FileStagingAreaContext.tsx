@@ -25,8 +25,9 @@ export function FileStagingAreaProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [decompressedFiles, setDecompressedFiles] =
-    useState<{ name: string; size: number; type: string }[]>([]);
+  const [decompressedFiles, setDecompressedFiles] = useState<
+    { name: string; size: number; type: string }[]
+  >([]);
   const [files, setFiles] = useState<File[]>([]);
 
   return (

@@ -1,7 +1,8 @@
+"use client";
+
 import FileUpload from "@/components/fileUpload/FileUpload";
 import "./page.css";
-import { UploadFilesTags } from "@/components/upload-files/UploadFilesTags";
-import { ExampleFormClinical } from "@/components/upload-files/ExampleFormClinical";
+import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
 
 /*
 
@@ -41,9 +42,32 @@ export default function Page() {
           </footer>
         </div>
       </article>
-      <ExampleFormClinical />
+
+      {/* <ExampleFormClinical /> */}
+
+      <ListUploadedFiles />
 
       {/* <UploadFilesTags /> */}
     </section>
   );
 }
+
+export const ListUploadedFiles = () => {
+  const { files, setFiles } = useFileStagingAreaContext();
+
+  console.log("~ files:", files);
+
+  return (
+    <article className="upload-list-files">
+      <h2 className="upload-list-files__title">Uploaded Files</h2>
+      <ul className="upload-list-files__list">
+        {files.map((file, index) => (
+          <li key={index} className="upload-list-files__item">
+            <span className="upload-list-files__item-name">{file.name}</span>
+            <button className="upload-list-files__item-remove">Remove</button>
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
+};
