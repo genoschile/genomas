@@ -1,22 +1,10 @@
 "use client";
 
-import { use, useEffect, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import "./addGroupsEnterprise.css";
-import { localStorageIdOrganization } from "@/lib/utils/localStorageIdOrganization";
-
-const getUsers = async () => {
-  const org = JSON.parse(localStorage.getItem("genomaOrganization") || "{}");
-
-  const response = await fetch("http://localhost:3000/api/organization/users", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id: org.id }),
-  });
-
-  return await response.json();
-};
+import { MultiSelectChips } from "./componentsAddGroupsEnterprise/MultiSelectChips";
+import { getOrganizationData } from "@/utils/getOrganizationData";
+import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 
 export const AddGroupsFormEnterprise = () => {
   const [isPending, startTransition] = useTransition();
@@ -44,7 +32,7 @@ export const AddGroupsFormEnterprise = () => {
 
     console.log("submitting", dto);
 
-    const { id } = localStorageIdOrganization();
+    const { id } = getLocalStorageOrganization();
 
     if (!id) {
       setMessage("Error al cargar la organización");
@@ -53,8 +41,6 @@ export const AddGroupsFormEnterprise = () => {
 
     startTransition(async () => {
       try {
-        console.log("i'm in fetch");
-
         const res = await fetch(`/api/organization/${id}/groups`, {
           method: "POST",
           headers: {
@@ -75,7 +61,7 @@ export const AddGroupsFormEnterprise = () => {
   };
 
   useEffect(() => {
-    setUsersPromise(getUsers());
+    setUsersPromise(getOrganizationData("users"));
   }, []);
 
   return (
@@ -102,9 +88,12 @@ export const AddGroupsFormEnterprise = () => {
           <label htmlFor="roles">Roles:</label>
           <RoleSelector />
 
-          <label htmlFor="users">Usuarios:</label>
           {usersPromise && (
-            <AddGroupsFormEnterpriseListUsers promiseUser={usersPromise} />
+            <MultiSelectChips
+              dataPromise={usersPromise}
+              name="userIds"
+              label="Usuarios"
+            />
           )}
         </div>
       </fieldset>
@@ -118,59 +107,7 @@ export const AddGroupsFormEnterprise = () => {
   );
 };
 
-export const AddGroupsFormEnterpriseListUsers = ({
-  promiseUser,
-}: {
-  promiseUser: Promise<any>;
-}) => {
-  const allUsers = use(promiseUser);
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const options = Array.from(e.target.selectedOptions).map(
-      (opt) => opt.value
-    );
-    setSelectedUsers(options);
-  };
-
-  const removeUser = (id: string) => {
-    setSelectedUsers((prev) => prev.filter((uid) => uid !== id));
-  };
-
-  return (
-    <>
-      <div className="selected-users">
-        {selectedUsers.map((id) => {
-          const user = allUsers.data.find((u: any) => u.id === id);
-          return (
-            <div key={id} className="chip">
-              {user?.name || id}
-              <button type="button" onClick={() => removeUser(id)}>
-                &times;
-              </button>
-            </div>
-          );
-        })}
-      </div>
-
-      <select
-        className="select-list"
-        id="users"
-        name="userIds"
-        multiple
-        onChange={handleSelect}
-      >
-        {allUsers.data.map((user: any) => (
-          <option key={user.id} value={user.id}>
-            {user.name}
-          </option>
-        ))}
-      </select>
-    </>
-  );
-};
-
-const RoleSelector = () => {
+export const RoleSelector = () => {
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

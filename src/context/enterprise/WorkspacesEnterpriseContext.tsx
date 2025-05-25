@@ -31,21 +31,30 @@ const WorkspacesContext = createContext<WorkspacesContextType | undefined>(
   undefined
 );
 
-export const WorkspacesProvider = ({ children }: { children: React.ReactNode }) => {
+export const WorkspacesProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [workspaces, setWorkspaces] = useState<WorkspaceList>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(null);
+  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(
+    null
+  );
   const [showList, setShowList] = useState<boolean>(false);
 
   const fetchWorkspaces = async () => {
     try {
       setLoading(true);
 
-      const organization = JSON.parse(localStorage.getItem("genomaOrganization") || "{}");
+      const organization = JSON.parse(
+        localStorage.getItem("genomaOrganization") || "{}"
+      );
       if (!organization.id) throw new Error("No organization ID found");
 
-      const res = await fetch(`/api/organization/${organization.id}/workspaces`);
+      const res = await fetch(
+        `/api/organization/${organization.id}/workspaces`
+      );
       const data = await res.json();
       if (data.success) setWorkspaces(data.data);
     } catch (err) {
@@ -79,7 +88,9 @@ export const WorkspacesProvider = ({ children }: { children: React.ReactNode }) 
 export const useWorkspacesContext = () => {
   const context = useContext(WorkspacesContext);
   if (!context) {
-    throw new Error("useWorkspacesContext must be used within a WorkspacesProvider");
+    throw new Error(
+      "useWorkspacesContext must be used within a WorkspacesProvider"
+    );
   }
   return context;
 };

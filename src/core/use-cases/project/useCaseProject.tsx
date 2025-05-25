@@ -1,4 +1,4 @@
-import { IProject, IProjectDTO, IProjectRepository } from "@/core/interfaces/IProject";
+import { IProjectDTO, IProjectRepository } from "@/core/interfaces/IProject";
 
 export class useCaseProjects {
   constructor(private userRepo: IProjectRepository) {}

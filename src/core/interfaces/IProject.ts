@@ -1,15 +1,28 @@
 import { IPipelineRun } from "./IPipelineRun";
-import { IProjectShare } from "./IProjectShare";
+import { IProjectGroupShare, IProjectShare } from "./IProjectShare";
 
 export interface IProject {
   id: string;
   name: string;
   description: string | null;
   workspaceId: string;
-  ownerId: string;
   createdAt: Date;
   updatedAt: Date;
   sharedWith?: IProjectShare[];
+  sharedWithGroups?: IProjectGroupShare[];
+  files?: File[];
+  executions?: IPipelineRun[];
+}
+
+export interface IProjectResponse {
+  id: string;
+  name: string;
+  description: string | null;
+  workspaceId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  sharedWith?: IProjectShare[];
+  sharedWithGroups?: IProjectGroupShare[];
   files?: File[];
   executions?: IPipelineRun[];
 }
@@ -18,23 +31,16 @@ export interface IProjectDTO {
   name: string;
   description: string | null;
   workspaceId: string;
-  ownerId: string;
-}
-
-export interface IProjectResponse {
-  name: string;
-  description: string | null;
-  workspaceId: string;
-  ownerId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  id: string;
+  sharedWithGroups?: IProjectGroupShare[];
   sharedWith?: IProjectShare[];
-  files?: File[];
-  executions?: IPipelineRun[];
+  users?: { id: string }[];
+  groups?: { id: string }[];
 }
 
 export interface IProjectRepository {
   getAllProjectsByWorkspaceId(idWorkspace: string): Promise<IProject[]>;
-  createProject(idWorkspace: string, data: IProjectDTO): Promise<IProjectResponse | null>;
+  createProject(
+    idWorkspace: string,
+    data: IProjectDTO
+  ): Promise<IProjectResponse | null>;
 }

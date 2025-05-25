@@ -1,10 +1,5 @@
-import { OrganizationRepository } from "@/core/repositories/organizationRepository";
-import { useCaseOrganizationUseCase } from "@/core/use-cases/organization/useCaseOrganization";
+import { useCaseOrganization } from "@/core/instances";
 import { NextRequest, NextResponse } from "next/server";
-
-const useCaseOrganization = new useCaseOrganizationUseCase(
-  new OrganizationRepository()
-);
 
 export async function GET(
   request: NextRequest,
@@ -54,7 +49,6 @@ export async function POST(
       { status: 200 }
     );
   } catch (error) {
-
     console.error("Error in POST /api/organization/[id]/groups", error);
 
     return NextResponse.json(

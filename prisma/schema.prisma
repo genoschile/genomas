@@ -139,6 +139,8 @@ model Group {
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id])
 
+  projectShares ProjectGroupShare[] @relation("GroupProjectShares")
+
   description String?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -175,7 +177,6 @@ model User {
 
   workspaceMembers WorkspaceMember[]
   sharedProjects   ProjectShare[]
-  ownedProjects    Project[]
   license          License?
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
@@ -222,18 +223,19 @@ model WorkspaceMember {
 
 // Proyecto
 model Project {
-  id          String         @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   description String?
   workspaceId String
-  workspace   Workspace      @relation(fields: [workspaceId], references: [id])
-  ownerId     String
-  owner       User           @relation(fields: [ownerId], references: [id])
-  sharedWith  ProjectShare[]
-  Files  File[]
-  executions  PipelineRun[]
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @default(now())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+
+  sharedWith       ProjectShare[]
+  sharedWithGroups ProjectGroupShare[] @relation("ProjectGroupShares")
+
+  Files      File[]
+  executions PipelineRun[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @default(now())
 }
 
 // Compartir proyecto con otros usuarios
@@ -249,6 +251,21 @@ model ProjectShare {
   createdAt DateTime @default(now())
 
   @@unique([userId, projectId])
+}
+
+// Compartir proyecto con grupos
+model ProjectGroupShare {
+  id        String     @id @default(cuid())
+  groupId   String
+  projectId String
+  access    AccessType
+
+  group   Group   @relation(fields: [groupId], references: [id], name: "GroupProjectShares")
+  project Project @relation(fields: [projectId], references: [id], name: "ProjectGroupShares")
+
+  createdAt DateTime @default(now())
+
+  @@unique([groupId, projectId])
 }
 
 // Archivos genómicos

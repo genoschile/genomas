@@ -1,6 +1,7 @@
 "use client";
 
-import { localStorageIdOrganization } from "@/lib/utils/localStorageIdOrganization";
+import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
+
 import React, {
   createContext,
   useContext,
@@ -55,19 +56,13 @@ export const DataTableUserEnterpriseProvider = ({
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const org = localStorageIdOrganization();
+        const org = getLocalStorageOrganization();
 
         if (!org) {
-          return 
+          return;
         }
 
-        const res = await fetch("/api/organization/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: org.id }),
-        });
+        const res = await fetch(`/api/organization/${org}/users`);
 
         if (!res.ok) {
           throw new Error("Error al obtener los usuarios");

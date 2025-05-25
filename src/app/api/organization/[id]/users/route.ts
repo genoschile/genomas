@@ -1,8 +1,6 @@
-import { UserRepository } from "@/core/repositories/userRepository";
-import { useCaseUsers } from "@/core/use-cases/user/useCaseUsers";
 import { NextResponse } from "next/server";
-
-const useCaseUser = new useCaseUsers(new UserRepository());
+import { UserType } from "@/core/interfaces/enums";
+import { useCaseUser } from "@/core/instances";
 
 export async function POST(
   request: Request,
@@ -42,5 +40,58 @@ export async function POST(
       },
       { status: 500 }
     );
+  }
+}
+
+type ApiResponse<T = undefined> = {
+  status: number;
+  success: boolean;
+  message: string;
+  data?: T;
+};
+
+type UserData = {
+  id: string;
+  name: string;
+  email: string;
+  userType: UserType;
+  organizationId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
+
+  try {
+    const currentListUsers = (
+      await useCaseUser.getAllUsersOrganization(id)
+    ).map((user) => ({
+      ...user,
+      name: user.name ?? "",
+    }));
+
+    if (!currentListUsers) {
+      return NextResponse.json(
+        { message: "Organization not created" },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json<ApiResponse<UserData[]>>({
+      status: 200,
+      data: currentListUsers,
+      success: true,
+      message: "Organization created successfully",
+    });
+  } catch (error) {
+    console.error("Error creating organization:", error);
+
+    return NextResponse.json({
+      message: "Error creating organization",
+    });
   }
 }

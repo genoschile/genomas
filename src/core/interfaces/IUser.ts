@@ -32,6 +32,13 @@ export interface UserDTO {
   updatedAt: Date;
 }
 
+export interface UserDefaultAdminResponse {
+  id: string;
+  email: string;
+  isDefaultAdmin: boolean;
+  encryptedPassword: string;
+}
+
 export interface IUserRepository {
   create(data: CreateUserDTO): Promise<UserDTO>;
   findById(id: string): Promise<UserDTO | null>;
@@ -41,4 +48,5 @@ export interface IUserRepository {
   getAllUsersOrganization(id: string): Promise<UserDTO[]>;
   addUserToOrg(orgId: string, data?: Omit<IUser, "id"> & { userId?: string }): Promise<UserDTO>;
   findByEmail(email: string): Promise<IUser | null>;
+  findDefaultAdminByOrgId(orgId: string): Promise<UserDefaultAdminResponse | null>;
 }

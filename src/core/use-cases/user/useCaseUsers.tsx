@@ -2,6 +2,7 @@ import {
   CreateUserDTO,
   IUser,
   IUserRepository,
+  UserDefaultAdminResponse,
   UserDTO,
 } from "@/core/interfaces/IUser";
 
@@ -37,5 +38,9 @@ export class useCaseUsers {
 
   async findByEmail(email: string): Promise<IUser | null> {
     return this.userRepo.findByEmail(email);
+  }
+
+  async findDefaultAdminByOrgId(orgId: string): Promise<UserDefaultAdminResponse | null> {
+    return this.userRepo.findDefaultAdminByOrgId(orgId);
   }
 }

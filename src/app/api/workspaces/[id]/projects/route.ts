@@ -60,10 +60,9 @@ export async function POST(
   try {
     const body = await request.json();
 
-    const newProject = await useCaseProject.createProject(
-      currentWorkspacesid,
-      body
-    );
+    console.log("data before create", body);
+
+    const newProject = useCaseProject.createProject(currentWorkspacesid, body);
 
     if (!newProject) {
       return NextResponse.json(
@@ -72,12 +71,16 @@ export async function POST(
       );
     }
 
-    return NextResponse.json<ApiResponse<UserData[]>>({
-      status: 200,
-      data: newProject,
-      success: true,
-      message: "Organization created successfully",
-    });
+    return NextResponse.json(
+      {
+        data: newProject,
+        success: true,
+        message: "Organization created successfully",
+      },
+      {
+        status: 201,
+      }
+    );
   } catch (error) {
     console.error("Error creating organization:", error);
 

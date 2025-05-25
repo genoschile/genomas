@@ -1,5 +1,10 @@
 import prisma from "@/lib/actions/prisma";
-import { IUser, IUserRepository, UserDTO } from "@core/interfaces/IUser";
+import {
+  IUser,
+  IUserRepository,
+  UserDefaultAdminResponse,
+  UserDTO,
+} from "@core/interfaces/IUser";
 import { mapToIUser, MapToPrismaUserType } from "../mapTypes/userTypes";
 import bcrypt from "bcrypt";
 
@@ -133,5 +138,28 @@ export class UserRepository implements IUserRepository {
     });
 
     return mapToIUser(user);
+  }
+
+  async findDefaultAdminByOrgId(
+    orgId: string
+  ): Promise<UserDefaultAdminResponse | null> {
+    const defaultAdmin = await prisma.user.findFirst({
+      where: {
+        isDefaultAdmin: true,
+        organizationId: orgId,
+      },
+      select: {
+        id: true,
+        email: true,
+        encryptedPassword: true,
+        isDefaultAdmin: true,
+      },
+    });
+
+    if (!defaultAdmin) {
+      return null;
+    }
+
+    return defaultAdmin;
   }
 }

@@ -1,49 +1,60 @@
 "use client";
 
+/* hooks */
 import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
+import { useEffect, useState } from "react";
+
+/* components */
+import { MultiSelectChips } from "./componentsAddGroupsEnterprise/MultiSelectChips";
+
+/* utils */
+import { getOrganizationData } from "@/utils/getOrganizationData";
+import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
+
+/* style */
 import "./addProjectEnterpriseForm.css";
-import { useState } from "react";
 
 export const AddProjectEnterpriseForm = () => {
   const { selectedWorkspaceId } = useWorkspacesContext();
+  const [usersPromise, setUsersPromise] = useState<Promise<any> | null>(null);
+  const [groupsPromise, setGroupsPromise] = useState<Promise<any> | null>(null);
 
-  const [sharedWith, setSharedWith] = useState([
-    { userId: "", permission: "read" },
-  ]);
+  // Estados para levantar seleccionados
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+  const [selectedGroupIds, setSelectedGroupIds] = useState<string[]>([]);
 
-  const handleAddShared = () => {
-    setSharedWith([...sharedWith, { userId: "", permission: "read" }]);
-  };
+  useEffect(() => {
+    setUsersPromise(getOrganizationData("users"));
+  }, []);
 
-  const handleSharedChange = (index: number, field: string, value: string) => {
-    const updated = [...sharedWith];
-    updated[index][field] = value;
-    setSharedWith(updated);
-  };
+  useEffect(() => {
+    setGroupsPromise(getOrganizationData("groups"));
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    
+
     const projectData = {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
       workspaceId: selectedWorkspaceId,
-      ownerId: formData.get("ownerId") as string,
-      sharedWith: sharedWith.map((entry) => ({
-        userId: entry.userId,
-        permission: entry.permission,
-      })),
+      ownerId: getLocalStorageOrganization(),
+      users: selectedUserIds.map((id) => ({ id })),
+      groups: selectedGroupIds.map((id) => ({ id })),
     };
 
     try {
-      const response = await fetch("/api/workspaces/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(projectData),
-      });
+      const response = await fetch(
+        `/api/workspaces/${selectedWorkspaceId}/projects`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(projectData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Error al crear el proyecto");
@@ -52,7 +63,7 @@ export const AddProjectEnterpriseForm = () => {
     } catch (error) {
       console.error("Error al crear el proyecto:", error);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -69,36 +80,23 @@ export const AddProjectEnterpriseForm = () => {
           <textarea id="description" name="description" rows={4}></textarea>
         </div>
 
-        <fieldset className="form-group">
-          <legend>Compartido con</legend>
-          {sharedWith.map((entry, index) => (
-            <div key={index} className="shared-entry">
-              <input
-                type="text"
-                name={`sharedWith[${index}].userId`}
-                placeholder="User ID"
-                value={entry.userId}
-                onChange={(e) =>
-                  handleSharedChange(index, "userId", e.target.value)
-                }
-                required
-              />
-              <select
-                name={`sharedWith[${index}].permission`}
-                value={entry.permission}
-                onChange={(e) =>
-                  handleSharedChange(index, "permission", e.target.value)
-                }
-              >
-                <option value="read">Leer</option>
-                <option value="write">Escribir</option>
-              </select>
-            </div>
-          ))}
-          <button type="button" onClick={handleAddShared}>
-            Añadir usuario compartido
-          </button>
-        </fieldset>
+        {usersPromise && (
+          <MultiSelectChips
+            dataPromise={usersPromise}
+            name="userIds"
+            label="Usuarios"
+            onChange={setSelectedUserIds}
+          />
+        )}
+
+        {groupsPromise && (
+          <MultiSelectChips
+            dataPromise={groupsPromise}
+            name="groupIds"
+            label="Grupos"
+            onChange={setSelectedGroupIds}
+          />
+        )}
       </fieldset>
 
       <button type="submit">Crear Proyecto</button>

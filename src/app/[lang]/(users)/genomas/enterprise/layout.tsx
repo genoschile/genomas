@@ -11,6 +11,7 @@ import { ModalContainer } from "@/components/modals/ModalContainer";
 import { WorkspacesProvider } from "@/context/enterprise/WorkspacesEnterpriseContext";
 import { ProjectsProvider } from "@/context/enterprise/ProjectContextEnterprise";
 import { ModalProvider } from "@/context/ModalsProject";
+import { GroupsProvider } from "@/context/enterprise/GroupsEnterpriseContext";
 
 export default function EnterpriseLayout({
   children,
@@ -20,24 +21,26 @@ export default function EnterpriseLayout({
   return (
     <ThemeProvider>
       <OrganizationContextProvider>
-        <SuggestionsProvider>
-          <WorkspacesProvider>
-            <ProjectsProvider>
-              <ModalProvider>
-                <ModalContainer />
-                <main className="enterpriselayout">
-                  <SidebarOrganization />
-                  <TopBar />
-                  <section>
-                    <Suspense fallback={<p> Loading ... </p>}>
-                      {children}
-                    </Suspense>
-                  </section>
-                </main>
-              </ModalProvider>
-            </ProjectsProvider>
-          </WorkspacesProvider>
-        </SuggestionsProvider>
+        <GroupsProvider>
+          <SuggestionsProvider>
+            <WorkspacesProvider>
+              <ProjectsProvider>
+                <ModalProvider>
+                  <ModalContainer />
+                  <main className="enterpriselayout">
+                    <SidebarOrganization />
+                    <TopBar />
+                    <section>
+                      <Suspense fallback={<p> Loading ... </p>}>
+                        {children}
+                      </Suspense>
+                    </section>
+                  </main>
+                </ModalProvider>
+              </ProjectsProvider>
+            </WorkspacesProvider>
+          </SuggestionsProvider>
+        </GroupsProvider>
       </OrganizationContextProvider>
     </ThemeProvider>
   );

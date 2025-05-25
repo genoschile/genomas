@@ -1,17 +1,8 @@
 import { NextResponse } from "next/server";
-import { useCaseOrganizationUseCase } from "@/core/use-cases/organization/useCaseOrganization";
-import { OrganizationRepository } from "@/core/repositories/organizationRepository";
 import { generateSecurePassword } from "@/core/helpers/randomPwdSecure";
-import { useCaseUsers } from "@/core/use-cases/user/useCaseUsers";
-import { UserRepository } from "@/core/repositories/userRepository";
 import { UserType } from "@/core/interfaces/enums";
 import { OrgDTO } from "@/core/interfaces/IOrganization";
-
-const useCaseOrganization = new useCaseOrganizationUseCase(
-  new OrganizationRepository()
-);
-
-const useCaseUser = new useCaseUsers(new UserRepository());
+import { useCaseOrganization, useCaseUser } from "@/core/instances";
 
 type ApiResponse<T = undefined> = {
   status: number;
