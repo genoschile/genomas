@@ -1,12 +1,17 @@
 "use client";
+import {
+  FaCloudUploadAlt,
+  FaSpinner,
+  FaFolderOpen,
+  FaDatabase,
+} from "react-icons/fa";
 
 import { createContext, useState } from "react";
-import { FaCheckCircle, FaCloudUploadAlt, FaSpinner } from "react-icons/fa";
 
 export const UploadStatus = {
   IDLE: "idle",
   PENDING: "pending",
-  STAGED: "staged", // ver la tabla
+  STAGED: "staged", 
   UPLOAD_DB: "upload_db",
 };
 
@@ -49,12 +54,16 @@ export function UploadStatusProvider({
     switch (uploadStatus) {
       case UploadStatus.PENDING:
         return <FaSpinner className="file-upload--icon rotate" size={50} />;
+
       case UploadStatus.STAGED:
-        return <FaCheckCircle className="file-upload--icon" size={50} />;
+        return <FaFolderOpen className="file-upload--icon" size={50} />;
+
       case UploadStatus.UPLOAD_DB:
-        return <FaCheckCircle className="file-upload--icon" size={50} />;
+        return <FaDatabase className="file-upload--icon" size={50} />;
+
+      case UploadStatus.IDLE:
       default:
-        return <FaCloudUploadAlt size={50} className="file-upload--icon" />;
+        return <FaCloudUploadAlt className="file-upload--icon" size={50} />;
     }
   };
 

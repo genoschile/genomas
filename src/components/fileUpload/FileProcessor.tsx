@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
 import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { UploadStatus } from "@/context/UploadStatusContext";
+import { FaSpinner, FaPlay, FaDatabase, FaRedo } from "react-icons/fa";
 
 interface SuccessResponse {
   success: true;
@@ -21,15 +22,40 @@ interface ErrorResponse {
 type ApiResponse = SuccessResponse | ErrorResponse;
 
 export default function FileProcessor() {
-  const { files, setFiles, setDecompressedFiles } = useFileStagingAreaContext();
+  const { files, setFiles, setDecompressedFiles, setProgressMap, decompressedFiles } = useFileStagingAreaContext();
   const { uploadStatus, setUploadStatus, isUploading, setUploading } =
     useUploadStatusContext();
+
+  const simulateUploadFiles = async () => {
+    for (const file of decompressedFiles) {
+      await simulateProgress(file.name); // o `file.id` si lo tienes
+    }
+  };
+
+  const simulateProgress = async (fileKey: string) => {
+    return new Promise<void>((resolve) => {
+      let current = 0;
+
+      const interval = setInterval(() => {
+        current += Math.floor(Math.random() * 20) + 10;
+        setProgressMap((prev) => ({
+          ...prev,
+          [fileKey]: Math.min(current, 100),
+        }));
+
+        if (current >= 100) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, 300);
+    });
+  };
 
   const handleClean = () => {
     setUploading(false);
     setDecompressedFiles([]);
     setUploadStatus(UploadStatus.IDLE);
-    setFiles([])
+    setFiles([]);
   };
 
   const handleUpload = async () => {
@@ -55,7 +81,7 @@ export default function FileProcessor() {
       if (!data.success) {
         toast.error("Error al procesar los archivos");
         setUploadStatus(UploadStatus.IDLE);
-        return console.log("Error al procesar los archivos");
+        return;
       }
 
       setDecompressedFiles(data.data.files);
@@ -72,31 +98,71 @@ export default function FileProcessor() {
 
   const handleStageToDatabase = async () => {
     setUploadStatus(UploadStatus.UPLOAD_DB);
-    console.log("Subiendo archivos a la base de datos:", files);
-    toast.success("Archivos subidos a la base de datos con éxito.");
+    await simulateUploadFiles();
+    toast.success("Todos los archivos fueron subidos.");
   };
+
+  const actionByStatus = () => {
+    switch (uploadStatus) {
+      case UploadStatus.IDLE:
+        return handleUpload;
+      case UploadStatus.STAGED:
+        return handleStageToDatabase;
+      case UploadStatus.UPLOAD_DB:
+        return () => toast.info("Subida ya en progreso.");
+      case UploadStatus.PENDING:
+        return () => {};
+      default:
+        return () => {};
+    }
+  };
+
+  const getButtonLabel = () => {
+    switch (uploadStatus) {
+      case UploadStatus.IDLE:
+        return "Subir archivo ZIP";
+      case UploadStatus.PENDING:
+        return "Procesando ZIP...";
+      case UploadStatus.STAGED:
+        return "Subir a la base de datos";
+      case UploadStatus.UPLOAD_DB:
+        return "Subiendo...";
+      default:
+        return "Cargar";
+    }
+  };
+
+  const getButtonIcon = () => {
+    switch (uploadStatus) {
+      case UploadStatus.IDLE:
+        return <FaPlay />;
+      case UploadStatus.PENDING:
+        return <FaSpinner className="rotate" />;
+      case UploadStatus.STAGED:
+        return <FaDatabase />;
+      case UploadStatus.UPLOAD_DB:
+        return <FaSpinner className="rotate" />;
+      default:
+        return null;
+    }
+  };
+
+  const isDisabled = uploadStatus === UploadStatus.PENDING || isUploading;
 
   return (
     <div className="upload-buttons">
-      {uploadStatus === UploadStatus.STAGED ? (
-        <button onClick={handleStageToDatabase}>Upload to Database</button>
-      ) : (
-        <button
-          className={`${
-            uploadStatus === UploadStatus.PENDING ? "loading" : ""
-          }`}
-          disabled={isUploading}
-          onClick={handleUpload}
-        >
-          <span className="text">{isUploading ? "" : "Load"}</span>
-          {isUploading && (
-            <span className="spinner">
-              <img src="./loader.svg" alt="loader" />
-            </span>
-          )}
-        </button>
-      )}
-      <button onClick={handleClean}>Clean</button>
+      <button
+        onClick={actionByStatus()}
+        disabled={isDisabled}
+        className={`upload-action-button ${isDisabled ? "disabled" : ""}`}
+      >
+        <span className="icon">{getButtonIcon()}</span>
+        <span className="text">{getButtonLabel()}</span>
+      </button>
+
+      <button onClick={handleClean} className="clean-button">
+        <FaRedo /> Limpiar
+      </button>
     </div>
   );
 }

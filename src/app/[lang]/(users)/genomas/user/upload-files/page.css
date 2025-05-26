@@ -33,37 +33,91 @@
       font-weight: 400;
       margin-bottom: 0.4rem;
     }
-
-    & .upload-files__warnings {
-      & > * {
-        display: block;
-        text-wrap: wrap;
-        text-align: start;
-      }
-
-      /* footer */
-      .upload-files__warning-text {
-        /*small*/
-        font-size: clamp(0.8rem, calc(1vw + 0.2rem), 1rem);
-        font-weight: 500;
-      }
-
-      .upload-files__example-link {
-        /*strong*/
-        margin-top: 0.4rem;
-        font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);
-        font-weight: bold;
-        color: var(--primary-color);
-      }
-    }
   }
 }
 
-.upload-list-files {
+/* footer */
+.upload-files__warnings {
+  & > * {
+    display: block;
+    text-wrap: wrap;
+    text-align: start;
+  }
+
+  .upload-files__warning-text {
+    /*small*/
+    font-size: clamp(0.8rem, calc(1vw + 0.2rem), 1rem);
+    font-weight: 500;
+  }
+
+  .upload-files__example-link {
+    /*strong*/
+    margin-top: 0.4rem;
+    font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);
+    font-weight: bold;
+    color: var(--primary-color);
+  }
 }
 
-.upload-files {
-  > article {
-    background-color: red;
+/* ########### */
+
+.upload-step {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  margin-top: 1rem;
+  border-radius: 4px;
+}
+
+.upload-step--pending {
+  background: #fef9e7;
+}
+
+.upload-step--staged {
+  background: #e8f8f5;
+}
+
+.upload-step--uploading {
+  background: #f4ecf7;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
+}
+
+.upload-table-container {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.upload-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.upload-table th,
+.upload-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.upload-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.upload-table td {
+  background-color: #fff;
 }

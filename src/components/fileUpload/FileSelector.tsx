@@ -5,6 +5,7 @@ import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { useState } from "react";
 import FileProcessor from "./FileProcessor";
 import { UploadLabel } from "./UploadLabel";
+import "./FileUpload.css";
 
 export default function FileSelector() {
   const { setFiles } = useFileStagingAreaContext();

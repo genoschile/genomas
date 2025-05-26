@@ -1,27 +1,10 @@
 "use client";
 
-import FileUpload from "@/components/fileUpload/FileUpload";
 import "./page.css";
 import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
-
-/*
-
-cambiar el icon al subir color verde de ok! al presubir 
-generar estados (presub stagging - al apretar load validar id?)
-
-
-si me suben multiples archivos cambiar visualización a una matriz
-css columnas predeterminadas
-edad
-sexo
-id
-enfermedad
-type
-type secuenc
-type fuente
-botoncito de más
-
-*/
+import FileSelector from "@/components/fileUpload/FileSelector";
+import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
+import { UploadStatus } from "@/context/UploadStatusContext";
 
 export default function Page() {
   return (
@@ -31,17 +14,13 @@ export default function Page() {
           <h2 className="upload-files__title">
             Upload your VCF file and/or Clinical data (optional)
           </h2>
-          <FileUpload />
-          <footer className="upload-files__warnings">
-            <small className="upload-files__warning-text">
-              If you have clinical data for multiple samples, upload it as
-              clinical.csv, following the example provided. Ensure that the
-              sample identifiers match the identifiers in the variants file.
-            </small>
-            <strong className="upload-files__example-link">Example here</strong>
-          </footer>
+          <div className="upload-files--init">
+            <FileSelector />
+          </div>
         </div>
       </article>
+
+      <ExampleFormClinical />
 
       {/* <ExampleFormClinical /> */}
 
@@ -52,22 +31,118 @@ export default function Page() {
   );
 }
 
-export const ListUploadedFiles = () => {
-  const { files, setFiles } = useFileStagingAreaContext();
+export const ExampleFormClinical = () => {
+  return (
+    <footer className="upload-files__warnings">
+      <small className="upload-files__warning-text">
+        If you have clinical data for multiple samples, upload it as
+        clinical.csv, following the example provided. Ensure that the sample
+        identifiers match the identifiers in the variants file.
+      </small>
+      <strong className="upload-files__example-link">Example here</strong>
+    </footer>
+  );
+};
 
-  console.log("~ files:", files);
+import { useMemo, useState } from "react";
+
+export const ListUploadedFiles = () => {
+  const { files, decompressedFiles, progressMap } = useFileStagingAreaContext();
+  const { uploadStatus } = useUploadStatusContext();
+
+  const procesoId = useMemo(() => `#${Date.now()}`, [files]);
+
+  const dynamicHeaders =
+    decompressedFiles.length > 0
+      ? Object.keys(decompressedFiles[0]).filter(
+          (key) => key !== "name" && key !== "type"
+        )
+      : [];
+
+  const renderTable = () => (
+    <div className="upload-table-container">
+      <table className="upload-table">
+        <thead>
+          <tr>
+            <th>Proceso ID</th>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Progreso</th>
+            {dynamicHeaders.map((header) => (
+              <th key={header}>{header}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {decompressedFiles.map((file, index) => {
+            const progress = progressMap[file.name] ?? 0;
+            return (
+              <tr key={index}>
+                <td>{procesoId}</td>
+                <td>{file.name}</td>
+                <td>{file.type}</td>
+                <td>
+                  {progress === 100 ? (
+                    <span style={{ color: "green" }}>✅</span>
+                  ) : (
+                    <div className="progress-bar">
+                      <div
+                        className="progress-bar__fill"
+                        style={{ width: `${progress}%` }}
+                      />
+                      <span className="progress-bar__text">{progress}%</span>
+                    </div>
+                  )}
+                </td>
+                {dynamicHeaders.map((header) => (
+                  <td key={header}>{file[header] ?? "—"}</td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  const renderContent = () => {
+    switch (uploadStatus) {
+      case UploadStatus.IDLE:
+        return <p>Sube un archivo ZIP para comenzar.</p>;
+
+      case UploadStatus.PENDING:
+        return (
+          <div className="upload-step upload-step--pending">
+            <p>Procesando archivo ZIP...</p>
+            <div className="spinner" />
+          </div>
+        );
+
+      case UploadStatus.STAGED:
+        return (
+          <div className="upload-step upload-step--staged">
+            <h3>Archivos listos para subir</h3>
+            {renderTable()}
+          </div>
+        );
+
+      case UploadStatus.UPLOAD_DB:
+        return (
+          <div className="upload-step upload-step--uploading">
+            <h3>Subiendo archivos a la base de datos...</h3>
+            {renderTable()}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
     <article className="upload-list-files">
-      <h2 className="upload-list-files__title">Uploaded Files</h2>
-      <ul className="upload-list-files__list">
-        {files.map((file, index) => (
-          <li key={index} className="upload-list-files__item">
-            <span className="upload-list-files__item-name">{file.name}</span>
-            <button className="upload-list-files__item-remove">Remove</button>
-          </li>
-        ))}
-      </ul>
+      <h2 className="upload-list-files__title">Carga de Archivos</h2>
+      {renderContent()}
     </article>
   );
 };

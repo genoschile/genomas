@@ -9,6 +9,8 @@ export interface FileStagingAreaContextType {
   setDecompressedFiles: (
     decompressedFiles: { name: string; size: number; type: string }[]
   ) => void;
+  setProgressMap: (progressMap: Record<string, number>) => void;
+  progressMap?: Record<string, number>;
 }
 
 export const FileStagingAreaContext = createContext<FileStagingAreaContextType>(
@@ -17,6 +19,8 @@ export const FileStagingAreaContext = createContext<FileStagingAreaContextType>(
     files: [],
     setFiles: () => {},
     setDecompressedFiles: () => {},
+    setProgressMap: () => {},
+    progressMap: {},
   }
 );
 
@@ -29,10 +33,11 @@ export function FileStagingAreaProvider({
     { name: string; size: number; type: string }[]
   >([]);
   const [files, setFiles] = useState<File[]>([]);
+  const [progressMap, setProgressMap] = useState<Record<string, number>>({});
 
   return (
     <FileStagingAreaContext
-      value={{ decompressedFiles, files, setFiles, setDecompressedFiles }}
+      value={{ decompressedFiles, files, setFiles, setDecompressedFiles, setProgressMap, progressMap }}
     >
       {children}
     </FileStagingAreaContext>
