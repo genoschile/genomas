@@ -5,7 +5,7 @@ import "../../../../../../components/forms/form.css";
 import { AuthFormLogo } from "@/components/forms/components/AuthFormLogo";
 import { AuthLink } from "@/components/forms/components/AuthLink";
 import { submitSignUpEnterprise } from "@/core/use-cases/organization/auth";
-import { useOrganizationContext } from "@/hooks/useOrganization";
+import { useSessionContext } from "@/hooks/useSession";
 import { useRouter } from "next/navigation";
 
 import { useActionState, useEffect } from "react";
@@ -18,7 +18,7 @@ export function FormSignUp() {
     submitSignUpEnterprise,
     undefined
   );
-  const { updateOrganization } = useOrganizationContext();
+  const { updateOrganization  } = useSessionContext();
 
   useEffect(() => {
     if (state?.success && state.user) {
@@ -26,7 +26,7 @@ export function FormSignUp() {
 
       console.log({ id, name, email });
 
-      updateOrganization({ id: id, name, email });
+      updateOrganization ({ id: id, name, email });
     }
 
     if (state?.success) {

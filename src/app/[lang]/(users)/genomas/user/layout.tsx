@@ -1,8 +1,6 @@
 "use client";
 
 /* context */
-import { AuthContextProvider } from "@/context/authContext";
-import { UserContextProvider } from "@/context/userContext";
 import { ProjectProvider } from "@/context/ProjectContext";
 
 /* styles */
@@ -20,18 +18,14 @@ export default function userLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AuthContextProvider>
-      <UserContextProvider>
-        <ProjectProvider>
-          <ModalContainer />
-          <div className="userWorkspace--container">
-            <HeaderUserWorkspace className="wu-header" />
-            <SidebarUser className="wu-aside" />
-            <main className="wu-main">{children}</main>
-            <FooterLanding className="wu-footer" />
-          </div>
-        </ProjectProvider>
-      </UserContextProvider>
-    </AuthContextProvider>
+    <ProjectProvider>
+      <ModalContainer />
+      <div className="userWorkspace--container">
+        <HeaderUserWorkspace className="wu-header" />
+        <SidebarUser className="wu-aside" />
+        <main className="wu-main">{children}</main>
+        <FooterLanding className="wu-footer" />
+      </div>
+    </ProjectProvider>
   );
 }

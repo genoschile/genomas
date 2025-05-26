@@ -7,6 +7,7 @@ import {
 } from "@core/interfaces/IUser";
 import { mapToIUser, MapToPrismaUserType } from "../mapTypes/userTypes";
 import bcrypt from "bcrypt";
+import { IProject } from "../interfaces/IProject";
 
 export class UserRepository implements IUserRepository {
   async getAllUsersOrganization(id: string): Promise<UserDTO[]> {
@@ -161,5 +162,74 @@ export class UserRepository implements IUserRepository {
     }
 
     return defaultAdmin;
+  }
+
+  async switchSession(email: string, password: string): Promise<IUser> {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (password !== user.encryptedPassword) {
+      throw new Error("Invalid password");
+    }
+
+    return mapToIUser(user);
+  }
+  
+  async currentProjectsByUserId(userId: string): Promise<IProject[]> {
+    // Obtener los grupos del usuario
+    const userWithGroups = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        groups: true,
+      },
+    });
+
+    if (!userWithGroups) {
+      throw new Error("User not found");
+    }
+
+    const groupIds = userWithGroups.groups.map((group) => group.id);
+
+    // Obtener proyectos compartidos directamente con el usuario
+    const sharedDirectly = await prisma.project.findMany({
+      where: {
+        sharedWith: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
+      include: {
+        workspace: true,
+      },
+    });
+
+    const sharedByGroups = await prisma.project.findMany({
+      where: {
+        sharedWithGroups: {
+          some: {
+            groupId: {
+              in: groupIds,
+            },
+          },
+        },
+      },
+      include: {
+        workspace: true,
+      },
+    });
+
+    const combined = [...sharedDirectly, ...sharedByGroups];
+    const uniqueProjectsMap = new Map<string, (typeof combined)[number]>();
+    for (const project of combined) {
+      uniqueProjectsMap.set(project.id, project);
+    }
+
+    return Array.from(uniqueProjectsMap.values()) as IProject[];
   }
 }

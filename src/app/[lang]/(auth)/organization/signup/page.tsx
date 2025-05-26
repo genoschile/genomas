@@ -1,10 +1,6 @@
-import { OrganizationContextProvider } from "@/context/OrganizationContext";
+import { SessionContextProvider } from "@/context/SessionContext";
 import { FormSignUp } from "./components/FormEnterpriseSignUp";
 
 export default function page() {
-  return (
-    <OrganizationContextProvider>
-      <FormSignUp />
-    </OrganizationContextProvider>
-  );
+  return <FormSignUp />;
 }

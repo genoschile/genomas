@@ -1,3 +1,4 @@
+import { IProject } from "@/core/interfaces/IProject";
 import {
   CreateUserDTO,
   IUser,
@@ -42,5 +43,13 @@ export class useCaseUsers {
 
   async findDefaultAdminByOrgId(orgId: string): Promise<UserDefaultAdminResponse | null> {
     return this.userRepo.findDefaultAdminByOrgId(orgId);
+  }
+
+  async switchSession(email: string, password: string): Promise<IUser> {
+    return this.userRepo.switchSession(email, password);
+  }
+
+  async currentProjectsByUserId(id: string): Promise<IProject[]> {
+    return this.userRepo.currentProjectsByUserId(id);
   }
 }

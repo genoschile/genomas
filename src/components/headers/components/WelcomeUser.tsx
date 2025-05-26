@@ -1,10 +1,12 @@
 "use client";
 
-import { useUserContext } from "@/hooks/useUserContext";
+import { useSessionContext } from "@/hooks/useSession";
 import "./welcomeUser.css";
 
 export function WelcomeUser() {
-  const { name, email } = useUserContext();
+  const { user } = useSessionContext();
+
+  const { name, email } = user || {};
 
   return (
     <p className="welcomeUser">

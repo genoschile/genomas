@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { useSessionContext } from "@/hooks/useSession";
+import { createContext, useEffect, useState } from "react";
 
 interface Project {
   name: string;
@@ -14,6 +15,8 @@ interface ProjectContextProps {
   selectedCards: string[];
   toggleCardSelection: (cardName: string) => void;
   isSelected: (cardName: string) => boolean;
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
 }
 
 export const ProjectContext = createContext<ProjectContextProps | undefined>(
@@ -23,73 +26,38 @@ export const ProjectContext = createContext<ProjectContextProps | undefined>(
 export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const [projects, setProjects] = useState<Project[]>([]);
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      name: "karen@genomas.com",
-      description: "Proyecto de análisis genómico basado en IA.",
-      sharedWith: ["carlos@genomas.com", "laura@genomas.com"],
-    },
-    {
-      name: "bioinformatics-hub",
-      description:
-        "Plataforma colaborativa para investigaciones en bioinformática.",
-      sharedWith: ["ana@biohub.com", "marco@biohub.com"],
-    },
-    {
-      name: "med-data-secure",
-      description: "Sistema de almacenamiento seguro para historiales médicos.",
-    },
-    {
-      name: "genome-mapper",
-      description:
-        "Aplicación para mapeo y visualización de secuencias genéticas.",
-      sharedWith: ["sofia@genomas.com"],
-    },
-    {
-      name: "karen@genomas.com",
-      description: "Proyecto de análisis genómico basado en IA.",
-      sharedWith: ["carlos@genomas.com", "laura@genomas.com"],
-    },
-    {
-      name: "bioinformatics-hub",
-      description:
-        "Plataforma colaborativa para investigaciones en bioinformática.",
-      sharedWith: ["ana@biohub.com", "marco@biohub.com"],
-    },
-    {
-      name: "med-data-secure",
-      description: "Sistema de almacenamiento seguro para historiales médicos.",
-    },
-    {
-      name: "genome-mapper",
-      description:
-        "Aplicación para mapeo y visualización de secuencias genéticas.",
-      sharedWith: ["sofia@genomas.com"],
-    },
-    {
-      name: "karen@genomas.com",
-      description: "Proyecto de análisis genómico basado en IA.",
-      sharedWith: ["carlos@genomas.com", "laura@genomas.com"],
-    },
-    {
-      name: "bioinformatics-hub",
-      description:
-        "Plataforma colaborativa para investigaciones en bioinformática.",
-      sharedWith: ["ana@biohub.com", "marco@biohub.com"],
-    },
-    {
-      name: "med-data-secure",
-      description: "Sistema de almacenamiento seguro para historiales médicos.",
-    },
-    {
-      name: "genome-mapper",
-      description:
-        "Aplicación para mapeo y visualización de secuencias genéticas.",
-      sharedWith: ["sofia@genomas.com"],
-    },
-  ]);
+  const { user } = useSessionContext();
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      if (!user || !user.id) return;
+
+      try {
+        setIsLoading(true);
+        const res = await fetch(`/api/users/${user.id}/projects`);
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const data = await res.json();
+
+        console.log("Projects fetched:", data);
+
+        if (!data.success) throw new Error(data.message);
+
+        setProjects(data.projects); 
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, [user]);
 
   const toggleCardSelection = (cardName: string) => {
     setSelectedCards((prevSelected) =>
@@ -107,7 +75,11 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     selectedCards,
     toggleCardSelection,
     isSelected,
+    isLoading,
+    setIsLoading,
   };
 
-  return <ProjectContext value={value}>{children}</ProjectContext>;
+  return (
+    <ProjectContext.Provider value={value}>{children}</ProjectContext.Provider>
+  );
 };

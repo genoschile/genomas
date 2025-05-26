@@ -19,7 +19,7 @@ export function ProjectHeaderUser() {
           <IoIosAdd size="24" /> New
         </button>
         <button
-          disabled={projects.length === 0 || selectedCards.length === 0}
+          disabled={projects?.length === 0 || selectedCards.length === 0}
           onClick={() => openModal("delete-confirmation")}
         >
           Move To Trash

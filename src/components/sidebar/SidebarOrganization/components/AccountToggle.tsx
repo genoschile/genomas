@@ -1,10 +1,11 @@
 import { GrConfigure } from "react-icons/gr";
 
 import "./accountToggle.css";
-import { useOrganizationContext } from "@/hooks/useOrganization";
+import { useSessionContext } from "@/hooks/useSession";
 
 export function AccountToggle() {
-  const { name, email } = useOrganizationContext();
+  const { organization } = useSessionContext();
+  const { name, email } = organization || {};
 
   if (!name && !email) {
     return <div className="loading">Cargando organización...</div>;

@@ -7,6 +7,7 @@ import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { toast } from "react-toastify";
 import { deleteSession } from "@/lib/actions/session";
+import { useSessionContext } from "@/hooks/useSession";
 
 interface MenuItem {
   label: string;
@@ -23,9 +24,8 @@ export const ItemMenu = ({
 }) => {
   const router = useRouter();
 
+  const { clearUser } = useSessionContext();
   const handleLogout = async () => {
-    
-
     const toastId = toast.loading("Cerrando sesión...", {
       position: "top-right",
       autoClose: false,
@@ -36,21 +36,17 @@ export const ItemMenu = ({
     });
 
     try {
-      await deleteSession();
+      // await deleteSession();
 
-      localStorage.removeItem("genomaUser");
-      localStorage.removeItem("genomaAuth");
+      clearUser();
 
       toast.update(toastId, {
         render: "Sesión cerrada con éxito!",
         type: "success",
         closeOnClick: true,
+        autoClose: 3000,
         pauseOnHover: true,
       });
-
-      setTimeout(() => {
-        toast.dismiss(toastId);
-      }, 3000);
 
       router.push("/");
     } catch (error) {
@@ -66,7 +62,7 @@ export const ItemMenu = ({
   };
 
   const handleProfile = () => {
-    router.push("/profile");
+    router.push("/settings");
     setDropdownVisible(false);
   };
 

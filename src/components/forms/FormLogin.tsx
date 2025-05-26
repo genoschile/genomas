@@ -119,7 +119,7 @@ export default function FormLogin() {
                 <div></div>
               </div>
 
-              <Link href="#" className="auth-form__submit-button">
+              <Link href="/organization" className="auth-form__submit-button">
                 {"Continue with Enterprise ID"}
               </Link>
 

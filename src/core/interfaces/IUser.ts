@@ -1,4 +1,5 @@
 import { UserType } from "@core/interfaces/enums";
+import { IProject } from "./IProject";
 
 export interface IUser {
   id: string;
@@ -46,7 +47,14 @@ export interface IUserRepository {
   update(id: string, data: Partial<UserDTO>): Promise<CreateUserDTO | null>;
   delete(id: string): Promise<UserDTO | null>;
   getAllUsersOrganization(id: string): Promise<UserDTO[]>;
-  addUserToOrg(orgId: string, data?: Omit<IUser, "id"> & { userId?: string }): Promise<UserDTO>;
+  addUserToOrg(
+    orgId: string,
+    data?: Omit<IUser, "id"> & { userId?: string }
+  ): Promise<UserDTO>;
   findByEmail(email: string): Promise<IUser | null>;
-  findDefaultAdminByOrgId(orgId: string): Promise<UserDefaultAdminResponse | null>;
+  findDefaultAdminByOrgId(
+    orgId: string
+  ): Promise<UserDefaultAdminResponse | null>;
+  switchSession(email: string, password: string): Promise<IUser>;
+  currentProjectsByUserId(id: string): Promise<IProject[]>;
 }
