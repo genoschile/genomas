@@ -33,7 +33,8 @@ export async function POST(request: Request) {
 
     const { id, name, email } = org;
 
-    const defaultUserPasswordSecure = generateSecurePassword();
+    // const defaultUserPasswordSecure = generateSecurePassword();
+    const defaultUserPasswordSecure = "fermin";
 
     const currentDataUser = {
       name: name,

@@ -8,6 +8,8 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 import { FormState, SignupFormSchema } from "./authType";
 
+const baseUrl = "http://localhost:3000/";
+
 const loginEnterpriseSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z
@@ -41,6 +43,39 @@ export const submitLoginEnterprise = async (
     const { email, password } = validatedData.data;
 
     console.log({ email, password });
+
+    const restLogin = await fetch(`${baseUrl}api/users/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    if (!restLogin.ok) {
+      return {
+        success: false,
+        message: "Login failed",
+        input: rawData,
+      };
+    }
+
+    console.log("restLogin", restLogin);
+
+    const responseData: ActionResponse = await restLogin.json();
+
+    console.log("formato de data de respuesta", responseData);
+
+    if (responseData.success) {
+      return {
+        success: true,
+        message: "Login successful",
+        data: responseData.data,
+      };
+    }
 
     return {
       success: false,
@@ -143,8 +178,6 @@ export async function submitSignUp(
   }
 }
 
-const baseUrl = "http://localhost:3000/";
-
 export const submitSignUpEnterprise = async (
   state: FormState,
   formData: FormData
@@ -208,7 +241,7 @@ export const submitSignUpEnterprise = async (
   return {
     success: true,
     message: "User created successfully!",
-    user: responseData.data, 
+    user: responseData.data,
   };
 };
 type ApiResponse<T = undefined> = {

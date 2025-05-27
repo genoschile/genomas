@@ -12,11 +12,6 @@ export async function GET(
       organizationId
     );
 
-    console.log(
-      "currentDefaultAdmin in GET /api/organization/[id]/defaultAdmin",
-      currentDefaultAdmin
-    );
-
     if (!currentDefaultAdmin) {
       return NextResponse.json(
         { message: "User admin not found, contact us" },

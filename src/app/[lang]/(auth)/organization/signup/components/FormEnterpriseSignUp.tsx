@@ -18,7 +18,7 @@ export function FormSignUp() {
     submitSignUpEnterprise,
     undefined
   );
-  const { updateOrganization  } = useSessionContext();
+  const { updateOrganization } = useSessionContext();
 
   useEffect(() => {
     if (state?.success && state.user) {
@@ -26,7 +26,7 @@ export function FormSignUp() {
 
       console.log({ id, name, email });
 
-      updateOrganization ({ id: id, name, email });
+      updateOrganization({ id: id, name, email });
     }
 
     if (state?.success) {
@@ -42,9 +42,11 @@ export function FormSignUp() {
       <div className="auth-form__container">
         <AuthFormLogo />
 
-        <form method="POST" action={action} className="auth-form__form">
+        <form action={action} className="auth-form__form">
           <fieldset>
-            <legend className="auth-form__title">Sign Up</legend>
+            <legend className="auth-form__title">
+              {"SignUp"} <small>enterprise</small>
+            </legend>
 
             <div className="auth-form__input-group">
               <label htmlFor="email">Email:</label>

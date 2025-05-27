@@ -17,6 +17,8 @@ import { AuthFormLogo } from "./components/AuthFormLogo";
 import { AuthLink } from "./components/AuthLink";
 import { useTranslations } from "@/context/I18nClientProvider";
 import Link from "next/link";
+import { useSessionContext } from "@/hooks/useSession";
+import { update } from "tar";
 
 const initialState: ActionResponseWithoutRepeatPassword = {
   success: false,
@@ -26,6 +28,8 @@ const initialState: ActionResponseWithoutRepeatPassword = {
 export default function FormLogin() {
   const [state, actions, isPending] = useActionState(submitLogin, initialState);
   const router = useRouter();
+
+  const { updateUser } = useSessionContext();
 
   const { t } = useTranslations();
 
@@ -47,12 +51,25 @@ export default function FormLogin() {
     if (!isPending) {
       if (state.success) {
         toast.success(state.message || "Login successful!");
-        router.push("/user");
+
+        if (!state.data) {
+          toast.error("User data is missing!");
+          return;
+        }
+
+        updateUser({
+          id: state.data?.id || "",
+          email: state.data?.email || "",
+          name: state.data?.name || "",
+          organizationId: state.data?.organizationId || "",
+        });
+
+        router.push("/genomas/user");
       } else if (state.message) {
         toast.error(state.message || "Something went wrong!");
       }
     }
-  }, [isPending, state.success, state.message]);
+  }, [state, updateUser]);
 
   return (
     <section className="auth-form">

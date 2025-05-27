@@ -117,14 +117,14 @@ export const FormEnterprice = () => {
                 <div></div>
               </div>
 
-              <Link href="#" className="auth-form__submit-button">
-                {"Continue with Enterprise ID"}
+              <Link href="/login" className="auth-form__submit-button">
+                {"Continue with User ID"}
               </Link>
 
               <AuthLink
                 text={authTranslations.newUserLink}
                 textPost={authTranslations.joinNowLink}
-                href="/signup"
+                href="/organization/signup"
               />
             </div>
           </fieldset>

@@ -66,7 +66,7 @@ export async function submitLogin(
       body: JSON.stringify({ email, password }),
     });
 
-    const result = await response.json();
+    const result: ActionResponseWithoutRepeatPassword = await response.json();
 
     if (!result.success) {
       return {
@@ -82,6 +82,7 @@ export async function submitLogin(
     return {
       success: true,
       message: "Login successful",
+      data: result.data,
     };
   } catch (error) {
     console.error("Error in submitLogin:", error);

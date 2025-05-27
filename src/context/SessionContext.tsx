@@ -7,6 +7,7 @@ export interface User {
   name: string;
   email: string;
   userType?: "admin" | "user" | "guest";
+  organizationId: string;
 }
 
 export interface Organization {

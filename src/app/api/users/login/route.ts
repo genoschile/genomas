@@ -8,8 +8,6 @@ export async function POST(req: Request) {
 
     const isExistUser = await useCaseUser.findByEmail(email);
 
-    console.log("isExistUser", isExistUser);
-
     if (!isExistUser) {
       return NextResponse.json(
         { success: false, message: "Usuario no existe" },
@@ -17,7 +15,8 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log("isExistUsers", isExistUser);
+    console.log("isExistUser y passowrd ", isExistUser.encryptedPassword);
+    console.log("isExistUser y email ", password);
 
     // Verificar contraseña
     const isPasswordValid = await bcrypt.compare(
@@ -27,7 +26,7 @@ export async function POST(req: Request) {
 
     if (!isPasswordValid) {
       return NextResponse.json(
-        { success: false, message: "Contraseña incorrecta" },
+        { success: false, message: "password went wrong" },
         { status: 401 }
       );
     }
