@@ -4,31 +4,41 @@ import { toast } from "react-toastify";
 import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
 import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { UploadStatus } from "@/context/UploadStatusContext";
-import { FaSpinner, FaPlay, FaDatabase, FaRedo } from "react-icons/fa";
+import {
+  FaSpinner,
+  FaPlay,
+  FaDatabase,
+  FaRedo,
+  FaCheckCircle,
+  FaPause,
+  FaTimesCircle,
+  FaUpload,
+} from "react-icons/fa";
 
-interface SuccessResponse {
-  success: true;
-  message: string;
+export interface resUpload_DB {
+  success: boolean;
   data: {
     files: File[];
   };
+  message?: string;
+  error?: string;
 }
-
-interface ErrorResponse {
-  success: false;
-  message: string;
-}
-
-type ApiResponse = SuccessResponse | ErrorResponse;
 
 export default function FileProcessor() {
-  const { files, setFiles, setDecompressedFiles, setProgressMap, decompressedFiles } = useFileStagingAreaContext();
+  const {
+    files,
+    setFiles,
+    setDecompressedFiles,
+    setProgressMap,
+    decompressedFiles,
+  } = useFileStagingAreaContext();
+
   const { uploadStatus, setUploadStatus, isUploading, setUploading } =
     useUploadStatusContext();
 
   const simulateUploadFiles = async () => {
     for (const file of decompressedFiles) {
-      await simulateProgress(file.name); // o `file.id` si lo tienes
+      await simulateProgress(file.name);
     }
   };
 
@@ -56,6 +66,7 @@ export default function FileProcessor() {
     setDecompressedFiles([]);
     setUploadStatus(UploadStatus.IDLE);
     setFiles([]);
+    setProgressMap({});
   };
 
   const handleUpload = async () => {
@@ -76,11 +87,11 @@ export default function FileProcessor() {
         body: formData,
       });
 
-      const data: ApiResponse = await response.json();
+      const data = await response.json();
 
       if (!data.success) {
         toast.error("Error al procesar los archivos");
-        setUploadStatus(UploadStatus.IDLE);
+        setUploadStatus(UploadStatus.UPLOAD_ERROR);
         return;
       }
 
@@ -90,7 +101,7 @@ export default function FileProcessor() {
     } catch (error) {
       console.error("Error al subir archivos:", error);
       toast.error("Error al procesar archivos.");
-      setUploadStatus(UploadStatus.IDLE);
+      setUploadStatus(UploadStatus.UPLOAD_ERROR);
     } finally {
       setUploading(false);
     }
@@ -98,20 +109,91 @@ export default function FileProcessor() {
 
   const handleStageToDatabase = async () => {
     setUploadStatus(UploadStatus.UPLOAD_DB);
-    await simulateUploadFiles();
-    toast.success("Todos los archivos fueron subidos.");
+    setUploading(true);
+
+    try {
+      await simulateUploadFiles();
+
+      const formData = new FormData();
+
+      files
+        .filter((file) => file.accepted)
+        .forEach((file) => {
+          formData.append("files", file);
+        });
+
+      const res = await fetch("/api/document/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        toast.error("Error al subir archivos a la base de datos.");
+        setUploadStatus(UploadStatus.UPLOAD_ERROR);
+      }
+
+      const resData: resUpload_DB = await res.json();
+
+      if (!resData.success) {
+        toast.error("Error al subir archivos a la base de datos.");
+        setUploadStatus(UploadStatus.UPLOAD_ERROR);
+      }
+
+      if (resData.success) {
+        setUploadStatus(UploadStatus.UPLOAD_SUCCESS);
+        toast.success("Archivos subidos a la base de datos con éxito.");
+      }
+    } catch {
+      toast.error("Error durante la subida a la base de datos.");
+      setUploadStatus(UploadStatus.UPLOAD_ERROR);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Opcional: reanudar la carga, por ejemplo en UPLOAD_RESUME
+  const handleResumeUpload = async () => {
+    setUploadStatus(UploadStatus.UPLOAD_DB);
+    setUploading(true);
+    try {
+      await simulateUploadFiles();
+      toast.success("Carga reanudada y completada.");
+      setUploadStatus(UploadStatus.UPLOAD_SUCCESS);
+    } catch {
+      toast.error("Error durante la reanudación.");
+      setUploadStatus(UploadStatus.UPLOAD_ERROR);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const actionByStatus = () => {
     switch (uploadStatus) {
       case UploadStatus.IDLE:
+      case UploadStatus.STAGED_IDLE:
         return handleUpload;
-      case UploadStatus.STAGED:
-        return handleStageToDatabase;
-      case UploadStatus.UPLOAD_DB:
-        return () => toast.info("Subida ya en progreso.");
+
       case UploadStatus.PENDING:
         return () => {};
+
+      case UploadStatus.STAGED:
+        return handleStageToDatabase;
+
+      case UploadStatus.UPLOAD_DB:
+        return () => toast.info("Subida ya en progreso.");
+
+      case UploadStatus.UPLOAD_SUCCESS:
+        return () => toast.info("Carga ya completada.");
+
+      case UploadStatus.UPLOAD_ERROR:
+        return handleUpload;
+
+      case UploadStatus.UPLOAD_CANCELLED:
+        return handleUpload;
+
+      case UploadStatus.UPLOAD_RESUME:
+        return handleResumeUpload;
+
       default:
         return () => {};
     }
@@ -120,13 +202,30 @@ export default function FileProcessor() {
   const getButtonLabel = () => {
     switch (uploadStatus) {
       case UploadStatus.IDLE:
+      case UploadStatus.STAGED_IDLE:
         return "Subir archivo ZIP";
+
       case UploadStatus.PENDING:
         return "Procesando ZIP...";
+
       case UploadStatus.STAGED:
         return "Subir a la base de datos";
+
       case UploadStatus.UPLOAD_DB:
         return "Subiendo...";
+
+      case UploadStatus.UPLOAD_SUCCESS:
+        return "Carga completada";
+
+      case UploadStatus.UPLOAD_ERROR:
+        return "Reintentar carga";
+
+      case UploadStatus.UPLOAD_CANCELLED:
+        return "Nuevo intento";
+
+      case UploadStatus.UPLOAD_RESUME:
+        return "Reanudar carga";
+
       default:
         return "Cargar";
     }
@@ -135,19 +234,39 @@ export default function FileProcessor() {
   const getButtonIcon = () => {
     switch (uploadStatus) {
       case UploadStatus.IDLE:
+      case UploadStatus.STAGED_IDLE:
         return <FaPlay />;
+
       case UploadStatus.PENDING:
         return <FaSpinner className="rotate" />;
+
       case UploadStatus.STAGED:
         return <FaDatabase />;
+
       case UploadStatus.UPLOAD_DB:
         return <FaSpinner className="rotate" />;
+
+      case UploadStatus.UPLOAD_SUCCESS:
+        return <FaCheckCircle color="green" />;
+
+      case UploadStatus.UPLOAD_ERROR:
+        return <FaTimesCircle color="red" />;
+
+      case UploadStatus.UPLOAD_CANCELLED:
+        return <FaPause />;
+
+      case UploadStatus.UPLOAD_RESUME:
+        return <FaUpload />;
+
       default:
         return null;
     }
   };
 
-  const isDisabled = uploadStatus === UploadStatus.PENDING || isUploading;
+  const isDisabled =
+    isUploading ||
+    uploadStatus === UploadStatus.PENDING ||
+    uploadStatus === UploadStatus.UPLOAD_DB;
 
   return (
     <div className="upload-buttons">

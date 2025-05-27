@@ -1,10 +1,17 @@
 "use client";
 
+/* styles */
 import "./page.css";
+
+/* hooks */
+import { useMemo } from "react";
 import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
+
+/* components */
 import FileSelector from "@/components/fileUpload/FileSelector";
 import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { UploadStatus } from "@/context/UploadStatusContext";
+import { getFileSize } from "@/utils/getFileSize";
 
 export default function Page() {
   return (
@@ -44,20 +51,40 @@ export const ExampleFormClinical = () => {
   );
 };
 
-import { useMemo, useState } from "react";
-
 export const ListUploadedFiles = () => {
   const { files, decompressedFiles, progressMap } = useFileStagingAreaContext();
   const { uploadStatus } = useUploadStatusContext();
 
-  const procesoId = useMemo(() => `#${Date.now()}`, [files]);
+  const procesoId = useMemo(() => `#${Date.now()}`, []);
 
-  const dynamicHeaders =
-    decompressedFiles.length > 0
-      ? Object.keys(decompressedFiles[0]).filter(
-          (key) => key !== "name" && key !== "type"
-        )
-      : [];
+  const safeProgressMap = progressMap ?? {};
+
+  const renderStagedIdleTable = () => (
+    <div className="upload-table-container">
+      <table className="upload-table">
+        <thead>
+          <tr>
+            <th>Proceso ID</th>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Tamaño</th>
+          </tr>
+        </thead>
+        <tbody>
+          {files.map((file, index) => (
+            <tr key={index}>
+              <td>{procesoId}</td>
+              <td>{file.name}</td>
+              <td>{file.type}</td>
+              <td>
+                {file.size ? `${(file.size / 1024).toFixed(2)} KB` : "N/D"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 
   const renderTable = () => (
     <div className="upload-table-container">
@@ -68,14 +95,14 @@ export const ListUploadedFiles = () => {
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Progreso</th>
-            {dynamicHeaders.map((header) => (
-              <th key={header}>{header}</th>
-            ))}
+            <th>Aceptado</th>
+            <th>Mensaje</th>
+            <th>Tamaño</th>
           </tr>
         </thead>
         <tbody>
           {decompressedFiles.map((file, index) => {
-            const progress = progressMap[file.name] ?? 0;
+            const progress = safeProgressMap[file.name] ?? 0;
             return (
               <tr key={index}>
                 <td>{procesoId}</td>
@@ -94,9 +121,16 @@ export const ListUploadedFiles = () => {
                     </div>
                   )}
                 </td>
-                {dynamicHeaders.map((header) => (
-                  <td key={header}>{file[header] ?? "—"}</td>
-                ))}
+                <td>
+                  {file.accepted ? (
+                    <span style={{ color: "green" }}>✔️</span>
+                  ) : (
+                    <span style={{ color: "red" }}>❌</span>
+                  )}
+                </td>
+
+                <td>{file.message}</td>
+                <td>{getFileSize(file?.size)}</td>
               </tr>
             );
           })}
@@ -109,6 +143,14 @@ export const ListUploadedFiles = () => {
     switch (uploadStatus) {
       case UploadStatus.IDLE:
         return <p>Sube un archivo ZIP para comenzar.</p>;
+
+      case UploadStatus.STAGED_IDLE:
+        return (
+          <div className="upload-step upload-step--staged-idle">
+            <p>Archivo subido. Aún no ha sido procesado.</p>
+            {renderStagedIdleTable()}
+          </div>
+        );
 
       case UploadStatus.PENDING:
         return (
@@ -130,6 +172,46 @@ export const ListUploadedFiles = () => {
         return (
           <div className="upload-step upload-step--uploading">
             <h3>Subiendo archivos a la base de datos...</h3>
+            {renderTable()}
+          </div>
+        );
+
+      case UploadStatus.UPLOAD_SUCCESS:
+        return (
+          <div className="upload-step upload-step--success">
+            <h3>¡Carga exitosa!</h3>
+            {renderTable()}
+            <p className="success-message">
+              Todos los archivos fueron subidos correctamente.
+            </p>
+          </div>
+        );
+
+      case UploadStatus.UPLOAD_ERROR:
+        return (
+          <div className="upload-step upload-step--error">
+            <h3>Error al subir archivos</h3>
+            {renderTable()}
+            <p className="error-message">
+              Ocurrió un problema durante la carga. Intenta nuevamente.
+            </p>
+          </div>
+        );
+
+      case UploadStatus.UPLOAD_CANCELLED:
+        return (
+          <div className="upload-step upload-step--cancelled">
+            <h3>Carga cancelada</h3>
+            <p>
+              Has cancelado la subida. Puedes volver a intentarlo cuando gustes.
+            </p>
+          </div>
+        );
+
+      case UploadStatus.UPLOAD_RESUME:
+        return (
+          <div className="upload-step upload-step--resume">
+            <h3>Reanudando carga...</h3>
             {renderTable()}
           </div>
         );

@@ -21,7 +21,7 @@ export const UploadLabel = ({
           : "Drag and drop your files here or click to upload them"}
       </h3>
       <input
-        ref={fileInputRef} 
+        ref={fileInputRef}
         className="upload-input"
         id="file-upload"
         type="file"
@@ -31,7 +31,7 @@ export const UploadLabel = ({
       <hr />
       <div className="upload-file-formats">
         <small>
-          Allowed formats: .fastq, .vcf, .mafft, .zip, .tar.gz, .rar
+          Allowed formats: .zip,
           {"   " + uploadStatus}
         </small>
       </div>

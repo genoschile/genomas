@@ -41,7 +41,6 @@ export const DropdownWorkspace = ({
         <CurrentListProjectsSelect />
 
         <div className="buttons" role="toolbar" aria-label="project Actions">
-          {/* Botón para abrir el modal de Crear Workspace */}
           <button
             role="menuitem"
             aria-label="Action create project"
@@ -67,7 +66,7 @@ export const DropdownWorkspace = ({
 
 export const CurrentListProjectsSelect = () => {
   const { projects } = useProjectContext();
-  const { currentProject, setCurrentProject } = useCurrentProject();
+  const { setCurrentProject } = useCurrentProject();
 
   if (!projects || projects.length === 0) {
     return <p className="no-projects-message">No projects available.</p>;
@@ -77,7 +76,10 @@ export const CurrentListProjectsSelect = () => {
     <ul role="menu" aria-label="project List">
       {projects.map((project, index) => (
         <li key={index} className="dropdown-item">
-          <button className="dropdown-link" onClick={() => setCurrentProject(project)}>
+          <button
+            className="dropdown-link"
+            onClick={() => setCurrentProject(project)}
+          >
             {project.name}
           </button>
         </li>
