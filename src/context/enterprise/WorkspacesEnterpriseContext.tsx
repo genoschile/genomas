@@ -1,5 +1,6 @@
 "use client";
 
+import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export type Workspace = {
@@ -47,13 +48,10 @@ export const WorkspacesProvider = ({
     try {
       setLoading(true);
 
-      const organization = JSON.parse(
-        localStorage.getItem("genomaOrganization") || "{}"
-      );
-      if (!organization.id) throw new Error("No organization ID found");
+      const organization = getLocalStorageOrganization()
 
       const res = await fetch(
-        `/api/organization/${organization.id}/workspaces`
+        `/api/organization/${organization}/workspaces`
       );
       const data = await res.json();
       if (data.success) setWorkspaces(data.data);

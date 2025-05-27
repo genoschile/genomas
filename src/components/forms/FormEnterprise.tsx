@@ -12,10 +12,16 @@ import { useRouter } from "next/navigation";
 
 import { ActionResponseWithoutRepeatPassword } from "@/lib/types/formTypes";
 import { submitLoginEnterprise } from "@/core/use-cases/organization/auth";
+import { useSessionContext } from "@/hooks/useSession";
 
 const initialState: ActionResponseWithoutRepeatPassword = {
   success: false,
   message: "",
+  error: {},
+  input: {
+    email: "",
+    password: "",
+  },
 };
 
 export const FormEnterprice = () => {
@@ -26,6 +32,8 @@ export const FormEnterprice = () => {
   const router = useRouter();
 
   const { t } = useTranslations();
+
+  const { updateOrganization, clearUser } = useSessionContext();
 
   const authTranslations = {
     title: t("auth.login.title"),
@@ -45,7 +53,16 @@ export const FormEnterprice = () => {
     if (!isPending) {
       if (state.success) {
         toast.success(state.message || "Login successful!");
-        router.push("/user");
+
+        clearUser(); // Clear any previous user session
+        // Set the organization in the session context
+        updateOrganization({
+          id: state.data?.id || "",
+          email: state.data?.email || "",
+          name: state.data?.name || "",
+        });
+
+        router.push("/genomas/enterprise");
       } else if (state.message) {
         toast.error(state.message || "Something went wrong!");
       }
@@ -57,7 +74,6 @@ export const FormEnterprice = () => {
       <div className="auth-form__container">
         <AuthFormLogo />
 
-        {/* Formulario */}
         <form action={actions} className="auth-form__form">
           <fieldset>
             <legend className="auth-form__title">

@@ -20,9 +20,9 @@ const loginEnterpriseSchema = z.object({
 // : Promise<ActionResponseWithoutRepeatPassword>
 
 export const submitLoginEnterprise = async (
-  _: ActionResponseWithoutRepeatPassword | null,
+  prevState: ActionResponseWithoutRepeatPassword,
   formData: FormData
-) => {
+): Promise<ActionResponseWithoutRepeatPassword> => {
   try {
     const rawData = {
       email: formData.get("email") as string,
@@ -42,37 +42,31 @@ export const submitLoginEnterprise = async (
 
     const { email, password } = validatedData.data;
 
-    console.log({ email, password });
-
-    const restLogin = await fetch(`${baseUrl}api/users/login`, {
+    const restLogin = await fetch(`${baseUrl}api/users/login/enterprise`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+      body: JSON.stringify({ email, password }),
     });
 
     if (!restLogin.ok) {
       return {
         success: false,
         message: "Login failed",
+        error: {},
         input: rawData,
       };
     }
 
-    console.log("restLogin", restLogin);
-
     const responseData: ActionResponse = await restLogin.json();
-
-    console.log("formato de data de respuesta", responseData);
 
     if (responseData.success) {
       return {
         success: true,
         message: "Login successful",
+        input: rawData,
+        error: {},
         data: responseData.data,
       };
     }
@@ -81,12 +75,15 @@ export const submitLoginEnterprise = async (
       success: false,
       message: "Enterprise does not exist",
       input: rawData,
+      error: {},
     };
   } catch (error) {
     console.error("Error in submitLogin:", error);
     return {
       success: false,
       message: "An unexpected error occurred",
+      input: prevState.input,
+      error: {},
     };
   }
 };

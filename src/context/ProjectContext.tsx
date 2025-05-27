@@ -7,6 +7,7 @@ interface Project {
   name: string;
   description: string;
   sharedWith?: string[];
+  id: string
 }
 
 interface ProjectContextProps {
@@ -44,11 +45,12 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
 
         const data = await res.json();
 
-        console.log("Projects fetched:", data);
-
         if (!data.success) throw new Error(data.message);
 
-        setProjects(data.projects); 
+        console.log("Projects fetched:", data.data);
+
+        setProjects(data.data); 
+
       } catch (err) {
         console.error("Error fetching projects:", err);
       } finally {

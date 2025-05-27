@@ -71,7 +71,7 @@ export const ProjectCard = ({
         <FaFolder color="gray" size={"100"} className="project__list--icon" />
       </figure>
       <footer>
-        <p>{name}</p>
+        <p>{description}</p>
       </footer>
     </li>
   );

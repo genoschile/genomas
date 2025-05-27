@@ -183,4 +183,27 @@ export class OrganizationRepository implements IOrganizationRepository {
       users: usersInGroup,
     };
   }
+
+  async organizationByEmail(email: string): Promise<OrgDTO | null> {
+    const org = await prisma.organization.findUnique({
+      where: { email },
+      include: {
+        users: { select: { id: true } },
+        workspaces: { select: { id: true } },
+        license: { select: { id: true } },
+      },
+    });
+
+    if (!org) return null;
+
+    return {
+      id: org.id,
+      name: org.name,
+      email: org.email,
+      userIds: org.users.map((u) => u.id),
+      workspaceIds: org.workspaces.map((w) => w.id),
+      licenseId: org.license?.id ?? undefined,
+      password: org.password,
+    };
+  }
 }

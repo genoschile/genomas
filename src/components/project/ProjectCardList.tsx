@@ -32,8 +32,8 @@ export const ProjectCardList = () => {
         {currentProjects.map((proj, index) => (
           <ProjectCard
             key={index}
-            name={proj.name}
-            description={proj.description}
+            name={proj.id}
+            description={proj.name}
             sharedWith={proj.sharedWith || []}
           />
         ))}

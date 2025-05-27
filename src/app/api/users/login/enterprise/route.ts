@@ -1,24 +1,28 @@
-import { useCaseUser } from "@/core/instances";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import { useCaseOrganization } from "@/core/instances";
 
 export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
 
-    const isExistUser = await useCaseUser.findByEmail(email);
+    const isExistOrganization = await useCaseOrganization.organizationByEmail(
+      email
+    );
 
-    if (!isExistUser) {
+    if (!isExistOrganization) {
       return NextResponse.json(
-        { success: false, message: "Usuario no existe" },
+        { success: false, message: "organization no existe" },
         { status: 401 }
       );
     }
 
+    console;
+
     // Verificar contraseña
     const isPasswordValid = await bcrypt.compare(
       password,
-      isExistUser.encryptedPassword
+      isExistOrganization.password
     );
 
     if (!isPasswordValid) {
@@ -34,11 +38,9 @@ export async function POST(req: Request) {
       success: true,
       message: "Login exitoso",
       data: {
-        id: isExistUser.id,
-        email: isExistUser.email,
-        name: isExistUser.name,
-        userType: isExistUser.userType,
-        organizationId: isExistUser.organizationId,
+        id: isExistOrganization.id,
+        email: isExistOrganization.email,
+        name: isExistOrganization.name,
       },
     });
   } catch (error) {

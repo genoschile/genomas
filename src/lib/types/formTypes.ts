@@ -25,7 +25,7 @@ export interface ActionResponseWithoutRepeatPassword {
     data?: {
         id: string;
         email: string;
-        name: string ;
+        name: string | null;
         isDefaultAdmin: boolean;
         userType: string;
         organizationId: string;

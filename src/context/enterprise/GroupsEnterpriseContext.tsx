@@ -1,7 +1,6 @@
-// context/GroupsContext.tsx
 "use client";
 
-import { IGroup } from "@/core/interfaces/IGroup";
+import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface GroupsContextType {
@@ -33,12 +32,9 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchGroups = async () => {
     try {
       setLoading(true);
-      const organization = JSON.parse(
-        localStorage.getItem("genomaOrganization") || "{}"
-      );
-      if (!organization.id) throw new Error("No organization ID found");
-
-      const res = await fetch(`/api/organization/${organization.id}/groups`);
+      const organization = getLocalStorageOrganization()
+      
+      const res = await fetch(`/api/organization/${organization}/groups`);
 
       console.log("Response from API:", res);
 

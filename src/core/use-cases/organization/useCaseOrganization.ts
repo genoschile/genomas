@@ -29,4 +29,10 @@ export class useCaseOrganizationUseCase {
   ): Promise<ResponseWorkspacesDTO[] | null> {
     return await this.orgRepo.findWorkspacesByOrgId(orgId);
   }
+
+  async organizationByEmail(
+    email: string
+  ): Promise<OrgDTO | null> {
+    return await this.orgRepo.organizationByEmail(email);
+  }
 }

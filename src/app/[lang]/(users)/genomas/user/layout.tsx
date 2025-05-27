@@ -11,6 +11,7 @@ import { FooterLanding } from "@/components/footer/FooterLanding";
 import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
 import { SidebarUser } from "@/components/sidebar/SidebarUser";
 import { ModalContainer } from "@/components/modals/ModalContainer";
+import { CurrentProjectProvider } from "@/context/currentProject";
 
 export default function userLayout({
   children,
@@ -18,14 +19,16 @@ export default function userLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ProjectProvider>
-      <ModalContainer />
-      <div className="userWorkspace--container">
-        <HeaderUserWorkspace className="wu-header" />
-        <SidebarUser className="wu-aside" />
-        <main className="wu-main">{children}</main>
-        <FooterLanding className="wu-footer" />
-      </div>
-    </ProjectProvider>
+    <CurrentProjectProvider>
+      <ProjectProvider>
+        <ModalContainer />
+        <div className="userWorkspace--container">
+          <HeaderUserWorkspace className="wu-header" />
+          <SidebarUser className="wu-aside" />
+          <main className="wu-main">{children}</main>
+          <FooterLanding className="wu-footer" />
+        </div>
+      </ProjectProvider>
+    </CurrentProjectProvider>
   );
 }
