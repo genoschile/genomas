@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
-import formidable from 'formidable';
-import { IncomingMessage } from 'http';
+import { NextResponse } from "next/server";
+import formidable from "formidable";
+import { IncomingMessage } from "http";
 
 export const config = {
   api: {
@@ -24,19 +24,18 @@ export async function POST(req: Request) {
     // @ts-ignore: because req is not exactly IncomingMessage in app router
     const { fields, files } = await parseForm(req);
 
-    console.log('📁 Archivos recibidos:', files);
-    console.log('📝 Metadatos:', fields);
+    console.log("📁 Archivos recibidos:", files);
+    console.log("📝 Metadatos:", fields);
 
     return NextResponse.json({
       success: true,
-      message: 'Archivos procesados correctamente',
+      message: "Archivos procesados correctamente",
       data: { files: Object.keys(files) },
     });
-
   } catch (error) {
-    console.error('⚠️ Error en la API ~ document/upload:', error);
+    console.error("⚠️ Error en la API ~ document/upload:", error);
     return NextResponse.json(
-      { success: false, message: 'Error interno del servidor' },
+      { success: false, message: "Error interno del servidor" },
       { status: 500 }
     );
   }
