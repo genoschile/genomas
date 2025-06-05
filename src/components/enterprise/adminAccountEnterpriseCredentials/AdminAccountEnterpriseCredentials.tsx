@@ -10,6 +10,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSessionContext } from "@/hooks/useSession";
+import { get } from "http";
 
 type Credentials = {
   email: string;
@@ -23,6 +24,7 @@ type AdminCredentialsResponse = {
     email: string;
     name: string;
     id: string;
+    organizationId: string;
   };
 };
 
@@ -90,13 +92,16 @@ export const AdminAccountEnterpriseCredentials = () => {
       .then((res) => res.json())
       .then((data: AdminCredentialsResponse) => {
         if (data.success) {
-          clearOrganization();
+          console.log("Session switched successfully:", data);
 
           updateUser({
             email: data.data.email,
             name: data.data.name,
             id: data.data.id,
+            organizationId: data.data.organizationId,
           });
+
+          clearOrganization();
 
           router.push("/genomas/user");
         } else {

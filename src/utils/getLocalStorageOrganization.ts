@@ -4,7 +4,7 @@ export const getLocalStorageOrganization = (): string | null => {
     if (!raw) return null;
 
     const parsed = JSON.parse(raw);
-    return parsed?.id ?? null; 
+    return parsed?.id ?? null;
   } catch (err) {
     console.error("Error parsing genomaOrganization from localStorage:", err);
     return null;

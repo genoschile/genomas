@@ -32,7 +32,7 @@ export const AddGroupsFormEnterprise = () => {
 
     console.log("submitting", dto);
 
-    const { id } = getLocalStorageOrganization();
+    const id = getLocalStorageOrganization();
 
     if (!id) {
       setMessage("Error al cargar la organización");

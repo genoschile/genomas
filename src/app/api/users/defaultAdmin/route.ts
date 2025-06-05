@@ -7,8 +7,6 @@ export async function POST(req: Request) {
 
     const defaultAdmin = await useCaseUser.switchSession(email, password);
 
-    console.log("defaultAdmin", defaultAdmin);
-
     return NextResponse.json(
       {
         success: true,
@@ -18,6 +16,7 @@ export async function POST(req: Request) {
           name: defaultAdmin.name,
           userType: defaultAdmin.userType,
           id: defaultAdmin.id,
+          idOrganization: defaultAdmin.organizationId,
         },
       },
       { status: 200 }

@@ -7,7 +7,225 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Enums
+model License {
+  id             String        @id @default(cuid())
+  licenseType    LicenseType
+  licenseScope   LicenseScope
+  maxUsers       Int
+  assignedUsers  Int           @default(0)
+  startDate      DateTime
+  endDate        DateTime
+  isActive       Boolean       @default(true)
+  userId         String?       @unique
+  organizationId String?       @unique
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  user           User?         @relation(fields: [userId], references: [id])
+}
+
+model Organization {
+  id         String      @id @default(cuid())
+  name       String
+  createdAt  DateTime    @default(now())
+  domain     String?
+  email      String      @unique
+  isActive   Boolean     @default(true)
+  logoUrl    String?
+  password   String
+  updatedAt  DateTime    @updatedAt
+  groups     Group[]
+  license    License?
+  users      User[]
+  workspaces Workspace[]
+}
+
+model Group {
+  id             String              @id @default(cuid())
+  name           String
+  role           Role[]
+  organizationId String
+  createdAt      DateTime            @default(now())
+  description    String?
+  isActive       Boolean             @default(true)
+  updatedAt      DateTime            @updatedAt
+  organization   Organization        @relation(fields: [organizationId], references: [id])
+  projectShares  ProjectGroupShare[] @relation("GroupProjectShares")
+  UserGroup      UserGroup[]
+  users          User[]              @relation("UserGroups")
+}
+
+model UserGroup {
+  userId    String
+  groupId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  group     Group    @relation(fields: [groupId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@id([userId, groupId])
+}
+
+model User {
+  id                String            @id @default(cuid())
+  name              String?
+  email             String            @unique
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  encryptedPassword String
+  userType          UserType          @default(CLIENT)
+  organizationId    String
+  isDefaultAdmin    Boolean           @default(false)
+  File              File[]
+  license           License?
+  PipelineRun       PipelineRun[]
+  sharedProjects    ProjectShare[]
+  Sample            Sample[]
+  organization      Organization      @relation(fields: [organizationId], references: [id])
+  UserGroup         UserGroup[]
+  workspaceMembers  WorkspaceMember[]
+  groups            Group[]           @relation("UserGroups")
+}
+
+model Workspace {
+  id             String            @id @default(cuid())
+  name           String
+  pipelineType   PipelineType
+  organizationId String?
+  updatedAt      DateTime          @updatedAt
+  createdAt      DateTime          @default(now())
+  description    String?
+  isActive       Boolean           @default(true)
+  projects       Project[]
+  organization   Organization?     @relation(fields: [organizationId], references: [id])
+  members        WorkspaceMember[]
+}
+
+model WorkspaceMember {
+  id          String    @id @default(cuid())
+  userId      String
+  workspaceId String
+  role        Role
+  assignedAt  DateTime  @default(now())
+  isActive    Boolean   @default(true)
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+
+  @@unique([userId, workspaceId])
+}
+
+model Project {
+  id               String              @id @default(cuid())
+  name             String
+  description      String?
+  workspaceId      String
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @default(now())
+  Files            File[]
+  executions       PipelineRun[]
+  workspace        Workspace           @relation(fields: [workspaceId], references: [id])
+  sharedWithGroups ProjectGroupShare[] @relation("ProjectGroupShares")
+  sharedWith       ProjectShare[]
+}
+
+model ProjectShare {
+  id        String     @id @default(cuid())
+  userId    String
+  projectId String
+  access    AccessType
+  createdAt DateTime   @default(now())
+  project   Project    @relation(fields: [projectId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
+
+  @@unique([userId, projectId])
+}
+
+model ProjectGroupShare {
+  id        String     @id @default(cuid())
+  groupId   String
+  projectId String
+  access    AccessType
+  createdAt DateTime   @default(now())
+  group     Group      @relation("GroupProjectShares", fields: [groupId], references: [id])
+  project   Project    @relation("ProjectGroupShares", fields: [projectId], references: [id])
+
+  @@unique([groupId, projectId])
+}
+
+model File {
+  id            String        @id @default(cuid())
+  filename      String
+  path          String
+  fileType      FileType
+  fileRole      FileRole
+  uploadedAt    DateTime      @default(now())
+  projectId     String
+  sampleId      Int?
+  pipelineRunId String?
+  inputForRunId String?
+  outputOfRunId String?
+  createdById   String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  documentTags  DocumentTag[]
+  createdBy     User?         @relation(fields: [createdById], references: [id])
+  inputForRun   PipelineRun?  @relation("InputFiles", fields: [inputForRunId], references: [id])
+  outputOfRun   PipelineRun?  @relation("OutputFiles", fields: [outputOfRunId], references: [id])
+  pipelineRun   PipelineRun?  @relation("PipelineRunLink", fields: [pipelineRunId], references: [id])
+  project       Project       @relation(fields: [projectId], references: [id])
+  sample        Sample?       @relation(fields: [sampleId], references: [id])
+}
+
+model PipelineRun {
+  id            String    @id @default(cuid())
+  startedAt     DateTime
+  endedAt       DateTime?
+  status        RunStatus
+  workflow      String
+  projectId     String
+  createdAt     DateTime  @default(now())
+  createdById   String?
+  description   String?
+  name          String?
+  updatedAt     DateTime  @updatedAt
+  inputFiles    File[]    @relation("InputFiles")
+  outputFiles   File[]    @relation("OutputFiles")
+  pipelineFiles File[]    @relation("PipelineRunLink")
+  createdBy     User?     @relation(fields: [createdById], references: [id])
+  project       Project   @relation(fields: [projectId], references: [id])
+}
+
+model Sample {
+  id             Int          @id @default(autoincrement())
+  sampleName     String
+  reportDate     DateTime
+  sampleType     InputSource
+  sequencingType SequenceType
+  disease        String
+  folioNumber    Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  createdById    String?
+  genomicFiles   File[]
+  createdBy      User?        @relation(fields: [createdById], references: [id])
+}
+
+model Tag {
+  id        String        @id @default(cuid())
+  name      String
+  type      TagType
+  documents DocumentTag[]
+}
+
+model DocumentTag {
+  id     String @id @default(cuid())
+  tagId  String
+  fileId String
+  file   File   @relation(fields: [fileId], references: [id])
+  tag    Tag    @relation(fields: [tagId], references: [id])
+}
+
 enum UserType {
   ADMIN
   CLIENT
@@ -88,264 +306,4 @@ enum TagType {
   ANALYSIS_STAGE
   QUALITY_FLAG
   PRIORITY
-}
-
-// Licencias
-model License {
-  id            String       @id @default(cuid())
-  licenseType   LicenseType
-  licenseScope  LicenseScope
-  maxUsers      Int
-  assignedUsers Int          @default(0)
-  startDate     DateTime
-  endDate       DateTime
-  isActive      Boolean      @default(true)
-
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String? @unique
-
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  organizationId String?       @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// Organización
-model Organization {
-  id         String      @id @default(cuid())
-  name       String
-  email      String      @unique
-  password   String
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  isActive   Boolean     @default(true)
-  users      User[]
-  workspaces Workspace[]
-  license    License?
-  logoUrl    String?
-  domain     String?
-
-  groups Group[]
-}
-
-model Group {
-  id   String @id @default(cuid())
-  name String
-  role Role[]
-
-  users User[] @relation("UserGroups")
-
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id])
-
-  projectShares ProjectGroupShare[] @relation("GroupProjectShares")
-
-  description String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  isActive    Boolean     @default(true)
-  UserGroup   UserGroup[]
-}
-
-model UserGroup {
-  userId  String
-  groupId String
-
-  user  User  @relation(fields: [userId], references: [id])
-  group Group @relation(fields: [groupId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@id([userId, groupId]) // Clave primaria compuesta evita duplicados
-}
-
-model User {
-  id String @id @default(cuid())
-
-  isDefaultAdmin Boolean @default(false)
-
-  email             String       @unique
-  name              String?
-  encryptedPassword String
-  userType          UserType     @default(CLIENT)
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id])
-
-  groups Group[] @relation("UserGroups")
-
-  workspaceMembers WorkspaceMember[]
-  sharedProjects   ProjectShare[]
-  license          License?
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  File             File[]
-  PipelineRun      PipelineRun[]
-  Sample           Sample[]
-  UserGroup        UserGroup[]
-}
-
-// Workspace
-model Workspace {
-  id           String       @id @default(cuid())
-  name         String
-  pipelineType PipelineType
-
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt()
-  isActive    Boolean  @default(true)
-
-  organizationId String?
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-
-  projects Project[]
-  members  WorkspaceMember[]
-}
-
-// Relación usuario - workspace (acceso)
-model WorkspaceMember {
-  id          String @id @default(cuid())
-  userId      String
-  workspaceId String
-  role        Role
-
-  assignedAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  isActive   Boolean  @default(true)
-
-  user      User      @relation(fields: [userId], references: [id])
-  workspace Workspace @relation(fields: [workspaceId], references: [id])
-
-  @@unique([userId, workspaceId]) // Evita duplicados
-}
-
-// Proyecto
-model Project {
-  id          String    @id @default(cuid())
-  name        String
-  description String?
-  workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
-
-  sharedWith       ProjectShare[]
-  sharedWithGroups ProjectGroupShare[] @relation("ProjectGroupShares")
-
-  Files      File[]
-  executions PipelineRun[]
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @default(now())
-}
-
-// Compartir proyecto con otros usuarios
-model ProjectShare {
-  id        String     @id @default(cuid())
-  userId    String
-  projectId String
-  access    AccessType
-
-  user    User    @relation(fields: [userId], references: [id])
-  project Project @relation(fields: [projectId], references: [id])
-
-  createdAt DateTime @default(now())
-
-  @@unique([userId, projectId])
-}
-
-// Compartir proyecto con grupos
-model ProjectGroupShare {
-  id        String     @id @default(cuid())
-  groupId   String
-  projectId String
-  access    AccessType
-
-  group   Group   @relation(fields: [groupId], references: [id], name: "GroupProjectShares")
-  project Project @relation(fields: [projectId], references: [id], name: "ProjectGroupShares")
-
-  createdAt DateTime @default(now())
-
-  @@unique([groupId, projectId])
-}
-
-// Archivos genómicos
-model File {
-  id         String   @id @default(cuid())
-  filename   String
-  path       String
-  fileType   FileType
-  fileRole   FileRole
-  uploadedAt DateTime @default(now())
-  projectId  String
-  project    Project  @relation(fields: [projectId], references: [id])
-  sampleId   Int?
-  sample     Sample?  @relation(fields: [sampleId], references: [id])
-
-  pipelineRunId String?
-  pipelineRun   PipelineRun? @relation("PipelineRunLink", fields: [pipelineRunId], references: [id])
-  inputForRunId String?
-  inputForRun   PipelineRun? @relation("InputFiles", fields: [inputForRunId], references: [id])
-  outputOfRunId String?
-  outputOfRun   PipelineRun? @relation("OutputFiles", fields: [outputOfRunId], references: [id])
-
-  createdById String?
-  createdBy   User?    @relation(fields: [createdById], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  documentTags DocumentTag[]
-}
-
-model PipelineRun {
-  id          String    @id @default(cuid())
-  startedAt   DateTime
-  endedAt     DateTime?
-  status      RunStatus
-  workflow    String
-  name        String? // Ej. "Run HG-001 - Tumor"
-  description String? // Para contexto adicional
-  projectId   String
-  project     Project   @relation(fields: [projectId], references: [id])
-
-  inputFiles    File[] @relation("InputFiles")
-  outputFiles   File[] @relation("OutputFiles")
-  pipelineFiles File[] @relation("PipelineRunLink")
-
-  createdById String?
-  createdBy   User?    @relation(fields: [createdById], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-// Datos genómicos
-model Sample {
-  id             Int          @id @default(autoincrement())
-  sampleName     String
-  reportDate     DateTime
-  sampleType     InputSource
-  sequencingType SequenceType
-  disease        String
-  folioNumber    Int
-  genomicFiles   File[]
-
-  createdById String?
-  createdBy   User?    @relation(fields: [createdById], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-// Sistema de tags
-model Tag {
-  id        String        @id @default(cuid())
-  name      String
-  type      TagType
-  documents DocumentTag[]
-}
-
-model DocumentTag {
-  id     String @id @default(cuid())
-  file   File   @relation(fields: [fileId], references: [id])
-  fileId String
-  tag    Tag    @relation(fields: [tagId], references: [id])
-  tagId  String
 }

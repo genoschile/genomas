@@ -14,7 +14,7 @@ export interface FileStagingAreaContextType {
   files: Files[];
   setFiles: (files: Files[]) => void;
   setDecompressedFiles: (decompressedFiles: Files[]) => void;
-  setProgressMap: (progressMap: Record<string, number>) => void;
+  setProgressMap: React.Dispatch<React.SetStateAction<Record<string, number>>>;
   progressMap?: Record<string, number>;
 }
 

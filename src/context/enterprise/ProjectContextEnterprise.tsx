@@ -10,6 +10,9 @@ export interface Project {
   ownerId: string;
   createdAt: Date;
   updatedAt: Date;
+  users?: { id: string }[];
+  groups?: { id: string }[];
+  executions?: string[];
 }
 
 interface ProjectsContextType {
@@ -33,7 +36,7 @@ export const ProjectsProvider = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const getProjectsForWorkspace = async (workspaceId: string) => {
-    if (projectsByWorkspace[workspaceId]) return; 
+    if (projectsByWorkspace[workspaceId]) return;
 
     try {
       setLoading(true);
