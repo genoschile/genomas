@@ -10,7 +10,7 @@ const ScrollToTopButton = () => {
   };
 
   return (
-    <button className="scroll-to-top" onClick={scrollToTop}>
+    <button className="scroll-to-top" onClick={scrollToTop} aria-label="Scroll to top">
       <IoMdArrowRoundUp size={24} color="white"/>
     </button>
   );

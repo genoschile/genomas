@@ -2,21 +2,26 @@
 
 import { useCallback, useState } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
-import "./membersForm.css";
 import { IoMail } from "react-icons/io5";
 
+import "./membersForm.css";
+
+const projectName = "Project Name";
 export const MembersForm = () => {
   const [emails, setEmails] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(false);
 
-  const projectName = "Project Name";
+  const handleSubmit = () => {
+    console.log("Submitting emails:", emails);
+  };
 
   return (
-    <form className="members-form">
+    <form onSubmit={handleSubmit} className="members-form">
       <search className="input-group">
         <h2>
           <mark>{projectName}</mark>
         </h2>
+
         <TextEmailAreaDetected
           setEmails={setEmails}
           emails={emails}

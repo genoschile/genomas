@@ -15,14 +15,17 @@ const socialIcons = [
   {
     icon: <FaLinkedin size={32} color="black" className="social-icons" />,
     href: "#",
+    name: "LinkedIn",
   },
   {
     icon: <FaLinkedin size={32} color="black" className="social-icons" />,
     href: "#",
+    name: "Twitter",
   },
   {
     icon: <FaLinkedin size={32} color="black" className="social-icons" />,
     href: "#",
+    name: "GitHub",
   },
 ];
 
@@ -47,11 +50,16 @@ export function FooterLanding({ className = "" }: { className?: string }) {
           <legend>{currentText.socialMedia}</legend>
 
           <div>
-            <input name="inputText" placeholder=" " type="text" />
+            <input
+              name="inputText"
+              id="inputText"
+              placeholder=" "
+              type="text"
+            />
             <label htmlFor="inputText">
               <p>
                 <strong>{t("layout.footer.inputPlaceholder")}</strong>
-                
+
                 {t("layout.footer.inputPlaceholder.2")}
               </p>
             </label>

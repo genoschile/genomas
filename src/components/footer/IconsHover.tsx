@@ -6,7 +6,7 @@ export function IconsHover({
   index,
   color = "rgba(255, 255, 255, 0.9)",
 }: {
-  social: { icon: JSX.Element; href: string };
+  social: { icon: JSX.Element; href: string; name: string };
   index: number;
   color?: string;
 }) {
@@ -18,6 +18,7 @@ export function IconsHover({
         fill: `${color}`,
       }}
       key={index}
+      aria-label={`Visita nuestro perfil de ${social.name}`}
       href={social.href}
     >
       {social.icon}

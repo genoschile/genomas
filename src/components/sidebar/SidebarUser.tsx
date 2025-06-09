@@ -23,22 +23,22 @@ const sidebarItems = [
   },
   {
     href: `/${path}/analysis`,
-    icon: <IoDocumentOutline  size={32} className="sidebar__icon" />,
+    icon: <IoDocumentOutline size={32} className="sidebar__icon" />,
     text: "Analysis",
   },
   {
     href: `/${path}/documents`,
-    icon: <AiOutlineExperiment  size={32} className="sidebar__icon" />,
+    icon: <AiOutlineExperiment size={32} className="sidebar__icon" />,
     text: "Documents",
   },
   {
     href: `/${path}/summary`,
-    icon: <VscGraphLine  size={32} className="sidebar__icon" />,
+    icon: <VscGraphLine size={32} className="sidebar__icon" />,
     text: "Summary",
   },
   {
     href: `/${path}/configuration`,
-    icon: <GrConfigure  size={32} className="sidebar__icon" />,
+    icon: <GrConfigure size={32} className="sidebar__icon" />,
     text: "Configuration",
   },
 ];
@@ -65,6 +65,7 @@ export const SidebarUser = ({ className = "" }: { className?: string }) => {
                 href={item.href}
                 data-text={item.text}
                 className={`sidebar__element ${isActive ? "active" : ""}`}
+                aria-label={item.text}
               >
                 {item.icon}
                 <div className="sidebar__hide">
@@ -80,6 +81,7 @@ export const SidebarUser = ({ className = "" }: { className?: string }) => {
         <button
           className={`sidebar__button ${isExpanded ? "rotate" : ""}`}
           onClick={toggleSidebar}
+          aria-label="open/close sidebar"
         >
           <FaChevronRight />
         </button>
@@ -87,4 +89,3 @@ export const SidebarUser = ({ className = "" }: { className?: string }) => {
     </aside>
   );
 };
-

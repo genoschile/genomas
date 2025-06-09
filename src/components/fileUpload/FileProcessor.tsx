@@ -14,6 +14,7 @@ import {
   FaTimesCircle,
   FaUpload,
 } from "react-icons/fa";
+import { useCurrentProject } from "@/context/currentProject";
 
 export interface resUpload_DB {
   success: boolean;
@@ -107,7 +108,16 @@ export default function FileProcessor() {
     }
   };
 
+  const { currentProject } = useCurrentProject();
+
   const handleStageToDatabase = async () => {
+    console.log("handleStageToDatabase called");
+
+    if (!currentProject) {
+      toast.error("No hay un proyecto POR DEFAULT seleccionado.");
+      return;
+    }
+
     setUploadStatus(UploadStatus.UPLOAD_DB);
     setUploading(true);
 

@@ -45,7 +45,10 @@ export const I18nButton = () => {
 
   return (
     <div className="select-dropdown">
-      <select value={currentLang} onChange={handleChange}>
+      <label htmlFor="language-select" className="visually-hidden">
+        Seleccionar idioma
+      </label>
+      <select id="language-select" value={currentLang} onChange={handleChange}>
         <option value="es">🇪🇸 Español</option>
         <option value="en">🇺🇸 English</option>
         <option value="fr">fr Francés</option>

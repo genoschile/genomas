@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect, use } from "react";
-import { FaChevronRight, FaHome, FaTimes } from "react-icons/fa";
+import { useState, useRef, useEffect } from "react";
+import { FaChevronRight, FaHome } from "react-icons/fa";
 import "./headerSidebar.css";
 import Link from "next/link";
 
@@ -58,6 +58,15 @@ const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
         <button
           className="sidebar__header--button"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label={
+            isOpen
+              ? `Cerrar selector de proyecto: ${
+                  currentProject?.name || nameProject
+                }`
+              : `Abrir selector de proyecto: ${
+                  currentProject?.name || nameProject
+                }`
+          }
         >
           <h4 className="sidebar__header-title">
             {currentProject?.name || nameProject}
@@ -67,7 +76,7 @@ const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
           />
         </button>
       ) : (
-        <Link href={`/${path}/`}>
+        <Link href={`/${path}/`} aria-label="go page home">
           <FaHome className="sidebar__icon" />
         </Link>
       )}

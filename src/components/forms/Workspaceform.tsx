@@ -17,7 +17,24 @@ export const WorkspaceForm = () => {
       return;
     }
     setError("");
-    alert("Project created!");
+
+    try {
+      // Simulate API call to create workspace
+      const newWorkspace = {
+        name: workspaceName,
+        description: description.trim() || "No description provided",
+      };
+
+      console.log("Creating workspace:", newWorkspace);
+
+      // faltan datos de que estan en el localStorage
+
+      setWorkspaceName("");
+      setDescription("");
+      alert("Workspace created successfully!");
+    } catch (error) {
+      setError("Failed to create workspace. Please try again.");
+    }
   };
 
   return (
