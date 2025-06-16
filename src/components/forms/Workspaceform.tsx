@@ -9,8 +9,19 @@ export const WorkspaceForm = () => {
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const projectData = {
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      workspaceId: selectedWorkspaceId,
+      ownerId: getLocalStorageOrganization(),
+      users: selectedUserIds.map((id) => ({ id })),
+      groups: selectedGroupIds.map((id) => ({ id })),
+    };
 
     if (!workspaceName.trim()) {
       setError("Project name is required.");
@@ -26,6 +37,22 @@ export const WorkspaceForm = () => {
       };
 
       console.log("Creating workspace:", newWorkspace);
+
+      const response = await fetch(
+        `/api/workspaces/${selectedWorkspaceId}/projects`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(projectData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al crear el proyecto");
+      }
+      console.log("Proyecto creado exitosamente");
 
       // faltan datos de que estan en el localStorage
 

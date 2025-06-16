@@ -1,5 +1,4 @@
 import { useCaseUser } from "@/core/instances";
-import { use } from "react";
 
 export async function GET(
   request: Request,

@@ -27,20 +27,23 @@
   padding-inline: 1rem;
 
   button {
-    border: none;
-    outline: 1px solid rgba(0, 0, 0, 0.6);
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    padding: 0.5rem 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
-    padding-inline: 0.5rem;
-    padding-block: 0.5rem;
-    border-radius: 0.75rem;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    color: var(--button-blue);
+
+    color: white;
+    background-color: var(--button-blue);
+    gap: 0.5rem;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    &:is(:disabled) {
-      cursor: not-allowed;
-      opacity: 0.5;
+      background-color: var(--button-blue-hover);
     }
 
     &:is(:focus, :focus-visible) {

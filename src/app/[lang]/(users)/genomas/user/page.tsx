@@ -75,14 +75,13 @@ export const TrashContainer = () => {
           <label className="trash__table--cell" htmlFor="checkboxTrash">
             <input id="checkboxTrash" type="checkbox" />
           </label>
-          <div className="trash__table--cell">report.docx</div> 
+          <div className="trash__table--cell">report.docx</div>
           <div className="trash__table--cell">/documents/reports</div>
           <div className="trash__table--cell">2025-06-01</div>
           <div className="trash__table--cell">1.2 MB</div>
           <div className="trash__table--cell">2025-06-08</div>
           <div className="trash__table--cell">
-            <button>Restore</button>
-            <button>Delete</button>
+            <span>...</span>
           </div>
         </li>
       </ul>

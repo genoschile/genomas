@@ -2,8 +2,8 @@
   /* nav */
   position: absolute;
   background-color: white;
-  top: 100%;
-  left: 50%;
+  top: 115%;
+  right: 0;
   max-width: max-content;
   border-radius: 0.5rem;
   outline: 1px solid rgba(0, 0, 0, 0.2);

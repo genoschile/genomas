@@ -1,7 +1,6 @@
 // context/CurrentProjectContext.tsx
 "use client";
 
-import { inter } from "@/lib/fonts/fonts";
 import { createContext, useContext, useState, ReactNode } from "react";
 
 export interface IProject {

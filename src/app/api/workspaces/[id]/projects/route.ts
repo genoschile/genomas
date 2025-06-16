@@ -60,9 +60,14 @@ export async function POST(
   try {
     const body = await request.json();
 
-    console.log("data before create", body);
+    const newProject = {
+      ...body,
+      workspaceId: currentWorkspacesid,
+    }
 
-    const newProject = useCaseProject.createProject(currentWorkspacesid, body);
+    console.log("data after create", newProject);
+
+    // const newProject = useCaseProject.createProject(currentWorkspacesid, body);
 
     if (!newProject) {
       return NextResponse.json(
