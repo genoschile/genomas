@@ -57,17 +57,17 @@ export async function POST(
 ) {
   const currentWorkspacesid = (await params).id;
 
+  if (!currentWorkspacesid) {
+    return NextResponse.json(
+      { message: "Workspace ID is required", success: false },
+      { status: 400 }
+    );
+  }
+
   try {
     const body = await request.json();
 
-    const newProject = {
-      ...body,
-      workspaceId: currentWorkspacesid,
-    }
-
-    console.log("data after create", newProject);
-
-    // const newProject = useCaseProject.createProject(currentWorkspacesid, body);
+    const newProject = await useCaseProject.createProject(currentWorkspacesid, body);
 
     if (!newProject) {
       return NextResponse.json(

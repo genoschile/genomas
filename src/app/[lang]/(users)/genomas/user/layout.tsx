@@ -12,6 +12,7 @@ import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
 import { SidebarUser } from "@/components/sidebar/SidebarUser";
 import { ModalContainer } from "@/components/modals/ModalContainer";
 import { CurrentProjectProvider } from "@/context/currentProject";
+import { UserWorkspacesProvider } from "@/context/userWorkspacesContext";
 
 export default function userLayout({
   children,
@@ -20,15 +21,17 @@ export default function userLayout({
 }) {
   return (
     <CurrentProjectProvider>
-      <ProjectProvider>
-        <ModalContainer />
-        <div className="userWorkspace--container">
-          <HeaderUserWorkspace className="wu-header" />
-          <SidebarUser className="wu-aside" />
-          <main className="wu-main">{children}</main>
-          <FooterLanding className="wu-footer" />
-        </div>
-      </ProjectProvider>
+      <UserWorkspacesProvider>
+        <ProjectProvider>
+          <ModalContainer />
+          <div className="userWorkspace--container">
+            <HeaderUserWorkspace className="wu-header" />
+            <SidebarUser className="wu-aside" />
+            <main className="wu-main">{children}</main>
+            <FooterLanding className="wu-footer" />
+          </div>
+        </ProjectProvider>
+      </UserWorkspacesProvider>
     </CurrentProjectProvider>
   );
 }

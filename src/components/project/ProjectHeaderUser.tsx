@@ -7,6 +7,7 @@ import { IoIosAdd } from "react-icons/io";
 import "./projectHeaderUser.css";
 import { useProjectContext } from "@/hooks/useProjectContext";
 import { useModalContext } from "@/hooks/useModalsProject";
+import { ProjectWorkspaceSelected } from "./ProjectWorkspaceSelected";
 
 export function ProjectHeaderUser() {
   const { projects, selectedCards } = useProjectContext();
@@ -14,6 +15,9 @@ export function ProjectHeaderUser() {
   return (
     <header className="project__home--header">
       <h2>User Project</h2>
+
+      <ProjectWorkspaceSelected />
+
       <nav>
         <button onClick={() => openModal("workspace")}>
           <IoIosAdd size="24" /> New

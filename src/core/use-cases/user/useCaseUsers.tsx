@@ -6,6 +6,7 @@ import {
   UserDefaultAdminResponse,
   UserDTO,
 } from "@/core/interfaces/IUser";
+import { ResponseWorkspacesDTO } from "@/core/interfaces/IWorkspace";
 
 export class useCaseUsers {
   constructor(private userRepo: IUserRepository) {}
@@ -51,5 +52,9 @@ export class useCaseUsers {
 
   async currentProjectsByUserId(id: string): Promise<IProject[]> {
     return this.userRepo.currentProjectsByUserId(id);
+  }
+
+  async findWorkspacesByUserId(id: string): Promise<ResponseWorkspacesDTO[] | null> {
+    return this.userRepo.findWorkspacesByUserId(id);
   }
 }

@@ -15,7 +15,7 @@ export default function UserOptions() {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const srcImg = "https://avatar.iran.liara.run/public";
+  const srcImg = "/placeholder.png"; 
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

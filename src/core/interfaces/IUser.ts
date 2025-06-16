@@ -1,5 +1,6 @@
 import { UserType } from "@core/interfaces/enums";
 import { IProject } from "./IProject";
+import { ResponseWorkspacesDTO } from "./IWorkspace";
 
 export interface IUser {
   id: string;
@@ -57,4 +58,7 @@ export interface IUserRepository {
   ): Promise<UserDefaultAdminResponse | null>;
   switchSession(email: string, password: string): Promise<IUser>;
   currentProjectsByUserId(id: string): Promise<IProject[]>;
+  findWorkspacesByUserId(
+    userId: string
+  ): Promise<ResponseWorkspacesDTO[] | null>;
 }

@@ -3,24 +3,39 @@
 import { useState } from "react";
 import { FaExclamationCircle } from "react-icons/fa";
 import "./workspaceform.css";
+import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
+import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 
 export const WorkspaceForm = () => {
   const [workspaceName, setWorkspaceName] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
 
+  const { selectedWorkspaceId, addWorkspace } = useUserWorkspacesContext();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
+    if (!selectedWorkspaceId) {
+      setError("Please select a workspace.");
+      return;
+    }
+
+    const currentUserId = getLocalStorageOrganization("genomaUser");
+
+    if (!currentUserId) {
+      setError("User not found. Please log in.");
+      return;
+    }
+
     const projectData = {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
       workspaceId: selectedWorkspaceId,
-      ownerId: getLocalStorageOrganization(),
-      users: selectedUserIds.map((id) => ({ id })),
-      groups: selectedGroupIds.map((id) => ({ id })),
+      ownerId: currentUserId,
+      users: [{ id: currentUserId }],
     };
 
     if (!workspaceName.trim()) {
@@ -52,6 +67,13 @@ export const WorkspaceForm = () => {
       if (!response.ok) {
         throw new Error("Error al crear el proyecto");
       }
+
+      const data = await response.json();
+
+      console.log("Workspace created response:", data);
+
+      addWorkspace(data.data);
+
       console.log("Proyecto creado exitosamente");
 
       // faltan datos de que estan en el localStorage
@@ -68,6 +90,7 @@ export const WorkspaceForm = () => {
     <form className="workspace-form" onSubmit={handleSubmit}>
       <div className="input-group">
         <input
+          name="name"
           type="text"
           placeholder="Project Name"
           value={workspaceName}
@@ -77,6 +100,7 @@ export const WorkspaceForm = () => {
 
       <div className="input-group">
         <textarea
+          name="description"
           placeholder="Project Description (Optional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}

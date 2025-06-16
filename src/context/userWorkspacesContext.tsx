@@ -23,8 +23,7 @@ interface WorkspacesContextType {
   refreshWorkspaces: () => Promise<void>;
   selectedWorkspaceId: string | null;
   setSelectedWorkspaceId: React.Dispatch<React.SetStateAction<string | null>>;
-  showList: boolean;
-  setShowList: React.Dispatch<React.SetStateAction<boolean>>;
+  addWorkspace: (workspace: Workspace) => void;
 }
 
 const UserWorkspacesContext = createContext<WorkspacesContextType | undefined>(
@@ -41,22 +40,31 @@ export const UserWorkspacesProvider = ({
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(
     null
   );
-  const [showList, setShowList] = useState<boolean>(false);
 
   const fetchWorkspaces = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-
-      const organization = getLocalStorageOrganization();
-
-      const res = await fetch(`/api/organization/${organization}/workspaces`);
-      const data = await res.json();
-      if (data.success) setWorkspaces(data.data);
-    } catch (err) {
-      console.error("Error fetching workspaces:", err);
+      const response = await fetch(
+        `/api/users/${getLocalStorageOrganization("genomaUser")}/workspaces`
+      );
+      if (!response.ok) {
+        throw new Error("Error fetching workspaces");
+      }
+      const data = await response.json();
+      if (data.success) {
+        setWorkspaces(data.data);
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching workspaces:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const addWorkspace = (workspace: Workspace) => {
+    setWorkspaces((prev) => [...prev, workspace]);
   };
 
   useEffect(() => {
@@ -71,8 +79,7 @@ export const UserWorkspacesProvider = ({
         refreshWorkspaces: fetchWorkspaces,
         selectedWorkspaceId,
         setSelectedWorkspaceId,
-        showList,
-        setShowList,
+        addWorkspace
       }}
     >
       {children}

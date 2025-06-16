@@ -8,8 +8,57 @@ import {
 import { mapToIUser, MapToPrismaUserType } from "../mapTypes/userTypes";
 import bcrypt from "bcrypt";
 import { IProject } from "../interfaces/IProject";
+import { ResponseWorkspacesDTO } from "../interfaces/IWorkspace";
+import { PipelineType, Role } from "../interfaces/enums";
 
 export class UserRepository implements IUserRepository {
+  async findWorkspacesByUserId(
+    id: string
+  ): Promise<ResponseWorkspacesDTO[] | null> {
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        organization: {
+          select: {
+            workspaces: {
+              select: {
+                id: true,
+                name: true,
+                pipelineType: true,
+                organizationId: true,
+                members: {
+                  select: {
+                    id: true,
+                    userId: true,
+                    role: true,
+                    isActive: true,
+                    assignedAt: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user || !user.organization) return null;
+
+    return user.organization.workspaces.map((workspace) => ({
+      id: workspace.id,
+      name: workspace.name,
+      pipelineType: workspace.pipelineType as PipelineType,
+      organizationId: workspace.organizationId,
+      members: workspace.members.map((m) => ({
+        id: m.id,
+        userId: m.userId,
+        role: [m.role as Role],
+        isActive: m.isActive,
+        assignedAt: m.assignedAt,
+      })),
+    }));
+  }
+
   async getAllUsersOrganization(id: string): Promise<UserDTO[]> {
     const users = await prisma.user.findMany({
       where: {
@@ -179,7 +228,7 @@ export class UserRepository implements IUserRepository {
 
     return mapToIUser(user);
   }
-  
+
   async currentProjectsByUserId(userId: string): Promise<IProject[]> {
     // Obtener los grupos del usuario
     const userWithGroups = await prisma.user.findUnique({

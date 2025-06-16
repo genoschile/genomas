@@ -1,21 +1,33 @@
 "use client";
 
+/* hooks */
 import { useState } from "react";
-import { FaChevronRight } from "react-icons/fa";
-import "./sidebarUser.css";
+
+/* components */
 import HeaderSidebar from "./components/HeaderSidebar";
 import Link from "next/link";
+
+/* icons */
+import { FaChevronRight } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-
-const path = "genomas/user";
-
 import { MdFileUpload } from "react-icons/md";
 import { AiOutlineExperiment } from "react-icons/ai";
 import { VscGraphLine } from "react-icons/vsc";
 import { GrConfigure } from "react-icons/gr";
 import { IoDocumentOutline } from "react-icons/io5";
+import { FaHome } from "react-icons/fa";
+
+/* styles */
+import "./sidebarUser.css";
+
+const path = "genomas/user";
 
 const sidebarItems = [
+  {
+    href: `/${path}`,
+    icon: <FaHome size={32} className="sidebar__icon" />,
+    text: "Home",
+  },
   {
     href: `/${path}/upload-files`,
     icon: <MdFileUpload size={32} className="sidebar__icon" />,
@@ -51,30 +63,34 @@ export const SidebarUser = ({ className = "" }: { className?: string }) => {
     setIsExpanded(!isExpanded);
   };
 
+  const isActive = (href: string) => {
+    if (pathname === href) return true;
+    if (href !== `/${path}` && pathname.startsWith(href)) return true;
+    return false;
+  };
+
   return (
     <aside className={`sidebar ${isExpanded ? "expanded" : ""} ${className}`}>
       <HeaderSidebar isExpanded={isExpanded} />
 
       <ul className="sidebar__list">
-        {sidebarItems.map((item, index) => {
-          const isActive = pathname.startsWith(item.href);
-
-          return (
-            <li key={index} className="sidebar__list--li">
-              <Link
-                href={item.href}
-                data-text={item.text}
-                className={`sidebar__element ${isActive ? "active" : ""}`}
-                aria-label={item.text}
-              >
-                {item.icon}
-                <div className="sidebar__hide">
-                  <p className="sidebar__text">{item.text}</p>
-                </div>
-              </Link>
-            </li>
-          );
-        })}
+        {sidebarItems.map((item, index) => (
+          <li key={index} className="sidebar__list--li">
+            <Link
+              href={item.href}
+              data-text={item.text}
+              className={`sidebar__element ${
+                isActive(item.href) ? "active" : ""
+              }`}
+              aria-label={item.text}
+            >
+              {item.icon}
+              <div className="sidebar__hide">
+                <p className="sidebar__text">{item.text}</p>
+              </div>
+            </Link>
+          </li>
+        ))}
       </ul>
 
       <footer className="sidebar__footer">

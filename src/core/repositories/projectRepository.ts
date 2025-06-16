@@ -58,20 +58,20 @@ export class ProjectRepository implements IProjectRepository {
     data: IProjectDTO
   ): Promise<IProjectResponse | null> {
     const sharedWith =
-      data.users?.map((user) => ({
-        user: {
-          connect: { id: user.id },
-        },
-        access: AccessType.EDIT,
-      })) || [];
+      data.users && data.users.length
+        ? data.users.map((user) => ({
+            user: { connect: { id: user.id } },
+            access: AccessType.EDIT,
+          }))
+        : [];
 
     const sharedWithGroups =
-      data.groups?.map((group) => ({
-        group: {
-          connect: { id: group.id },
-        },
-        access: AccessType.EDIT,
-      })) || [];
+      data.groups && data.groups.length
+        ? data.groups.map((group) => ({
+            group: { connect: { id: group.id } },
+            access: AccessType.EDIT,
+          }))
+        : [];
 
     const project = await prisma.project.create({
       data: {

@@ -1,14 +1,16 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { FaChevronRight, FaHome } from "react-icons/fa";
-import "./headerSidebar.css";
+import { FaChevronRight } from "react-icons/fa";
 import Link from "next/link";
-
-const nameProject = "Select a project";
-
 import { DropdownWorkspace } from "@/components/sidebar/components/DropdownWorkspace";
 import { useCurrentProject } from "@/context/currentProject";
+import { SiOpenproject } from "react-icons/si";
+
+/* style */
+import "./headerSidebar.css";
+
+const nameProject = "Select a project";
 
 interface HeaderSidebarProps {
   isExpanded: boolean;
@@ -54,32 +56,32 @@ const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
       className="sidebar__header"
       data-expanded={isExpanded ? "true" : "false"}
     >
-      {isExpanded ? (
-        <button
-          className="sidebar__header--button"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={
-            isOpen
-              ? `Cerrar selector de proyecto: ${
-                  currentProject?.name || nameProject
-                }`
-              : `Abrir selector de proyecto: ${
-                  currentProject?.name || nameProject
-                }`
-          }
-        >
-          <h4 className="sidebar__header-title">
-            {currentProject?.name || nameProject}
-          </h4>
-          <FaChevronRight
-            className={`sidebar-arrow ${isOpen ? "dropdown--active" : ""}`}
-          />
-        </button>
-      ) : (
-        <Link href={`/${path}/`} aria-label="go page home">
-          <FaHome className="sidebar__icon" />
-        </Link>
-      )}
+      <button
+        className="sidebar__header--button"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label={
+          isOpen
+            ? `Cerrar selector de proyecto: ${
+                currentProject?.name || nameProject
+              }`
+            : `Abrir selector de proyecto: ${
+                currentProject?.name || nameProject
+              }`
+        }
+      >
+        {isExpanded ? (
+          <>
+            <h4 className="sidebar__header-title">
+              {currentProject?.name || nameProject}
+            </h4>
+            <FaChevronRight
+              className={`sidebar-arrow ${isOpen ? "dropdown--active" : ""}`}
+            />
+          </>
+        ) : (
+          <SiOpenproject className="sidebar__icon" />
+        )}
+      </button>
 
       {isOpen && (
         <DropdownWorkspace
