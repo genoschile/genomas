@@ -124,9 +124,6 @@ export default function FileProcessor() {
 
       formData.append("jobId", uploadJobId);
 
-      // Enviamos un JSON con los tempPath y nombres
-      formData.append("files", JSON.stringify(decompressedFiles));
-
       const res = await axios.post("/api/document/upload", formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round(
@@ -150,7 +147,7 @@ export default function FileProcessor() {
         setUploadStatus(UploadStatus.STAGED);
         toast.success("Archivos cargados y descomprimidos.");
       } else {
-        toast.error("Error al procesar los archivos");
+        toast.error("Error al procesar los archivos" + res.data.message);
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
       }
     } catch (error) {
@@ -161,6 +158,7 @@ export default function FileProcessor() {
       setUploading(false);
     }
   };
+
   const handleResumeUpload = async () => {
     setUploadStatus(UploadStatus.UPLOAD_DB);
     setUploading(true);

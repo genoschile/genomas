@@ -86,7 +86,6 @@ function processZipFile(
       message,
       type: fileType,
       size: entryWithSizes.uncompressedSize,
-      tempPath: path.join(extractDir, entry.entryName),
     });
   }
 
@@ -158,7 +157,6 @@ async function processTarGzFile(
         : "Formato no soportado",
       type: fileType,
       size: fileSize,
-      tempPath: filePath,
     });
 
     fileCount++;
@@ -171,8 +169,10 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const tempDir = os.tmpdir();
+
+    const jobId = `extract_${Date.now()}`;
     const uploadDir = path.join(tempDir, `uploads_${Date.now()}`);
-    const extractDir = path.join(tempDir, `extract_${Date.now()}`);
+    const extractDir = path.join(tempDir, jobId);
 
     await mkdir(uploadDir, { recursive: true });
     await mkdir(extractDir, { recursive: true });
@@ -223,15 +223,17 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Limpieza opcional de directorios
+    // Limpieza opcional del directorio de uploads
     await rm(uploadDir, { recursive: true, force: true }).catch(() => {});
-    // await rm(extractDir, { recursive: true, force: true }).catch(() => {});
 
     return NextResponse.json(
       {
         success: true,
         message: "Archivos procesados correctamente",
-        data: { files: filesStatus, jobId: extractDir },
+        data: {
+          files: filesStatus,
+          jobId, // SOLO el ID, no el path completo
+        },
       },
       { status: 200 }
     );
