@@ -1,72 +1,78 @@
 import { NextResponse } from "next/server";
-import formidable, { Files } from "formidable";
-import { IncomingMessage } from "http";
-import fs from "fs/promises";
+import fs, { rm } from "fs/promises";
 import path from "path";
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-async function parseForm(
-  req: IncomingMessage
-): Promise<{ fields: any; files: Files }> {
-  const form = formidable({
-    multiples: true,
-    maxFileSize: 2 * 1024 * 1024 * 1024, // 2GB
-    keepExtensions: true,
-  });
-
-  return new Promise((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
-      if (err) reject(err);
-      else resolve({ fields, files });
-    });
-  });
-}
 
 export async function POST(req: Request) {
   try {
-    // TypeScript no sabe que req es IncomingMessage
-    // @ts-ignore
-    const { fields, files } = await parseForm(req);
+    const formData = await req.formData();
+    const filesRaw = formData.get("files");
 
-    console.log("📝 Campos:", fields);
-    console.log("📁 Archivos:", files);
+    const jobId = formData.get("jobId");
+
+    if (!filesRaw) {
+      return NextResponse.json(
+        { success: false, message: "No se encontraron archivos para subir." },
+        { status: 400 }
+      );
+    }
+
+    //  metadata
+    const filesMeta: Array<{ name: string; tempPath: string }> = JSON.parse(
+      filesRaw.toString()
+    );
 
     const uploadFolder = path.join(process.cwd(), "uploads");
     await fs.mkdir(uploadFolder, { recursive: true });
 
     const savedFiles: string[] = [];
 
-    for (const key of Object.keys(files)) {
-      const fileData = files[key];
-      if (!fileData) continue;
-      const fileArray = Array.isArray(fileData) ? fileData : [fileData];
+    for (const fileMeta of filesMeta) {
+      const { name, tempPath } = fileMeta;
 
-      for (const file of fileArray) {
-        const destPath = path.join(
-          uploadFolder,
-          file.originalFilename || file.newFilename
-        );
-        await fs.copyFile(file.filepath, destPath);
-        savedFiles.push(destPath);
+      // Validar que el archivo existe en el tempPath
+      try {
+        await fs.access(tempPath);
+      } catch {
+        console.warn(`Archivo no encontrado en tempPath: ${tempPath}`);
+        continue; // Saltar si el archivo no existe
       }
+
+      const destPath = path.join(uploadFolder, name);
+      await fs.copyFile(tempPath, destPath);
+      savedFiles.push(destPath);
     }
+
+    if (savedFiles.length === 0) {
+      console.error("Ningún archivo válido encontrado en los tempPath.");
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Error interno: Ninguno de los archivos existe en el servidor temporal.",
+        },
+        { status: 500 }
+      );
+    }
+
+    // await rm({ jobId }, { recursive: true, force: true }).catch(() => {});
 
     return NextResponse.json({
       success: true,
       message: "Archivos guardados en el servidor",
       files: savedFiles,
+      data: {
+        files: savedFiles.map((filePath) => ({
+          name: path.basename(filePath),
+          path: filePath,
+        })),
+      },
     });
   } catch (err) {
-    console.error("❌ Upload error:", err);
+    console.error("Upload error:", err);
     return NextResponse.json(
       {
         success: false,
-        message: "Error al procesar el archivo",
+        message: "Error al procesar los archivos",
       },
       { status: 500 }
     );

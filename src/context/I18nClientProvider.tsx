@@ -2,7 +2,11 @@
 
 import { createContext, useContext, useState } from "react";
 import api, { createTranslator } from "@/lib/i18n/api";
-import { Language, TranslationKey, TranslationParams } from "@/lib/i18n/i18n.types";
+import {
+  Language,
+  TranslationKey,
+  TranslationParams,
+} from "@/lib/i18n/i18n.types";
 
 type I18nContextType = {
   t: (key: TranslationKey, params?: TranslationParams) => string;
@@ -26,8 +30,6 @@ export function I18nClientProvider({
   const setLang = async (lang: Language) => {
     const { dictionary } = await api.fetch(lang);
     setDictionary(dictionary);
-
-    console.log(dictionary)
     setTranslator(() => createTranslator(dictionary));
   };
 

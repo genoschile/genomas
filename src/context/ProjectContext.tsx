@@ -48,8 +48,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
 
         if (!data.success) throw new Error(data.message);
 
-        console.log("Projects fetched:", data.data);
-
         setProjects(data.data);
       } catch (err) {
         console.error("Error fetching projects:", err);

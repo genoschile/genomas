@@ -32,6 +32,8 @@ export interface UploadStatusContextType {
   isUploading: boolean;
   setUploading: (isUploading: boolean) => void;
   renderUploadIcon: () => React.JSX.Element;
+  uploadJobId: string;
+  setUploadJobId: (jobId: string) => void;
 }
 
 export const UploadStatusContext = createContext<UploadStatusContextType>({
@@ -42,6 +44,8 @@ export const UploadStatusContext = createContext<UploadStatusContextType>({
   renderUploadIcon: () => (
     <FaCloudUploadAlt size={50} className="file-upload--icon" />
   ),
+  uploadJobId: "",
+  setUploadJobId: () => {},
 });
 
 export function UploadStatusProvider({
@@ -51,6 +55,7 @@ export function UploadStatusProvider({
 }) {
   const [uploadStatus, setUploadStatus] = useState<string>(UploadStatus.IDLE);
   const [isUploading, setUploading] = useState<boolean>(false);
+  const [uploadJobId, setUploadJobId] = useState<string>("");
 
   const renderUploadIcon = () => {
     switch (uploadStatus) {
@@ -99,6 +104,8 @@ export function UploadStatusProvider({
         isUploading,
         setUploading,
         renderUploadIcon,
+        uploadJobId,
+        setUploadJobId,
       }}
     >
       {children}

@@ -36,8 +36,14 @@ export default function FileProcessor() {
     decompressedFiles,
   } = useFileStagingAreaContext();
 
-  const { uploadStatus, setUploadStatus, isUploading, setUploading } =
-    useUploadStatusContext();
+  const {
+    uploadStatus,
+    setUploadStatus,
+    isUploading,
+    setUploading,
+    setUploadJobId,
+    uploadJobId,
+  } = useUploadStatusContext();
 
   const handleClean = () => {
     setUploading(false);
@@ -73,7 +79,10 @@ export default function FileProcessor() {
         return;
       }
 
+      console.log("Respuesta del servidor:", data);
+
       setDecompressedFiles(data.data.files);
+      setUploadJobId(data.data.jobId);
       setUploadStatus(UploadStatus.STAGED);
       toast.success("Archivos cargados y descomprimidos.");
     } catch (error) {
@@ -101,13 +110,24 @@ export default function FileProcessor() {
     try {
       const formData = new FormData();
 
-      files
-        .filter((file) => file.accepted)
-        .forEach((file) => {
-          formData.append("files", file);
-        });
+      if (decompressedFiles.length === 0) {
+        toast.error("No hay archivos descomprimidos para subir.");
+        setUploadStatus(UploadStatus.UPLOAD_ERROR);
+        return;
+      }
 
-      const res = await axios.post("/api/document/utils", formData, {
+      if (!uploadJobId) {
+        toast.error("No se encontró un jobId para la subida.");
+        setUploadStatus(UploadStatus.UPLOAD_ERROR);
+        return;
+      }
+
+      formData.append("jobId", uploadJobId);
+
+      // Enviamos un JSON con los tempPath y nombres
+      formData.append("files", JSON.stringify(decompressedFiles));
+
+      const res = await axios.post("/api/document/upload", formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round(
             (progressEvent.loaded * 100) / (progressEvent.total || 1)
@@ -122,6 +142,8 @@ export default function FileProcessor() {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      console.log("Respuesta del servidor:", res.data);
 
       if (res.data.success) {
         setDecompressedFiles(res.data.data.files);
@@ -139,7 +161,6 @@ export default function FileProcessor() {
       setUploading(false);
     }
   };
-
   const handleResumeUpload = async () => {
     setUploadStatus(UploadStatus.UPLOAD_DB);
     setUploading(true);

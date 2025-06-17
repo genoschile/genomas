@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 /* hooks */
 import { useModalContext } from "@/hooks/useModalsProject";
@@ -17,15 +17,13 @@ export const Modal: React.FC<ModalProps> = ({ id, title, children }) => {
   const { activeModal, closeModal } = useModalContext();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-useEffect(() => {
-  console.log("Modal useEffect: ", { activeModal, id });
-
-  if (activeModal === id && dialogRef.current) {
-    dialogRef.current.showModal();
-  } else if (activeModal !== id && dialogRef.current?.open) {
-    dialogRef.current.close();
-  }
-}, [activeModal, id]);
+  useEffect(() => {
+    if (activeModal === id && dialogRef.current) {
+      dialogRef.current.showModal();
+    } else if (activeModal !== id && dialogRef.current?.open) {
+      dialogRef.current.close();
+    }
+  }, [activeModal, id]);
 
   if (activeModal !== id) return null;
 

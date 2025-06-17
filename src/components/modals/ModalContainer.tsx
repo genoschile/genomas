@@ -10,8 +10,6 @@ import { MODAL_IDS } from "@/context/ModalsProject";
 import { AddProjectEnterpriseForm } from "../forms/AddProjectEnterpriseForm";
 
 export const ModalContainer = () => {
-  console.log("ModalContainer: ", MODAL_IDS.ADD_GROUPS_ENTERPRISE);
-
   return (
     <>
       <Modal id={MODAL_IDS.WORKSPACE} title="Create new Project">
@@ -31,10 +29,6 @@ export const ModalContainer = () => {
         title="Add Groups(s) to Enterprise"
       >
         <>
-          {console.log(
-            "Rendering ADD_GROUPS_ENTERPRISE modal with ID:",
-            MODAL_IDS.ADD_GROUPS_ENTERPRISE
-          )}
           <AddGroupsFormEnterprise />
         </>
       </Modal>
