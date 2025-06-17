@@ -1,247 +1,93 @@
+// src/app/api/document/extract/route.ts
 "use server";
 
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir, readdir, stat, rm } from "fs/promises";
+import { writeFile, mkdir, readdir, stat } from "fs/promises";
 import path from "path";
 import os from "os";
 import AdmZip from "adm-zip";
 import * as tar from "tar";
 
-interface FileProcessStatus {
-  name: string;
-  accepted: boolean;
-  message: string;
-  type: string;
-  size?: number;
-  tempPath?: string;
-}
-
 const config = {
   supportedArchiveExtensions: ["zip", "tar.gz"],
-  supportedFileTypes: [
-    "txt",
-    "jpg",
-    "jpeg",
-    "png",
-    "gif",
-    "json",
-    "csv",
-    "xml",
-    "pdf",
-    "docx",
-    "xlsx",
-  ],
+  supportedFileTypes: ["txt", "jpg", "jpeg", "png", "gif", "json", "csv", "xml", "pdf", "docx", "xlsx"],
   maxIndividualFileSize: 10 * 1024 * 1024,
   maxArchiveFileSize: 50 * 1024 * 1024,
   maxFilesInArchive: 1000,
 };
 
 function isSupportedArchive(filename: string): boolean {
-  const ext = filename.toLowerCase().endsWith(".tar.gz")
-    ? "tar.gz"
-    : path.extname(filename).replace(".", "").toLowerCase();
-  return config.supportedArchiveExtensions.includes(ext);
+  return filename.toLowerCase().endsWith(".tar.gz") || filename.toLowerCase().endsWith(".zip");
 }
 
 function isSupportedFileExtension(filename: string): boolean {
-  const ext = path.extname(filename).replace(".", "").toLowerCase();
-  return config.supportedFileTypes.includes(ext);
+  return config.supportedFileTypes.includes(path.extname(filename).replace(".", "").toLowerCase());
 }
 
-function processZipFile(
-  zipPath: string,
-  extractDir: string
-): FileProcessStatus[] {
+async function processZipFile(zipPath: string, extractDir: string) {
   const zip = new AdmZip(zipPath);
-  const filesStatus: FileProcessStatus[] = [];
-
-  if (zip.getEntries().length > config.maxFilesInArchive) {
-    return [
-      {
-        name: path.basename(zipPath),
-        accepted: false,
-        message: `El archivo ZIP contiene demasiados archivos (máx. ${config.maxFilesInArchive})`,
-        type: "zip",
-        size: 0,
-      },
-    ];
+  const entries = zip.getEntries();
+  if (entries.length > config.maxFilesInArchive) {
+    return [];
   }
 
   zip.extractAllTo(extractDir, true);
-
-  for (const entry of zip.getEntries()) {
-    if (entry.isDirectory) continue;
-
-    const fileType =
-      path.extname(entry.entryName).replace(".", "") || "unknown";
-    const accepted = isSupportedFileExtension(entry.entryName);
-    const message = accepted
-      ? "Archivo extraído correctamente"
-      : "Formato no soportado";
-    const entryWithSizes = entry as typeof entry & { uncompressedSize: number };
-
-    filesStatus.push({
+  return entries
+    .filter((e) => !e.isDirectory)
+    .map((entry) => ({
       name: entry.entryName,
-      accepted,
-      message,
-      type: fileType,
-      size: entryWithSizes.uncompressedSize,
-    });
-  }
-
-  return filesStatus;
+      accepted: isSupportedFileExtension(entry.entryName),
+    }));
 }
 
-async function processTarGzFile(
-  tarPath: string,
-  extractDir: string
-): Promise<FileProcessStatus[]> {
-  try {
-    await tar.x({ file: tarPath, cwd: extractDir });
-  } catch (tarError) {
-    console.error(`Error extrayendo tar.gz ${tarPath}:`, tarError);
-    return [
-      {
-        name: path.basename(tarPath),
-        accepted: false,
-        message: `Error al extraer el archivo .tar.gz: ${tarError}`,
-        type: "tar.gz",
-      },
-    ];
-  }
-
-  const files = await readdir(extractDir, { withFileTypes: true });
-  const filesStatus: FileProcessStatus[] = [];
-  let fileCount = 0;
-
-  for (const file of files) {
-    if (!file.isFile()) continue;
-    if (fileCount >= config.maxFilesInArchive) {
-      filesStatus.push({
-        name: path.basename(tarPath),
-        accepted: false,
-        message: `El archivo .tar.gz contiene demasiados archivos (máx. ${config.maxFilesInArchive})`,
-        type: "tar.gz",
-        size: 0,
-      });
-      break;
-    }
-
-    const filePath = path.join(extractDir, file.name);
-    const stats = await stat(filePath);
-    const fileSize = stats.size;
-
-    if (fileSize > config.maxIndividualFileSize) {
-      filesStatus.push({
-        name: file.name,
-        accepted: false,
-        message: `Archivo excede el tamaño máximo permitido (${(
-          config.maxIndividualFileSize /
-          1024 /
-          1024
-        ).toFixed(1)}MB)`,
-        type: path.extname(file.name).replace(".", "") || "unknown",
-        size: fileSize,
-      });
-      continue;
-    }
-
-    const fileType = path.extname(file.name).replace(".", "") || "unknown";
-    const accepted = isSupportedFileExtension(file.name);
-
-    filesStatus.push({
-      name: file.name,
-      accepted,
-      message: accepted
-        ? "Archivo extraído correctamente"
-        : "Formato no soportado",
-      type: fileType,
-      size: fileSize,
-    });
-
-    fileCount++;
-  }
-
-  return filesStatus;
+async function processTarGzFile(tarPath: string, extractDir: string) {
+  await tar.x({ file: tarPath, cwd: extractDir });
+  const files = await readdir(extractDir);
+  return await Promise.all(
+    files.map(async (file) => ({
+      name: file,
+      accepted: isSupportedFileExtension(file),
+    }))
+  );
 }
 
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const tempDir = os.tmpdir();
-
     const jobId = `extract_${Date.now()}`;
-    const uploadDir = path.join(tempDir, `uploads_${Date.now()}`);
-    const extractDir = path.join(tempDir, jobId);
-
-    await mkdir(uploadDir, { recursive: true });
+    const extractDir = path.join(process.cwd(), "tmp-extracted", jobId);
     await mkdir(extractDir, { recursive: true });
 
-    const filesStatus: FileProcessStatus[] = [];
+    const fileStatuses = [];
 
     for (const entry of formData.entries()) {
       const file = entry[1];
       if (!(file instanceof File)) continue;
 
       const filename = file.name;
+      if (!isSupportedArchive(filename)) continue;
 
-      if (file.size > config.maxArchiveFileSize) {
-        filesStatus.push({
-          name: filename,
-          accepted: false,
-          message: `Archivo excede el tamaño máximo permitido (${(
-            config.maxArchiveFileSize /
-            1024 /
-            1024
-          ).toFixed(1)}MB)`,
-          type: path.extname(filename).replace(".", "") || "unknown",
-          size: file.size,
-        });
-        continue;
-      }
+      const tempUploadPath = path.join(extractDir, filename);
+      await writeFile(tempUploadPath, Buffer.from(await file.arrayBuffer()));
 
-      if (!isSupportedArchive(filename)) {
-        filesStatus.push({
-          name: filename,
-          accepted: false,
-          message: "Formato de archivo comprimido no soportado",
-          type: path.extname(filename).replace(".", "") || "unknown",
-          size: file.size,
-        });
-        continue;
-      }
+      const extracted =
+        filename.endsWith(".zip")
+          ? await processZipFile(tempUploadPath, extractDir)
+          : await processTarGzFile(tempUploadPath, extractDir);
 
-      const filePath = path.join(uploadDir, filename);
-      await writeFile(filePath, Buffer.from(await file.arrayBuffer()));
-
-      if (filename.toLowerCase().endsWith(".zip")) {
-        const zipFiles = processZipFile(filePath, extractDir);
-        filesStatus.push(...zipFiles);
-      } else if (filename.toLowerCase().endsWith(".tar.gz")) {
-        const tarFiles = await processTarGzFile(filePath, extractDir);
-        filesStatus.push(...tarFiles);
-      }
+      fileStatuses.push(...extracted);
     }
 
-    // Limpieza opcional del directorio de uploads
-    await rm(uploadDir, { recursive: true, force: true }).catch(() => {});
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Archivos procesados correctamente",
-        data: {
-          files: filesStatus,
-          jobId, // SOLO el ID, no el path completo
-        },
+    return NextResponse.json({
+      success: true,
+      message: "Archivos procesados correctamente",
+      data: {
+        jobId,
+        files: fileStatuses,
       },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("⚠️ Error en la API:", error);
-    return NextResponse.json(
-      { success: false, message: "Error interno del servidor" },
-      { status: 500 }
-    );
+    });
+  } catch (err) {
+    console.error("Error al procesar archivo:", err);
+    return NextResponse.json({ success: false, message: "Error interno del servidor" }, { status: 500 });
   }
 }

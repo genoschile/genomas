@@ -1,7 +1,7 @@
+// src/app/api/document/upload/route.ts
 import { NextResponse } from "next/server";
-import fs, { rm } from "fs/promises";
+import fs from "fs/promises";
 import path from "path";
-import os from "os";
 
 export async function POST(req: Request) {
   try {
@@ -15,64 +15,57 @@ export async function POST(req: Request) {
       );
     }
 
-    // Reconstruir el path temporal del job
-    const tempDir = path.join(os.tmpdir(), jobId);
+    // 👇 Asegúrate que este path es donde se guardaron los archivos descomprimidos
+    const extractDir = path.join(process.cwd(), "tmp-extracted", jobId);
 
-    // Leer los archivos en el directorio temporal
-    let filesInTemp: string[] = [];
+    let filesInDir: string[];
     try {
-      filesInTemp = await fs.readdir(tempDir);
+      filesInDir = await fs.readdir(extractDir);
     } catch {
       return NextResponse.json(
-        {
-          success: false,
-          message: "El jobId no es válido o el directorio no existe.",
-        },
+        { success: false, message: "El jobId no es válido o el directorio no existe." },
         { status: 400 }
       );
     }
 
-    if (filesInTemp.length === 0) {
+    if (filesInDir.length === 0) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "No se encontraron archivos en el directorio temporal.",
-        },
+        { success: false, message: "No se encontraron archivos en el directorio temporal." },
         { status: 400 }
       );
     }
 
-    // Crear el directorio final de uploads
     const uploadFolder = path.join(process.cwd(), "uploads");
     await fs.mkdir(uploadFolder, { recursive: true });
 
-    const savedFiles: string[] = [];
+    const savedFiles: { name: string; path: string }[] = [];
 
-    // Copiar los archivos del temp al destino final
-    for (const fileName of filesInTemp) {
-      const tempPath = path.join(tempDir, fileName);
+    for (const fileName of filesInDir) {
+      const srcPath = path.join(extractDir, fileName);
+      const stats = await fs.stat(srcPath);
+
+      if (stats.isDirectory()) {
+        console.warn(`Omitiendo directorio: ${fileName}`);
+        continue;
+      }
+
       const destPath = path.join(uploadFolder, fileName);
-
-      await fs.copyFile(tempPath, destPath);
-      savedFiles.push(destPath);
+      await fs.copyFile(srcPath, destPath);
+      savedFiles.push({
+        name: fileName,
+        path: destPath,
+      });
     }
-
-    // Limpieza opcional del directorio temporal
-    await rm(tempDir, { recursive: true, force: true }).catch(() => {});
 
     return NextResponse.json({
       success: true,
-      message: "Archivos guardados en el servidor",
-      files: savedFiles,
       data: {
-        files: savedFiles.map((filePath) => ({
-          name: path.basename(filePath),
-          path: filePath,
-        })),
+        files: savedFiles,
       },
+      message: "Archivos guardados en el servidor",
     });
   } catch (err) {
-    console.error("Upload error:", err);
+    console.error("Error al guardar archivos:", err);
     return NextResponse.json(
       { success: false, message: "Error al procesar los archivos" },
       { status: 500 }
