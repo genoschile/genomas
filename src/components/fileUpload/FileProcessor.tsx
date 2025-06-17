@@ -25,6 +25,8 @@ export interface resUpload_DB {
   error?: string;
 }
 
+import axios from "axios";
+
 export default function FileProcessor() {
   const {
     files,
@@ -36,31 +38,6 @@ export default function FileProcessor() {
 
   const { uploadStatus, setUploadStatus, isUploading, setUploading } =
     useUploadStatusContext();
-
-  const simulateUploadFiles = async () => {
-    for (const file of decompressedFiles) {
-      await simulateProgress(file.name);
-    }
-  };
-
-  const simulateProgress = async (fileKey: string) => {
-    return new Promise<void>((resolve) => {
-      let current = 0;
-
-      const interval = setInterval(() => {
-        current += Math.floor(Math.random() * 20) + 10;
-        setProgressMap((prev) => ({
-          ...prev,
-          [fileKey]: Math.min(current, 100),
-        }));
-
-        if (current >= 100) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, 300);
-    });
-  };
 
   const handleClean = () => {
     setUploading(false);
@@ -122,8 +99,6 @@ export default function FileProcessor() {
     setUploading(true);
 
     try {
-      await simulateUploadFiles();
-
       const formData = new FormData();
 
       files
@@ -132,41 +107,43 @@ export default function FileProcessor() {
           formData.append("files", file);
         });
 
-      const res = await fetch("/api/document/upload", {
-        method: "POST",
-        body: formData,
+      const res = await axios.post("/api/document/utils", formData, {
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round(
+            (progressEvent.loaded * 100) / (progressEvent.total || 1)
+          );
+          console.log(`Progreso real: ${percent}%`);
+          setProgressMap((prev) => ({
+            ...prev,
+            ["files"]: percent,
+          }));
+        },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      if (!res.ok) {
-        toast.error("Error al subir archivos a la base de datos.");
+      if (res.data.success) {
+        setDecompressedFiles(res.data.data.files);
+        setUploadStatus(UploadStatus.STAGED);
+        toast.success("Archivos cargados y descomprimidos.");
+      } else {
+        toast.error("Error al procesar los archivos");
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
       }
-
-      const resData: resUpload_DB = await res.json();
-
-      if (!resData.success) {
-        toast.error("Error al subir archivos a la base de datos.");
-        setUploadStatus(UploadStatus.UPLOAD_ERROR);
-      }
-
-      if (resData.success) {
-        setUploadStatus(UploadStatus.UPLOAD_SUCCESS);
-        toast.success("Archivos subidos a la base de datos con éxito.");
-      }
-    } catch {
-      toast.error("Error durante la subida a la base de datos.");
+    } catch (error) {
+      console.error("Error en la subida:", error);
+      toast.error("Error al procesar archivos.");
       setUploadStatus(UploadStatus.UPLOAD_ERROR);
     } finally {
       setUploading(false);
     }
   };
 
-  // Opcional: reanudar la carga, por ejemplo en UPLOAD_RESUME
   const handleResumeUpload = async () => {
     setUploadStatus(UploadStatus.UPLOAD_DB);
     setUploading(true);
     try {
-      await simulateUploadFiles();
       toast.success("Carga reanudada y completada.");
       setUploadStatus(UploadStatus.UPLOAD_SUCCESS);
     } catch {

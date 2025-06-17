@@ -7,7 +7,7 @@ interface Project {
   name: string;
   description: string;
   sharedWith?: string[];
-  id: string
+  id: string;
 }
 
 interface ProjectContextProps {
@@ -18,6 +18,7 @@ interface ProjectContextProps {
   isSelected: (cardName: string) => boolean;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
+  addProject: (project: Project) => void;
 }
 
 export const ProjectContext = createContext<ProjectContextProps | undefined>(
@@ -49,8 +50,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
 
         console.log("Projects fetched:", data.data);
 
-        setProjects(data.data); 
-
+        setProjects(data.data);
       } catch (err) {
         console.error("Error fetching projects:", err);
       } finally {
@@ -69,6 +69,10 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
+  const addProject = (project: Project) => {
+    setProjects((prevProjects) => [...prevProjects, project]);
+  };
+
   const isSelected = (cardName: string) => selectedCards.includes(cardName);
 
   const value: ProjectContextProps = {
@@ -79,6 +83,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     isSelected,
     isLoading,
     setIsLoading,
+    addProject,
   };
 
   return (

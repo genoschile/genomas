@@ -7,64 +7,65 @@
   max-width: max-content;
   border-radius: 0.5rem;
   outline: 1px solid rgba(0, 0, 0, 0.2);
+}
 
-  & ul {
-    list-style: none;
+.dropdownUser--menu ul,
+.dropdown-content ul {
+  list-style: none;
+  width: 100%;
+
+  & > * {
+    border: 1px solid transparent;
+  }
+
+  & > *:not(:first-child) {
+    border-top: 0.5px solid rgba(0, 0, 0, 1);
+  }
+
+  & li {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     width: 100%;
+    transition: background-color 0.3s ease-in;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
 
     & > * {
-      border: 1px solid transparent;
-    }
-
-    & > *:not(:first-child) {
-      border-top: 0.5px solid rgba(0, 0, 0, 1);
-    }
-
-    & li {
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
+      border: none;
+      padding: 0.5rem 0.8rem;
+      text-wrap: nowrap;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
       width: 100%;
-      transition: background-color 0.3s ease-in;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      text-align: left;
+    }
 
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.2);
-      }
+    & > a {
+      text-decoration: none;
+    }
 
-      & > * {
-        border: none;
-        padding: 0.5rem 0.8rem;
-        text-wrap: nowrap;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        width: 100%;
-        font-family: inherit;
-        font-size: inherit;
-        color: inherit;
-        text-align: left;
-      }
+    & > button,
+    & > a {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: transparent;
 
-      & > a {
-        text-decoration: none;
-      }
-
-      & > button,
-      & > a {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-color: transparent;
-
-        & .dropdown-menu__icon {
-          fill: black;
-          max-width: 32px;
-          height: auto;
-          aspect-ratio: 1/1;
-        }
+      & .dropdown-menu__icon {
+        fill: black;
+        max-width: 32px;
+        height: auto;
+        aspect-ratio: 1/1;
       }
     }
   }

@@ -17,41 +17,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-
-    & ul {
-      list-style: none;
-      padding-block: 0.5rem;
-      margin: 0.2rem;
-      padding-inline: 0.6rem;
-
-      & li {
-        padding: 0.2rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        width: 100%;
-        height: 100%;
-
-        &:has(:focus) {
-          outline: 1px solid black;
-        }
-
-        &:hover {
-          background-color: #f0f0f0;
-        }
-
-        & input {
-          border: none;
-          background-color: transparent;
-          width: 100%;
-          height: 100%;
-          font-size: 1em;
-
-          &:focus {
-            outline: none;
-          }
-        }
-      }
-    }
+    max-block-size: 220px;
+    max-inline-size: 400px;
   }
 
   & h3 {

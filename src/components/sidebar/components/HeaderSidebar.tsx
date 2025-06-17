@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import { FaChevronRight } from "react-icons/fa";
-import Link from "next/link";
 import { DropdownWorkspace } from "@/components/sidebar/components/DropdownWorkspace";
 import { useCurrentProject } from "@/context/currentProject";
 import { SiOpenproject } from "react-icons/si";
@@ -15,8 +14,6 @@ const nameProject = "Select a project";
 interface HeaderSidebarProps {
   isExpanded: boolean;
 }
-
-const path = "genomas/user";
 
 const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
   const [isOpen, setIsOpen] = useState(false);

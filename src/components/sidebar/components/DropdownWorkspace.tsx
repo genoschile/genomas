@@ -6,8 +6,7 @@ import { MdOutlineWorkspaces } from "react-icons/md";
 import { FaTimes } from "react-icons/fa";
 import { useModalContext } from "@/hooks/useModalsProject";
 import { MODAL_IDS } from "@/context/ModalsProject";
-import { useProjectContext } from "@/hooks/useProjectContext";
-import { useCurrentProject } from "@/context/currentProject";
+import { CurrentListProjectsSelect } from "./CurrentListProjectsSelect";
 
 export const DropdownWorkspace = ({
   isOpen,
@@ -61,29 +60,5 @@ export const DropdownWorkspace = ({
         </div>
       </div>
     </nav>
-  );
-};
-
-export const CurrentListProjectsSelect = () => {
-  const { projects } = useProjectContext();
-  const { setCurrentProject } = useCurrentProject();
-
-  if (!projects || projects.length === 0) {
-    return <p className="no-projects-message">No projects available.</p>;
-  }
-
-  return (
-    <ul role="menu" aria-label="project List">
-      {projects.map((project, index) => (
-        <li key={index} className="dropdown-item">
-          <button
-            className="dropdown-link"
-            onClick={() => setCurrentProject(project)}
-          >
-            {project.name}
-          </button>
-        </li>
-      ))}
-    </ul>
   );
 };

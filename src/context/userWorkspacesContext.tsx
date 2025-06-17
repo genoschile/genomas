@@ -15,15 +15,12 @@ export type Workspace = {
   createdAt: Date;
 };
 
-type WorkspaceList = Workspace[];
-
 interface WorkspacesContextType {
-  workspaces: WorkspaceList;
+  workspaces: Workspace[];
   loading: boolean;
   refreshWorkspaces: () => Promise<void>;
   selectedWorkspaceId: string | null;
   setSelectedWorkspaceId: React.Dispatch<React.SetStateAction<string | null>>;
-  addWorkspace: (workspace: Workspace) => void;
 }
 
 const UserWorkspacesContext = createContext<WorkspacesContextType | undefined>(
@@ -35,7 +32,7 @@ export const UserWorkspacesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [workspaces, setWorkspaces] = useState<WorkspaceList>([]);
+  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(
     null
@@ -63,10 +60,6 @@ export const UserWorkspacesProvider = ({
     }
   };
 
-  const addWorkspace = (workspace: Workspace) => {
-    setWorkspaces((prev) => [...prev, workspace]);
-  };
-
   useEffect(() => {
     fetchWorkspaces();
   }, []);
@@ -79,7 +72,6 @@ export const UserWorkspacesProvider = ({
         refreshWorkspaces: fetchWorkspaces,
         selectedWorkspaceId,
         setSelectedWorkspaceId,
-        addWorkspace
       }}
     >
       {children}

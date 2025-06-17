@@ -19,6 +19,7 @@
     "@google/genai": "^0.13.0",
     "@prisma/client": "^6.9.0",
     "adm-zip": "^0.5.16",
+    "axios": "^1.10.0",
     "bcrypt": "^5.1.1",
     "charts.css": "^1.1.0",
     "formidable": "^3.5.4",

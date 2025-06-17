@@ -5,13 +5,15 @@ import { FaExclamationCircle } from "react-icons/fa";
 import "./workspaceform.css";
 import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
+import { useProjectContext } from "@/hooks/useProjectContext";
 
 export const WorkspaceForm = () => {
   const [workspaceName, setWorkspaceName] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
 
-  const { selectedWorkspaceId, addWorkspace } = useUserWorkspacesContext();
+  const { addProject } = useProjectContext();
+  const { selectedWorkspaceId } = useUserWorkspacesContext();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,15 +74,11 @@ export const WorkspaceForm = () => {
 
       console.log("Workspace created response:", data);
 
-      addWorkspace(data.data);
+      addProject(data.data);
 
       console.log("Proyecto creado exitosamente");
-
-      // faltan datos de que estan en el localStorage
-
       setWorkspaceName("");
       setDescription("");
-      alert("Workspace created successfully!");
     } catch (error) {
       setError("Failed to create workspace. Please try again.");
     }
