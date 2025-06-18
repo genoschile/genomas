@@ -37,10 +37,29 @@ export interface IProjectDTO {
   groups?: { id: string }[];
 }
 
+export interface IProjectFile {
+  name: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  url: string;
+  createdAt: string;
+  projectId: string;
+  organizationId?: string;
+  workspaceId?: string;
+}
+
 export interface IProjectRepository {
   getAllProjectsByWorkspaceId(idWorkspace: string): Promise<IProject[]>;
   createProject(
     idWorkspace: string,
     data: IProjectDTO
   ): Promise<IProjectResponse | null>;
+  addFilesToProject(
+    idProject: string,
+    files: IProjectFile[]
+  ): Promise<IProjectResponse | null>;
+  getFilesByProjectId(
+    idProject: string
+  ): Promise<IProjectFile[] | null>;
 }

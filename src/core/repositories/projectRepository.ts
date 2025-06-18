@@ -2,11 +2,13 @@ import prisma from "@/lib/actions/prisma";
 import {
   IProject,
   IProjectDTO,
+  IProjectFile,
   IProjectRepository,
   IProjectResponse,
 } from "../interfaces/IProject";
 import { AccessType } from "@prisma/client";
 import { mapFromPrismaAccessType } from "../mapTypes/accessTypes";
+import { FileRole, FileType } from "../interfaces/enums";
 
 export class ProjectRepository implements IProjectRepository {
   async getAllProjectsByWorkspaceId(
@@ -119,5 +121,86 @@ export class ProjectRepository implements IProjectRepository {
     };
 
     return transformedProject;
+  }
+
+  async addFilesToProject(
+    idProject: string,
+    files: IProjectFile[]
+  ): Promise<any> {
+    // Mapea y valida fileType y fileRole
+    const dataToInsert = files.map((file) => {
+      // Convertir extensión a FileType enum
+      const extUpper = file.extension.toUpperCase();
+      // Validar que exista en FileType, sino poner default (ej: CSV)
+      const fileTypeValue = (FileType as any)[extUpper] ?? FileType.CSV;
+
+      return {
+        filename: file.name,
+        path: file.url,
+        fileType: fileTypeValue,
+        fileRole: FileRole.INPUT,
+        projectId: idProject,
+        uploadedAt: new Date(file.createdAt),
+        // organizationId: file.organizationId,
+        // workspaceId: file.workspaceId,
+      };
+    });
+
+    await prisma.file.createMany({
+      data: dataToInsert,
+    });
+
+    return prisma.project.findUnique({
+      where: { id: idProject },
+      include: { Files: true },
+    });
+  }
+
+  async getFilesByProjectId(idProject: string): Promise<IProjectFile[] | null> {
+    const files = await prisma.file.findMany({
+      where: { projectId: idProject },
+      select: {
+        id: true,
+        filename: true,
+        uploadedAt: true,
+        path: true,
+        fileRole: true,
+        fileType: true,
+        projectId: true,
+      },
+    });
+
+    if (!files || files.length === 0) {
+      return [];
+    }
+
+    console.log("Files found for project ID:", idProject, files);
+
+    return files.map((file) => {
+      const extension =
+        file.filename.split(".").pop()?.toLowerCase() || "unknown";
+
+      const mimeType =
+        extension === "pdf"
+          ? "application/pdf"
+          : extension === "txt"
+          ? "text/plain"
+          : extension === "csv"
+          ? "text/csv"
+          : "application/octet-stream";
+
+      return {
+        name: file.filename,
+        extension,
+        mimeType,
+        size: 0,
+        url: file.path,
+        createdAt: file.uploadedAt.toISOString(),
+        projectId: file.projectId,
+
+        fileType: file.fileType as FileType,
+        roleType: file.fileRole as FileRole,
+      };
+    });
   }
 }

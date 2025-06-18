@@ -15,6 +15,7 @@ import {
   FaUpload,
 } from "react-icons/fa";
 import { useCurrentProject } from "@/context/currentProject";
+import axios from "axios";
 
 export interface resUpload_DB {
   success: boolean;
@@ -24,8 +25,6 @@ export interface resUpload_DB {
   message?: string;
   error?: string;
 }
-
-import axios from "axios";
 
 export default function FileProcessor() {
   const {
@@ -97,39 +96,41 @@ export default function FileProcessor() {
   const { currentProject } = useCurrentProject();
 
   const handleStageToDatabase = async () => {
-    console.log("handleStageToDatabase called");
-
     if (!currentProject) {
       toast.error("No hay un proyecto POR DEFAULT seleccionado.");
       return;
     }
 
+    if (decompressedFiles.length === 0) {
+      toast.error("No hay archivos descomprimidos para subir.");
+      return;
+    }
+
+    if (!uploadJobId) {
+      toast.error("No se encontró un jobId para la subida.");
+      return;
+    }
+
+    const { id: projectId, workspace } = currentProject;
+    const { id: workspaceId, organizationId } = workspace;
+
+    const formData = new FormData();
+    formData.append("workspaceId", workspaceId);
+    formData.append("projectId", projectId);
+    formData.append("jobId", uploadJobId);
+    formData.append("organizationId", organizationId);
+
     setUploadStatus(UploadStatus.UPLOAD_DB);
     setUploading(true);
 
+    const toastId = toast.loading("Subiendo archivos a la base de datos...");
+
     try {
-      const formData = new FormData();
-
-      if (decompressedFiles.length === 0) {
-        toast.error("No hay archivos descomprimidos para subir.");
-        setUploadStatus(UploadStatus.UPLOAD_ERROR);
-        return;
-      }
-
-      if (!uploadJobId) {
-        toast.error("No se encontró un jobId para la subida.");
-        setUploadStatus(UploadStatus.UPLOAD_ERROR);
-        return;
-      }
-
-      formData.append("jobId", uploadJobId);
-
       const res = await axios.post("/api/document/upload", formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round(
             (progressEvent.loaded * 100) / (progressEvent.total || 1)
           );
-          console.log(`Progreso real: ${percent}%`);
           setProgressMap((prev) => ({
             ...prev,
             ["files"]: percent,
@@ -140,19 +141,20 @@ export default function FileProcessor() {
         },
       });
 
-      console.log("Respuesta del servidor:", res.data);
+      toast.dismiss(toastId);
 
       if (res.data.success) {
         setDecompressedFiles(res.data.data.files);
         setUploadStatus(UploadStatus.STAGED);
-        toast.success("Archivos cargados y descomprimidos.");
+        toast.success("¡Archivos subidos correctamente!");
       } else {
-        toast.error("Error al procesar los archivos" + res.data.message);
+        toast.error("Error: " + res.data.message);
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
       }
     } catch (error) {
       console.error("Error en la subida:", error);
-      toast.error("Error al procesar archivos.");
+      toast.dismiss(toastId);
+      toast.error("Error al procesar archivos");
       setUploadStatus(UploadStatus.UPLOAD_ERROR);
     } finally {
       setUploading(false);

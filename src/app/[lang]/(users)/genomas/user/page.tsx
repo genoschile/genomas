@@ -3,7 +3,6 @@
 /* components */
 import { ProjectCardList } from "@/components/project/ProjectCardList";
 import { ProjectHeaderUser } from "@/components/project/ProjectHeaderUser";
-import ProjectUserTable from "@/components/project/table/ProjectUserTable";
 import { SidebarInfoProjectSelect } from "@/components/sidebar/sidebarInfoProjectSelect/SidebarInfoProjectSelect";
 
 /* style */
@@ -11,7 +10,8 @@ import "./page.css";
 
 /* hooks */
 import { useProjectContext } from "@/hooks/useProjectContext";
-import { FaTrashAlt } from "react-icons/fa";
+import { FilesProjectSelected } from "./components/FilesProjectSelected";
+import { TrashContainer } from "./components/TrashContainer";
 
 export default function Page() {
   const { selectedCards } = useProjectContext();
@@ -27,6 +27,10 @@ export default function Page() {
         </div>
       </article>
 
+      <article>
+        <FilesProjectSelected />
+      </article>
+
       <article className="project__home--article">
         <div className="project__home--container">
           <TrashContainer />
@@ -37,54 +41,3 @@ export default function Page() {
     </>
   );
 }
-
-export const HeaderTableTrash = [
-  "Select",
-  "File Name",
-  "Original Location",
-  "Date Deleted",
-  "Size",
-  "Date Eliminated",
-  "Actions",
-];
-
-export const TrashContainer = () => {
-  return (
-    <div className="project__trash--container">
-      <header className="project__trash--header">
-        <div>
-          <FaTrashAlt />
-          <h2>Trash</h2>
-        </div>
-        <nav>
-          <button>Restore selected</button>
-          <button>Empty Trash</button>
-        </nav>
-      </header>
-
-      <ul className="trash__table">
-        <li className="trash__table--row trash__table--header">
-          {HeaderTableTrash.map((header, index) => (
-            <div key={index} className="trash__table--cell">
-              {header}
-            </div>
-          ))}
-        </li>
-
-        <li className="trash__table--row">
-          <label className="trash__table--cell" htmlFor="checkboxTrash">
-            <input id="checkboxTrash" type="checkbox" />
-          </label>
-          <div className="trash__table--cell">report.docx</div>
-          <div className="trash__table--cell">/documents/reports</div>
-          <div className="trash__table--cell">2025-06-01</div>
-          <div className="trash__table--cell">1.2 MB</div>
-          <div className="trash__table--cell">2025-06-08</div>
-          <div className="trash__table--cell">
-            <span>...</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  );
-};

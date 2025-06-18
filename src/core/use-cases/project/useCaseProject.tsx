@@ -1,4 +1,8 @@
-import { IProjectDTO, IProjectRepository } from "@/core/interfaces/IProject";
+import {
+  IProjectDTO,
+  IProjectFile,
+  IProjectRepository,
+} from "@/core/interfaces/IProject";
 
 export class useCaseProjects {
   constructor(private userRepo: IProjectRepository) {}
@@ -9,5 +13,16 @@ export class useCaseProjects {
 
   async createProject(idWorkspace: string, data: IProjectDTO): Promise<any> {
     return this.userRepo.createProject(idWorkspace, data);
+  }
+
+  async addFilesToProject(
+    idProject: string,
+    files: IProjectFile[]
+  ): Promise<any> {
+    return this.userRepo.addFilesToProject(idProject, files);
+  }
+
+  async getFilesByProjectId(idProject: string): Promise<IProjectFile[] | null> {
+    return await this.userRepo.getFilesByProjectId(idProject);
   }
 }
