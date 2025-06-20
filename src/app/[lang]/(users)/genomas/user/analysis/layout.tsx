@@ -6,7 +6,7 @@ export default function userLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="analysys-container">
+    <section className="analysys-container project__home--standardContainer">
       <HeaderTabs />
       {children}
     </section>

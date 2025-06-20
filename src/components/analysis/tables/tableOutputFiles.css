@@ -1,67 +1,59 @@
 .table__outputs_files {
-    outline: 1px solid black;
-    height: max-content;
-    padding: 2rem;
-    border-radius: 0.3rem;
-  
-    & table {
-      width: 100%;
-      border-collapse: collapse;
-  
-      & caption {
-        font-size: 1.875em;
-        font-weight: bold;
-        color: black;
+  width: 100%;
+  border-collapse: collapse;
+
+  & caption {
+    font-size: 1.875em;
+    font-weight: bold;
+    color: black;
+    text-align: left;
+    margin-bottom: 0.5rem;
+  }
+
+  & thead {
+    & tr {
+      & th {
+        padding: 1rem;
         text-align: left;
-        margin-bottom: 0.5rem;
       }
-  
-      & thead {
-        & tr {
-          & th {
-            padding: 1rem;
-            text-align: left;
-          }
+    }
+  }
+
+  & tbody {
+    & td {
+      padding: 0.4rem;
+      & > div {
+        padding: 0.4rem;
+        border-radius: 8px;
+      }
+
+      &[data-cell="File"] {
+        & div {
+          background-color: transparent;
         }
       }
-  
-      & tbody {
-        & td {
-          padding: 0.4rem;
-          & > div {
-            padding: 0.4rem;
-            border-radius: 8px;
-          }
-  
-          &[data-cell="File"] {
-            & div {
-              background-color: transparent;
-            }
-          }
-  
-          &[data-cell="Workflow"] {
-            & div {
-              background-color: var(--bg-color-yellow);
-            }
-          }
-          &[data-cell="Idprocess"] {
-            & div {
-              background-color: gray;
-            }
-          }
+
+      &[data-cell="Workflow"] {
+        & div {
+          background-color: var(--bg-color-yellow);
         }
       }
-  
-      & tfood {
-        width: 100%;
-        margin-top: 1rem;
-        & tr {
-          width: 100%;
-          & td {
-            margin: 0 auto;
-          }
+      &[data-cell="Idprocess"] {
+        & div {
+          background-color: gray;
         }
       }
     }
   }
-  
+
+  & tfood {
+    width: 100%;
+    margin-top: 1rem;
+    & tr {
+      width: 100%;
+      & td {
+        margin: 0 auto;
+      }
+    }
+  }
+}

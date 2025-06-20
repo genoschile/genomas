@@ -2,6 +2,7 @@
 
 import { useCurrentProject } from "@/context/currentProject";
 import { useEffect, useState } from "react";
+import { IoIosAdd } from "react-icons/io";
 
 interface IFile {
   id: string;
@@ -84,57 +85,70 @@ export const FilesProjectSelected = () => {
 
   return (
     <div className="project__home--container">
-      {loading && <p>Cargando archivos...</p>}
-      {error && <p className="error">{error}</p>}
-      {!loading && !error && files && files.length === 0 && (
-        <p>No hay archivos en este proyecto.</p>
-      )}
+      <header className="project__home--header">
+        <h2>User Files</h2>
 
-      {!loading && !error && files && files.length > 0 && (
-        <>
-          <ul className="files__project--list">
-            {files.map((file, index) => (
-              <li
-                key={file.id || index}
-                className={`files__project--item ${
-                  selectedFiles.has(file.id) ? "selected" : ""
-                }`}
-                onClick={() => toggleSelect(file.id)}
+        <nav>
+          <button>
+            <IoIosAdd size="24" /> New
+          </button>
+          <button>Move To Trash</button>
+        </nav>
+      </header>
+
+      <div>
+        {loading && <p>Cargando archivos...</p>}
+        {error && <p className="error">{error}</p>}
+        {!loading && !error && files && files.length === 0 && (
+          <p>No hay archivos en este proyecto.</p>
+        )}
+
+        {!loading && !error && files && files.length > 0 && (
+          <>
+            <ul className="files__project--list">
+              {files.map((file, index) => (
+                <li
+                  key={file.id || index}
+                  className={`files__project--item ${
+                    selectedFiles.has(file.id) ? "selected" : ""
+                  }`}
+                  onClick={() => toggleSelect(file.id)}
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor: selectedFiles.has(file.id)
+                      ? "#e0f7fa"
+                      : "white",
+                    border: "1px solid #ddd",
+                    borderRadius: "6px",
+                    padding: "0.5rem",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  <div className="files__project--name">{file.name}</div>
+                  <div className="files__project--size">{file.size}</div>
+                  <div className="files__project--date">{file.date}</div>
+                </li>
+              ))}
+            </ul>
+
+            {selectedFiles.size > 0 && (
+              <button
+                onClick={handleSendSelected}
                 style={{
+                  padding: "0.5rem 1rem",
+                  backgroundColor: "#0070f3",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
                   cursor: "pointer",
-                  backgroundColor: selectedFiles.has(file.id)
-                    ? "#e0f7fa"
-                    : "white",
-                  border: "1px solid #ddd",
-                  borderRadius: "6px",
-                  padding: "0.5rem",
-                  marginBottom: "0.5rem",
                 }}
               >
-                <div className="files__project--name">{file.name}</div>
-                <div className="files__project--size">{file.size}</div>
-                <div className="files__project--date">{file.date}</div>
-              </li>
-            ))}
-          </ul>
-
-          {selectedFiles.size > 0 && (
-            <button
-              onClick={handleSendSelected}
-              style={{
-                padding: "0.5rem 1rem",
-                backgroundColor: "#0070f3",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
-              Enviar archivos seleccionados ({selectedFiles.size})
-            </button>
-          )}
-        </>
-      )}
+                Enviar archivos seleccionados ({selectedFiles.size})
+              </button>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

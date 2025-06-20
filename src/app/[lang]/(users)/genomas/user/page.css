@@ -1,31 +1,12 @@
-.project__home--article {
-  display: block;
-  width: 100%;
-  padding: 2rem;
-  min-block-size: 30vh;
-
-  & > div:first-of-type {
-    width: 100%;
-    padding: 0.4rem;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 0.4rem;
-
-    & .project__list--container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 90%;
-      margin: 0 auto;
-    }
-  }
+.project__list--container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .project__trash--container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-inline: 1rem;
-
   button {
     display: flex;
     gap: 0.3rem;

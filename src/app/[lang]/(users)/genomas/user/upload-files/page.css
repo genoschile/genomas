@@ -1,52 +1,7 @@
-.upload-files {
-  display: flex;
-  flex-direction: column;
-  inline-size: 100%;
-  max-inline-size: 980px;
-  margin: 0 auto;
-  gap: 1.2rem;
-  
-  > article {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
-    padding-inline: 1rem;
-
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    margin-block-start: 1rem;
-
-    &:last-child {
-      margin-block-end: 1rem;
-    }
-  }
-}
-
-/* article 1 */
-.upload-files__container {
-  display: flex;
-  inline-size: 100%;
-
-  &:first-child {
-    flex: 1;
-  }
-
-  &:last-child {
-    flex: 2;
-  }
-
-  & .upload-files__files-section {
-    padding-block: 1rem;
-    display: flex;
-    gap: 1rem;
-    flex-direction: column;
-    justify-content: center;
-    inline-size: 100%;
-
-    & .upload-files__title {
-      font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);
-      font-weight: 400;
-      margin-bottom: 0.4rem;
-    }
-  }
+.upload-files__title {
+  font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);
+  font-weight: 400;
+  margin-bottom: 0.4rem;
 }
 
 /* footer */

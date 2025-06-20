@@ -1,0 +1,27 @@
+.project__home--article {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 1200px;
+  margin-inline: auto;
+  margin-block-start: 2rem;
+}
+
+.project__home--standardContainer {
+  inline-size: 100%;
+  max-inline-size: 1200px;
+  margin-inline: auto;
+  margin-block-start: 2rem;
+}
+
+.project__home--container {
+  min-block-size: 25vh;
+  inline-size: 100%;
+  padding-inline: 1rem;
+  padding-block: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}

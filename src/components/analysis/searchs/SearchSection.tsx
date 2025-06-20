@@ -5,7 +5,7 @@ import "./searchSection.css";
 
 export const SearchSection = () => {
   return (
-    <search className="search-analysis-section">
+    <search className="search-analysis-section project__home--standardContainer">
       {/* Formulario de selección */}
       <form className="search-form" role="search">
         <input list="data-options" id="search-data" placeholder="Enter data" />

@@ -11,10 +11,12 @@ import { DropdownMenuCard } from "./components/DropdownMenuCard";
 import { MODAL_IDS } from "@/context/ModalsProject";
 
 export const ProjectCard = ({
+  id,
   name,
   description,
   sharedWith,
 }: {
+  id: string;
   name: string;
   description: string;
   sharedWith: string[];
@@ -25,7 +27,7 @@ export const ProjectCard = ({
   const dropdownRef = useRef<HTMLSpanElement>(null);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    toggleCardSelection(name);
+    toggleCardSelection(id);
   };
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export const ProjectCard = ({
   }, [dropdownRef]);
 
   return (
-    <li className={`project__list--card ${isSelected(name) ? "selected" : ""}`}>
+    <li className={`project__list--card ${isSelected(id) ? "selected" : ""}`}>
       <header>
         <span ref={dropdownRef} onClick={() => setIsOpen(!isOpen)}>
           <SlOptionsVertical />
@@ -55,12 +57,13 @@ export const ProjectCard = ({
         <label>
           <input
             type="checkbox"
-            checked={isSelected(name)}
+            checked={isSelected(id)}
             onChange={handleCheckboxChange}
           />
         </label>
       </header>
       <figure>
+        {/* <button onClick={() => openModal(MODAL_IDS.MEMBERS, { projectId: id })}> */}
         <button onClick={() => openModal(MODAL_IDS.MEMBERS)}>
           {sharedWith.length > 0 ? (
             <FaUser size={20} />
@@ -76,5 +79,3 @@ export const ProjectCard = ({
     </li>
   );
 };
-
-

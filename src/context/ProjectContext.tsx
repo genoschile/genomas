@@ -14,8 +14,8 @@ interface ProjectContextProps {
   projects: Project[];
   setProjects: (projects: Project[]) => void;
   selectedCards: string[];
-  toggleCardSelection: (cardName: string) => void;
-  isSelected: (cardName: string) => boolean;
+  toggleCardSelection: (cardId: string) => void;
+  isSelected: (cardId: string) => boolean;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
   addProject: (project: Project) => void;
@@ -59,11 +59,11 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     fetchProjects();
   }, [user]);
 
-  const toggleCardSelection = (cardName: string) => {
+  const toggleCardSelection = (cardId: string) => {
     setSelectedCards((prevSelected) =>
-      prevSelected.includes(cardName)
-        ? prevSelected.filter((name) => name !== cardName)
-        : [...prevSelected, cardName]
+      prevSelected.includes(cardId)
+        ? prevSelected.filter((id) => id !== cardId)
+        : [...prevSelected, cardId]
     );
   };
 
@@ -71,8 +71,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     setProjects((prevProjects) => [...prevProjects, project]);
   };
 
-  const isSelected = (cardName: string) => selectedCards.includes(cardName);
-
+  const isSelected = (cardId: string) => selectedCards.includes(cardId);
+  
   const value: ProjectContextProps = {
     projects,
     setProjects,

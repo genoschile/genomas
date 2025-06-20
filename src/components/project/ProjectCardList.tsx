@@ -31,6 +31,7 @@ export const ProjectCardList = () => {
       <ul className="project__list">
         {currentProjects.map((proj, index) => (
           <ProjectCard
+            id={proj.id}
             key={index}
             name={proj.id}
             description={proj.name}

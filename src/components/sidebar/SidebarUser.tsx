@@ -37,21 +37,25 @@ const sidebarItems = [
     href: `/${path}/analysis`,
     icon: <IoDocumentOutline size={32} className="sidebar__icon" />,
     text: "Analysis",
+    disabled: true,
   },
   {
     href: `/${path}/documents`,
     icon: <AiOutlineExperiment size={32} className="sidebar__icon" />,
     text: "Documents",
+    disabled: true,
   },
   {
     href: `/${path}/summary`,
     icon: <VscGraphLine size={32} className="sidebar__icon" />,
     text: "Summary",
+    disabled: true,
   },
   {
     href: `/${path}/configuration`,
     icon: <GrConfigure size={32} className="sidebar__icon" />,
     text: "Configuration",
+    disabled: true,
   },
 ];
 
@@ -75,7 +79,12 @@ export const SidebarUser = ({ className = "" }: { className?: string }) => {
 
       <ul className="sidebar__list">
         {sidebarItems.map((item, index) => (
-          <li key={index} className="sidebar__list--li">
+          <li
+            key={index}
+            className={`sidebar__list--li ${item.disabled ? "disabled" : ""} ${
+              item.disabled ? "disabled-link" : ""
+            }`}
+          >
             <Link
               href={item.href}
               data-text={item.text}

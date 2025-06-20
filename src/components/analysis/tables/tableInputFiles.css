@@ -1,148 +1,141 @@
 .table__inputs_files {
-  outline: 1px solid black;
-  height: max-content;
-  padding: 2rem;
-  border-radius: 0.3rem;
+  min-block-size: 500px;
+  width: 100%;
+  border-collapse: collapse;
 
-  & table {
-    min-block-size: 500px;
-    width: 100%;
-    border-collapse: collapse;
+  & input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    aspect-ratio: 1;
+    cursor: pointer;
+  }
 
-    & input[type="checkbox"] {
-      width: 1rem;
-      height: 1rem;
-      aspect-ratio: 1;
-      cursor: pointer;
+  & tr {
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+
+  & tr.selected {
+    background-color: var(--hover-row-table);
+  }
+
+  & caption {
+    font-size: 1.875em;
+    font-weight: bold;
+    color: black;
+    text-align: left;
+    margin-bottom: 0.5rem;
+  }
+
+  & thead {
+    & > tr:nth-child(2) > th:first-child {
+      visibility: hidden;
     }
 
     & tr {
-      background-color: transparent;
-      transition: background-color 0.3s ease;
-    }
-
-    & tr.selected {
-      background-color: var(--hover-row-table);
-    }
-
-    & caption {
-      font-size: 1.875em;
-      font-weight: bold;
-      color: black;
-      text-align: left;
-      margin-bottom: 0.5rem;
-    }
-
-    & thead {
-      & > tr:nth-child(2) > th:first-child {
-        visibility: hidden;
-      }
-
-      & tr {
+      &:nth-child(2) {
         &:nth-child(2) {
-          &:nth-child(2) {
-            font-size: 1.25em;
-            font-weight: medium;
-          }
-
-          &:nth-child(3) {
-            font-size: 1.5em;
-            font-weight: bold;
-          }
-
-          &:nth-child(4) {
-            font-size: 1.5em;
-            font-weight: bold;
-          }
-
-          &:nth-child(5) {
-            font-size: 1.5em;
-            font-weight: bold;
-          }
+          font-size: 1.25em;
+          font-weight: medium;
         }
-        & th {
-          padding: 1rem;
-          text-align: left;
+
+        &:nth-child(3) {
+          font-size: 1.5em;
+          font-weight: bold;
+        }
+
+        &:nth-child(4) {
+          font-size: 1.5em;
+          font-weight: bold;
+        }
+
+        &:nth-child(5) {
+          font-size: 1.5em;
+          font-weight: bold;
         }
       }
+      & th {
+        padding: 1rem;
+        text-align: left;
+      }
     }
+  }
 
-    & tbody {
-      & tr {
-        & td {
+  & tbody {
+    & tr {
+      & td {
+        padding: 0.4rem;
+
+        &:first-child {
+          width: 1rem;
+          text-align: center;
+
+          & svg {
+            margin-left: 0.5rem;
+            stroke: black;
+            stroke-width: 10px;
+            fill: none;
+            cursor: pointer;
+
+            &.favorite {
+              fill: yellow;
+              stroke: yellow;
+            }
+          }
+        }
+
+        &:nth-child(2) {
+          font-size: 1.25em;
+          font-weight: medium;
+        }
+
+        &:nth-child(3) {
+          font-size: 1.5em;
+          font-weight: bold;
+        }
+
+        &:nth-child(4) {
+          font-size: 1.5em;
+          font-weight: bold;
+        }
+
+        &:nth-child(5) {
+          font-size: 1.5em;
+          font-weight: bold;
+        }
+
+        & > div {
           padding: 0.4rem;
+          border-radius: 8px;
+        }
 
-          &:first-child {
-            width: 1rem;
-            text-align: center;
-
-            & svg {
-              margin-left: 0.5rem;
-              stroke: black;
-              stroke-width: 10px;
-              fill: none; 
-              cursor: pointer;
-
-              &.favorite {
-                fill: yellow;
-                stroke: yellow;
-              }
-            }
+        &[data-cell="File"] {
+          & div {
+            background-color: transparent;
           }
+        }
 
-          &:nth-child(2) {
-            font-size: 1.25em;
-            font-weight: medium;
+        &[data-cell="Workflow"] {
+          & div {
+            background-color: var(--bg-color-yellow);
           }
-
-          &:nth-child(3) {
-            font-size: 1.5em;
-            font-weight: bold;
-          }
-
-          &:nth-child(4) {
-            font-size: 1.5em;
-            font-weight: bold;
-          }
-
-          &:nth-child(5) {
-            font-size: 1.5em;
-            font-weight: bold;
-          }
-
-          & > div {
-            padding: 0.4rem;
-            border-radius: 8px;
-          }
-
-          &[data-cell="File"] {
-            & div {
-              background-color: transparent;
-            }
-          }
-
-          &[data-cell="Workflow"] {
-            & div {
-              background-color: var(--bg-color-yellow);
-            }
-          }
-          &[data-cell="Idprocess"] {
-            & div {
-              background-color: #e6e6e6;
-            }
+        }
+        &[data-cell="Idprocess"] {
+          & div {
+            background-color: #e6e6e6;
           }
         }
       }
     }
+  }
 
-    & tfood {
+  & tfood {
+    width: 100%;
+    margin-top: 1rem;
+    & tr {
       width: 100%;
-      margin-top: 1rem;
-      & tr {
-        width: 100%;
-        & td {
-          margin: 0 auto;
-        }
+      & td {
+        margin: 0 auto;
       }
     }
   }

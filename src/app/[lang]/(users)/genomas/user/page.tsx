@@ -12,30 +12,37 @@ import "./page.css";
 import { useProjectContext } from "@/hooks/useProjectContext";
 import { FilesProjectSelected } from "./components/FilesProjectSelected";
 import { TrashContainer } from "./components/TrashContainer";
+import { ArticleContainer } from "@/components/container/ProjectHomeArticleContainer";
+import { TableInputFiles } from "@/components/analysis/tables/TableInputFiles";
+import { TableOutputFiles } from "@/components/analysis/tables/TableOutputFiles";
 
 export default function Page() {
   const { selectedCards } = useProjectContext();
 
   return (
     <>
-      <article className="project__home--article">
-        <div className="project__home--container">
-          <ProjectHeaderUser />
-          <section className="project__list--container">
-            <ProjectCardList />
-          </section>
-        </div>
-      </article>
+      <ArticleContainer>
+        <ProjectHeaderUser />
+        <section className="project__list--container">
+          <ProjectCardList />
+        </section>
+      </ArticleContainer>
 
-      <article>
+      <ArticleContainer>
         <FilesProjectSelected />
-      </article>
+      </ArticleContainer>
 
-      <article className="project__home--article">
-        <div className="project__home--container">
-          <TrashContainer />
-        </div>
-      </article>
+      <ArticleContainer>
+        <TrashContainer />
+      </ArticleContainer>
+
+      <ArticleContainer>
+        <TableInputFiles />
+      </ArticleContainer>
+
+      <ArticleContainer>
+        <TableOutputFiles />
+      </ArticleContainer>
 
       {selectedCards.length > 0 && <SidebarInfoProjectSelect />}
     </>

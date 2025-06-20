@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { SearchFilterTable } from "../searchs/SearchFilterTable";
 import "./tableOutputFiles.css";
@@ -58,59 +58,57 @@ export const TableOutputFiles = () => {
     }
   };
   return (
-    <article className="table__outputs_files">
-      <table>
-        <caption>Outputs Files</caption>
+    <table className="table__outputs_files">
+      <caption>Outputs Files</caption>
 
-        <thead>
-          <tr>
-            <th colSpan={headerTables.length + 1}>
-              <SearchFilterTable />
-            </th>
-          </tr>
-          <tr>
-            <th style={{ visibility: "hidden" }}>Select</th>
-            {headerTables.map((header, index) => (
-              <th key={index}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-
-        <tbody>
-          {tableData.map((row, index) => (
-            <tr key={index}>
-              <td
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  maxWidth: "50px",
-                  justifyContent: "space-around",
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedRows.includes(index)}
-                  onChange={() => handleCheckboxChange(index)}
-                />
-                <FaStar />
-              </td>
-              <td data-cell="File">
-                <div>{row.nombrefile}</div>
-              </td>
-              <td data-cell="Workflow">
-                <div>{row.workflow}</div>
-              </td>
-            </tr>
+      <thead>
+        <tr>
+          <th colSpan={headerTables.length + 1}>
+            <SearchFilterTable />
+          </th>
+        </tr>
+        <tr>
+          <th style={{ visibility: "hidden" }}>Select</th>
+          {headerTables.map((header, index) => (
+            <th key={index}>{header}</th>
           ))}
-        </tbody>
+        </tr>
+      </thead>
 
-        <tfoot>
-          <tr>
-            <td colSpan={headerTables.length + 1}> End of table </td>
+      <tbody>
+        {tableData.map((row, index) => (
+          <tr key={index}>
+            <td
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                maxWidth: "50px",
+                justifyContent: "space-around",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={selectedRows.includes(index)}
+                onChange={() => handleCheckboxChange(index)}
+              />
+              <FaStar />
+            </td>
+            <td data-cell="File">
+              <div>{row.nombrefile}</div>
+            </td>
+            <td data-cell="Workflow">
+              <div>{row.workflow}</div>
+            </td>
           </tr>
-        </tfoot>
-      </table>
-    </article>
+        ))}
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td colSpan={headerTables.length + 1}> End of table </td>
+        </tr>
+      </tfoot>
+    </table>
   );
 };

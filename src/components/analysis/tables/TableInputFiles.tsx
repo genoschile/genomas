@@ -139,74 +139,72 @@ export const TableInputFiles = () => {
   const currentPosts = tableData.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
-    <article className="table__inputs_files">
-      <table>
-        <caption>User input files</caption>
-        <thead>
-          <tr>
-            <th colSpan={headerTables.length + 1}>
-              <SearchFilterTable />
-            </th>
-          </tr>
-          <tr>
-            <th>Select</th>
-            {headerTables.map((header, index) => (
-              <th key={index}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {currentPosts.map((row) => (
-            <tr
-              key={row.idprocess}
-              className={selectedIds.includes(row.idprocess) ? "selected" : ""}
-            >
-              <td>
-                <div>
-                  <input
-                    type="checkbox"
-                    checked={selectedIds.includes(row.idprocess)}
-                    onChange={() => handleCheckboxChange(row.idprocess)}
-                  />
-                  <FaStar
-                    size={20}
-                    onClick={() => handleFavoriteClick(row.idprocess)}
-                    className={
-                      favoriteIds.includes(row.idprocess) ? "favorite" : ""
-                    }
-                  />
-                </div>
-              </td>
-              <td data-cell="File">
-                <div>{row.nombrefile}</div>
-              </td>
-              <td data-cell="Workflow">
-                <div>{row.workflow}</div>
-              </td>
-              <td data-cell="Idprocess">
-                <div>{row.idprocess}</div>
-              </td>
-              <td data-cell="Status">
-                <div style={{ backgroundColor: statusColors[row.status] }}>
-                  {row.status}
-                </div>
-              </td>
-            </tr>
+    <table className="table__inputs_files">
+      <caption>User input files</caption>
+      <thead>
+        <tr>
+          <th colSpan={headerTables.length + 1}>
+            <SearchFilterTable />
+          </th>
+        </tr>
+        <tr>
+          <th>Select</th>
+          {headerTables.map((header, index) => (
+            <th key={index}>{header}</th>
           ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan={headerTables.length + 1}>
-              <Pagination
-                totalPosts={tableData.length}
-                postsPerPage={postsPerPage}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-              />
+        </tr>
+      </thead>
+      <tbody>
+        {currentPosts.map((row) => (
+          <tr
+            key={row.idprocess}
+            className={selectedIds.includes(row.idprocess) ? "selected" : ""}
+          >
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  checked={selectedIds.includes(row.idprocess)}
+                  onChange={() => handleCheckboxChange(row.idprocess)}
+                />
+                <FaStar
+                  size={20}
+                  onClick={() => handleFavoriteClick(row.idprocess)}
+                  className={
+                    favoriteIds.includes(row.idprocess) ? "favorite" : ""
+                  }
+                />
+              </div>
+            </td>
+            <td data-cell="File">
+              <div>{row.nombrefile}</div>
+            </td>
+            <td data-cell="Workflow">
+              <div>{row.workflow}</div>
+            </td>
+            <td data-cell="Idprocess">
+              <div>{row.idprocess}</div>
+            </td>
+            <td data-cell="Status">
+              <div style={{ backgroundColor: statusColors[row.status] }}>
+                {row.status}
+              </div>
             </td>
           </tr>
-        </tfoot>
-      </table>
-    </article>
+        ))}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colSpan={headerTables.length + 1}>
+            <Pagination
+              totalPosts={tableData.length}
+              postsPerPage={postsPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   );
 };

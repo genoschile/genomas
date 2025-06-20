@@ -47,22 +47,28 @@
   & .sidebar__list--li {
     width: 100%;
 
+    &.disabled-link {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
     & > a {
       text-decoration: none;
 
       &.active {
         background-color: var(--placeholder-color-hover);
-        color: #433F65;
+        color: #1c04ed;
         cursor: pointer;
 
         & .sidebar__icon {
-          color: #433F65;
+          color: #433f65;
         }
       }
 
       & > .sidebar__icon {
         transition: color 0.3s ease;
-        color: var(--primary-color);
+        color: #ff00a6;
       }
     }
   }
@@ -84,11 +90,11 @@
 
   &:hover {
     background-color: var(--placeholder-color-hover);
-    color: #433F65;
+    color: #433f65;
     cursor: pointer;
 
     & .sidebar__icon {
-      color: #433F65;
+      color: #433f65;
     }
   }
 
