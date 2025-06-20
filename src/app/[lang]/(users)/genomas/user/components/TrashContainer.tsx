@@ -13,17 +13,6 @@ export const HeaderTableTrash = [
 export const TrashContainer = () => {
   return (
     <div className="project__trash--container">
-      <header className="project__trash--header">
-        <div>
-          <FaTrashAlt />
-          <h2>Trash</h2>
-        </div>
-        <nav>
-          <button>Restore selected</button>
-          <button>Empty Trash</button>
-        </nav>
-      </header>
-
       <ul className="trash__table">
         <li className="trash__table--row trash__table--header">
           {HeaderTableTrash.map((header, index) => (

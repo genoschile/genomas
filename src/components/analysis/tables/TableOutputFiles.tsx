@@ -59,7 +59,13 @@ export const TableOutputFiles = () => {
   };
   return (
     <table className="table__outputs_files">
-      <caption>Outputs Files</caption>
+      <caption
+        style={{
+          display: "none",
+        }}
+      >
+        Outputs Files
+      </caption>
 
       <thead>
         <tr>

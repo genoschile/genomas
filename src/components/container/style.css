@@ -1,9 +1,30 @@
 .project__home--article {
-  display: block;
   inline-size: 100%;
   max-inline-size: 1200px;
   margin-inline: auto;
   margin-block-start: 2rem;
+  display: flex;
+  flex-direction: column;
+
+  min-block-size: 650px;
+  max-block-size: 50vh;
+
+  &:last-child {
+    margin-block-end: 2rem;
+  }
+
+  > .project__home--container {
+    inline-size: 100%;
+    padding-inline: 1rem;
+    padding-block: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+    block-size: 100%;
+  }
 }
 
 .project__home--standardContainer {
@@ -13,15 +34,64 @@
   margin-block-start: 2rem;
 }
 
-.project__home--container {
-  min-block-size: 25vh;
-  inline-size: 100%;
-  padding-inline: 1rem;
-  padding-block: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0.4rem;
+.project__home--header {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 2rem;
+  width: 100%;
+  border: 1px solid transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-block: 0.8rem;
+  margin-bottom: 0.5rem;
+  max-block-size: 80px;
+
+  & > h2 {
+    font-size: 1.875em;
+    font-weight: bold;
+  }
+
+  & > nav {
+    display: flex;
+    flex-wrap: nowrap;
+    text-wrap: nowrap;
+    gap: 0.5rem;
+
+    & button {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+      padding: 0.5rem 0.9rem;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-radius: 0.5rem;
+      color: var(--button-blue);
+
+      &:first-child {
+        color: white;
+        background-color: var(--button-blue);
+        gap: 0.5rem;
+
+        &:hover {
+          background-color: var(--button-blue-hover);
+        }
+      }
+
+      &:last-child {
+        text-decoration: underline;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          transform: scale(0.95);
+          transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+      }
+    }
+  }
 }

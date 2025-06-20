@@ -38,6 +38,7 @@ export interface IProjectDTO {
 }
 
 export interface IProjectFile {
+  id: string
   name: string;
   extension: string;
   mimeType: string;

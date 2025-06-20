@@ -174,7 +174,7 @@ export class ProjectRepository implements IProjectRepository {
       return [];
     }
 
-    console.log("Files found for project ID:", idProject, files);
+    // console.log("Files found for project ID:", idProject, files);
 
     return files.map((file) => {
       const extension =
@@ -190,6 +190,7 @@ export class ProjectRepository implements IProjectRepository {
           : "application/octet-stream";
 
       return {
+        id: file.id,
         name: file.filename,
         extension,
         mimeType,

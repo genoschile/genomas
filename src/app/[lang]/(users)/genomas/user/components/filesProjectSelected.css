@@ -2,3 +2,6 @@
   border: 2px solid #00acc1;
   background-color: #e0f7fa;
 }
+.files__project--list {
+  list-style: none;
+}

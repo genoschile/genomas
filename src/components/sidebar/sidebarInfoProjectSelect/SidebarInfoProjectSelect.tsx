@@ -68,7 +68,9 @@ export const SidebarInfoProjectSelect = () => {
     }
   }, [hasMounted, selectedCards]);
 
-  if (!hasMounted) return null; 
+  if (!hasMounted) return null;
+
+  if (selectedCards.length === 0) return null;
 
   return (
     <aside

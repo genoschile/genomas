@@ -58,55 +58,26 @@ const tableData: TableRow[] = [
     idprocess: "PID-101",
     status: "pending",
   },
-  {
-    nombrefile: "Archivo_E.txt",
-    workflow: "Proceso_5",
-    idprocess: "PID-102",
-    status: "done",
-  },
-  {
-    nombrefile: "Archivo_F.pdf",
-    workflow: "Proceso_6",
-    idprocess: "PID-103",
-    status: "running",
-  },
-  {
-    nombrefile: "Archivo_G.csv",
-    workflow: "Proceso_7",
-    idprocess: "PID-104",
-    status: "fail",
-  },
-  {
-    nombrefile: "Archivo_H.csv",
-    workflow: "Proceso_8",
-    idprocess: "PID-105",
-    status: "pending",
-  },
-  {
-    nombrefile: "Archivo_I.txt",
-    workflow: "Proceso_9",
-    idprocess: "PID-106",
-    status: "done",
-  },
-  {
-    nombrefile: "Archivo_J.pdf",
-    workflow: "Proceso_10",
-    idprocess: "PID-107",
-    status: "running",
-  },
-  {
-    nombrefile: "Archivo_K.csv",
-    workflow: "Proceso_11",
-    idprocess: "PID-108",
-    status: "fail",
-  },
-  {
-    nombrefile: "Archivo_L.csv",
-    workflow: "Proceso_12",
-    idprocess: "PID-109",
-    status: "pending",
-  },
 ];
+
+export const ExampleResFastAPI = {
+  organizationId: "org-123", /* ✔️ */
+  userId: "user-456", /* ✔️ */
+  workspaceId: "workspace-789", /* ✔️ */
+  inputFiles: [
+    {
+      fileName: "sample1.fastq",
+      fileType: "fastq",
+      fileSize: 123456,
+      filePath: "/uploads/sample1.fastq",
+      pipeline: "Run Alignment & Mapping",    
+      status: "done",
+      idprocess: "PID-123",
+    },
+  ], /* ✔️ */
+  workerName: "worker-1", /* ✔️ */
+  genomeVersionRef: "hg38", /* ✔️ */
+};
 
 export const TableInputFiles = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -140,7 +111,13 @@ export const TableInputFiles = () => {
 
   return (
     <table className="table__inputs_files">
-      <caption>User input files</caption>
+      <caption
+        style={{
+          display: "none",
+        }}
+      >
+        User input files
+      </caption>
       <thead>
         <tr>
           <th colSpan={headerTables.length + 1}>

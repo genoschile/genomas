@@ -8,6 +8,7 @@ interface Project {
   description: string;
   sharedWith?: string[];
   id: string;
+  workspaceId: string; 
 }
 
 interface ProjectContextProps {

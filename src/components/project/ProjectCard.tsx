@@ -12,7 +12,6 @@ import { MODAL_IDS } from "@/context/ModalsProject";
 
 export const ProjectCard = ({
   id,
-  name,
   description,
   sharedWith,
 }: {
