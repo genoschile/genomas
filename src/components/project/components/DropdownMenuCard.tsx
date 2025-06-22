@@ -5,11 +5,19 @@ import { MdDownload, MdEdit, MdInfoOutline } from "react-icons/md";
 import "./dropdownMenuCard.css";
 import { useProjectContext } from "@/hooks/useProjectContext";
 
-export const DropdownMenuCard = () => {
+export const DropdownMenuCard = ({
+  openToLeft,
+  cardId,
+}: {
+  openToLeft: boolean;
+  cardId: string;
+}) => {
   const { onSetOpen } = useProjectContext();
 
   const handleSetOpenInfoCard = () => {
-    onSetOpen(true);
+    console.log("Abriendo información del proyecto con ID:", cardId);
+
+    onSetOpen({ id: cardId, onOpen: true });
   };
 
   const menuItems = [
@@ -41,7 +49,11 @@ export const DropdownMenuCard = () => {
   ];
 
   return (
-    <ul className="project--dropdown-menu__options">
+    <ul
+      className={`project--dropdown-menu__options ${
+        openToLeft ? "position-left" : "position-right"
+      }`}
+    >
       {menuItems.map((item) => (
         <li
           key={item.id}

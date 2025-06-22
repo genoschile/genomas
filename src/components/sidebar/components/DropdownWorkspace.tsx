@@ -49,14 +49,6 @@ export const DropdownWorkspace = ({
             Create project
           </button>
 
-          <button
-            role="menuitem"
-            aria-label="Action invite members"
-            onClick={() => openModal(MODAL_IDS.MEMBERS)}
-          >
-            <IoPersonOutline className="buttons-icons" />
-            Invite member(s)
-          </button>
         </div>
       </div>
     </nav>

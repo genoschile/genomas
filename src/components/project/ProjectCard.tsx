@@ -22,8 +22,10 @@ export const ProjectCard = ({
 }) => {
   const { toggleCardSelection, isSelected } = useProjectContext();
   const { openModal } = useModalContext();
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLSpanElement>(null);
+  const [openToLeft, setOpenToLeft] = useState(false);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     toggleCardSelection(id);
@@ -46,12 +48,43 @@ export const ProjectCard = ({
     };
   }, [dropdownRef]);
 
+  const handleDropdownToggle = () => {
+    if (!dropdownRef.current) return;
+
+    const container = dropdownRef.current.closest(
+      ".project-card-list-container"
+    );
+
+    const fakeUl = document.createElement("ul");
+    fakeUl.className = "project--dropdown-menu__options";
+    fakeUl.style.visibility = "hidden";
+    fakeUl.style.position = "absolute";
+    fakeUl.style.top = "0";
+    fakeUl.style.left = "0";
+    document.body.appendChild(fakeUl);
+
+    const dropdownWidth = fakeUl.getBoundingClientRect().width || 200;
+    document.body.removeChild(fakeUl);
+
+    const triggerRect = dropdownRef.current.getBoundingClientRect();
+    const containerRect = container?.getBoundingClientRect();
+
+    if (containerRect) {
+      const spaceRight = containerRect.right - triggerRect.right;
+      const spaceLeft = triggerRect.left - containerRect.left;
+
+      setOpenToLeft(spaceRight < dropdownWidth && spaceLeft > dropdownWidth);
+    }
+
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <li className={`project__list--card ${isSelected(id) ? "selected" : ""}`}>
       <header>
-        <span ref={dropdownRef} onClick={() => setIsOpen(!isOpen)}>
+        <span ref={dropdownRef} onClick={handleDropdownToggle}>
           <SlOptionsVertical />
-          {isOpen && <DropdownMenuCard />}
+          {isOpen && <DropdownMenuCard openToLeft={openToLeft} cardId={id} />}
         </span>
         <label>
           <input

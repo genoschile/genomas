@@ -111,14 +111,14 @@
         }
       }
 
-      &:last-child {
+      /* &:last-child {
         background-color: transparent;
         outline-color: black;
 
         & .buttons-icons {
           fill: black;
         }
-      }
+      } */
     }
   }
 }

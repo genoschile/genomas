@@ -17,8 +17,8 @@ import "./projectCardList.css";
 export const ProjectCardList = () => {
   const { projects, isLoading } = useProjectContext();
   const { selectedWorkspaceId } = useUserWorkspacesContext();
-
   const [currentPage, setCurrentPage] = useState(1);
+
   const postsPerPage = 6;
 
   if (isLoading) {
@@ -44,14 +44,7 @@ export const ProjectCardList = () => {
   );
 
   return (
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        flex: "1",
-      }}
-    >
+    <div className="project-card-list-container">
       <ProjectCardListItems currentProjects={currentProjects} />
 
       {filteredProjects.length > postsPerPage && (

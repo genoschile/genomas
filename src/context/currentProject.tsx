@@ -1,44 +1,8 @@
 // context/CurrentProjectContext.tsx
 "use client";
 
+import { IProject } from "@/lib/types/contextTypes";
 import { createContext, useContext, useState, ReactNode } from "react";
-
-// export interface IProject {
-//   id: string;
-//   name: string;
-//   workspaceId: string;
-//   description: string | null;
-//   sharedWith?: string[];
-//   sharedWithGroups?: string[];
-//   files?: File[];
-//   executions?: string[];
-// }
-
-export interface IWorkspace {
-  createdAt: string;
-  description: string;
-  id: string;
-  isActive: boolean;
-  name: string;
-  organizationId: string;
-  pipelineType: string;
-  updatedAt: string;
-}
-
-export interface IProject {
-  id: string;
-  name: string;
-  workspaceId: string;
-  description: string | null;
-  createdAt: string;
-  updatedAt: string;
-  workspace: IWorkspace;
-
-  sharedWith?: string[];
-  sharedWithGroups?: string[];
-  files?: File[];
-  executions?: string[];
-}
 
 interface CurrentProjectContextType {
   currentProject: IProject | null;

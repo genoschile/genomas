@@ -1,30 +1,22 @@
 "use client";
 
 import { useSessionContext } from "@/hooks/useSession";
+import { IProject } from "@/lib/types/contextTypes";
 import { createContext, useEffect, useState } from "react";
 
-interface Project {
-  name: string;
-  description: string;
-  sharedWith?: string[];
-  id: string;
-  workspaceId: string;
-  workspace: {
-    organizationId: string;
-  };
-}
+
 
 interface ProjectContextProps {
-  projects: Project[];
-  setProjects: (projects: Project[]) => void;
+  projects: IProject[];
+  setProjects: (projects: IProject[]) => void;
   selectedCards: string[];
   toggleCardSelection: (cardId: string) => void;
   isSelected: (cardId: string) => boolean;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
-  addProject: (project: Project) => void;
-  onOpen: boolean;
-  onSetOpen: (open: boolean) => void;
+  addProject: (project: IProject) => void;
+  onOpen: { id: string; onOpen: boolean };
+  onSetOpen: ({ id, onOpen }: { id: string; onOpen: boolean }) => void;
 }
 
 export const ProjectContext = createContext<ProjectContextProps | undefined>(
@@ -34,10 +26,13 @@ export const ProjectContext = createContext<ProjectContextProps | undefined>(
 export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<IProject[]>([]);
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [onOpen, onSetOpen] = useState(false);
+  const [onOpen, onSetOpen] = useState<{ id: string; onOpen: boolean }>({
+    id: "",
+    onOpen: false,
+  });
 
   const { user } = useSessionContext();
 
@@ -74,7 +69,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
-  const addProject = (project: Project) => {
+  const addProject = (project: IProject) => {
     setProjects((prevProjects) => [...prevProjects, project]);
   };
 

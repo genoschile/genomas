@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
-import "./headerSidebarInfoProjectSelect.css"
+import "./headerSidebarInfoProjectSelect.css";
+import { useProjectContext } from "@/hooks/useProjectContext";
 
 const projectSidebarData = {
   usersWithAccess: [
@@ -54,9 +55,35 @@ export const HeaderSidebarInfoProjectSelect = () => {
     setIsAvatarListActive((prev) => !prev);
   };
 
+  const { onOpen, onSetOpen } = useProjectContext();
+
+  const projectInfo = onOpen;
+
   return (
-    <header className={`sidebarinfoProjectSelect--header ${isAvatarListActive ? "active" : ""}`}>
-      <h2>User with access</h2>
+    <header
+      className={`sidebarinfoProjectSelect--header ${
+        isAvatarListActive ? "active" : ""
+      }`}
+    >
+      <button
+        style={{
+          position: "absolute",
+          right: "10px",
+          borderRadius: "50%",
+          aspectRatio: "1/1",
+          width: "30px",
+          height: "30px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        type="button"
+        onClick={() => onSetOpen({ onOpen: false, id: "" })}
+      >
+        X
+      </button>
+      <h2>User with access </h2>
+      <p>from project id {projectInfo?.id}</p>
       <ul
         style={
           {

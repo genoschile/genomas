@@ -3,7 +3,6 @@
   background-color: white;
   position: absolute;
   top: 50%;
-  left: 70%;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -67,4 +66,12 @@
       }
     }
   }
+}
+
+.project--dropdown-menu__options.position-right {
+  left: 70%;
+}
+
+.project--dropdown-menu__options.position-left {
+  right: 70%;
 }
