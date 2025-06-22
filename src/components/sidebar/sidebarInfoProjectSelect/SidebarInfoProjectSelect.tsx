@@ -1,10 +1,13 @@
 "use client";
 
-import { MdArrowCircleLeft } from "react-icons/md";
+/* hooks */
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useProjectContext } from "@/hooks/useProjectContext";
+
+/* styles */
 import "./sidebarInfoProjectSelect.css";
+import { MdArrowCircleLeft } from "react-icons/md";
 
 const HeaderSidebarInfoProjectSelect = dynamic(
   () =>
@@ -31,46 +34,22 @@ const SectionSidebarInfoProjectSelect = dynamic(
 );
 
 export const SidebarInfoProjectSelect = () => {
-  const { selectedCards } = useProjectContext();
-  const [isOpen, setIsOpen] = useState(false);
+  const { onOpen } = useProjectContext();
   const [hasMounted, setHasMounted] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
-
-  const toggleSidebar = (): void => {
-    setIsOpen((prev) => !prev);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent): void => {
-      if (
-        isOpen &&
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (hasMounted && selectedCards.length > 0) {
-      setIsOpen(true);
-    }
-  }, [hasMounted, selectedCards]);
+  if (!hasMounted || !onOpen) {
+    return null;
+  }
 
-  if (!hasMounted) return null;
-
-  if (selectedCards.length === 0) return null;
+  const toggleSidebar = (): void => {
+    setIsOpen((prev) => !prev);
+  };
 
   return (
     <aside
@@ -82,14 +61,12 @@ export const SidebarInfoProjectSelect = () => {
           <MdArrowCircleLeft />
         </button>
 
-        {isOpen && (
-          <div className="sidebar--content">
-            <HeaderSidebarInfoProjectSelect />
-            <hr />
-            <SectionSidebarInfoProjectSelect />
-            <hr />
-          </div>
-        )}
+        <div className="sidebar--content">
+          <HeaderSidebarInfoProjectSelect />
+          <hr />
+          <SectionSidebarInfoProjectSelect />
+          <hr />
+        </div>
       </div>
     </aside>
   );

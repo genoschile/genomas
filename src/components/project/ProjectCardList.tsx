@@ -1,14 +1,18 @@
+"use client";
+
 /* hooks */
 import { useProjectContext } from "@/hooks/useProjectContext";
 import { useState } from "react";
 
 /* components */
-import { ProjectCard } from "./ProjectCard";
 import { Pagination } from "../analysis/tables/Pagination";
+import { ProjectCardListItems } from "./ProjectCardListItems";
+
+/* context */
+import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
 
 /* styles */
 import "./projectCardList.css";
-import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
 
 export const ProjectCardList = () => {
   const { projects, isLoading } = useProjectContext();
@@ -67,31 +71,5 @@ export const ProjectCardList = () => {
         </p>
       )}
     </div>
-  );
-};
-
-export const ProjectCardListItems = ({
-  currentProjects = [],
-}: {
-  currentProjects?: {
-    id: string;
-    name: string;
-    description: string;
-    sharedWith?: string[];
-    workspaceId: string;
-  }[];
-}) => {
-  return (
-    <ul className="project__list">
-      {currentProjects.map((proj) => (
-        <ProjectCard
-          id={proj.id}
-          key={proj.id}
-          name={proj.name}
-          description={proj.description}
-          sharedWith={proj.sharedWith || []}
-        />
-      ))}
-    </ul>
   );
 };

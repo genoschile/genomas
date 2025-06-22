@@ -28,6 +28,7 @@ export const GenomeVersionRefSelected = () => {
         id="workers-select"
         value={selectedGenomeVersion?.id || ""}
         onChange={handleChange}
+        name="genomeVersionRef"
       >
         <option value="" disabled>
           Selecciona una versión del genoma

@@ -29,6 +29,7 @@ export const WorkerNameSelected = () => {
         id="workers-select"
         value={selectedWorker?.id || ""}
         onChange={handleChange}
+        name="workerId"
       >
         <option value="" disabled>
           Selecciona un worker

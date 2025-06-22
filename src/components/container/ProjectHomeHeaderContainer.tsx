@@ -33,6 +33,7 @@ export const ProjectHomeHeaderContainer: React.FC<ProjectHeaderProps> = ({
             key={button.id}
             onClick={button.onClick}
             disabled={button.disabled}
+            type="button"
           >
             {button.icon && (
               <span style={{ marginRight: "0.5rem" }}>{button.icon}</span>

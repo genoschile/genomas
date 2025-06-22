@@ -1,4 +1,4 @@
-"use client";
+import { useEffect } from "react";
 
 export const ProjectFilesSelected = ({
   projects = [],
@@ -11,10 +11,15 @@ export const ProjectFilesSelected = ({
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newId = e.target.value;
-
     const selectedProject = projects.find((p) => p.id === newId) || null;
     onChangeProject?.(selectedProject);
   };
+
+  useEffect(() => {
+    if (currentProject) {
+      onChangeProject?.(currentProject);
+    }
+  }, [currentProject?.id]);
 
   return (
     <div className="select-dropdown--workspaces select-dropdown">
@@ -23,24 +28,17 @@ export const ProjectFilesSelected = ({
       </label>
       <select
         id="workspaces-select"
-        value={currentProject?.id}
+        value={currentProject?.id || ""}
         onChange={handleChange}
       >
         <option value="" disabled>
           Select a workspace
         </option>
-
-        {projects ? (
-          projects.map((pr) => (
-            <option key={pr.id} value={pr.id}>
-              {pr.name}
-            </option>
-          ))
-        ) : (
-          <option value="" disabled>
-            Loading workspaces...
+        {projects.map((pr) => (
+          <option key={pr.id} value={pr.id}>
+            {pr.name}
           </option>
-        )}
+        ))}
       </select>
     </div>
   );

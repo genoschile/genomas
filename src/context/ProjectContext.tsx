@@ -8,7 +8,10 @@ interface Project {
   description: string;
   sharedWith?: string[];
   id: string;
-  workspaceId: string; 
+  workspaceId: string;
+  workspace: {
+    organizationId: string;
+  };
 }
 
 interface ProjectContextProps {
@@ -20,6 +23,8 @@ interface ProjectContextProps {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
   addProject: (project: Project) => void;
+  onOpen: boolean;
+  onSetOpen: (open: boolean) => void;
 }
 
 export const ProjectContext = createContext<ProjectContextProps | undefined>(
@@ -32,6 +37,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [onOpen, onSetOpen] = useState(false);
 
   const { user } = useSessionContext();
 
@@ -73,7 +79,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const isSelected = (cardId: string) => selectedCards.includes(cardId);
-  
+
   const value: ProjectContextProps = {
     projects,
     setProjects,
@@ -83,6 +89,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     isLoading,
     setIsLoading,
     addProject,
+    onOpen,
+    onSetOpen,
   };
 
   return (
