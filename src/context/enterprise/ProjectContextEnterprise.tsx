@@ -7,7 +7,7 @@ export interface Project {
   name: string;
   description?: string;
   workspaceId: string;
-  ownerId: string;
+  ownerId?: string;
   createdAt: Date;
   updatedAt: Date;
   users?: { id: string }[];
@@ -19,6 +19,7 @@ interface ProjectsContextType {
   projectsByWorkspace: Record<string, Project[]>;
   loading: boolean;
   getProjectsForWorkspace: (workspaceId: string) => Promise<void>;
+  addProjectToWorkspace: (project: Project, workspaceId: string | null) => void;
 }
 
 const ProjectsContext = createContext<ProjectsContextType | undefined>(
@@ -34,6 +35,21 @@ export const ProjectsProvider = ({
     Record<string, Project[]>
   >({});
   const [loading, setLoading] = useState<boolean>(false);
+
+  const addProjectToWorkspace = (
+    project: Project,
+    workspaceId: string | null
+  ) => {
+    if (!workspaceId) return;
+
+    setProjectsByWorkspace((prev) => {
+      const workspaceProjects = prev[workspaceId] || [];
+      return {
+        ...prev,
+        [workspaceId]: [...workspaceProjects, project],
+      };
+    });
+  };
 
   const getProjectsForWorkspace = async (workspaceId: string) => {
     if (projectsByWorkspace[workspaceId]) return;
@@ -65,6 +81,7 @@ export const ProjectsProvider = ({
         projectsByWorkspace,
         loading,
         getProjectsForWorkspace,
+        addProjectToWorkspace,
       }}
     >
       {children}

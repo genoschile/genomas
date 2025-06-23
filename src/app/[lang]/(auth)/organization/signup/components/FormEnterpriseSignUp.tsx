@@ -49,7 +49,7 @@ export function FormSignUp() {
             </legend>
 
             <div className="auth-form__input-group">
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">Name:</label>
               <input
                 type="text"
                 id="name"

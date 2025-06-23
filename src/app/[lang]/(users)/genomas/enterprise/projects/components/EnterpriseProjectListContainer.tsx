@@ -116,8 +116,6 @@ export const EnterpriseProjectListContainer = () => {
                   )}
                 </ul>
               </li>
-
-              {/* Conteo de ejecuciones */}
               <li>{project.executions?.length ?? 0}</li>
 
               <li>

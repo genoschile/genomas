@@ -37,3 +37,9 @@ const ExampleResFastAPI = {
 > Se corrigieron y avanzaron en más cosas, ver commits para más info.
 
 [Img de avances](./imgAvances/semana-21-06-2025/image.png)
+
+# semana 24-06-2025 (Lunes)
+lunes:
+- se corrigio labels form de enterprise signup
+- ahora al añadir un project (enterprise) se actualiza el estado global de project
+- se añada cmdk a la interfaz de genomas enterprise 

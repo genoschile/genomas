@@ -50,7 +50,9 @@ export const EnterpriseProjectHero = () => {
               : "No workspace seleccionado"}
           </button>
           {showList && (
-            <ul onClick={(e) => e.stopPropagation()}>
+            <ul
+              onClick={(e) => e.stopPropagation()}
+            >
               {workspaces.map((workspace) => (
                 <li
                   key={workspace.id}
@@ -69,15 +71,7 @@ export const EnterpriseProjectHero = () => {
 
       <div>
         <h4>Projects:</h4>
-        {selectedProjects.length === 0 ? (
-          <p>No projects found.</p>
-        ) : (
-          <ul>
-            {selectedProjects.map((project) => (
-              <li key={project.id}>{project.name}</li>
-            ))}
-          </ul>
-        )}
+          <small>{selectedProjects.length}</small>
       </div>
     </ContainerDefaultEnterprise>
   );

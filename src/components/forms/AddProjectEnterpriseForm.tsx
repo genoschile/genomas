@@ -3,6 +3,7 @@
 /* hooks */
 import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 /* components */
 import { MultiSelectChips } from "./componentsAddGroupsEnterprise/MultiSelectChips";
@@ -13,13 +14,15 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 
 /* style */
 import "./addProjectEnterpriseForm.css";
+import { useProjectsContextEnterprise } from "@/context/enterprise/ProjectContextEnterprise";
 
 export const AddProjectEnterpriseForm = () => {
   const { selectedWorkspaceId } = useWorkspacesContext();
+  const { addProjectToWorkspace } = useProjectsContextEnterprise();
+
   const [usersPromise, setUsersPromise] = useState<Promise<any> | null>(null);
   const [groupsPromise, setGroupsPromise] = useState<Promise<any> | null>(null);
 
-  // Estados para levantar seleccionados
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [selectedGroupIds, setSelectedGroupIds] = useState<string[]>([]);
 
@@ -57,11 +60,18 @@ export const AddProjectEnterpriseForm = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Error al crear el proyecto");
+        toast.error("Error al crear el proyecto");
       }
-      console.log("Proyecto creado exitosamente");
+
+      const data = await response.json();
+      if (data?.success && data?.data) {
+        addProjectToWorkspace(data.data, selectedWorkspaceId); 
+        toast.success("Proyecto creado exitosamente");
+      } else {
+        toast.error("Error al crear el proyecto (respuesta inválida)");
+      }
     } catch (error) {
-      console.error("Error al crear el proyecto:", error);
+      toast.error(`Error al crear el proyecto: ${error}`);
     }
   };
 

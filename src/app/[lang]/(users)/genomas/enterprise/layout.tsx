@@ -1,16 +1,23 @@
-import { Suspense } from "react";
+/* styles */
 import "./style.css";
 import "./layout.css";
 
-import { SidebarOrganization } from "@/components/sidebar/SidebarOrganization/SidebarOrganization";
-import { TopBar } from "@/components/sidebar/SidebarOrganization/components/TopBar";
+/* contexts */
 import { SuggestionsProvider } from "@/context/enterprise/SuggestionsPromptContext";
 import { ThemeProvider } from "@/context/enterprise/ThemeContext";
-import { ModalContainer } from "@/components/modals/ModalContainer";
 import { WorkspacesProvider } from "@/context/enterprise/WorkspacesEnterpriseContext";
 import { ProjectsProvider } from "@/context/enterprise/ProjectContextEnterprise";
 import { ModalProvider } from "@/context/ModalsProject";
 import { GroupsProvider } from "@/context/enterprise/GroupsEnterpriseContext";
+
+/* components */
+import { SidebarOrganization } from "@/components/sidebar/SidebarOrganization/SidebarOrganization";
+import { TopBar } from "@/components/sidebar/SidebarOrganization/components/TopBar";
+import { ModalContainer } from "@/components/modals/ModalContainer";
+import { CommandMenu } from "@/components/sidebar/SidebarOrganization/components/Search";
+
+/* hooks */
+import { Suspense } from "react";
 
 export default function EnterpriseLayout({
   children,
@@ -32,6 +39,7 @@ export default function EnterpriseLayout({
                     <Suspense fallback={<p> Loading ... </p>}>
                       {children}
                     </Suspense>
+                    <CommandMenu />
                   </section>
                 </main>
               </ModalProvider>
