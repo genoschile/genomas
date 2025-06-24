@@ -11,6 +11,13 @@ export async function POST(
     const id = (await params).id;
     const body = await request.json();
 
+    if (!id || !body) {
+      return NextResponse.json(
+        { message: "ID or body is missing", success: false },
+        { status: 400 }
+      );
+    }
+
     const currentUser = await useCaseUser.addUserToOrg(id, body);
 
     if (!currentUser) {

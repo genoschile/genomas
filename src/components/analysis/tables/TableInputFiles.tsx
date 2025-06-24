@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { SearchFilterTable } from "../searchs/SearchFilterTable";
 import "./tableInputFiles.css";
 import { Pagination } from "./Pagination";
+import { useProcessContext } from "@/context/ProcessContext";
 
 const headerTables = ["File", "Workflow", "Id process", "Status"];
 
@@ -33,6 +34,13 @@ const statusColors: { [key: string]: string } = {
   pending: "lightblue",
 };
 
+interface Task {
+  id: string; // idprocess
+  fileName: string;
+  workflow: string;
+  status: keyof typeof statusColors;
+}
+
 const tableData: TableRow[] = [
   {
     nombrefile: "Archivo_A.txt",
@@ -61,25 +69,27 @@ const tableData: TableRow[] = [
 ];
 
 export const ExampleResFastAPI = {
-  organizationId: "org-123", /* ✔️ */
-  userId: "user-456", /* ✔️ */
-  workspaceId: "workspace-789", /* ✔️ */
+  organizationId: "org-123" /* ✔️ */,
+  userId: "user-456" /* ✔️ */,
+  workspaceId: "workspace-789" /* ✔️ */,
   inputFiles: [
     {
       fileName: "sample1.fastq",
       fileType: "fastq",
       fileSize: 123456,
       filePath: "/uploads/sample1.fastq",
-      pipeline: "Run Alignment & Mapping",    
+      pipeline: "Run Alignment & Mapping",
       status: "done",
       idprocess: "PID-123",
     },
-  ], /* ✔️ */
-  workerName: "worker-1", /* ✔️ */
-  genomeVersionRef: "hg38", /* ✔️ */
+  ] /* ✔️ */,
+  workerName: "worker-1" /* ✔️ */,
+  genomeVersionRef: "hg38" /* ✔️ */,
 };
 
 export const TableInputFiles = () => {
+  const { tasks } = useProcessContext();
+
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -107,7 +117,7 @@ export const TableInputFiles = () => {
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = tableData.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = tasks.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <table className="table__inputs_files">
@@ -134,33 +144,31 @@ export const TableInputFiles = () => {
       <tbody>
         {currentPosts.map((row) => (
           <tr
-            key={row.idprocess}
-            className={selectedIds.includes(row.idprocess) ? "selected" : ""}
+            key={row.id}
+            className={selectedIds.includes(row.id) ? "selected" : ""}
           >
             <td>
               <div>
                 <input
                   type="checkbox"
-                  checked={selectedIds.includes(row.idprocess)}
-                  onChange={() => handleCheckboxChange(row.idprocess)}
+                  checked={selectedIds.includes(row.id)}
+                  onChange={() => handleCheckboxChange(row.id)}
                 />
                 <FaStar
                   size={20}
-                  onClick={() => handleFavoriteClick(row.idprocess)}
-                  className={
-                    favoriteIds.includes(row.idprocess) ? "favorite" : ""
-                  }
+                  onClick={() => handleFavoriteClick(row.id)}
+                  className={favoriteIds.includes(row.id) ? "favorite" : ""}
                 />
               </div>
             </td>
             <td data-cell="File">
-              <div>{row.nombrefile}</div>
+              <div>{row.fileName}</div>
             </td>
             <td data-cell="Workflow">
               <div>{row.workflow}</div>
             </td>
             <td data-cell="Idprocess">
-              <div>{row.idprocess}</div>
+              <div>{row.id}</div>
             </td>
             <td data-cell="Status">
               <div style={{ backgroundColor: statusColors[row.status] }}>
@@ -174,7 +182,7 @@ export const TableInputFiles = () => {
         <tr>
           <td colSpan={headerTables.length + 1}>
             <Pagination
-              totalPosts={tableData.length}
+              totalPosts={tasks.length}
               postsPerPage={postsPerPage}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}

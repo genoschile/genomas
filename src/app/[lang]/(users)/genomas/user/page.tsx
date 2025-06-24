@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 /* components */
 import { SidebarInfoProjectSelect } from "@/components/sidebar/sidebarInfoProjectSelect/SidebarInfoProjectSelect";
@@ -18,9 +18,9 @@ export default function Page() {
 
       <FilesProject />
 
-      <TrashProject />
-
       <InputFilesProjects />
+      
+      <TrashProject />
 
       <OutputFilesProjects />
 

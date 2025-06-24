@@ -5,5 +5,5 @@ export default async function GenomasLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <SessionContextProvider>{children};</SessionContextProvider>;
+  return <SessionContextProvider>{children}</SessionContextProvider>;
 }

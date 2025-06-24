@@ -5,6 +5,7 @@ import "./addGroupsEnterprise.css";
 import { MultiSelectChips } from "./componentsAddGroupsEnterprise/MultiSelectChips";
 import { getOrganizationData } from "@/utils/getOrganizationData";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
+import { toast } from "react-toastify";
 
 export const AddGroupsFormEnterprise = () => {
   const [isPending, startTransition] = useTransition();
@@ -25,7 +26,6 @@ export const AddGroupsFormEnterprise = () => {
     const dto = {
       name,
       role: roles,
-
       description: description || undefined,
       users: userIds.map((id) => ({ id })),
     };
@@ -49,12 +49,12 @@ export const AddGroupsFormEnterprise = () => {
           body: JSON.stringify(dto),
         });
 
-        if (!res.ok) throw new Error("Error al crear el grupo");
+        if (!res.ok) toast.error("Error al crear el grupo");
 
         const data = await res.json();
-        setMessage(`rupo creado: ${data.message || data.id}`);
+        setMessage(`grupo creado: ${data.message || data.id}`);
       } catch (err) {
-        console.error(err);
+        toast.error(`${err}`);
         setMessage("Ocurrió un error al crear el grupo.");
       }
     });

@@ -24,9 +24,10 @@ export const InputFilesProjects = () => {
   return (
     <ArticleContainer>
       <ProjectHomeHeaderContainer
-        title="Input Files"
-        navButtons={navButtonsInputFiles}
-      ></ProjectHomeHeaderContainer>
+        title="Task process resume"
+        // navButtons={navButtonsInputFiles}
+        navButtons={[]}
+      />
       <TableInputFiles />
     </ArticleContainer>
   );

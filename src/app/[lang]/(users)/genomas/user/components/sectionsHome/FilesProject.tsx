@@ -26,6 +26,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 /* styles */
 import "./filesProject.css";
 import { IFile } from "@/lib/types/files";
+import { useProcessContext } from "@/context/ProcessContext";
 
 const ExampleResFastAPI = {
   organizationId: "org-123" /* ✔️ */,
@@ -39,12 +40,16 @@ const ExampleResFastAPI = {
 export const FilesProject = () => {
   const { openModal } = useModalContext();
   const { projects } = useProjectContext();
+  const { addTask, updateTaskStatus } = useProcessContext();
+
   const [currentProject, setCurrentProject] = useState<{
     id: string;
     name: string;
   } | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
   const [files, setFiles] = useState<IFile[]>([]);
+
+  const [taskState, setTaskState] = useState<string | null>(null);
 
   const toggleSelect = (fileId: string) => {
     setSelectedFiles((prev) => {
@@ -122,6 +127,39 @@ export const FilesProject = () => {
 
       toast.success(`Task enviado correctamente ✅\nTask ID: ${data.task_id}`);
       setSelectedFiles(new Set());
+      addTask({
+        id: data.task_id,
+        fileName: "Sin nombre",
+        workflow: "Pending Assignment",
+        status: "pending",
+      });
+
+      const socket = new WebSocket(
+        `ws://localhost:8000/ws/status/${data.task_id}`
+      );
+
+      socket.onmessage = (event) => {
+        const { state } = JSON.parse(event.data);
+        updateTaskStatus(data.task_id, state.toLowerCase() as any);
+
+        if (state === "SUCCESS") {
+          toast.success("Tarea completada");
+        } else if (state === "FAILURE") {
+          toast.error("Tarea fallida");
+        }
+      };
+
+      socket.onopen = () => {
+        console.log("WebSocket conectado");
+      };
+
+      socket.onerror = (error) => {
+        console.error("WebSocket error", error);
+      };
+
+      socket.onclose = () => {
+        console.log("WebSocket cerrado");
+      };
     } catch (err) {
       toast.error(
         `Error al enviar archivos seleccionados ❌\n${(err as Error).message}`
@@ -156,6 +194,8 @@ export const FilesProject = () => {
             <WorkerNameSelected />
 
             <GenomeVersionRefSelected />
+
+            {taskState && <p>Estado actual de la tarea: {taskState}</p>}
           </div>
         </ProjectHomeHeaderContainer>
 
@@ -167,6 +207,30 @@ export const FilesProject = () => {
           setFiles={setFiles}
         />
       </form>
+      {taskState && (
+        <strong
+          style={{
+            padding: "0.3rem 0.6rem",
+            backgroundColor:
+              taskState === "PENDING"
+                ? "lightblue"
+                : taskState === "STARTED"
+                ? "orange"
+                : taskState === "SUCCESS"
+                ? "green"
+                : taskState === "FAILURE"
+                ? "red"
+                : "gray",
+            color: "white",
+            borderRadius: "4px",
+            textTransform: "uppercase",
+            fontSize: "0.85rem",
+            width: "fit-content",
+          }}
+        >
+          Estado: {taskState}
+        </strong>
+      )}
       <button
         form="project-files-form"
         type="submit"

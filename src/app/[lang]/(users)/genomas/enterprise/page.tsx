@@ -1,9 +1,17 @@
 import "./style.css";
 
-import { MetricsEnterprise } from "@/components/enterprise/metrics/MetricsEnterprise";
 import { AdminAccountEnterpriseCredentials } from "@/components/enterprise/adminAccountEnterpriseCredentials/AdminAccountEnterpriseCredentials";
 import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
-import { QuickActions } from "@/components/enterprise/quickactions/QuickActions";
+import {
+  MonthlyGrowthCard,
+  TotalGroupsCard,
+  TotalUsersCard,
+} from "@/components/enterprise/metrics/MetricsEnterprise";
+import {
+  QuickActionsUsers,
+  QuickActionsGroups,
+  QuickActionsProjects,
+} from "@/components/enterprise/quickactions/QuickActions";
 
 export default function page() {
   return (
@@ -13,21 +21,31 @@ export default function page() {
         description="What do you think of your organization's summary?"
       />
 
-      <article>
-        <MetricsEnterprise />
-      </article>
-
-      <article className="admincredential">
-        <h1>Organization Admin credentials</h1>
-
-        <AdminAccountEnterpriseCredentials />
-      </article>
-
-      <article>
-        <h1>Quick Actions</h1>
-
-        <QuickActions />
-      </article>
+      <div className="grid">
+        <div className="left-top">
+          <TotalUsersCard />
+        </div>
+        <div className="left-bottom">
+          <TotalGroupsCard />
+        </div>
+        <article className="main-top-left">
+          <QuickActionsGroups />
+        </article>
+        <div className="main-top-right">
+          <QuickActionsUsers />
+        </div>
+        <article className="main admincredential">
+          <AdminAccountEnterpriseCredentials />
+        </article>
+        <div className="main-bottom-left"></div>
+        <div className="main-bottom-right"></div>
+        <div className="right-top">
+          <MonthlyGrowthCard />
+        </div>
+        <div className="right-bottom">
+          <QuickActionsProjects />
+        </div>
+      </div>
     </>
   );
 }

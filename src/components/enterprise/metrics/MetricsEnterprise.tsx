@@ -1,59 +1,75 @@
-import { FaChartLine, FaUser, FaUsers } from "react-icons/fa";
-import "./metricsEnterprise.css";
+import { JSX } from "react";
 import { IconRoundedFull } from "../iconRoundedFull/IconRoundedFull";
+import { FaChartLine, FaUser, FaUsers } from "react-icons/fa";
 
-const metrics = [
-  {
-    title: "Total Users",
-    icon: <FaUser />,
-    value: "1,250",
-    change: "+ 12% from last month",
-    image: "/images/carrousel/car1.svg",
-    caption: "Usuarios activos",
-  },
-  {
-    title: "Total Groups",
-    icon: <FaUsers />,
-    value: "320",
-    change: "+ 2% from last month",
-    image: "/images/carrousel/car2.svg",
-    caption: "Grupos creados",
-  },
-  {
-    title: "Monthly Growth",
-    icon: <FaChartLine />,
-    value: "8.5%",
-    change: "+ 1.3% from last month",
-    image: "/images/carrousel/car3.svg",
-    caption: "Crecimiento mensual",
-  },
-];
+type Props = {
+  title: string;
+  icon: JSX.Element;
+  value: string;
+  change: string;
+  image: string;
+  caption: string;
+};
 
-export const MetricsEnterprise = () => {
+export const MetricCard = ({
+  title,
+  icon,
+  value,
+  change,
+  image,
+  caption,
+}: Props) => {
   return (
-    <div className="grid-container">
-      {metrics.map((item, index) => {
-        return (
-          <div className="box box-metrics" key={index}>
-            <header>
-              <h1>{item.title}</h1>
-              <IconRoundedFull icon={item.icon} />
-            </header>
+    <div className="box box-metrics">
+      <header>
+        <h1>{title}</h1>
+        <IconRoundedFull icon={icon} />
+      </header>
 
-            <main>
-              <strong>{item.value}</strong>
-              <small>
-                <mark>{item.change}</mark>
-              </small>
-            </main>
+      <main>
+        <strong>{value}</strong>
+        <small>
+          <mark>{change}</mark>
+        </small>
+      </main>
 
-            <figure>
-              <figcaption>{item.caption}</figcaption>
-              <img src={item.image} alt={item.title} />
-            </figure>
-          </div>
-        );
-      })}
+      <figure>
+        <figcaption>{caption}</figcaption>
+        <img src={image} alt={title} />
+      </figure>
     </div>
   );
 };
+
+export const TotalUsersCard = () => (
+  <MetricCard
+    title="Total Users"
+    icon={<FaUser />}
+    value="1,250"
+    change="+ 12% from last month"
+    image="/images/carrousel/car1.svg"
+    caption="Usuarios activos"
+  />
+);
+
+export const TotalGroupsCard = () => (
+  <MetricCard
+    title="Total Groups"
+    icon={<FaUsers />}
+    value="320"
+    change="+ 2% from last month"
+    image="/images/carrousel/car2.svg"
+    caption="Grupos creados"
+  />
+);
+
+export const MonthlyGrowthCard = () => (
+  <MetricCard
+    title="Monthly Growth"
+    icon={<FaChartLine />}
+    value="8.5%"
+    change="+ 1.3% from last month"
+    image="/images/carrousel/car3.svg"
+    caption="Crecimiento mensual"
+  />
+);

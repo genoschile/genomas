@@ -10,7 +10,6 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSessionContext } from "@/hooks/useSession";
-import { get } from "http";
 
 type Credentials = {
   email: string;
@@ -116,24 +115,14 @@ export const AdminAccountEnterpriseCredentials = () => {
 
   return (
     <div className="admincredential--container">
-      <header>
-        <div>
-          <h1>Genomas Innovations</h1>
-          <IconRoundedFull icon={<VscAccount />} />
-        </div>
-        <small>Administrator access credentials for Genomas Innovation</small>
-      </header>
-
-      <figure>
-        <img src="/images/carrousel/car1.svg" alt="" />
-      </figure>
-
       {loading ? (
         <p>Cargando credenciales...</p>
       ) : credentials ? (
         <form id="admin-credentials-form" onSubmit={handleSubmit}>
           <fieldset>
-            <legend>credentials</legend>
+            <legend>
+              credentials <IconRoundedFull icon={<VscAccount />} />
+            </legend>
             <div>
               <label>
                 Correo
@@ -160,7 +149,7 @@ export const AdminAccountEnterpriseCredentials = () => {
         <p>No se pudieron cargar las credenciales.</p>
       )}
 
-      <hr />
+      <hr className="no-flex" />
 
       <footer>
         <small>Ensure these credentials are stored securely.</small>

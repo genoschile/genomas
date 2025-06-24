@@ -14,7 +14,7 @@ export const MultiSelectChips = ({
   onChange,
 }: {
   dataPromise: Promise<{ data: SelectableItem[] }>;
-  name: string; 
+  name: string;
   label: string;
   onChange?: (selected: string[]) => void;
 }) => {
@@ -25,8 +25,9 @@ export const MultiSelectChips = ({
     const selected = Array.from(e.target.selectedOptions).map(
       (opt) => opt.value
     );
-    setSelectedIds(selected);
-    onChange?.(selected);
+    const merged = Array.from(new Set([...selectedIds, ...selected]));
+    setSelectedIds(merged);
+    onChange?.(merged);
   };
 
   const remove = (id: string) => {
@@ -59,6 +60,7 @@ export const MultiSelectChips = ({
         name={name}
         multiple
         onChange={handleSelect}
+        value={selectedIds}
       >
         {allItems.data.map((item) => (
           <option key={item.id} value={item.id}>

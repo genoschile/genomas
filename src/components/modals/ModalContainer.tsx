@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { WorkspaceForm } from "../forms/Workspaceform";
 import { Modal } from "./Modal";
@@ -8,6 +8,7 @@ import { AddGroupsFormEnterprise } from "../forms/AddGroupsEnterprise";
 import { AddWorkspacesEnterpriseForm } from "../forms/AddWorkspacesEnterpriseForm";
 import { MODAL_IDS } from "@/context/ModalsProject";
 import { AddProjectEnterpriseForm } from "../forms/AddProjectEnterpriseForm";
+import { AddUsersEnterprise } from "../forms/AddUsersEnterprise";
 
 export const ModalContainer = () => {
   return (
@@ -39,6 +40,16 @@ export const ModalContainer = () => {
 
       <Modal id={MODAL_IDS.ADD_PROJECT_ENTERPRISE} title="Add Projects">
         <AddProjectEnterpriseForm />
+      </Modal>
+    </>
+  );
+};
+
+export const ModalContainerAddUsersEnterprise = () => {
+  return (
+    <>
+      <Modal id={MODAL_IDS.ADD_USER_ENTERPRISE} title="Add Users">
+        <AddUsersEnterprise />
       </Modal>
     </>
   );

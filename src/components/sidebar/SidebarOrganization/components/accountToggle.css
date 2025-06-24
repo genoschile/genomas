@@ -53,7 +53,7 @@
       height: 2rem;
       border-radius: 0.125rem;
       flex-shrink: 0;
-      background-color: var(--bg-style-color);
+      background: linear-gradient(to right, #4285f4, #d96570);
     }
 
     > div {

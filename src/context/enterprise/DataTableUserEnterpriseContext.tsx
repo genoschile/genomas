@@ -32,6 +32,7 @@ type TableContextType = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  addUsers: (newUsers: User[]) => void;
 };
 
 const DataTableUserEnterpriseContext = createContext<
@@ -90,6 +91,10 @@ export const DataTableUserEnterpriseProvider = ({
       .includes(searchTerm.toLowerCase())
   );
 
+  const addUsers = async (newUsers: User[]) => {
+    setUsers((prevUsers) => [...prevUsers, ...newUsers]);
+  };
+
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
@@ -109,6 +114,7 @@ export const DataTableUserEnterpriseProvider = ({
   return (
     <DataTableUserEnterpriseContext.Provider
       value={{
+        addUsers,
         users,
         selectedIds,
         favoriteIds,

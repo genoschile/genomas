@@ -22,30 +22,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-
-  // console.log('File:', file);
-
-  // if (!file) {
-  //   return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
-  // }
-
-  // const buffer = Buffer.from(await file.arrayBuffer());
-  // const jobId = "job-";
-
-  // const vpsUploadEndpoint = 'http://IP_DEL_VPS:PORT/submit-job';
-  // const vpsFormData = new FormData();
-
-  // vpsFormData.append('file', new Blob([buffer]), file.name);
-  // vpsFormData.append('jobId', jobId);
-
-  // const response = await fetch(vpsUploadEndpoint, {
-  //   method: 'POST',
-  //   body: vpsFormData,
-  // });
-
-  // if (!response.ok) {
-  //   return NextResponse.json({ error: 'VPS error' }, { status: 500 });
-  // }
-
-  // return NextResponse.json({ jobId });
 }

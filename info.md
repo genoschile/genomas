@@ -31,15 +31,28 @@ const ExampleResFastAPI = {
 - se seteo un article y un div por default para estandarizar los contenedores, es mejorable ya que article especificos quizás necesitan menos espacio
 
 [!WARNING]
+
 > Necesito de verdad entender la distribución o cómo o en que carpeta se guardarán los archivos de salida del pipeline, sería ideal pero utópico quizás que se guarden en la misma carpeta pero con un attr de type "output"
 
 [!NOTE]
+
 > Se corrigieron y avanzaron en más cosas, ver commits para más info.
 
 [Img de avances](./imgAvances/semana-21-06-2025/image.png)
 
 # semana 24-06-2025 (Lunes)
+
 lunes:
+
 - se corrigio labels form de enterprise signup
 - ahora al añadir un project (enterprise) se actualiza el estado global de project
-- se añada cmdk a la interfaz de genomas enterprise 
+- se añada cmdk a la interfaz de genomas enterprise
+- se habilito modal de usuarios (addUserEnterprise) en la interfaz de enterprise
+- ahora al añadir un users (enterprise) se actualiza el estado global de users
+- reunión constanza para esquema de estructura organizacional
+- ahora al añadir un groups (enterprise) se actualiza el estado global de groups
+- TODO: se necesita un ssh key para la maquina virtual (correo lab) GITHUB
+- se implemento un bento (todavía falta corregir en el home de genomas enterprise)
+- TODO: la app se cae, investigar el problema
+- se realizo la conex de websocket + fastapi
+- se sincroniza las tareas con el article de process status

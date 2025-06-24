@@ -8,11 +8,13 @@ import { EnterpriseUserFiltersHero } from "./components/EnterpriseUserFiltersHer
 import { TableEnterpriseUserContainer } from "./components/TableEnterpriseUserContainer";
 
 import "./page.css";
+import { ModalContainerAddUsersEnterprise } from "@/components/modals/ModalContainer";
 
 export default function page() {
   return (
     <DataTableUserEnterpriseProvider>
       <FiltersTableUserEnterpriseContextProvider>
+        <ModalContainerAddUsersEnterprise />
         <div className="enterprise-users">
           <ChatSuggestionTitle
             title="Administra tus usuarios"

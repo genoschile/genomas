@@ -10,9 +10,6 @@ export const SectionWorkspaces = ({}: {}) => {
         title="Administra workspaces"
         description=" Puedes agregar, editar y eliminar workspaces de tu organización."
       />
-      <ContainerWorkspaces>
-        <h1>hola</h1>
-      </ContainerWorkspaces>
 
       <ContainerWorkspaces>
         <ContainerListWorkspaces />

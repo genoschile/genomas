@@ -151,6 +151,8 @@ export class UserRepository implements IUserRepository {
     orgId: string,
     data?: Omit<IUser, "id"> & { userId?: string }
   ): Promise<IUser> {
+    console.log("aqui");
+
     if (data?.userId) {
       await prisma.user.update({
         where: { id: data.userId },
