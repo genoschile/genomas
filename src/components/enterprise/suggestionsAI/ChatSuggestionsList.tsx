@@ -1,4 +1,9 @@
-import { RiCodeBoxLine, RiLightbulbFlashLine, RiLoopLeftFill, RiNewspaperLine } from "react-icons/ri";
+import {
+  RiCodeBoxLine,
+  RiLightbulbFlashLine,
+  RiLoopLeftFill,
+  RiNewspaperLine,
+} from "react-icons/ri";
 
 import "./chatSuggestionsList.css";
 

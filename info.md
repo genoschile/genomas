@@ -42,8 +42,6 @@ const ExampleResFastAPI = {
 
 # semana 24-06-2025 (Lunes)
 
-lunes:
-
 - se corrigio labels form de enterprise signup
 - ahora al añadir un project (enterprise) se actualiza el estado global de project
 - se añada cmdk a la interfaz de genomas enterprise
@@ -56,3 +54,7 @@ lunes:
 - TODO: la app se cae, investigar el problema
 - se realizo la conex de websocket + fastapi
 - se sincroniza las tareas con el article de process status
+
+
+- reunión genomas 24-06
+
