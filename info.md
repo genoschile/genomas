@@ -55,6 +55,10 @@ const ExampleResFastAPI = {
 - se realizo la conex de websocket + fastapi
 - se sincroniza las tareas con el article de process status
 
-
 - reunión genomas 24-06
 
+- websiteMathBio: generación content news, content users, content publications
+- websiteMathBio: implementación popover
+- todo: eliminar popover en sm windows
+
+- reunión administración sistemas 27 - 06 admin system UDD
