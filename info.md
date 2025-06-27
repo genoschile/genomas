@@ -62,3 +62,19 @@ const ExampleResFastAPI = {
 - todo: eliminar popover en sm windows
 
 - reunión administración sistemas 27 - 06 admin system UDD
+- montar todo dentro de la mv
+  y configure el tema de los workers
+- VOLUMEN: SCRIPT.NF
+- VOLUMEN: DEFINIR CARPETA PARA OUTPUTS
+- VOLUMEN: REFERENCIAS
+- comando del primer worker VCF
+- archivo configuración
+- samplesheet
+- VCF PRUEBA
+- SAMPLESHEET DE PRUEBA
+- TODO: SCRIPT AUTOMÁTICO PARA CREAR EL SAMPLESHEET
+- TODO: VCF VALIDATE
+- TODO: ENCONTRAR OUTPUT
+- se hablo de abrir los port con informatica con udd
+- TODO: Probar proxy jump
+- modificación interfaz groups 

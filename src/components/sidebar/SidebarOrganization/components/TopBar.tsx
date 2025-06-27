@@ -8,7 +8,11 @@ import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRou
 import { Suspense } from "react";
 import { ThemeSwitcher } from "@/components/enterprise/ThemeSwitcher/ThemeSwitcher";
 
-export function TopBar() {
+export function TopBar({
+  handleSetOpenSidebar,
+}: {
+  handleSetOpenSidebar: () => void;
+}) {
   return (
     <div className="topbar--enterprise">
       <div className="topbar-content">
@@ -18,6 +22,16 @@ export function TopBar() {
         <div>
           <ThemeSwitcher />
           <IconRoundedFull icon={<FiCalendar />} />
+          <button
+            className="sidebar-toggle icon-rounded-full"
+            onClick={handleSetOpenSidebar}
+            aria-label="Toggle sidebar"
+            style={{
+              border: "none",
+            }}
+          >
+            ☰
+          </button>
         </div>
       </div>
     </div>

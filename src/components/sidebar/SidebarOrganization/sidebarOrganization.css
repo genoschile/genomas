@@ -13,15 +13,51 @@
   flex-direction: column;
   max-block-size: 100vh;
   max-block-size: 100dvh;
-
-  & .sidebar-org--container {
-    flex: 1;
-    position: sticky;
-    top: 1rem;
-    padding-inline: 0.5rem;
-    margin-block-end: auto;
-
-    display: flex;
-    flex-direction: column;
-  }
+  transition: transform 0.3s ease;
+  z-index: 1000; 
 }
+
+.sidebar-org .sidebar-org--container {
+  flex: 1;
+  position: sticky;
+  top: 1rem;
+  padding-inline: 0.5rem;
+  margin-block-end: auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Oculta el sidebar en móviles y lo convierte en overlay */
+@media (max-width: 640px) {
+  .sidebar-org {
+    /* lo saca de la grid y flujo */
+    grid-area: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    inline-size: 250px; 
+    max-inline-size: none;
+    transform: translateX(-100%); 
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    min-block-size: 100vh;
+  }
+  .sidebar-org.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 900;
+  }
+
+}
+
+/* @media (min-width: 641px) {
+  .sidebar-toggle,
+  .sidebar-backdrop {
+    display: none;
+  }
+} */

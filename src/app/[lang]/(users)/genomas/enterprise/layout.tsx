@@ -1,3 +1,5 @@
+"use client";
+
 /* styles */
 import "./style.css";
 import "./layout.css";
@@ -17,13 +19,19 @@ import { ModalContainer } from "@/components/modals/ModalContainer";
 import { CommandMenu } from "@/components/sidebar/SidebarOrganization/components/Search";
 
 /* hooks */
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 
 export default function EnterpriseLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [openSidebar, setOpenSidebar] = useState(false);
+
+  const handleSetOpenSidebar = () => {
+    setOpenSidebar(openSidebar => !openSidebar);
+  };
+
   return (
     <ThemeProvider>
       <GroupsProvider>
@@ -33,8 +41,11 @@ export default function EnterpriseLayout({
               <ModalProvider>
                 <ModalContainer />
                 <main className="enterpriselayout">
-                  <SidebarOrganization />
-                  <TopBar />
+                  <SidebarOrganization 
+                    openSidebar={openSidebar}
+                    handleSetOpenSidebar={handleSetOpenSidebar}
+                  />
+                  <TopBar handleSetOpenSidebar={handleSetOpenSidebar} />
                   <section>
                     <Suspense fallback={<p> Loading ... </p>}>
                       {children}

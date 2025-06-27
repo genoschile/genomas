@@ -7,15 +7,26 @@ import { Search } from "./components/Search";
 
 import "./sidebarOrganization.css";
 
-export function SidebarOrganization() {
+export function SidebarOrganization({
+  openSidebar,
+  handleSetOpenSidebar,
+}: {
+  openSidebar?: boolean;
+  handleSetOpenSidebar?: () => void;
+}) {
   return (
-    <aside className="sidebar-org">
-      <div className="sidebar-org--container ">
-        <AccountToggle />
-        <Search />
-        <RouteSelect />
-      </div>
-      <Plan />
-    </aside>
+    <>
+      {openSidebar && (
+        <div className="sidebar-backdrop" onClick={handleSetOpenSidebar} />
+      )}
+      <aside className={`sidebar-org ${openSidebar ? "open" : ""}`}>
+        <div className="sidebar-org--container">
+          <AccountToggle />
+          <Search />
+          <RouteSelect />
+        </div>
+        <Plan />
+      </aside>
+    </>
   );
 }
