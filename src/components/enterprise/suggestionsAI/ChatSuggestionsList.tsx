@@ -1,28 +1,28 @@
-import {
-  RiCodeBoxLine,
-  RiLightbulbFlashLine,
-  RiLoopLeftFill,
-  RiNewspaperLine,
-} from "react-icons/ri";
-
 import "./chatSuggestionsList.css";
+
+import {
+  RiTeamLine,
+  RiShieldUserLine,
+  RiGroupLine,
+  RiLightbulbFlashLine,
+} from "react-icons/ri";
 
 export const suggestions = [
   {
-    text: "Help me plan a game night with my 5 best friends for under $100.",
+    text: "Suggest optimal group configurations based on roles like Developer, QA, and Manager.",
+    icon: <RiTeamLine />,
+  },
+  {
+    text: "Assign access rights for each role: who can read, write, or deploy?",
+    icon: <RiShieldUserLine />,
+  },
+  {
+    text: "Distribute users across projects: Alpha Team, Beta Team, etc.",
+    icon: <RiGroupLine />,
+  },
+  {
+    text: "Generate smart recommendations for cross-functional team assignments.",
     icon: <RiLightbulbFlashLine />,
-  },
-  {
-    text: "What are the best tips to improve my public speaking skills?",
-    icon: <RiLoopLeftFill />,
-  },
-  {
-    text: "Can you help me find the latest news on web development?",
-    icon: <RiNewspaperLine />,
-  },
-  {
-    text: "Write JavaScript code to sum all elements in an array.",
-    icon: <RiCodeBoxLine />,
   },
 ];
 

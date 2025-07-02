@@ -19,6 +19,7 @@ interface SuggestionsContextType {
   status: IAStatus;
   getSuggestions: (prompt: string) => Promise<string[]>;
   history: Message[];
+  addMessageToHistory: (message: Message) => void;
 }
 
 const SuggestionsContext = createContext<SuggestionsContextType | undefined>(
@@ -83,9 +84,13 @@ export const SuggestionsProvider = ({
     }
   };
 
+  function addMessageToHistory(message: Message) {
+    setHistory((prevHistory) => [...prevHistory, message]);
+  }
+
   return (
     <SuggestionsContext.Provider
-      value={{ suggestions, status, getSuggestions, history }}
+      value={{ suggestions, status, getSuggestions, history, addMessageToHistory }}
     >
       {children}
     </SuggestionsContext.Provider>

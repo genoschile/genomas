@@ -9,6 +9,7 @@ import { AddWorkspacesEnterpriseForm } from "../forms/AddWorkspacesEnterpriseFor
 import { MODAL_IDS } from "@/context/ModalsProject";
 import { AddProjectEnterpriseForm } from "../forms/AddProjectEnterpriseForm";
 import { AddUsersEnterprise } from "../forms/AddUsersEnterprise";
+import { TbBulb } from "react-icons/tb";
 
 export const ModalContainer = () => {
   return (
@@ -41,6 +42,10 @@ export const ModalContainer = () => {
       <Modal id={MODAL_IDS.ADD_PROJECT_ENTERPRISE} title="Add Projects">
         <AddProjectEnterpriseForm />
       </Modal>
+
+      <Modal id={MODAL_IDS.HELPER_SUGGESTIONS} title="Suggestions">
+        <ModalHelperSuggestions />
+      </Modal>
     </>
   );
 };
@@ -52,5 +57,35 @@ export const ModalContainerAddUsersEnterprise = () => {
         <AddUsersEnterprise />
       </Modal>
     </>
+  );
+};
+
+export const ModalHelperSuggestions = () => {
+  return (
+    <section className="suggestions-help">
+      <h2>
+        <TbBulb className="icon" />
+        How Group Suggestions Work
+      </h2>
+      <p>
+        This tool uses AI to generate smart group suggestions based on the
+        roles, access levels, and project assignments you provide.
+      </p>
+      <ul>
+        <li>
+          <strong>User Roles:</strong> e.g., "Admin, Developer, Manager"
+        </li>
+        <li>
+          <strong>Access Rights:</strong> e.g., "Read, Write, Execute"
+        </li>
+        <li>
+          <strong>Group Assignments:</strong> e.g., "Project Alpha, Beta Team"
+        </li>
+      </ul>
+      <p>
+        The AI will analyze your input and suggest the most suitable groups or
+        configurations based on patterns and semantic relationships it detects.
+      </p>
+    </section>
   );
 };

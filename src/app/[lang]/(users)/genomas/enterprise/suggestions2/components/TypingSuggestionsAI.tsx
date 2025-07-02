@@ -1,9 +1,42 @@
+import "./typingSuggestionsAI.css";
+
+import { useSuggestions } from "@/context/enterprise/SuggestionsPromptContext";
+import { useModalContext } from "@/hooks/useModalsProject";
 import { RiLoopLeftFill } from "react-icons/ri";
+import { TbPencilHeart } from "react-icons/tb";
 
 export const TypingSuggestionsAI = () => {
+  const { openModal } = useModalContext();
+  const { addMessageToHistory } = useSuggestions();
+
+  function handleForm(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const input = event.currentTarget.querySelector(
+      ".typing-input"
+    ) as HTMLInputElement;
+    const message = input.value.trim();
+    if (message) {
+      console.log("Message sent:", message);
+      input.value = ""; // Clear the input after sending
+      addMessageToHistory({
+        role: "user",
+        content: message,
+      });
+    }
+  }
+
   return (
-    <div className="typing-area">
-      <form action="#" className="typing-form">
+    <>
+      <form onSubmit={handleForm} className="typing-form">
+        <div className="action-buttons">
+          <span
+            id="theme-toggle-button"
+            className="icon material-symbols-rounded eyes-attention"
+            onClick={() => openModal("helper_suggestions")}
+          >
+            <TbPencilHeart />
+          </span>
+        </div>
         <div className="input-wrapper">
           <input
             type="text"
@@ -31,6 +64,6 @@ export const TypingSuggestionsAI = () => {
         Gemini may display inaccurate info, including about people, so
         double-check its responses.
       </p>
-    </div>
+    </>
   );
 };
