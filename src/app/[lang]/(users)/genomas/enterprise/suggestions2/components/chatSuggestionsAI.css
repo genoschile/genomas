@@ -1,69 +1,35 @@
 .chat-list {
   padding: 2rem 1rem;
-
-  max-height: 100vh;
   overflow-y: auto;
-  scrollbar-color: #999 transparent;
-}
-.chat-list .message.incoming {
-  margin-top: 1.5rem;
-}
-.chat-list .message .message-content {
-  display: flex;
-  gap: 1.5rem;
-  width: 100%;
-  align-items: center;
-}
-.chat-list .message .text {
-  color: var(--text-color);
-  white-space: pre-wrap;
-}
-.chat-list .message.error .text {
-  color: #e55865;
-}
-.chat-list .message.loading .text {
-  display: none;
-}
-.chat-list .message .avatar {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 50%;
-  align-self: flex-start;
-}
-.chat-list .message.loading .avatar {
-  animation: rotate 3s linear infinite;
-}
+  block-size: 100%;
 
-@keyframes rotate {
-  100% {
-    transform: rotate(360deg);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  inline-size: 100%;
+  list-style: none;
+
+  & > li {
+    background-color: rgba(0, 0, 0, 0.4);
+    inline-size: 50%;
+    padding-block: 1rem;
+    border-radius: 0.75rem;
+    padding-inline: 1.5rem;
+
+    &.bot {
+      align-self: flex-start;
+      background-color: var(--primary-color);
+      color: var(--text-color);
+    }
+
+    &.user {
+      align-self: flex-end;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+    }
   }
 }
 
-.chat-list .message .icon {
-  color: var(--text-color);
-  cursor: pointer;
-  height: 35px;
-  width: 35px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  font-size: 1.25rem;
-  margin-left: 3.5rem;
-  visibility: hidden;
-}
-.chat-list .message .icon.hide {
-  visibility: hidden;
-}
-.chat-list .message:not(.loading, .error):hover .icon:not(.hide) {
-  visibility: visible;
-}
-.chat-list .message .icon:hover {
-  background: var(--secondary-hover-color);
-}
 .chat-list .message .loading-indicator {
   display: none;
   gap: 0.8rem;
