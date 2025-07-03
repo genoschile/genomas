@@ -141,9 +141,12 @@ const ExampleResFastAPI = {
 <h2>avances genomas</h2>
 <ul>
   <li>
-  se genero la primera version del feature de ia suggestion (genomas enterprise)
+  se genero la primera version del feature de ia suggestion (genomas enterprise) (en css)
+  problemas en comunicación mensaje cliente respuesta servidor, llega el body mejorar api, quizás expiro el api token o key jeje
   </li>
 
-- se agrego un nuevo modal de ayuda a la suggestions ( o entende para que son)
+  <li>se agrego un nuevo modal de ayuda a la suggestions ( o entende para que son)</li>
+  <li>mejora acciones groups, implementando el delete y el edit jeje</li>
 
+  <li>se agregaron dos modales, </li>
 </ul>

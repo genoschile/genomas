@@ -46,6 +46,14 @@ export const ModalContainer = () => {
       <Modal id={MODAL_IDS.HELPER_SUGGESTIONS} title="Suggestions">
         <ModalHelperSuggestions />
       </Modal>
+
+      <Modal id={MODAL_IDS.DELETE_GROUPS_ENTERPRISE} title="Delete Group">
+        <ModalGroupsDeleteEnterprise />
+      </Modal>
+
+      <Modal id={MODAL_IDS.EDIT_GROUPS_ENTERPRISE} title="Edit Group">
+        <ModalGroupsEditEnterprise />
+      </Modal>
     </>
   );
 };
@@ -86,6 +94,32 @@ export const ModalHelperSuggestions = () => {
         The AI will analyze your input and suggest the most suitable groups or
         configurations based on patterns and semantic relationships it detects.
       </p>
+    </section>
+  );
+};
+
+export const ModalGroupsDeleteEnterprise = () => {
+  return (
+    <section className="groups-delete">
+      <p>
+        Are you sure you want to delete this group? This action cannot be
+        undone.
+      </p>
+      <p>Please confirm your action below.</p>
+      hola  
+    </section>
+  );
+};
+
+export const ModalGroupsEditEnterprise = () => {
+  return (
+    <section className="groups-edit">
+      <h2>Edit Group</h2>
+      <p>
+        Use this form to edit the details of an existing group. Make sure to
+        review all changes before saving.
+      </p>
+      {/* Add your form component here */}
     </section>
   );
 };

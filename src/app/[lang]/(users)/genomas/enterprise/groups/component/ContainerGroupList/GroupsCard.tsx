@@ -1,16 +1,26 @@
-import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
+"use client";
+
+/* styles */
 import "./groupsCard.css";
+
+/* icons */
 import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+
+/* groups */
 import { GroupsCardMembers } from "./GroupsCardMembers";
 import { GroupsCardHeader } from "./GroupsCardHeader";
-import { MdDelete } from "react-icons/md";
-import { IoSettingsSharp } from "react-icons/io5";
 import { Group } from "@/context/enterprise/GroupsEnterpriseContext";
 import { GroupsCardMembersNoMembers } from "./GroupsCardMembersNoMembers";
 import { GroupsCardMembersContainer } from "./GroupsCardMembersContainer";
 import { GroupsCardRolesList } from "./GroupsCardRolesList";
 
+/* hooks */
+import { useModalContext } from "@/hooks/useModalsProject";
+
 export const GroupsCard = ({ item }: { item: Group }) => {
+  const { openModal } = useModalContext();
+
   return (
     <li className="groupsCard">
       <GroupsCardHeader name={item.name} description={item.description} />
@@ -36,24 +46,23 @@ export const GroupsCard = ({ item }: { item: Group }) => {
       <hr />
 
       <footer>
-        <div>
-          <button>
-            <span>
-              <FaEdit />
-            </span>
-            Edit
-          </button>
-          <button>
-            <span>
-              <MdDelete />
-            </span>
-            Delete
-          </button>
-        </div>
+        <button
+          className="btn edit"
+          onClick={() => openModal("edit_group_enterprise")}
+          type="button"
+        >
+          <FaEdit />
+          Edit
+        </button>
 
-        <span>
-          <IconRoundedFull icon={<IoSettingsSharp />} />
-        </span>
+        <button
+          className="btn delete"
+          onClick={() => openModal("delete_group_enterprise")}
+          type="button"
+        >
+          <MdDelete />
+          Delete
+        </button>
       </footer>
     </li>
   );

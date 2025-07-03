@@ -12,6 +12,7 @@ type IAStatus =
 type Message = {
   role: "user" | "assistant";
   content: string;
+  timestamp?: string;
 };
 
 interface SuggestionsContextType {
