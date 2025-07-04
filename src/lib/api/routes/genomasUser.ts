@@ -10,4 +10,8 @@ export const genomasUserRoutes = {
   /* pipeline */
   runPipelineTest: () => `${BASE_CLUSTER}/run`,
   annomafTest: () => `/api/pipes/annomaf`,
+
+  /* files upload */
+  decompressFiles: () => `/api/document/utils`,
+  uploadFiles: () => `/api/document/upload`,
 };

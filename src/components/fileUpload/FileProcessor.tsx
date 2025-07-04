@@ -16,6 +16,7 @@ import {
 } from "react-icons/fa";
 import { useCurrentProject } from "@/context/currentProject";
 import axios from "axios";
+import { routes } from "@/lib/api/routes";
 
 export interface resUpload_DB {
   success: boolean;
@@ -65,7 +66,7 @@ export default function FileProcessor() {
       const formData = new FormData();
       files.forEach((file) => formData.append("files", file));
 
-      const response = await fetch("/api/document/utils", {
+      const response = await fetch(routes.decompressFiles(), {
         method: "POST",
         body: formData,
       });
@@ -126,7 +127,7 @@ export default function FileProcessor() {
     const toastId = toast.loading("Subiendo archivos a la base de datos...");
 
     try {
-      const res = await axios.post("/api/document/upload", formData, {
+      const res = await axios.post(routes.uploadFiles(), formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round(
             (progressEvent.loaded * 100) / (progressEvent.total || 1)

@@ -1,9 +1,13 @@
 .contact--page {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  inline-size: 100%;
 
-  & > :is(article, section) {
+  & > :is(article) {
     margin: 0 auto;
     max-inline-size: 1200px;
+    inline-size: 100%;
     padding-block-start: 1rem;
     display: flex;
     flex-direction: column;
@@ -110,32 +114,7 @@
   }
 }
 
-.our-story {
-  display: flex;
-
-  > header {
-    block-size: fit-content;
-    margin-bottom: 0.5rem;
-
-    > h1 {
-      font-size: 3.75em;
-      font-weight: 900;
-      color: #333;
-      text-align: center;
-      margin: 0;
-    }
-
-    > p {
-      font-size: 1.6em;
-      font-weight: 400;
-      color: rgba(0, 0, 0, 0.6);
-    }
-  }
-}
-
 .teams {
-  margin-top: 2rem;
-
   & ul {
     list-style: none;
     position: relative;
@@ -151,7 +130,7 @@
     }
   }
 
-  > article {
+  > div {
     padding: 0.2rem;
     align-self: flex-start;
     &:not(:last-child) {
@@ -159,7 +138,7 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.09);
     }
 
-    & > article {
+    & > div {
       margin-top: 0.5rem;
 
       & > * {

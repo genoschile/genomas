@@ -5,7 +5,13 @@ import { useModalContext } from "@/hooks/useModalsProject";
 
 import { FaSearch, FaAddressCard } from "react-icons/fa";
 
-export const ContainerGroupsHeader = () => {
+export const ContainerGroupsHeader = ({
+  onSearchChange,
+  searchTerm,
+}: {
+  searchTerm: string;
+  onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
   const { openModal } = useModalContext();
 
   return (
@@ -20,6 +26,8 @@ export const ContainerGroupsHeader = () => {
             placeholder="Buscar usuario"
             name="search"
             id="search"
+            value={searchTerm}
+            onChange={(e) => onSearchChange(e)}
           />
         </label>
       </search>

@@ -116,7 +116,7 @@ export const Team = () => {
   }, []);
 
   return (
-    <section className="teams">
+    <article className="teams">
       <SectionIntro
         imageSrc="/images/contact/contact.svg"
         imageAlt="Contact Us"
@@ -126,7 +126,7 @@ export const Team = () => {
       />
 
       {TeamInfoSection.map((team, index) => (
-        <article key={index}>
+        <div key={index}>
           <h1>{team.title}</h1>
           <ul
             className="team"
@@ -156,7 +156,7 @@ export const Team = () => {
               </li>
             ))}
           </ul>
-          <article className="member-details">
+          <div className="member-details">
             {selectedMembers[index] ? (
               <>
                 <header>
@@ -170,9 +170,9 @@ export const Team = () => {
             ) : (
               <p>Haz clic en un integrante para ver su información.</p>
             )}
-          </article>
-        </article>
+          </div>
+        </div>
       ))}
-    </section>
+    </article>
   );
 };

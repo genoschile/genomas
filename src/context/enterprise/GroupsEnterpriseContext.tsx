@@ -2,7 +2,12 @@
 
 import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface GroupsContextType {
   groups: GroupList;
@@ -12,6 +17,7 @@ interface GroupsContextType {
   handleAddGroupSelected: (group: Group) => void;
   currentGroup: Group | null;
   handleChangeCurrentGroup: (group: Group) => void;
+  deleteGroupIdFromContext: (groupId: string) => void;
 }
 
 const GroupsContext = createContext<GroupsContextType | undefined>(undefined);
@@ -49,6 +55,18 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
   /* actual */
   const handleChangeCurrentGroup = (group: Group) => {
     setCurrentGroup(group);
+  };
+
+  const deleteGroupIdFromContext = (groupId: string) => {
+    setGroups((prevGroups) =>
+      prevGroups.filter((group) => group.id !== groupId)
+    );
+    setSelectedGroups((prevSelected) =>
+      prevSelected.filter((group) => group.id !== groupId)
+    );
+    if (currentGroup && currentGroup.id === groupId) {
+      setCurrentGroup(null);
+    }
   };
 
   const fetchGroups = async () => {
@@ -97,6 +115,7 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
         handleAddGroupSelected,
         currentGroup,
         handleChangeCurrentGroup,
+        deleteGroupIdFromContext,
       }}
     >
       {children}

@@ -55,7 +55,7 @@ export const OurStory = () => {
     <article className="our-story">
       <header>
         <h1>{dataOurStory.title}</h1>
-        <h3>{dataOurStory.subtitle}</h3>
+        <p>{dataOurStory.subtitle}</p>
       </header>
       <Timeline dataOurStory={dataOurStory} />
     </article>

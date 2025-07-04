@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@google/genai": "^0.13.0",
-    "@prisma/client": "^6.9.0",
+    "@prisma/client": "^6.11.1",
     "adm-zip": "^0.5.16",
     "axios": "^1.10.0",
     "bcrypt": "^5.1.1",
@@ -44,7 +44,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "prisma": "^6.9.0",
+    "prisma": "^6.11.1",
     "typescript": "^5"
   }
 }

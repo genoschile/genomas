@@ -153,4 +153,9 @@ const ExampleResFastAPI = {
   TODO: se generará un archivo de endpoint para tener todo más ordenado y centralizado
 
   se avanzo en el todo, se orquesto un routes que exporta todas las rutas y se conforma de standalone modules jeje, se empezo a modificar el codigo dentro para funcionar a partir del orquestador, se mejorá fileprocess
+
+  se corrigio error de timelines en contact section, este error hacia que cada li creciera como container, y se empezo a generar el responsive del componente
+
+
+  se genera una nueva migración para agregar onDelete: Cascade user - group
 </ul>

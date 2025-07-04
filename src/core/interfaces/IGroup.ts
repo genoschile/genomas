@@ -8,7 +8,6 @@ export interface IGroup {
   role: Role[];
   users: {
     user: Omit<IUser, "encryptedPassword">;
-    // metadata opcional del enlace
     addedAt?: Date;
     addedById?: string;
   }[];
@@ -23,7 +22,7 @@ export interface IGroup {
 export interface IGroupRepository {
   // findGroupsByOrgId(orgId: string): Promise<IGroup[] | null>;
   // addGroupToOrg(orgId: string, data: CreateGroupDTO): Promise<IGroup | null>;
-  deleteGroup(groupId: string): Promise<DeleteGroupsDTO | null>;
+  deleteGroup(orgId: string, groupId: string): Promise<DeleteGroupsDTO | null>;
 }
 
 export interface ResponseGroupDTO {

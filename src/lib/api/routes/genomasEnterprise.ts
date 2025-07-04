@@ -6,6 +6,9 @@ export const genomasEnterpriseRoutes = {
   getGroupsEnterprise: (organization: string) =>
     `/api/organization/${organization}/groups`,
 
+  deleteGroupEnterprise: (orgId: string, groupId: string) =>
+    `/api/organization/${orgId}/groups/${groupId}`,
+
   AddGroupsEnterprise: (orgId: string) => `/api/organization/${orgId}/groups`,
 
   addUserEnterprise: (organizationId: string) =>

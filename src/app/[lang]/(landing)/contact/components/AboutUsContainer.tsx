@@ -42,7 +42,7 @@ export const AboutUsContainer = () => {
       />
 
       <div className="container--">
-        <AccordionList items={faqItems} />;
+        <AccordionList items={faqItems} />
       </div>
     </article>
   );

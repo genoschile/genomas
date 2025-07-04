@@ -1,26 +1,22 @@
 import { JSX } from "react";
-import "./timeline.css"
+import "./timeline.css";
 
 interface dataOurStory {
+  title: string;
+  subtitle: string;
+  timeline: {
+    date: string;
     title: string;
-    subtitle: string;
-    timeline: {
-        date: string;
-        title: string;
-        description: string;
-        icon: JSX.Element;
-    }[];
+    description: string;
+    icon: JSX.Element;
+  }[];
 }
 
-export const Timeline = ({
-    dataOurStory
-}: {
-    dataOurStory: dataOurStory
-}) => {
+export const Timeline = ({ dataOurStory }: { dataOurStory: dataOurStory }) => {
   return (
-    <ul className="timeline">
+    <ul className="timelines">
       {dataOurStory.timeline.map((event, index) => (
-        <li className="container" key={index}>
+        <li key={index}>
           <figure>{event.icon}</figure>
           <div className="text-box">
             <h2>{event.title}</h2>{" "}
