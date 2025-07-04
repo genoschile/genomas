@@ -10,6 +10,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSessionContext } from "@/hooks/useSession";
+import { routes } from "@/lib/api/routes";
 
 type Credentials = {
   email: string;
@@ -45,7 +46,7 @@ export const AdminAccountEnterpriseCredentials = () => {
 
       try {
         const res = await fetch(
-          `/api/organization/${organizationId}/defaultAdmin`
+          routes.getCredentialsUserAdmin(organizationId),
         );
         if (!res.ok) throw new Error("Failed to fetch credentials");
 
@@ -78,7 +79,7 @@ export const AdminAccountEnterpriseCredentials = () => {
 
     console.log("Switching session to user...");
 
-    fetch("/api/users/defaultAdmin", {
+    fetch(routes.loginDefaultAdmin(), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

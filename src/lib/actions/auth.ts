@@ -9,7 +9,7 @@ import type {
 } from "@lib/types/formTypes";
 
 /* actions */
-import { createSession } from "@lib/actions/session";
+import { routes } from "@/lib/api/routes";
 
 const signUpSchema = z
   .object({
@@ -56,9 +56,7 @@ export async function submitLogin(
 
     const { email, password } = validatedData.data;
 
-    const baseUrl = "http://localhost:3000";
-
-    const response = await fetch(`${baseUrl}/api/users/login`, {
+    const response = await fetch(routes.login(), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

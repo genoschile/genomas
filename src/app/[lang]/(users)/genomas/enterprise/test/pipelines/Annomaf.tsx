@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/lib/api/routes";
 import { useState } from "react";
 
 export interface FileAnnomaf {
@@ -26,7 +27,7 @@ export default function Annomaf() {
     const formData = new FormData();
     formData.append("file", selectedFile);
 
-    const res = await fetch("/api/pipes/annomaf", {
+    const res = await fetch(routes.annomafTest(), {
       method: "POST",
       body: formData,
     });

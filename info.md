@@ -149,4 +149,8 @@ const ExampleResFastAPI = {
   <li>mejora acciones groups, implementando el delete y el edit jeje</li>
 
   <li>se agregaron dos modales, </li>
+  se genero nuevo, useCaseGroups, nueva interfaz de groups, un repositorio para groups, con los primeros métodos de delete y edit
+  TODO: se generará un archivo de endpoint para tener todo más ordenado y centralizado
+
+  se avanzo en el todo, se orquesto un routes que exporta todas las rutas y se conforma de standalone modules jeje, se empezo a modificar el codigo dentro para funcionar a partir del orquestador, se mejorá fileprocess
 </ul>

@@ -10,6 +10,7 @@ import { MODAL_IDS } from "@/context/ModalsProject";
 import { AddProjectEnterpriseForm } from "../forms/AddProjectEnterpriseForm";
 import { AddUsersEnterprise } from "../forms/AddUsersEnterprise";
 import { TbBulb } from "react-icons/tb";
+import { ModalGroupsDeleteEnterprise } from "../forms/DeleteGroupsEnterprise";
 
 export const ModalContainer = () => {
   return (
@@ -94,19 +95,6 @@ export const ModalHelperSuggestions = () => {
         The AI will analyze your input and suggest the most suitable groups or
         configurations based on patterns and semantic relationships it detects.
       </p>
-    </section>
-  );
-};
-
-export const ModalGroupsDeleteEnterprise = () => {
-  return (
-    <section className="groups-delete">
-      <p>
-        Are you sure you want to delete this group? This action cannot be
-        undone.
-      </p>
-      <p>Please confirm your action below.</p>
-      hola  
     </section>
   );
 };

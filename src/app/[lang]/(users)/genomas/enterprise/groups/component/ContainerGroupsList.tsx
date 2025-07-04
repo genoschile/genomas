@@ -6,8 +6,6 @@ import { GroupsCard } from "./ContainerGroupList/GroupsCard";
 export const ContainerGroupsList = () => {
   const { groups, loading } = useGroupsContext();
 
-  console.log(groups);
-
   if (loading) {
     return <div className="loading">Cargando grupos...</div>;
   }

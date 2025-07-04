@@ -7,8 +7,7 @@ import {
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { FormState, SignupFormSchema } from "./authType";
-
-const baseUrl = "http://localhost:3000/";
+import { routes } from "@/lib/api/routes";
 
 const loginEnterpriseSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -16,8 +15,6 @@ const loginEnterpriseSchema = z.object({
     .string()
     .min(6, { message: "Password must be at least 6 characters long" }),
 });
-
-// : Promise<ActionResponseWithoutRepeatPassword>
 
 export const submitLoginEnterprise = async (
   prevState: ActionResponseWithoutRepeatPassword,
@@ -42,7 +39,7 @@ export const submitLoginEnterprise = async (
 
     const { email, password } = validatedData.data;
 
-    const restLogin = await fetch(`${baseUrl}api/users/login/enterprise`, {
+    const restLogin = await fetch(routes.loginEnterprise(), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -202,7 +199,7 @@ export const submitSignUpEnterprise = async (
 
   console.log({ message: "User created successfully!" });
 
-  const res = await fetch(`${baseUrl}/api/organization`, {
+  const res = await fetch(routes.signUpEnterprise(), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

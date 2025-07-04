@@ -1,3 +1,4 @@
+import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@utils/getLocalStorageOrganization";
 
 export const getOrganizationData = async (resource: "users" | "groups") => {
@@ -8,7 +9,7 @@ export const getOrganizationData = async (resource: "users" | "groups") => {
   }
 
   const res = await fetch(
-    `http://localhost:3000/api/organization/${organization}/${resource}`
+    routes.getOrganizationResource(organization, resource)
   );
 
   if (!res.ok) {

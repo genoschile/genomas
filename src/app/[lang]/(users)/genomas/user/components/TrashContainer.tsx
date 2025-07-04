@@ -1,5 +1,3 @@
-import { FaTrashAlt } from "react-icons/fa";
-
 export const HeaderTableTrash = [
   "Select",
   "File Name",

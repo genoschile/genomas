@@ -10,7 +10,10 @@ import { MdDelete } from "react-icons/md";
 /* groups */
 import { GroupsCardMembers } from "./GroupsCardMembers";
 import { GroupsCardHeader } from "./GroupsCardHeader";
-import { Group } from "@/context/enterprise/GroupsEnterpriseContext";
+import {
+  Group,
+  useGroupsContext,
+} from "@/context/enterprise/GroupsEnterpriseContext";
 import { GroupsCardMembersNoMembers } from "./GroupsCardMembersNoMembers";
 import { GroupsCardMembersContainer } from "./GroupsCardMembersContainer";
 import { GroupsCardRolesList } from "./GroupsCardRolesList";
@@ -21,8 +24,26 @@ import { useModalContext } from "@/hooks/useModalsProject";
 export const GroupsCard = ({ item }: { item: Group }) => {
   const { openModal } = useModalContext();
 
+  const { selectedGroups, handleChangeCurrentGroup, handleAddGroupSelected } =
+    useGroupsContext();
+
+  const handleEdit = () => {
+    handleChangeCurrentGroup(item);
+    openModal("edit_group_enterprise");
+  };
+
+  const handleDelete = () => {
+    handleChangeCurrentGroup(item);
+    openModal("delete_group_enterprise");
+  };
+
+  const isSelected = selectedGroups.some((g) => g.id === item.id);
+
   return (
-    <li className="groupsCard">
+    <li
+      className={`groupsCard ${isSelected ? "selected" : ""}`}
+      onClick={() => handleAddGroupSelected(item)}
+    >
       <GroupsCardHeader name={item.name} description={item.description} />
 
       {item.users && item.users.length > 0 ? (
@@ -48,7 +69,10 @@ export const GroupsCard = ({ item }: { item: Group }) => {
       <footer>
         <button
           className="btn edit"
-          onClick={() => openModal("edit_group_enterprise")}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleEdit();
+          }}
           type="button"
         >
           <FaEdit />
@@ -57,7 +81,10 @@ export const GroupsCard = ({ item }: { item: Group }) => {
 
         <button
           className="btn delete"
-          onClick={() => openModal("delete_group_enterprise")}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete();
+          }}
           type="button"
         >
           <MdDelete />

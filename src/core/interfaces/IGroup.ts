@@ -20,6 +20,12 @@ export interface IGroup {
   isActive: boolean;
 }
 
+export interface IGroupRepository {
+  // findGroupsByOrgId(orgId: string): Promise<IGroup[] | null>;
+  // addGroupToOrg(orgId: string, data: CreateGroupDTO): Promise<IGroup | null>;
+  deleteGroup(groupId: string): Promise<DeleteGroupsDTO | null>;
+}
+
 export interface ResponseGroupDTO {
   id: string;
   name: string;
@@ -38,7 +44,15 @@ export interface ResponseGroupDTO {
 
 export interface CreateGroupDTO {
   name: string;
-  role: Role[]; 
+  role: Role[];
   description?: string;
-  users?: { id: string; addedById?: string }[]; 
+  users?: { id: string; addedById?: string }[];
+}
+
+export interface DeleteGroupsDTO {
+  groupIds: string;
+}
+
+export interface DeletedGroupResponseDTO {
+  groupIds: string;
 }

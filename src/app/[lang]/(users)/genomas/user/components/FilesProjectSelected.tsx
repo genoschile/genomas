@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import "./filesProjectSelected.css";
 import { IFile } from "@/lib/types/files";
+import { routes } from "@/lib/api/routes";
 
 export const FilesProjectSelected = ({
   currentProject,
@@ -29,7 +30,7 @@ export const FilesProjectSelected = ({
       setError(null);
 
       try {
-        const res = await fetch(`/api/project/${currentIdProject}/files`);
+        const res = await fetch(routes.getFilesOfProject(currentIdProject));
         if (!res.ok)
           throw new Error(`Error al obtener archivos: ${res.statusText}`);
 

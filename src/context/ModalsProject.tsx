@@ -40,9 +40,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({
   const [activeModal, setActiveModal] = useState<ModalID>(null);
 
   const openModal = (id: ModalID) => {
-    console.log("openModal called with:", id);
-    console.trace("openModal trace"); 
-    
     setActiveModal(id);
   };
   const closeModal = () => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/lib/api/routes";
 import { createContext, useContext, useState } from "react";
 
 type IAStatus =
@@ -47,7 +48,7 @@ export const SuggestionsProvider = ({
     try {
       setStatus("waiting_response");
 
-      const res = await fetch("/api/suggestions/enterprise", {
+      const res = await fetch(routes.getSuggestionsEnterpise(), {
         method: "POST",
         body: JSON.stringify({ messages: newMessage }),
         headers: { "Content-Type": "application/json" },

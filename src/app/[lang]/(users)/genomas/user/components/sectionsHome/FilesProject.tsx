@@ -27,6 +27,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 import "./filesProject.css";
 import { IFile } from "@/lib/types/files";
 import { useProcessContext } from "@/context/ProcessContext";
+import { routes } from "@/lib/api/routes";
 
 const ExampleResFastAPI = {
   organizationId: "org-123" /* ✔️ */,
@@ -113,7 +114,7 @@ export const FilesProject = () => {
     if (selected.length === 0) return;
 
     try {
-      const res = await fetch("http://localhost:8000/run", {
+      const res = await fetch(routes.annomafTest(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

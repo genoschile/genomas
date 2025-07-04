@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 
 import React, {
@@ -63,7 +64,7 @@ export const DataTableUserEnterpriseProvider = ({
           return;
         }
 
-        const res = await fetch(`/api/organization/${org}/users`);
+        const res = await fetch(routes.getUserFromOrganization(org));
 
         if (!res.ok) {
           throw new Error("Error al obtener los usuarios");

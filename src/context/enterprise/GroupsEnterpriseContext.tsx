@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
@@ -7,6 +8,10 @@ interface GroupsContextType {
   groups: GroupList;
   loading: boolean;
   refreshGroups: () => Promise<void>;
+  selectedGroups: GroupList;
+  handleAddGroupSelected: (group: Group) => void;
+  currentGroup: Group | null;
+  handleChangeCurrentGroup: (group: Group) => void;
 }
 
 const GroupsContext = createContext<GroupsContextType | undefined>(undefined);
@@ -18,8 +23,8 @@ export type Group = {
   users?: string[];
   organizationId: string;
   description: string;
-  createdAt: string; // o Date 
-  updatedAt: string; // o Date 
+  createdAt: string;
+  updatedAt: string;
   isActive: boolean;
 };
 
@@ -28,23 +33,42 @@ type GroupList = Group[];
 export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
   const [groups, setGroups] = useState<GroupList>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentGroup, setCurrentGroup] = useState<Group | null>(null);
+  const [selectedGroups, setSelectedGroups] = useState<GroupList>([]);
+
+  /* groups seleccionados */
+  const handleAddGroupSelected = (group: Group) => {
+    const alreadySelected = selectedGroups.some((g) => g.id === group.id);
+
+    if (alreadySelected) {
+      setSelectedGroups(selectedGroups.filter((g) => g.id !== group.id));
+    } else {
+      setSelectedGroups([...selectedGroups, group]);
+    }
+  };
+  /* actual */
+  const handleChangeCurrentGroup = (group: Group) => {
+    setCurrentGroup(group);
+  };
 
   const fetchGroups = async () => {
     try {
       setLoading(true);
-      const organization = getLocalStorageOrganization()
-      
-      const res = await fetch(`/api/organization/${organization}/groups`);
+      const organization = getLocalStorageOrganization();
 
-      console.log("Response from API:", res);
+      if (!organization) {
+        console.error("No organization found in local storage");
+        return;
+      }
+
+      const res = await fetch(routes.getGroupsEnterprise(organization));
 
       if (!res.ok) {
         console.log(`Error HTTP: ${res.status}`);
-        return 
+        return;
       }
 
       const data = await res.json();
-      console.log("Data from API:", data);
 
       if (!data.success) {
         console.log(`Error: ${data.message}`);
@@ -52,7 +76,6 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       setGroups(data.data);
-
     } catch (err) {
       console.error("Error fetching groups:", err);
     } finally {
@@ -65,7 +88,17 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <GroupsContext value={{ groups, loading, refreshGroups: fetchGroups }}>
+    <GroupsContext
+      value={{
+        groups,
+        loading,
+        refreshGroups: fetchGroups,
+        selectedGroups,
+        handleAddGroupSelected,
+        currentGroup,
+        handleChangeCurrentGroup,
+      }}
+    >
       {children}
     </GroupsContext>
   );

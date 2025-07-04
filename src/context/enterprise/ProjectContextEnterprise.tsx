@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/lib/api/routes";
 import { createContext, useContext, useState } from "react";
 
 export interface Project {
@@ -56,7 +57,7 @@ export const ProjectsProvider = ({
 
     try {
       setLoading(true);
-      const res = await fetch(`/api/workspaces/${workspaceId}/projects`);
+      const res = await fetch(routes.getProjectForWorkspace(workspaceId));
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 

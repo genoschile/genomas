@@ -1,6 +1,7 @@
 "use client";
 
 import { useSessionContext } from "@/hooks/useSession";
+import { routes } from "@/lib/api/routes";
 import { IProject } from "@/lib/types/contextTypes";
 import { createContext, useEffect, useState } from "react";
 
@@ -42,7 +43,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
 
       try {
         setIsLoading(true);
-        const res = await fetch(`/api/users/${user.id}/projects`);
+        const res = await fetch(routes.getFilesOfUser(user.id));
 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 

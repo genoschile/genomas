@@ -15,6 +15,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 /* style */
 import "./addProjectEnterpriseForm.css";
 import { useProjectsContextEnterprise } from "@/context/enterprise/ProjectContextEnterprise";
+import { routes } from "@/lib/api/routes";
 
 export const AddProjectEnterpriseForm = () => {
   const { selectedWorkspaceId } = useWorkspacesContext();
@@ -47,9 +48,15 @@ export const AddProjectEnterpriseForm = () => {
       groups: selectedGroupIds.map((id) => ({ id })),
     };
 
+
+    if (!selectedWorkspaceId) {
+      toast.error("No hay un espacio de trabajo seleccionado");
+      return;
+    }
+
     try {
       const response = await fetch(
-        `/api/workspaces/${selectedWorkspaceId}/projects`,
+        routes.addProjectEnterprise(selectedWorkspaceId),
         {
           method: "POST",
           headers: {

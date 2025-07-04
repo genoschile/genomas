@@ -1,6 +1,7 @@
 "use client";
 
 import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -34,7 +35,7 @@ export const AddUsersEnterprise = () => {
         return;
       }
 
-      const res = await fetch(`/api/organization/${organizationId}/users`, {
+      const res = await fetch(routes.addUserEnterprise(organizationId), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

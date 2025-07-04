@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -41,9 +42,8 @@ export const UserWorkspacesProvider = ({
   const fetchWorkspaces = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `/api/users/${getLocalStorageOrganization("genomaUser")}/workspaces`
-      );
+      const response = await fetch (routes.getWorkspacesFromUser(getLocalStorageOrganization("genomaUser")));
+
       if (!response.ok) {
         throw new Error("Error fetching workspaces");
       }

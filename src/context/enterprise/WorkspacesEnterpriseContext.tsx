@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -48,11 +49,16 @@ export const WorkspacesProvider = ({
     try {
       setLoading(true);
 
-      const organization = getLocalStorageOrganization()
+      const organization = getLocalStorageOrganization();
+
+      if (!organization) {
+        throw new Error("No organization found in local storage");
+      }
 
       const res = await fetch(
-        `/api/organization/${organization}/workspaces`
+        routes.getWorkspacesfromOrganization(organization)
       );
+      
       const data = await res.json();
       if (data.success) setWorkspaces(data.data);
     } catch (err) {

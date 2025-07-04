@@ -6,6 +6,7 @@ import { MultiSelectChips } from "./componentsAddGroupsEnterprise/MultiSelectChi
 import { getOrganizationData } from "@/utils/getOrganizationData";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { toast } from "react-toastify";
+import { routes } from "@/lib/api/routes";
 
 export const AddGroupsFormEnterprise = () => {
   const [isPending, startTransition] = useTransition();
@@ -41,7 +42,7 @@ export const AddGroupsFormEnterprise = () => {
 
     startTransition(async () => {
       try {
-        const res = await fetch(`/api/organization/${id}/groups`, {
+        const res = await fetch(routes.AddGroupsEnterprise(id), {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

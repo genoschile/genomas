@@ -37,8 +37,6 @@ export function FileStagingAreaProvider({
   const [decompressedFiles, setDecompressedFiles] = useState<Files[]>([]);
   const [files, setFiles] = useState<Files[]>([]);
   const [progressMap, setProgressMap] = useState<Record<string, number>>({});
-
-
   
   return (
     <FileStagingAreaContext
