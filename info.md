@@ -152,10 +152,14 @@ const ExampleResFastAPI = {
   se genero nuevo, useCaseGroups, nueva interfaz de groups, un repositorio para groups, con los primeros métodos de delete y edit
   TODO: se generará un archivo de endpoint para tener todo más ordenado y centralizado
 
-  se avanzo en el todo, se orquesto un routes que exporta todas las rutas y se conforma de standalone modules jeje, se empezo a modificar el codigo dentro para funcionar a partir del orquestador, se mejorá fileprocess
+se avanzo en el todo, se orquesto un routes que exporta todas las rutas y se conforma de standalone modules jeje, se empezo a modificar el codigo dentro para funcionar a partir del orquestador, se mejorá fileprocess
 
-  se corrigio error de timelines en contact section, este error hacia que cada li creciera como container, y se empezo a generar el responsive del componente
+se corrigio error de timelines en contact section, este error hacia que cada li creciera como container, y se empezo a generar el responsive del componente
 
+se genera una nueva migración para agregar onDelete: Cascade user - group
 
-  se genera una nueva migración para agregar onDelete: Cascade user - group
+se elimino el hooks use de las listas en los modales, se agrego, error.tsx, global-error.tsx y loading .tsx se mejoro visualmente el selected groups, se agrego el filterterm, ahora se pueden exportar los grupos selecionados en csv o json, habilita boton para seleccionarlos todos, se corrigio error que al agregar un groups, no se actualizaba el contexto, se agrego un raid-limit para prevenir loops infinitos,
+
+TODO: eliminar grupos con project y editar grupos queda en todo por pensar como solucionarlo
+
 </ul>

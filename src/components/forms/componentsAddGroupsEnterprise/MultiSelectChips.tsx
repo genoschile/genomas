@@ -8,17 +8,16 @@ type SelectableItem = {
 };
 
 export const MultiSelectChips = ({
-  dataPromise,
+  data,
   name,
   label,
   onChange,
 }: {
-  dataPromise: Promise<{ data: SelectableItem[] }>;
+  data: SelectableItem[];
   name: string;
   label: string;
   onChange?: (selected: string[]) => void;
 }) => {
-  const allItems = use(dataPromise);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -42,7 +41,7 @@ export const MultiSelectChips = ({
 
       <div className="selected-chips">
         {selectedIds.map((id) => {
-          const item = allItems.data.find((el) => el.id === id);
+          const item = data.find((el) => el.id === id);
           return (
             <div key={id} className="chip">
               {item?.name || id}
@@ -62,7 +61,7 @@ export const MultiSelectChips = ({
         onChange={handleSelect}
         value={selectedIds}
       >
-        {allItems.data.map((item) => (
+        {data.map((item) => (
           <option key={item.id} value={item.id}>
             {item.name}
           </option>

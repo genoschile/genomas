@@ -1,0 +1,26 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff;
+}
+
+@keyframes spinDna {
+  0% {
+    transform: rotate(0deg) skewY(5deg) scaleY(1);
+  }
+  50% {
+    transform: rotate(180deg) skewY(-5deg) scaleY(1.1);
+  }
+  100% {
+    transform: rotate(360deg) skewY(5deg) scaleY(1);
+  }
+}
+
+.loading-dna {
+  animation: spinDna 3s linear infinite;
+  transform-origin: center;
+  color: #09f;
+  font-size: 4rem;
+}

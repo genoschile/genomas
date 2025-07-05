@@ -39,7 +39,7 @@ export function SearchFilterEnterpriseGroups({
 export const CheckboxButtonFilterTable = ({ id }: { id: string }) => {
   const OptionsCheckboxButtonFilterTable = ["Opción 1", "Opción 2", "Opción 3"];
 
-  const { groups, handleAddGroupSelected } = useGroupsContext();
+  const { handleSelectAllGroups } = useGroupsContext();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -110,10 +110,12 @@ export const CheckboxButtonFilterTable = ({ id }: { id: string }) => {
               onClick={(e) => {
                 e.stopPropagation();
                 if (index === 0) {
-                  groups.forEach((group) => {
-                    handleAddGroupSelected(group);
-                  });
+                  handleSelectAllGroups();
                 }
+                // else {
+                //   Aquí podrías hacer algo con la opción seleccionada si aplica
+                //   O simplemente omitir si solo te importa el "Select All"
+                // }
               }}
             >
               {index === 0 ? "Select All" : option}
@@ -127,6 +129,7 @@ export const CheckboxButtonFilterTable = ({ id }: { id: string }) => {
 
 export const MoveTrashButtonFilterTable = () => {
   const { selectedGroups, deleteGroupIdFromContext } = useGroupsContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDeleteArrayGroups = async () => {
     if (selectedGroups.length === 0) return;
@@ -134,33 +137,35 @@ export const MoveTrashButtonFilterTable = () => {
     const confirm = window.confirm(
       `Are you sure you want to delete ${selectedGroups.length} group(s)? This action cannot be undone.`
     );
-
     if (!confirm) return;
+
+    setIsLoading(true); // 🔵 Inicia loading
 
     await Promise.all(
       selectedGroups.map(async (group) => {
         try {
           const response = await fetch(
             routes.deleteGroupEnterprise(group.organizationId, group.id),
-            {
-              method: "DELETE",
-            }
+            { method: "DELETE" }
           );
 
           if (!response.ok) {
             toast.error(
               `Error deleting group ${group.id}. Please try again later.`
             );
+            return;
           }
 
-          toast.success(`Group ${group.id} deleted successfully.`);
-          // Remove group from context
           deleteGroupIdFromContext(group.id);
+          toast.success(`Group ${group.id} deleted successfully.`);
         } catch (error) {
           console.error(`Error deleting group ${group.id}:`, error);
+          toast.error(`Unexpected error deleting group ${group.id}`);
         }
       })
     );
+
+    setIsLoading(false); // ✅ Finaliza loading
   };
 
   return (
@@ -170,7 +175,7 @@ export const MoveTrashButtonFilterTable = () => {
         className="moveTrashButtonFilterTable"
         disabled={selectedGroups.length === 0}
       >
-        Move to Trash
+        {isLoading ? "Eliminando..." : "Move to Trash"}
       </button>
     </div>
   );

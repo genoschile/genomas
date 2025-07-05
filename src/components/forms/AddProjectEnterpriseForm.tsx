@@ -17,22 +17,26 @@ import "./addProjectEnterpriseForm.css";
 import { useProjectsContextEnterprise } from "@/context/enterprise/ProjectContextEnterprise";
 import { routes } from "@/lib/api/routes";
 
+type SelectableItem = {
+  id: string;
+  name: string;
+};
+
 export const AddProjectEnterpriseForm = () => {
   const { selectedWorkspaceId } = useWorkspacesContext();
   const { addProjectToWorkspace } = useProjectsContextEnterprise();
 
-  const [usersPromise, setUsersPromise] = useState<Promise<any> | null>(null);
-  const [groupsPromise, setGroupsPromise] = useState<Promise<any> | null>(null);
-
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [selectedGroupIds, setSelectedGroupIds] = useState<string[]>([]);
+  const [users, setUsers] = useState<SelectableItem[]>([]);
+  const [groups, setGroups] = useState<SelectableItem[]>([]);
 
   useEffect(() => {
-    setUsersPromise(getOrganizationData("users"));
+    getOrganizationData("users").then((data) => setUsers(data.data));
   }, []);
 
   useEffect(() => {
-    setGroupsPromise(getOrganizationData("groups"));
+    getOrganizationData("groups").then((data) => setGroups(data.data));
   }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,7 +51,6 @@ export const AddProjectEnterpriseForm = () => {
       users: selectedUserIds.map((id) => ({ id })),
       groups: selectedGroupIds.map((id) => ({ id })),
     };
-
 
     if (!selectedWorkspaceId) {
       toast.error("No hay un espacio de trabajo seleccionado");
@@ -72,7 +75,7 @@ export const AddProjectEnterpriseForm = () => {
 
       const data = await response.json();
       if (data?.success && data?.data) {
-        addProjectToWorkspace(data.data, selectedWorkspaceId); 
+        addProjectToWorkspace(data.data, selectedWorkspaceId);
         toast.success("Proyecto creado exitosamente");
       } else {
         toast.error("Error al crear el proyecto (respuesta inválida)");
@@ -82,41 +85,46 @@ export const AddProjectEnterpriseForm = () => {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>Nuevo Proyecto</legend>
+return (
+  <form onSubmit={handleSubmit}>
+    <fieldset>
+      <legend>Nuevo Proyecto</legend>
 
-        <div className="form-group">
-          <label htmlFor="name">Nombre del proyecto</label>
-          <input type="text" id="name" name="name" required />
-        </div>
+      <div className="form-group">
+        <label htmlFor="name">Nombre del proyecto</label>
+        <input type="text" id="name" name="name" required />
+      </div>
 
-        <div className="form-group">
-          <label htmlFor="description">Descripción</label>
-          <textarea id="description" name="description" rows={4}></textarea>
-        </div>
+      <div className="form-group">
+        <label htmlFor="description">Descripción</label>
+        <textarea id="description" name="description" rows={4}></textarea>
+      </div>
 
-        {usersPromise && (
-          <MultiSelectChips
-            dataPromise={usersPromise}
-            name="userIds"
-            label="Usuarios"
-            onChange={setSelectedUserIds}
-          />
-        )}
+      {users.length === 0 ? (
+        <p>Cargando usuarios...</p>
+      ) : (
+        <MultiSelectChips
+          data={users}
+          name="userIds"
+          label="Usuarios"
+          onChange={setSelectedUserIds}
+        />
+      )}
 
-        {groupsPromise && (
-          <MultiSelectChips
-            dataPromise={groupsPromise}
-            name="groupIds"
-            label="Grupos"
-            onChange={setSelectedGroupIds}
-          />
-        )}
-      </fieldset>
+      {groups.length === 0 ? (
+        <p>Cargando grupos...</p>
+      ) : (
+        <MultiSelectChips
+          data={groups}
+          name="groupIds"
+          label="Grupos"
+          onChange={setSelectedGroupIds}
+        />
+      )}
+    </fieldset>
 
-      <button type="submit">Crear Proyecto</button>
-    </form>
-  );
+    <button type="submit">Crear Proyecto</button>
+  </form>
+);
+
 };

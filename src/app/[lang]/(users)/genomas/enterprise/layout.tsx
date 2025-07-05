@@ -20,6 +20,7 @@ import { CommandMenu } from "@/components/sidebar/SidebarOrganization/components
 
 /* hooks */
 import { Suspense, useState } from "react";
+import { DataTableUserEnterpriseProvider } from "@/context/enterprise/DataTableUserEnterpriseContext";
 
 export default function EnterpriseLayout({
   children,
@@ -29,7 +30,7 @@ export default function EnterpriseLayout({
   const [openSidebar, setOpenSidebar] = useState(false);
 
   const handleSetOpenSidebar = () => {
-    setOpenSidebar(openSidebar => !openSidebar);
+    setOpenSidebar((openSidebar) => !openSidebar);
   };
 
   return (
@@ -38,22 +39,24 @@ export default function EnterpriseLayout({
         <SuggestionsProvider>
           <WorkspacesProvider>
             <ProjectsProvider>
-              <ModalProvider>
-                <ModalContainer />
-                <main className="enterpriselayout">
-                  <SidebarOrganization 
-                    openSidebar={openSidebar}
-                    handleSetOpenSidebar={handleSetOpenSidebar}
-                  />
-                  <TopBar handleSetOpenSidebar={handleSetOpenSidebar} />
-                  <section>
-                    <Suspense fallback={<p> Loading ... </p>}>
-                      {children}
-                    </Suspense>
-                    <CommandMenu />
-                  </section>
-                </main>
-              </ModalProvider>
+              <DataTableUserEnterpriseProvider>
+                <ModalProvider>
+                  <ModalContainer />
+                  <main className="enterpriselayout">
+                    <SidebarOrganization
+                      openSidebar={openSidebar}
+                      handleSetOpenSidebar={handleSetOpenSidebar}
+                    />
+                    <TopBar handleSetOpenSidebar={handleSetOpenSidebar} />
+                    <section>
+                      <Suspense fallback={<p> Loading ... </p>}>
+                        {children}
+                      </Suspense>
+                      <CommandMenu />
+                    </section>
+                  </main>
+                </ModalProvider>
+              </DataTableUserEnterpriseProvider>
             </ProjectsProvider>
           </WorkspacesProvider>
         </SuggestionsProvider>

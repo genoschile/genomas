@@ -2,12 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "@lib/actions/session";
 import { Roles } from "@/lib/types/global";
+import { isRateLimited } from "./lib/rate-limit";
 
 export default async function middleware(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
   const pathname = req.nextUrl.pathname;
-
   const lang = req.headers.get("accept-language")?.split(",")[0] || "es";
-  console.log({ lang });
+
+  // // rate limit (evita flood o loops infinitos)
+  // if (isRateLimited(ip)) {
+  //   return NextResponse.redirect(new URL("/429", req.nextUrl));
+  // }
 
   if (lang === "ch") {
     return new NextResponse("chino no soportado", {
@@ -15,20 +20,16 @@ export default async function middleware(req: NextRequest) {
     });
   }
 
-  // Extraer el lang
   const segments = pathname.split("/");
-
   const res = NextResponse.next();
-  // const currentPath = req.nextUrl.pathname;
-
   const currentPath = "/" + segments.slice(1).join("/");
 
-  // Evitar control de rutas para /api/*
+  // No aplicar auth ni redirecciones a /api/*
   if (currentPath.startsWith("/api/")) {
-    return res; // no aplicar control de sesión ni redirecciones
+    return res;
   }
 
-  // 1. Orígenes permitidos
+  // CORS para orígenes permitidos
   const allowedOrigins = ["http://localhost:3002", "https://varandcode.com"];
   const origin = req.headers.get("origin") || "";
 
@@ -45,22 +46,20 @@ export default async function middleware(req: NextRequest) {
     );
   }
 
-  // 2. Manejar preflight (OPTIONS request)
+  // OPTIONS preflight para CORS
   if (req.method === "OPTIONS" && currentPath.startsWith("/api/")) {
     return new NextResponse(null, { status: 200, headers: res.headers });
   }
 
-  // 3. Rutas públicas (no requieren autenticación)
+  // Rutas públicas
   const publicRoutes = ["/", "/login", "/register", "/about"];
   const isPublicRoute = publicRoutes.some((route) =>
     currentPath.startsWith(route)
   );
 
-  if (isPublicRoute) {
-    return res; // no hacer nada si es pública
-  }
+  if (isPublicRoute) return res;
 
-  // 4. Rutas protegidas por prefijo + rol
+  // Rutas con roles
   const roleProtectedPrefixes: { prefix: string; role: Roles }[] = [
     { prefix: "/admin", role: "admin" },
     { prefix: "/user", role: "user" },
@@ -81,12 +80,13 @@ export default async function middleware(req: NextRequest) {
     const session = await decrypt(sessionCookie);
 
     console.log(session);
+    // Aquí podrías verificar si el usuario tiene el rol adecuado, etc.
   }
 
   return res;
 }
 
-// 5. Aplicar a todo excepto archivos estáticos
+// Aplica a todo excepto archivos estáticos
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

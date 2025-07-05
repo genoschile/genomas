@@ -13,6 +13,8 @@ interface GroupsContextType {
   currentGroup: Group | null;
   handleChangeCurrentGroup: (group: Group) => void;
   deleteGroupIdFromContext: (groupId: string) => void;
+  handleSelectAllGroups: () => void;
+  handleAddGroupsContext: (newGroup: Group) => void;
 }
 
 const GroupsContext = createContext<GroupsContextType | undefined>(undefined);
@@ -47,6 +49,25 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
       setSelectedGroups([...selectedGroups, group]);
     }
   };
+
+  const handleAddGroupsContext = (newGroup: Group) => {
+    setGroups((prevGroups) => [...prevGroups, newGroup]);
+  };
+
+  const handleSelectAllGroups = () => {
+    const areAllSelected = groups.every((group) =>
+      selectedGroups.some((selected) => selected.id === group.id)
+    );
+
+    if (areAllSelected) {
+      // Deselecciona todos
+      setSelectedGroups([]);
+    } else {
+      // Selecciona todos
+      setSelectedGroups(groups);
+    }
+  };
+
   /* actual */
   const handleChangeCurrentGroup = (group: Group) => {
     setCurrentGroup(group);
@@ -111,6 +132,8 @@ export const GroupsProvider = ({ children }: { children: React.ReactNode }) => {
         currentGroup,
         handleChangeCurrentGroup,
         deleteGroupIdFromContext,
+        handleSelectAllGroups,
+        handleAddGroupsContext,
       }}
     >
       {children}

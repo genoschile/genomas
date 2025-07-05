@@ -1,18 +1,22 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import "./addGroupsEnterprise.css";
 import { MultiSelectChips } from "./componentsAddGroupsEnterprise/MultiSelectChips";
-import { getOrganizationData } from "@/utils/getOrganizationData";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { toast } from "react-toastify";
 import { routes } from "@/lib/api/routes";
+import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { useModalContext } from "@/hooks/useModalsProject";
+import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
 
 export const AddGroupsFormEnterprise = () => {
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
 
-  const [usersPromise, setUsersPromise] = useState<Promise<any> | null>(null);
+  const { users } = useDataTableUserEnterpriseContext();
+  const { handleAddGroupsContext } = useGroupsContext();
+  const { closeModal } = useModalContext();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,16 +58,16 @@ export const AddGroupsFormEnterprise = () => {
 
         const data = await res.json();
         setMessage(`grupo creado: ${data.message || data.id}`);
+        toast.success("Grupo creado exitosamente");
+        console.log("Grupo creado:", data);
+        handleAddGroupsContext(data.data);
+        closeModal();
       } catch (err) {
         toast.error(`${err}`);
         setMessage("Ocurrió un error al crear el grupo.");
       }
     });
   };
-
-  useEffect(() => {
-    setUsersPromise(getOrganizationData("users"));
-  }, []);
 
   return (
     <form className="add-groups-enterprise" onSubmit={handleSubmit}>
@@ -89,11 +93,16 @@ export const AddGroupsFormEnterprise = () => {
           <label htmlFor="roles">Roles:</label>
           <RoleSelector />
 
-          {usersPromise && (
+          {users.length === 0 ? (
+            <p>Cargando usuarios...</p>
+          ) : (
             <MultiSelectChips
-              dataPromise={usersPromise}
+              data={users}
               name="userIds"
-              label="Usuarios"
+              label="Selecciona usuarios"
+              onChange={(selected) => {
+                console.log("Usuarios seleccionados:", selected);
+              }}
             />
           )}
         </div>
