@@ -7,9 +7,10 @@ import "./page.css";
 import { ContainerGroupsHeader } from "./component/ContainerGroupsHeader";
 import { ContainerGroupsList } from "./component/ContainerGroupsList";
 import { ContainerDefaultEnterprise } from "../components/ContainerDefaultEnterprise";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SearchFilterEnterpriseGroups } from "./component/ContainerGroupsFiltersComponent/SearchFilterEnterpriseGroups";
 import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
+import { toast } from "react-toastify";
 
 export default function page() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,18 +24,63 @@ export default function page() {
   };
 
   const handleChangeDateCreateAscDesc = () => {
+    if (groups.length === 0) {
+      toast.error("No hay grupos para ordenar", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      return;
+    }
+
+    if (groups.length === 1) {
+      toast.error("No se puede ordenar un solo grupo", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      return;
+    }
     setIsAscending((prev) => !prev);
+    toast.info(
+      `Orden de creación de grupos ${
+        isAscending ? "ascendente" : "descendente"
+      }`,
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      }
+    );
   };
 
-  const sortedGroups = [...groups].sort((a, b) => {
-    const dateA = new Date(a.createdAt).getTime();
-    const dateB = new Date(b.createdAt).getTime();
-    return isAscending ? dateA - dateB : dateB - dateA;
-  });
+  const filteredGroups = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
 
-  const filteredGroups = sortedGroups.filter((group) =>
-    group.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    const filtered =
+      query === ""
+        ? groups // si no hay term, devuelve todo
+        : groups.filter((group) =>
+            `${group.name} ${group.description}`.toLowerCase().includes(query)
+          );
+
+    return filtered.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return isAscending ? dateA - dateB : dateB - dateA;
+    });
+  }, [groups, searchTerm, isAscending]);
 
   return (
     <>
@@ -58,7 +104,7 @@ export default function page() {
       </ContainerDefaultEnterprise>
 
       <ContainerDefaultEnterprise dinamicStyle="enterprise-groups__hero">
-        <ContainerGroupsList searchTerm={searchTerm} />
+        <ContainerGroupsList filteredGroups={filteredGroups} />
       </ContainerDefaultEnterprise>
     </>
   );

@@ -6,6 +6,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { FaArrowDownLong } from "react-icons/fa6";
 import { IoIosArrowDown } from "react-icons/io";
 import { RiMenu5Line } from "react-icons/ri";
+import { toast } from "react-toastify";
 
 import "./searchFilterEnterpriseGroups.css";
 import {
@@ -16,10 +17,10 @@ import { routes } from "@/lib/api/routes";
 
 export function SearchFilterEnterpriseGroups({
   onChangeDateCreateAscDesc,
-  isAscending
+  isAscending,
 }: {
   onChangeDateCreateAscDesc: () => void;
-  isAscending: boolean
+  isAscending: boolean;
 }) {
   return (
     <search className="searchFilterEnterpriseGroups">
@@ -36,12 +37,42 @@ export function SearchFilterEnterpriseGroups({
 }
 
 export const CheckboxButtonFilterTable = ({ id }: { id: string }) => {
-  const { openId, toggleOpen } = useFiltersTableUserEnterpriseContext();
+  const OptionsCheckboxButtonFilterTable = ["Opción 1", "Opción 2", "Opción 3"];
 
-  const isDropdownOpen = openId === id;
+  const { groups, handleAddGroupSelected } = useGroupsContext();
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div onClick={() => toggleOpen(id)} className="checkboxButtonFilterTable">
+    <div
+      ref={containerRef}
+      onClick={toggleDropdown}
+      className="checkboxButtonFilterTable"
+      style={{ position: "relative", display: "inline-block" }}
+    >
       <label
         htmlFor="checkboxButtonFilterTable"
         className="filters-EnterpriseUser LabelFilterTableSelect"
@@ -57,26 +88,40 @@ export const CheckboxButtonFilterTable = ({ id }: { id: string }) => {
         />
       </label>
 
-      {isDropdownOpen && <DropdownCheckboxButtonFilterTable />}
+      {isDropdownOpen && (
+        <ul
+          className="dropdownUlListFilters"
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            background: "#fff",
+            border: "1px solid #ccc",
+            padding: "0.5rem",
+            listStyle: "none",
+            zIndex: 10,
+          }}
+        >
+          {OptionsCheckboxButtonFilterTable.map((option, index) => (
+            <li
+              key={index}
+              className="dropdownCheckboxButtonFilterTable--item"
+              style={{ cursor: "pointer", padding: "4px 8px" }}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (index === 0) {
+                  groups.forEach((group) => {
+                    handleAddGroupSelected(group);
+                  });
+                }
+              }}
+            >
+              {index === 0 ? "Select All" : option}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
-  );
-};
-
-export const OptionsCheckboxButtonFilterTable = [
-  "Opción 1",
-  "Opción 2",
-  "Opción 3",
-];
-
-export const DropdownCheckboxButtonFilterTable = () => {
-  return (
-    <ul className="dropdownUlListFilters">
-      {OptionsCheckboxButtonFilterTable.map((option, index) => (
-        <li key={index} className="dropdownCheckboxButtonFilterTable--item">
-          {option}
-        </li>
-      ))}
-    </ul>
   );
 };
 
@@ -103,9 +148,13 @@ export const MoveTrashButtonFilterTable = () => {
           );
 
           if (!response.ok) {
-            throw new Error(`Error deleting group ${group.id}`);
+            toast.error(
+              `Error deleting group ${group.id}. Please try again later.`
+            );
           }
 
+          toast.success(`Group ${group.id} deleted successfully.`);
+          // Remove group from context
           deleteGroupIdFromContext(group.id);
         } catch (error) {
           console.error(`Error deleting group ${group.id}:`, error);
@@ -129,10 +178,10 @@ export const MoveTrashButtonFilterTable = () => {
 
 export const DateCreatedButtonFilterTable = ({
   onChangeDateCreateAscDesc,
-  isAscending
+  isAscending,
 }: {
   onChangeDateCreateAscDesc: () => void;
-  isAscending: boolean
+  isAscending: boolean;
 }) => {
   return (
     <div>
@@ -226,19 +275,28 @@ export const ExportButtonFilterTable = ({ id }: { id: string }) => {
   };
 
   const handleExportCsv = () => {
-    if (!selectedGroups.length) return;
+    if (!selectedGroups.length) {
+      toast.error("No groups selected for export.");
+      return;
+    }
 
     const csv = convertToCSV(selectedGroups);
     downloadFile(csv, "groups.csv", "text/csv");
     setIsOpen(false);
+
+    toast.success("Groups exported successfully as CSV.");
   };
 
   const handleExportJson = () => {
-    if (!selectedGroups.length) return;
+    if (!selectedGroups.length) {
+      toast.error("No groups selected for export.");
+      return;
+    }
 
     const json = JSON.stringify(selectedGroups, null, 2);
     downloadFile(json, "groups.json", "application/json");
     setIsOpen(false);
+    toast.success("Groups exported successfully as JSON.");
   };
 
   const convertToCSV = (groups: Group[]): string => {

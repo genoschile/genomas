@@ -1,24 +1,17 @@
 "use client";
 
-import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
+import {
+  Group,
+  useGroupsContext,
+} from "@/context/enterprise/GroupsEnterpriseContext";
 import { GroupsCard } from "./ContainerGroupList/GroupsCard";
-import { useMemo } from "react";
 
 export const ContainerGroupsList = ({
-  searchTerm,
+  filteredGroups,
 }: {
-  searchTerm: string;
+  filteredGroups: Group[];
 }) => {
-  const { groups, loading } = useGroupsContext();
-
-  const filteredGroups = useMemo(() => {
-    const query = searchTerm.trim().toLowerCase();
-    return query === ""
-      ? groups
-      : groups.filter((group) =>
-          `${group.name} ${group.description}`.toLowerCase().includes(query)
-        );
-  }, [searchTerm, groups]);
+  const { loading } = useGroupsContext();
 
   if (loading) {
     return <div className="loading">Cargando grupos...</div>;

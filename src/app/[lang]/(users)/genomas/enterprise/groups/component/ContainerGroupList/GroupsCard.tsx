@@ -41,7 +41,7 @@ export const GroupsCard = ({ item }: { item: Group }) => {
 
   return (
     <li
-      className={`groupsCard ${isSelected ? "selected" : ""}`}
+      className={`groupsCard ${isSelected ? "selected" : "flip"} `}
       onClick={() => handleAddGroupSelected(item)}
     >
       <GroupsCardHeader name={item.name} description={item.description} />
@@ -91,6 +91,8 @@ export const GroupsCard = ({ item }: { item: Group }) => {
           Delete
         </button>
       </footer>
+
+      <span></span>
     </li>
   );
 };
