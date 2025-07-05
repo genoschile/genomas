@@ -34,6 +34,16 @@
 
   & .moveTrashButtonFilterTable {
     text-decoration: underline;
+
+    &:disabled {
+      color: var(--text-color-disabled);
+      cursor: not-allowed;
+    }
+
+    &:disabled:hover {
+      background-color: var(--primary-color);
+      cursor: not-allowed;
+    }
   }
 
   & .dateCreatedButtonFilterTable {
