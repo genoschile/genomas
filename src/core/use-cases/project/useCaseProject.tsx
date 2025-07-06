@@ -17,7 +17,7 @@ export class useCaseProjects {
 
   async addFilesToProject(
     idProject: string,
-    files: IProjectFile[]
+    files: Omit<IProjectFile, "id">[]
   ): Promise<any> {
     return this.userRepo.addFilesToProject(idProject, files);
   }

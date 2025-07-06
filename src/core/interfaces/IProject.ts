@@ -38,7 +38,7 @@ export interface IProjectDTO {
 }
 
 export interface IProjectFile {
-  id: string
+  id: string;
   name: string;
   extension: string;
   mimeType: string;
@@ -58,9 +58,7 @@ export interface IProjectRepository {
   ): Promise<IProjectResponse | null>;
   addFilesToProject(
     idProject: string,
-    files: IProjectFile[]
+    files: Omit<IProjectFile, "id">[]
   ): Promise<IProjectResponse | null>;
-  getFilesByProjectId(
-    idProject: string
-  ): Promise<IProjectFile[] | null>;
+  getFilesByProjectId(idProject: string): Promise<IProjectFile[] | null>;
 }

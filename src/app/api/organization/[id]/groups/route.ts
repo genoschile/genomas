@@ -62,39 +62,3 @@ export async function POST(
     );
   }
 }
-
-export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const id = (await params).id;
-
-    const deletedGroup = await useCaseGroups.deleteGroup(id);
-
-    if (!deletedGroup) {
-      throw new Error("Error al eliminar el grupo");
-    }
-
-    return NextResponse.json(
-      {
-        message: "Grupo eliminado correctamente",
-        success: true,
-        data: deletedGroup,
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Error in DELETE /api/organization/[id]/groups", error);
-
-    return NextResponse.json(
-      {
-        message: `Error: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
-        success: false,
-      },
-      { status: 500 }
-    );
-  }
-}

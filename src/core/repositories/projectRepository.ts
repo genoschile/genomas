@@ -125,7 +125,7 @@ export class ProjectRepository implements IProjectRepository {
 
   async addFilesToProject(
     idProject: string,
-    files: IProjectFile[]
+    files: Omit<IProjectFile, "id">[]
   ): Promise<any> {
     // Mapea y valida fileType y fileRole
     const dataToInsert = files.map((file) => {

@@ -6,7 +6,7 @@ export const ProjectCardListItems = ({
   currentProjects?: {
     id: string;
     name: string;
-    description: string;
+    description: string | null;
     sharedWith?: string[];
     workspaceId: string;
   }[];
@@ -18,7 +18,7 @@ export const ProjectCardListItems = ({
           id={proj.id}
           key={proj.id}
           name={proj.name}
-          description={proj.description}
+          description={proj.description ?  proj.description : "description not available"}
           sharedWith={proj.sharedWith || []}
         />
       ))}

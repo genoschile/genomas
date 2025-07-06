@@ -17,7 +17,7 @@ export const ProjectCard = ({
 }: {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   sharedWith: string[];
 }) => {
   const { toggleCardSelection, isSelected } = useProjectContext();

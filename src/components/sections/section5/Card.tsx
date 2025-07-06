@@ -12,14 +12,17 @@ const socialIcons = [
   {
     icon: <FaLinkedin size={24} color="black" className="social-icons" />,
     href: "#",
+    name: "LinkedIn",
   },
   {
     icon: <FaLinkedin size={24} color="black" className="social-icons" />,
     href: "#",
+    name: "LinkedIn",
   },
   {
     icon: <FaLinkedin size={24} color="black" className="social-icons" />,
     href: "#",
+    name: "LinkedIn",
   },
 ];
 
