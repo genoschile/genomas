@@ -5,7 +5,6 @@ import "./HeaderLanding.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Logo from "@components/logo/Logo";
 import Link from "next/link";
-import { I18nButton } from "./I18nButton";
 import { usePathname } from "next/navigation";
 
 const links = [
@@ -100,7 +99,6 @@ const Header = () => {
             );
           })}
           <div className="header-landing__auth">
-            <I18nButton />
             <ButtonPrimary
               link="/login"
               text="Login"

@@ -1,6 +1,3 @@
-/* styles */
-import "./section.css";
-
 /* types */
 interface SectionProps {
   children: React.ReactNode;

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Carrousel from "../carrousel/Carrousel";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import Section from "./section";
-import "./section1.css";
 import { useTranslations } from "@/context/I18nClientProvider";
 
 export default function Section1() {
@@ -43,39 +42,36 @@ export default function Section1() {
     });
   }, [entries]);
 
-  const { t } = useTranslations()
+  const { t } = useTranslations();
 
   const InfoSection = {
     title: t("landing.section1.title"),
-    description: t("landing.section1.description")
+    description: t("landing.section1.description"),
   };
 
   return (
-    <Section className="section">
+    <Section>
       <div className="section__content">
         {/* Contenedor principal */}
-        <div className="section__main">
-          {/* Título */}
-          <h2
-            ref={h2Ref}
-            className={`section__title ${
-              isH2Visible ? "visibleElement" : "hiddenElement"
-            }`}
-          >
-            {InfoSection.title}
-          </h2>
 
-          {/* Descripción */}
-          <p
-            ref={pRef}
-            className={`section__description ${
-              isPVisible ? "visibleElement" : "hiddenElement"
-            }`}
-          >
-            {InfoSection.description}
-          </p>
-        </div>
-
+        {/* Título */}
+        <h2
+          ref={h2Ref}
+          className={`section__title ${
+            isH2Visible ? "visibleElement" : "hiddenElement"
+          }`}
+        >
+          {InfoSection.title}
+        </h2>
+        {/* Descripción */}
+        <p
+          ref={pRef}
+          className={`section__description ${
+            isPVisible ? "visibleElement" : "hiddenElement"
+          }`}
+        >
+          {InfoSection.description}
+        </p>
         <div
           ref={carrouselRef}
           className={`section__img ${

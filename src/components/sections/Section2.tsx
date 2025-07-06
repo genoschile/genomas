@@ -4,9 +4,6 @@
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useEffect, useRef, useState } from "react";
 
-/* styles */
-import "./section2.css";
-
 /* components */
 import Section from "./section";
 import { useTranslations } from "@/context/I18nClientProvider";
@@ -62,11 +59,11 @@ export default function sectionTwo2() {
 
   return (
     <Section>
-      <main className="sectionTwo__content">
+      <main className="section__content sectionTwo__content">
         {/* Título */}
         <h2
           ref={h2Ref}
-          className={`sectionTwo__title ${
+          className={`section__title sectionTwo__title ${
             isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
@@ -76,7 +73,7 @@ export default function sectionTwo2() {
         {/* Párrafo */}
         <p
           ref={pRef}
-          className={`sectionTwo__description ${
+          className={`section__description sectionTwo__description ${
             isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >

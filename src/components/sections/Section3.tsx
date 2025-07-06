@@ -55,11 +55,11 @@ export default function Section3() {
   };
 
   return (
-    <Section className="section3">
+    <Section>
       <div className="section3__content">
         <h2
           ref={h2Ref}
-          className={`section3__title ${
+          className={`section__title section3__title ${
             isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
@@ -67,7 +67,7 @@ export default function Section3() {
         </h2>
         <p
           ref={pRef}
-          className={`section3__description ${
+          className={`section__description section3__description ${
             isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >

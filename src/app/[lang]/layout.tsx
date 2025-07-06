@@ -11,7 +11,7 @@ import { inter } from "@/lib/fonts/fonts";
 /* components */
 import { ToastContainer } from "react-toastify";
 
-import { I18nServerProvider } from "../../context/I18nServerProvider";
+import { I18nServerProvider } from "@/context/I18nServerProvider";
 import { Language } from "@/lib/i18n/i18n.types";
 import { ModalProvider } from "@/context/ModalsProject";
 
