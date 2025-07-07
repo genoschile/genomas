@@ -1,6 +1,6 @@
 import { useTranslations } from "@/context/I18nClientProvider";
 import Card from "./Card";
-import "./carrouselCards.css";
+import styles from "./carrouselCards.module.css";
 
 interface Member {
   id: number;
@@ -14,7 +14,7 @@ export default function Carousel() {
     return members.map((member) => <Card key={member.id} member={member} />);
   };
 
-  const { t } = useTranslations()
+  const { t } = useTranslations();
 
   const teamMembers: Member[] = [
     {
@@ -38,10 +38,10 @@ export default function Carousel() {
   ];
 
   return (
-    <div className="carousel_">
-      <div className="group">{renderCards(teamMembers)}</div>
+    <div className={styles.carousel_}>
+      <div className={styles.group}>{renderCards(teamMembers)}</div>
 
-      <div aria-hidden="false" className="group">
+      <div aria-hidden="false" className={styles.group}>
         {renderCards(teamMembers)}
       </div>
     </div>

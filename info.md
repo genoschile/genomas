@@ -188,3 +188,6 @@ TODO: se corrigirá el error de la transacción en infraestructura (mal implemen
 se agrego el ssl a genomas.cl, mathbio.genomas.cl
 
 TODO: se teoriza que el problema de la carga parcial o hidratación de css en dispositivos moviles es por los import en cada componente, segun la guia de nextjs que no vi se recomienda el uso de css modules, hay que cambiar eso.
+
+
+TODO: PROBAR PROXY JUMP SI NO 

@@ -1,11 +1,11 @@
 /* components */
-import TeamCarrousel from "@/components/sections/section5/TeamCarrousel";
-import Section1 from "@/components/sections/Section1";
-import Section2 from "@/components/sections/Section2";
-import Section3 from "@/components/sections/Section3";
-import Section4 from "@/components/sections/Section4";
 
-import "./default.css";
+import Section1 from "./components/Section1";
+import Section2 from "./components/Section2";
+import Section3 from "./components/Section3";
+import Section4 from "./components/Section4";
+import TeamCarrousel from "./components/TeamCarrousel";
+import "@styles/default.css";
 
 export default function Home() {
   return (

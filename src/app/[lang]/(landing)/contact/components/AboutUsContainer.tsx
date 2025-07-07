@@ -1,6 +1,6 @@
 import { AccordionList } from "@/components/accordion/AccordionList";
-import { SectionIntro } from "@/components/sections/sectionTitle/SectionTitle";
 import { useTranslations } from "@/context/I18nClientProvider";
+import { SectionIntro } from "../../components/SectionTitle";
 
 export const AboutUsContainer = () => {
   const { t } = useTranslations();

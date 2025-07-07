@@ -1,4 +1,4 @@
-import { SectionIntro } from "@/components/sections/sectionTitle/SectionTitle";
+import { SectionIntro } from "@/app/[lang]/(landing)/components/SectionTitle";
 import { useTranslations } from "@/context/I18nClientProvider";
 import { useState, useRef, useEffect } from "react";
 

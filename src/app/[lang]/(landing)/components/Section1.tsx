@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Carrousel from "../carrousel/Carrousel";
+import Carrousel from "../../../../components/carrousel/Carrousel";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import Section from "./section";
 import { useTranslations } from "@/context/I18nClientProvider";

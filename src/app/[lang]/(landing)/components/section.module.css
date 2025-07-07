@@ -7,27 +7,26 @@
   height: 100dvh;
   inline-size: 100%;
   min-height: 100vh;
-
   overflow: hidden;
+}
 
-  &:nth-of-type(2)::before {
-    background: var(--bg-linear-gradient-semifull);
-  }
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  z-index: -1;
+  border-radius: 15px;
+}
 
-  &:nth-of-type(4)::before {
-    background: var(--bg-linear-gradient-full);
-  }
+.container:nth-of-type(2)::before {
+  background: var(--bg-linear-gradient-semifull);
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background: transparent;
-    z-index: -1;
-    border-radius: 15px;
-  }
+.container:nth-of-type(4)::before {
+  background: var(--bg-linear-gradient-full);
 }
 
 @media (min-width: 640px) {

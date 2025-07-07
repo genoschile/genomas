@@ -1,0 +1,75 @@
+.carousel_ {
+  margin: 0 auto;
+  padding: 20px 0;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  transition: filter 1s ease;
+}
+
+.carousel_::before,
+.carousel_::after {
+  content: "";
+  height: 100px;
+  position: absolute;
+  width: 200px;
+  z-index: 2;
+}
+
+.carousel_::before {
+  left: 0;
+  top: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.carousel_::after {
+  right: 0;
+  top: 0;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.carousel_ > * {
+  flex: 0 0 100%;
+}
+
+.carousel_:hover {
+  filter: grayscale(50%);
+}
+
+.carousel_:hover .group {
+  animation-play-state: paused;
+  filter: unset;
+}
+
+.carousel_:hover .group .card {
+  filter: grayscale(0%);
+}
+
+.group {
+  display: flex;
+  gap: 20px;
+  padding-right: 20px;
+}
+
+.group {
+  will-change: transform;
+  animation: scrolling 10s linear infinite;
+}
+
+@keyframes scrolling {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 
 /* styles */
-import "../globals.css";
+import "@styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
 /* fonts */

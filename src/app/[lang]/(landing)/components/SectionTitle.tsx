@@ -1,4 +1,4 @@
-import "./sectionIntro.css"
+import styles from "./sectionIntro.module.css";
 
 interface SectionIntroProps {
   imageSrc: string;
@@ -17,12 +17,12 @@ export const SectionIntro = ({
 }: SectionIntroProps) => {
   return (
     <>
-      <figure className="sectionIntro--figure">
+      <figure className={styles.sectionIntro__figure}>
         <img src={imageSrc} alt={imageAlt} className="contact--page__image" />
         <figcaption className="contact--page__caption">{caption}</figcaption>
       </figure>
 
-      <header className="sectionIntro--header">
+      <header className={styles.sectionIntro__header}>
         <h1>{title}</h1>
         <h3>{subtitle}</h3>
       </header>
