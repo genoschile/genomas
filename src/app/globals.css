@@ -91,9 +91,7 @@
     transform: translateY(0);
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
   }
-}
 
-@layer observerImage {
   .hiddenImage {
     opacity: 0;
     transform: translateX(-100%);
@@ -127,30 +125,6 @@
   .visibleImageLeft {
     opacity: 1;
     transform: translateX(0);
-    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
-  }
-
-  .hiddenImageTop {
-    opacity: 0;
-    transform: translateY(-100%);
-    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
-  }
-
-  .visibleImageTop {
-    opacity: 1;
-    transform: translateY(0);
-    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
-  }
-
-  .hiddenImageBottom {
-    opacity: 0;
-    transform: translateY(100%);
-    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
-  }
-
-  .visibleImageBottom {
-    opacity: 1;
-    transform: translateY(0);
     transition: transform 0.8s ease-out, opacity 0.8s ease-out;
   }
 }

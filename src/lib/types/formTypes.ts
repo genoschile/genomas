@@ -5,15 +5,16 @@ export interface ActionResponse {
     data?: {
         id: string;
         email: string;
-        name: string | null;
+        name: string ;
         isDefaultAdmin: boolean;
         userType: string;
         organizationId: string;
         createdAt: Date;
         updatedAt: Date;
     };
-    input?: {
+    input: {
         email: string;
+        name: string;
         password: string;
         repeatPassword: string;
     };

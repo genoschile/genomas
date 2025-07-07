@@ -1,5 +1,4 @@
-import { OpenAIService } from "@/core/repositories/IAServices";
-import { SuggestGroupsUseCase } from "@/core/use-cases/suggestionsIA/suggestionsGroups";
+import { useCaseSuggestions } from "@/core/instances";
 import { NextRequest, NextResponse } from "next/server";
 
 const prompt = (
@@ -31,39 +30,51 @@ Basándote en la siguiente entrada del usuario: "${userInput}"
 `;
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
+    const messages = body.messages;
 
-  console.log("Received body:", body);
+    if (!messages) {
+      return NextResponse.json(
+        { error: "Missing or invalid messages" },
+        { status: 400 }
+      );
+    }
 
-  const messages = body.messages;
+    const { role, content } = messages;
 
-  if (!messages) {
+    const suggestions = await useCaseSuggestions.execute(role, prompt(content));
+
+    const { success, message, prompt: responsePrompt, error } = suggestions;
+
+    if (!suggestions) {
+      return NextResponse.json(
+        { success: false, error: "No suggestions found" },
+        { status: 404 }
+      );
+    }
+
+    if (!suggestions.success) {
+      console.error("Error in suggestions:", suggestions.error);
+      return NextResponse.json(
+        {
+          success: false,
+          error: suggestions.error || "Failed to process the request",
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Consulta procesada correctamente",
+      prompt: responsePrompt,
+    });
+  } catch (err) {
+    console.error("Internal server error:", err);
     return NextResponse.json(
-      { error: "Missing or invalid messages" },
-      { status: 400 }
-    );
-  }
-
-  const { content } = messages;
-
-  const iaService = new OpenAIService();
-  const useCase = new SuggestGroupsUseCase(iaService);
-
-  const suggestions = await useCase.execute(prompt(content));
-
-  const { success, error, message } = suggestions;
-
-  if (!success) {
-    return NextResponse.json(
-      { error: error || "An unknown error occurred" },
+      { success: false, error: "Internal server error" },
       { status: 500 }
     );
-  }
-
-  if (error) {
-    return NextResponse.json({ error: error }, {  status: 400 });
-  }
-  if (message) {
-    return NextResponse.json({ message: message, suggestions: suggestions }, { status: 200 });
   }
 }

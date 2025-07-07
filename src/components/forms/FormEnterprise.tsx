@@ -6,13 +6,15 @@ import Link from "next/link";
 import { AuthLink } from "./components/AuthLink";
 import { AuthFormLogo } from "./components/AuthFormLogo";
 import { toast } from "react-toastify";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useTranslations } from "@/context/I18nClientProvider";
 import { useRouter } from "next/navigation";
 
 import { ActionResponseWithoutRepeatPassword } from "@/lib/types/formTypes";
 import { submitLoginEnterprise } from "@/core/use-cases/organization/auth";
 import { useSessionContext } from "@/hooks/useSession";
+import { IoEyeSharp } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
 
 const initialState: ActionResponseWithoutRepeatPassword = {
   success: false,
@@ -30,6 +32,12 @@ export const FormEnterprice = () => {
     initialState
   );
   const router = useRouter();
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
 
   const { t } = useTranslations();
 
@@ -102,13 +110,29 @@ export const FormEnterprice = () => {
             <div className="auth-form__input-group">
               <label htmlFor="password">{authTranslations.passwordLabel}</label>
               <input
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 id="password"
                 name="password"
                 defaultValue={state?.input?.password}
-                placeholder={`${authTranslations.passwordPlaceholder}`}
+                placeholder={`${
+                  isPasswordVisible
+                    ? authTranslations.passwordPlaceholder
+                    : "********"
+                }
+                  `}
                 className="auth-form__input"
               />
+              {isPasswordVisible ? (
+                <FaEyeSlash
+                  className="eyes-icons"
+                  onClick={togglePasswordVisibility}
+                />
+              ) : (
+                <IoEyeSharp
+                  className="eyes-icons"
+                  onClick={togglePasswordVisibility}
+                />
+              )}
               {state?.error?.password && (
                 <p className="auth-form__error-message">
                   {state.error.password[0]}

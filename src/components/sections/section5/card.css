@@ -81,11 +81,6 @@
         height: 100%;
       }
 
-      /* & > :nth-child(1),
-      & > :nth-child(3) {
-        background-color: red;
-      } */
-
       & a {
         display: grid;
         place-content: center;

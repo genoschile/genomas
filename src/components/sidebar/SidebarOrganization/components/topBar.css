@@ -39,6 +39,16 @@
       align-items: center;
       gap: 0.5rem;
       justify-content: center;
+
+      .sidebar-toggle {
+        display: none;
+      }
     }
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar--enterprise .topbar-content > *:nth-child(2) .sidebar-toggle {
+    display: inline-block;
   }
 }

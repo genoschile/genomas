@@ -163,3 +163,23 @@ se elimino el hooks use de las listas en los modales, se agrego, error.tsx, glob
 TODO: eliminar grupos con project y editar grupos queda en todo por pensar como solucionarlo
 
 </ul>
+
+# semana 07-07-2025
+
+se generó el primer build de la aplicación se solucionaron 7 erróres críticos, la pagina ya esta disponible en genomas.cl (sin ssl)
+
+solo funciona correctamente en chrome y en desktop
+no se puede usar la api en build
+
+TODO: mejoras variables de entorno para que funcionen con el dominio genomas.cl
+TODO: 
+
+se mejoro responsive de la landing, corrección de erróres
+ahora se desabilitaron los link que no tenian funcionalidad (para no confundir al usuario)
+
+en el login y en el signup ahora el campo contraseña puede alternar el estado visible
+
+trabajando en @media 640px
+
+se agrego nueva instancia en core **
+se definio el handle para que el useCaseSuggestion funcione y devuelva la respuesta correcta del modelo

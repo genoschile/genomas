@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import "./HeaderLanding.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Logo from "@components/logo/Logo";
@@ -31,47 +30,10 @@ const links = [
 ];
 
 const Header = () => {
-  const [scrolling, setScrolling] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        setScrolling(currentScrollY > 50);
-        lastScrollY = currentScrollY;
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 900) {
-        const sideMenuCheckbox = document.getElementById(
-          "side-menu"
-        ) as HTMLInputElement;
-        if (sideMenuCheckbox && sideMenuCheckbox.checked) {
-          sideMenuCheckbox.checked = false;
-        }
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
-    <header className={`header-landing ${scrolling ? "scrolled" : ""}`}>
+    <header className={`header-landing `}>
       <div className="header-landing__container">
         <Logo />
 
@@ -84,9 +46,9 @@ const Header = () => {
           {links.map(({ label, href, isNextLink }, index) => {
             const isActive = pathname.startsWith(href) && href !== "#";
 
-            const linkClass = `header-landing__link ${
-              isActive ? "active" : ""
-            }`;
+            const linkClass = `header-landing__link ${isActive ? "active" : ""}
+             ${!isNextLink ? "disabled" : ""}
+            `;
 
             return isNextLink ? (
               <Link key={index} href={href} className={linkClass}>
@@ -104,7 +66,7 @@ const Header = () => {
               text="Login"
               className="header-landing__auth-link"
             />
-            <ButtonPrimary text="Sign up" link="#" />
+            <ButtonPrimary text="Sign up" link="/organization/signup" />
           </div>
         </nav>
       </div>

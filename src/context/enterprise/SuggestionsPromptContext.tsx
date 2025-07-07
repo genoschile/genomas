@@ -2,6 +2,14 @@
 
 import { routes } from "@/lib/api/routes";
 import { createContext, useContext, useState } from "react";
+import { toast } from "react-toastify";
+
+type ApiSuggestionsResponse = {
+  success: boolean;
+  message?: string;
+  prompt?: string[];
+  error?: string;
+};
 
 type IAStatus =
   | "idle"
@@ -12,14 +20,14 @@ type IAStatus =
 
 type Message = {
   role: "user" | "assistant";
-  content: string;
+  content: string | string[];
   timestamp?: string;
 };
 
 interface SuggestionsContextType {
   suggestions: string[];
   status: IAStatus;
-  getSuggestions: (prompt: string) => Promise<string[]>;
+  getSuggestions: (prompt: string | string[]) => Promise<string[]>;
   history: Message[];
   addMessageToHistory: (message: Message) => void;
 }
@@ -33,15 +41,19 @@ export const SuggestionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [status, setStatus] = useState<IAStatus>("idle");
   const [history, setHistory] = useState<Message[]>([]);
 
-  const getSuggestions = async (prompt: string) => {
+  const getSuggestions = async (prompt: string | string[]) => {
+    const normalizedPrompt = Array.isArray(prompt) ? prompt.join("\n") : prompt;
     setStatus("waiting_prompt");
 
-    const newMessage: Message = { role: "user", content: prompt };
+    const newMessage: Message = {
+      role: "user",
+      content: normalizedPrompt,
+      timestamp: new Date().toISOString(),
+    };
     const updatedHistory = [...history, newMessage];
     setHistory(updatedHistory);
 
@@ -54,31 +66,34 @@ export const SuggestionsProvider = ({
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("Response:", res);
-
       if (!res.ok) {
-        throw new Error(`Server responded with status ${res.status}`);
+        toast.error("Error fetching suggestions: try later again ");
       }
 
-      const data = await res.json();
+      const data: ApiSuggestionsResponse = await res.json();
 
-      if (!data?.suggestions) {
-        throw new Error("Suggestions not found in response");
+      if (!data.success) {
+        toast.error(
+          data.error || "Error fetching suggestions: try later again"
+        );
+        setStatus("error");
+        return [];
       }
 
-      setSuggestions(data.suggestions);
+      setSuggestions(data.prompt || []);
 
       const aiMessage: Message = {
         role: "assistant",
-        content: data.content,
+        content: data.prompt ?? [],
+        timestamp: new Date().toISOString(),
       };
 
       setHistory([...updatedHistory, aiMessage]);
       setStatus("done");
 
-      return data.suggestions;
-
+      return data.prompt ?? [];
     } catch (error) {
+      toast.error("Error fetching suggestions: try later again");
       console.error("Error fetching suggestions:", error);
 
       setStatus("error");
@@ -92,7 +107,13 @@ export const SuggestionsProvider = ({
 
   return (
     <SuggestionsContext.Provider
-      value={{ suggestions, status, getSuggestions, history, addMessageToHistory }}
+      value={{
+        suggestions,
+        status,
+        getSuggestions,
+        history,
+        addMessageToHistory,
+      }}
     >
       {children}
     </SuggestionsContext.Provider>

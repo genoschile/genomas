@@ -15,11 +15,14 @@ type UserData = {
   id: string;
   name: string;
   email: string;
+  password: string;
 };
 
 /* Create a new organization for the first time */
 export async function POST(request: Request) {
   const body = await request.json();
+
+  console.log("Creating organization with body:", body);
 
   try {
     const org: OrgDTO = await useCaseOrganization.execute(body);
@@ -33,19 +36,20 @@ export async function POST(request: Request) {
 
     const { id, name, email } = org;
 
-    // const defaultUserPasswordSecure = generateSecurePassword();
-    const defaultUserPasswordSecure = "fermin";
-
-    const currentDataUser = {
-      name: name,
-      email: email,
-      encryptedPassword: defaultUserPasswordSecure,
-      organizationId: id,
-      isDefaultAdmin: true,
-      userType: UserType.ADMIN,
+    type CreateOrgResponse = {
+      id: string;
+      name: string;
+      email: string;
+      isDefaultAdmin: boolean;
+      userType: string;
+      organizationId: string;
+      createdAt: Date;
+      updatedAt: Date;
     };
 
-    const currentUser = await useCaseUser.createUserAdmin(currentDataUser);
+    const currentUser: CreateOrgResponse = await useCaseUser.createUserAdmin(
+      currentDataUser
+    );
 
     if (!currentUser) {
       throw new Error("Error creating default user");
@@ -54,6 +58,8 @@ export async function POST(request: Request) {
     if (!defaultUserPasswordSecure) {
       throw new Error("Error generating secure password");
     }
+
+    const;
 
     return NextResponse.json<ApiResponse<UserData>>({
       status: 200,

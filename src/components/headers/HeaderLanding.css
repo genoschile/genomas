@@ -8,21 +8,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: width 0.5s ease-in-out, background-color 0.3s ease,
-    transform 0.5s ease;
+  transition: background-color 0.3s ease;
   width: 100%;
   color: white;
-
-  &.scrolled {
-    width: 60%;
-    backdrop-filter: blur(40px);
-    background-color: var(--primary-color-hover);
-    font-size: 1.2em;
-    line-height: 1.2;
-    transform: translateY(10px);
-    border-radius: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
 }
 
 .header-landing__container {
@@ -42,7 +30,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-
+  
   & > a {
     text-decoration: none;
     position: relative;
@@ -84,6 +72,11 @@
     color: var(--color-white);
     transition: color 0.3s ease-in-out;
     font-weight: bold;
+
+    &.disabled {
+      color: rgba(255, 255, 255, 0.4);
+      pointer-events: none;
+    }
 
     &:hover {
       color: var(--text-color);

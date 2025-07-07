@@ -59,7 +59,7 @@ export default function sectionTwo2() {
 
   return (
     <Section>
-      <main className="section__content sectionTwo__content">
+      <div className="section__content sectionTwo__content">
         {/* Título */}
         <h2
           ref={h2Ref}
@@ -94,7 +94,7 @@ export default function sectionTwo2() {
             </a>
           ))}
         </div>
-      </main>
+      </div>
     </Section>
   );
 }

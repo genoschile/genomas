@@ -172,7 +172,6 @@ export class OrganizationRepository implements IOrganizationRepository {
       ? group.UserGroup.map((ug) => ({
           user: mapToIUser(ug.user),
           addedAt: ug.createdAt,
-          // addedById: ug.addedById, // Si 'addedById' existe en UserGroup
         }))
       : [];
 

@@ -2,15 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import "./section4.css";
 import Section from "./section";
 import { useTranslations } from "@/context/I18nClientProvider";
-
-const InfoSection = {
-  title: "Turn Your Genomic Data Into Actionable Insights",
-  description:
-    "          Stop spending hours interpreting complex genetic files. With GENOMAS,           gain reliable, data-driven answers using advanced AI tailored for           genomic analysis.",
-};
 
 export default function Section4() {
   const h2Ref = useRef<HTMLHeadingElement | null>(null);
@@ -51,21 +44,21 @@ export default function Section4() {
     });
   }, [entries]);
 
-    const { t } = useTranslations();
-  
-    const section4Data = {
-      title: t("landing.section3.title"),
-      description: t("landing.section3.description"),
-      buttonText: t("landing.section3.button"),
-      buttonHref: "/see-more",
-    };
+  const { t } = useTranslations();
+
+  const section4Data = {
+    title: t("landing.section3.title"),
+    description: t("landing.section3.description"),
+    buttonText: t("landing.section3.button"),
+    buttonHref: "/see-more",
+  };
 
   return (
-    <Section className="section3">
-      <div className="section3__content alternate-layout">
+    <Section>
+      <div className="section3__content left-image">
         <h2
           ref={h2Ref}
-          className={`section3__title ${
+          className={`section__title section3__title ${
             isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
@@ -73,7 +66,7 @@ export default function Section4() {
         </h2>
         <p
           ref={pRef}
-          className={`section3__description ${
+          className={`section__description section3__description ${
             isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >

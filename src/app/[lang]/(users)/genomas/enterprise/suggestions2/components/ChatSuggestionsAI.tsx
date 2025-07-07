@@ -4,6 +4,7 @@ import { MdContentCopy } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { TypingDots } from "./TypingDots";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export const ChatSuggestionsAI = () => {
   const { history, status } = useSuggestions();
@@ -27,13 +28,29 @@ export const ChatSuggestionsAI = () => {
 
           <footer className="chat-footer">
             <ul>
-              <li aria-label="Copy suggestion">
+              <li
+                aria-label="Copy suggestion"
+                onClick={() => {
+                  const textToCopy = Array.isArray(item.content)
+                    ? item.content.join("\n")
+                    : item.content;
+
+                  navigator.clipboard
+                    .writeText(textToCopy)
+                    .then(() => {
+                      toast.success("¡Texto copiado al portapapeles!");
+                    })
+                    .catch(() => {
+                      toast.error("No se pudo copiar el texto.");
+                    });
+                }}
+              >
                 <MdContentCopy />
               </li>
 
-              <li aria-label="Edit suggestion">
+              {/* <li aria-label="Edit suggestion">
                 <FaRegEdit />
-              </li>
+              </li> */}
             </ul>
           </footer>
           <time className="message-time">

@@ -1,18 +1,10 @@
-export type IAResponse =
-  | {
-      success: boolean;
-      message: string;
-      usuario: string[];
-      grupos: string[];
-      acceso: string[];
-      error?: string;
-    }
-  | {
-      success: boolean;
-      message?: string;
-      error: string;
-    };
+export type IAResponse = {
+  success: boolean;
+  message?: string;
+  prompt?: string[];
+  error?: string;
+};
 
 export interface IAService {
-  suggestGroups(prompt: string): Promise<IAResponse>;
+  suggestGroups(roleId: string, prompt: string): Promise<IAResponse>;
 }

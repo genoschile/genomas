@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import "./section3.css";
 import Section from "./section";
 import { useTranslations } from "@/context/I18nClientProvider";
 
@@ -65,6 +64,7 @@ export default function Section3() {
         >
           {section3Data.title}
         </h2>
+
         <p
           ref={pRef}
           className={`section__description section3__description ${
@@ -73,17 +73,6 @@ export default function Section3() {
         >
           {section3Data.description}
         </p>
-
-        <div className="section3__containerButtons">
-          <button
-            ref={button1Ref}
-            className={`section3__button ${
-              isButton1Visible ? "visibleElement" : "hiddenImage"
-            }`}
-          >
-            {section3Data.buttonText}
-          </button>
-        </div>
 
         <figure className="section3__image-container">
           <img
@@ -95,6 +84,17 @@ export default function Section3() {
             }`}
           />
         </figure>
+
+        <div className="section3__containerButtons">
+          <button
+            ref={button1Ref}
+            className={`section3__button ${
+              isButton1Visible ? "visibleElement" : "hiddenImage"
+            }`}
+          >
+            {section3Data.buttonText}
+          </button>
+        </div>
       </div>
     </Section>
   );

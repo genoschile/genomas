@@ -26,6 +26,8 @@
   gap: 1rem;
   width: 100%;
 
+  position: relative;
+
   & fieldset {
     border: 1px solid rgba(0, 0, 0, 0.3);
     width: 50%;
@@ -207,5 +209,20 @@
       height: 2px;
       background-color: rgba(0, 0, 0, 0.3);
     }
+  }
+}
+
+.eyes-icons {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #333;
+  font-size: 1.5em;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--secondary-color);
   }
 }

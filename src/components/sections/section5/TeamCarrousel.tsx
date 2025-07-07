@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Section from "../section";
 import CarrouselCards from "./CarrouselCards";
-import "./section5.css";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useTranslations } from "@/context/I18nClientProvider";
 
@@ -44,20 +43,20 @@ const TeamSection = () => {
   };
 
   return (
-    <Section className="team-section">
-      <div className="team-section__content">
+    <Section>
+      <div className="section__content">
         <h2
           ref={h2Ref}
-          className={`team-section__title ${
-            isH2Visible ? "visibleImage" : "hiddenImage"
+          className={`section__title ${
+            isH2Visible ? "visibleElement" : "hiddenElement"
           }`}
         >
           {InfoSection.title}
         </h2>
         <p
           ref={pRef}
-          className={`team-section__description ${
-            isPVisible ? "visibleImageRight" : "hiddenImageRight"
+          className={`section__description ${
+            isPVisible ? "visibleElement" : "hiddenElement"
           }`}
         >
           {InfoSection.description}
