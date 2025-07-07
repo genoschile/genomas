@@ -172,7 +172,7 @@ solo funciona correctamente en chrome y en desktop
 no se puede usar la api en build
 
 TODO: mejoras variables de entorno para que funcionen con el dominio genomas.cl
-TODO: 
+TODO:
 
 se mejoro responsive de la landing, corrección de erróres
 ahora se desabilitaron los link que no tenian funcionalidad (para no confundir al usuario)
@@ -181,6 +181,10 @@ en el login y en el signup ahora el campo contraseña puede alternar el estado v
 
 trabajando en @media 640px
 
-se agrego nueva instancia en core **
+se agrego nueva instancia en core \*\*
 se definio el handle para que el useCaseSuggestion funcione y devuelva la respuesta correcta del modelo
 TODO: se corrigirá el error de la transacción en infraestructura (mal implementada), se generá un caso de uso, para crear una organización con un usuario admin por default
+
+se agrego el ssl a genomas.cl, mathbio.genomas.cl
+
+TODO: se teoriza que el problema de la carga parcial o hidratación de css en dispositivos moviles es por los import en cada componente, segun la guia de nextjs que no vi se recomienda el uso de css modules, hay que cambiar eso.

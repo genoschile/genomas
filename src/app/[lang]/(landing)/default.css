@@ -81,13 +81,9 @@
   font-weight: var(--font-title-weight);
   line-height: 1.3;
   color: var(--font-title-color);
-  text-wrap: nowrap;
+  text-wrap: wrap;
+  text-align: balance;
   text-align: center;
-
-
-  @media (max-width: 1300px) {
-    text-wrap: balance;
-  }
 
   &::after {
     content: "";
