@@ -1,32 +1,43 @@
 import prisma from "@/lib/actions/prisma";
 import {
   CreateOrgDTO,
-  IOrganization,
   IOrganizationRepository,
   OrgDTO,
 } from "../interfaces/IOrganization";
 import { CreateGroupDTO, ResponseGroupDTO } from "../interfaces/IGroup";
-import { mapToIUser } from "../mapTypes/userTypes";
+import { mapToIUser, MapToPrismaUserType } from "../mapTypes/userTypes";
 import { mapToDomainRoles } from "../mapTypes/rolesTypes";
 import { ResponseWorkspacesDTO } from "../interfaces/IWorkspace";
 import { PipelineType } from "../interfaces/enums";
+import { IUser } from "../interfaces/IUser";
+import bcrypt from "bcrypt";
+import { generateSecurePassword } from "@/core/helpers/randomPwdSecure";
+import { UserType as DomainUserType } from "@/core/interfaces/enums";
 
 export class OrganizationRepository implements IOrganizationRepository {
   async create(data: CreateOrgDTO): Promise<OrgDTO> {
-    return await prisma.$transaction(async (tx) => {
+    return await prisma.$transaction(async () => {
       // Paso 1: Crear la organización con include
-      const org = await tx.organization.create({
+      const org = await prisma.organization.create({
         data: {
           name: data.name,
           email: data.email,
           password: data.password,
         },
+      });
+
+      const fullOrg = await prisma.organization.findUnique({
+        where: { id: org.id },
         include: {
           users: { select: { id: true } },
           workspaces: { select: { id: true } },
           license: { select: { id: true } },
         },
       });
+
+      if (!fullOrg) {
+        throw new Error("No se pudo crear la organización");
+      }
 
       const workspaceData = [
         { name: "Workspace Cáncer", pipelineType: PipelineType.CANCER },
@@ -36,7 +47,7 @@ export class OrganizationRepository implements IOrganizationRepository {
 
       await Promise.all(
         workspaceData.map(({ name, pipelineType }) =>
-          tx.workspace.create({
+          prisma.workspace.create({
             data: {
               name,
               pipelineType,
@@ -47,14 +58,28 @@ export class OrganizationRepository implements IOrganizationRepository {
         )
       );
 
+      // 3. Crear el usuario admin asociado a la organización
+      const defaultAdminUser: Omit<IUser, "id"> = {
+        email: data.email,
+        name: "Admin",
+        userType: DomainUserType.ADMIN,
+        organizationId: org.id,
+        isDefaultAdmin: true,
+        encryptedPassword: generateSecurePassword(12),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      await createUser(defaultAdminUser);
+
       return {
-        id: org.id,
-        name: org.name,
-        email: org.email,
-        password: org.password,
-        userIds: org.users.map((u) => u.id),
-        workspaceIds: org.workspaces.map((w) => w.id),
-        licenseId: org.license?.id ?? undefined,
+        id: fullOrg.id,
+        name: fullOrg.name,
+        email: fullOrg.email,
+        password: fullOrg.password,
+        userIds: fullOrg.users.map((u) => u.id),
+        workspaceIds: fullOrg.workspaces.map((w) => w.id),
+        licenseId: fullOrg.license?.id ?? undefined,
       };
     });
   }
@@ -205,4 +230,23 @@ export class OrganizationRepository implements IOrganizationRepository {
       password: org.password,
     };
   }
+}
+
+async function createUser(user: Omit<IUser, "id">): Promise<IUser> {
+  const hashedPassword = await bcrypt.hash(user.encryptedPassword, 10);
+
+  const data = {
+    email: user.email,
+    name: user.name,
+    userType: MapToPrismaUserType(user.userType),
+    organizationId: user.organizationId,
+    isDefaultAdmin: user.isDefaultAdmin,
+    encryptedPassword: hashedPassword,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+
+  const prismaUser = await prisma.user.create({ data });
+
+  return mapToIUser(prismaUser);
 }

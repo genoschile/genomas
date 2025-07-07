@@ -9,6 +9,7 @@ import { ResponseWorkspacesDTO } from "@/core/interfaces/IWorkspace";
 export class useCaseOrganizationUseCase {
   constructor(private orgRepo: IOrganizationRepository) {}
 
+  // create new organization and new user admin default
   async execute(data: CreateOrgDTO): Promise<OrgDTO> {
     return await this.orgRepo.create(data);
   }
@@ -30,9 +31,7 @@ export class useCaseOrganizationUseCase {
     return await this.orgRepo.findWorkspacesByOrgId(orgId);
   }
 
-  async organizationByEmail(
-    email: string
-  ): Promise<OrgDTO | null> {
+  async organizationByEmail(email: string): Promise<OrgDTO | null> {
     return await this.orgRepo.organizationByEmail(email);
   }
 }

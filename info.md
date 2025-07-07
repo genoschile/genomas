@@ -183,3 +183,4 @@ trabajando en @media 640px
 
 se agrego nueva instancia en core **
 se definio el handle para que el useCaseSuggestion funcione y devuelva la respuesta correcta del modelo
+TODO: se corrigirá el error de la transacción en infraestructura (mal implementada), se generá un caso de uso, para crear una organización con un usuario admin por default

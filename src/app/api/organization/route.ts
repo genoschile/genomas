@@ -1,9 +1,23 @@
 import { NextResponse } from "next/server";
-import { generateSecurePassword } from "@/core/helpers/randomPwdSecure";
-import { UserType } from "@/core/interfaces/enums";
+import bcrypt from "bcrypt";
 import { OrgDTO } from "@/core/interfaces/IOrganization";
-import { useCaseOrganization, useCaseUser } from "@/core/instances";
+import { useCaseOrganization } from "@/core/instances";
+import { z } from "zod";
 
+// Schema Zod compartido
+const signUpEnterpriseSchema = z
+  .object({
+    name: z.string().min(2, { message: "Name must be at least 2 characters long" }),
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
+    repeatPassword: z.string().min(6, { message: "Repeat password must be at least 6 characters long" }),
+  })
+  .refine((data) => data.password === data.repeatPassword, {
+    message: "Passwords must match",
+    path: ["repeatPassword"],
+  });
+
+// Tipo de respuesta unificada
 type ApiResponse<T = undefined> = {
   status: number;
   success: boolean;
@@ -11,69 +25,79 @@ type ApiResponse<T = undefined> = {
   data?: T;
 };
 
-type UserData = {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-};
-
-/* Create a new organization for the first time */
+/**
+ * POST /api/organization/signup
+ * Crea una organización
+ */
 export async function POST(request: Request) {
   const body = await request.json();
-
-  console.log("Creating organization with body:", body);
-
+  
   try {
-    const org: OrgDTO = await useCaseOrganization.execute(body);
+    console.log("📥 Request body recibido:", body);
 
-    if (!org) {
-      return NextResponse.json(
-        { message: "Organization not created" },
-        { status: 400 }
-      );
-    }
-
-    const { id, name, email } = org;
-
-    type CreateOrgResponse = {
-      id: string;
-      name: string;
-      email: string;
-      isDefaultAdmin: boolean;
-      userType: string;
-      organizationId: string;
-      createdAt: Date;
-      updatedAt: Date;
-    };
-
-    const currentUser: CreateOrgResponse = await useCaseUser.createUserAdmin(
-      currentDataUser
+    const validated = signUpEnterpriseSchema.safeParse(
+      body,
     );
 
-    if (!currentUser) {
-      throw new Error("Error creating default user");
+    if (!validated.success) {
+      console.warn("❌ Error de validación:", validated.error.flatten().fieldErrors);
+
+      return NextResponse.json<ApiResponse>({
+        status: 400,
+        success: false,
+        message: "Validation failed",
+        data: validated.error.flatten().fieldErrors as any,
+      }, { status: 400 });
     }
 
-    if (!defaultUserPasswordSecure) {
-      throw new Error("Error generating secure password");
+    const { name, email, password } = validated.data;
+
+    // ¿Existe ya?
+    const existingOrg = await useCaseOrganization.organizationByEmail(email);
+
+    if (existingOrg) {
+      console.warn("⚠️ Organización ya existe:", email);
+
+      return NextResponse.json<ApiResponse>({
+        status: 400,
+        success: false,
+        message: "Organization already exists with this email",
+      }, { status: 400 });
     }
 
-    const;
+    // 🔐 Encriptar contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    return NextResponse.json<ApiResponse<UserData>>({
+    // Crear organización
+    const org: OrgDTO = await useCaseOrganization.execute({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    if (!org) {
+      return NextResponse.json<ApiResponse>({
+        status: 400,
+        success: false,
+        message: "Organization not created",
+      }, { status: 400 });
+    }
+
+    console.log("✅ Organización creada:", org);
+
+    return NextResponse.json<ApiResponse<OrgDTO>>({
       status: 200,
-      data: { id, name, email },
       success: true,
       message: "Organization created successfully",
-    });
+      data: org,
+    }, { status: 200 });
   } catch (error) {
-    console.error("Error creating organization:", error);
+    console.error("❌ Error inesperado:", error);
 
-    return NextResponse.json({
-      message: "Error creating organization",
+    return NextResponse.json<ApiResponse>({
       status: 500,
       success: false,
-    });
+      message: "Internal server error",
+    }, { status: 500 });
   }
 }

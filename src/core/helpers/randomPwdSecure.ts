@@ -23,7 +23,7 @@ export  function generateSecurePassword(length = 12): string {
   const remainingLength = length - requiredChars.length;
   const remainingChars = Array.from({ length: remainingLength }, () => getRandom(allChars));
 
-  // Mezclamos todo para evitar orden predecible
+  // Mezclamos todo
   const passwordArray = [...requiredChars, ...remainingChars];
   const shuffledPassword = passwordArray.sort(() => Math.random() - 0.5);
 

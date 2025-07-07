@@ -150,10 +150,6 @@ export const submitSignUpEnterprise = async (
     // e.g. Hash the user's password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 3. Insert the user into the database
-
-    console.log({ message: "User created successfully!" });
-
     const res = await fetch(routes.signUpEnterprise(), {
       method: "POST",
       headers: {
@@ -167,6 +163,9 @@ export const submitSignUpEnterprise = async (
     });
 
     if (!res.ok) {
+      const errorText = await res.text();
+      console.error("❌ Error desde backend:", res.status, errorText);
+
       return {
         success: false,
         message: "Login failed",
@@ -176,6 +175,8 @@ export const submitSignUpEnterprise = async (
     }
 
     const responseData: ApiResponse<UserData> = await res.json();
+
+    console.log("Response data:", responseData);
 
     if (responseData.success) {
       return {
@@ -189,7 +190,7 @@ export const submitSignUpEnterprise = async (
 
     return {
       success: false,
-      message: "Enterprise does not exist",
+      message: "Error creating organization",
       input: rawData,
       error: {},
     };
