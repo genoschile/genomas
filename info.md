@@ -189,5 +189,57 @@ se agrego el ssl a genomas.cl, mathbio.genomas.cl
 
 TODO: se teoriza que el problema de la carga parcial o hidratación de css en dispositivos moviles es por los import en cada componente, segun la guia de nextjs que no vi se recomienda el uso de css modules, hay que cambiar eso.
 
+TODO: PROBAR PROXY JUMP SI NO
 
-TODO: PROBAR PROXY JUMP SI NO 
+propuesta!
+
+=>
+Arquitectura: "Orquestador de Pipelines Seguros"
+Esta arquitectura permite tener una interfaz de usuario moderna (Next.js) que orquesta la ejecución de flujos de trabajo computacionales intensivos (Nextflow) en una máquina virtual remota y privada, todo mientras la API principal permanece accesible y separada, y la comunicación se realiza de forma segura a través de un "proxy jump".
+
+¡Claro que sí! Aquí tienes un resumen de la arquitectura que planteas, con un nombre pegadizo y los pasos clave para entender el flujo, destacando que tu API principal reside fuera de la máquina virtual (VM).
+
+Arquitectura: "Orquestador de Pipelines Seguros"
+Esta arquitectura te permite tener una interfaz de usuario moderna (Next.js) que orquesta la ejecución de flujos de trabajo computacionales intensivos (Nextflow) en una máquina virtual remota y privada, todo mientras la API principal permanece accesible y separada, y la comunicación se realiza de forma segura a través de un "proxy jump".
+
+Flujo de Trabajo Simplificado:
+El Usuario Pide Ejecutar (Next.js)
+
+Tu aplicación Next.js, a la que acceden los usuarios, recolecta los datos necesarios y envía una solicitud a tu API de Backend.
+
+La API de Backend Recibe y Delega (Python)
+
+Tu API (Flask, FastAPI, etc.), que está fuera de la máquina virtual, recibe la solicitud.
+
+En lugar de ejecutar el Nextflow directamente, crea una tarea asíncrona y la envía a la cola de Redis para que la procese Celery. Esto mantiene tu API ágil y responsiva.
+
+Celery se Prepara para el Salto (Python Celery Worker)
+
+Un Worker de Celery, que también reside fuera de la máquina virtual (posiblemente en el mismo servidor que tu API o un VPS separado que hará de "proxy jump"), toma la tarea de la cola de Redis.
+
+Este worker sabe que tiene que llegar a una VM privada.
+
+El Salto Seguro al Destino (Proxy Jump + SSH)
+
+El Worker de Celery inicia una conexión SSH (usando librerías como paramiko) al servidor de "proxy jump".
+
+Desde ese servidor de "proxy jump", el Worker de Celery establece una segunda conexión SSH a la Máquina Virtual de Nextflow, que es privada y no está directamente expuesta a internet.
+
+Ejecución del Pipeline Remoto (Nextflow en la VM)
+
+Una vez conectado a la VM, el Worker de Celery le da la orden a la VM para que ejecute el comando nextflow run ... con los parámetros necesarios.
+
+Nextflow dentro de la VM se encarga de todo el procesamiento pesado.
+
+Actualización de Estado y Resultados (Redis/DB)
+
+El Worker de Celery puede monitorear la ejecución del Nextflow y actualizar el estado de la tarea en Redis (o en una base de datos) para que tu API y Next.js puedan informar al usuario sobre el progreso o si el pipeline terminó.
+
+
+## correo
+
+
+
+
+1er desafio: almacenar los archivos 
+
