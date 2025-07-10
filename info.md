@@ -67,7 +67,7 @@ const ExampleResFastAPI = {
 - VOLUMEN: SCRIPT.NF
 - VOLUMEN: DEFINIR CARPETA PARA OUTPUTS
 - VOLUMEN: REFERENCIAS
-- comando del primer worker VCF
+- comando del primer worker VCF <=>  need it
 - archivo configuración
 - samplesheet
 - VCF PRUEBA
@@ -76,7 +76,7 @@ const ExampleResFastAPI = {
 - TODO: VCF VALIDATE
 - TODO: ENCONTRAR OUTPUT
 - se hablo de abrir los port con informatica con udd
-- TODO: Probar proxy jump
+- TODO: Probar proxy jump => we're here
 - modificación interfaz groups
 
 # semana 01-07-2025
@@ -238,8 +238,10 @@ El Worker de Celery puede monitorear la ejecución del Nextflow y actualizar el 
 
 ## correo
 
-
-
-
 1er desafio: almacenar los archivos 
+2do desafio: generar un endpoint que consulte la mv
+
+## genomas 
+
+se hicieorn 2 helper uno para la infraestructura de la api, y otro para el front que es para reutilizar los catch try
 
