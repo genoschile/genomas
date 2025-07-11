@@ -67,7 +67,7 @@ const ExampleResFastAPI = {
 - VOLUMEN: SCRIPT.NF
 - VOLUMEN: DEFINIR CARPETA PARA OUTPUTS
 - VOLUMEN: REFERENCIAS
-- comando del primer worker VCF <=>  need it
+- comando del primer worker VCF <=> need it
 - archivo configuración
 - samplesheet
 - VCF PRUEBA
@@ -197,8 +197,6 @@ propuesta!
 Arquitectura: "Orquestador de Pipelines Seguros"
 Esta arquitectura permite tener una interfaz de usuario moderna (Next.js) que orquesta la ejecución de flujos de trabajo computacionales intensivos (Nextflow) en una máquina virtual remota y privada, todo mientras la API principal permanece accesible y separada, y la comunicación se realiza de forma segura a través de un "proxy jump".
 
-¡Claro que sí! Aquí tienes un resumen de la arquitectura que planteas, con un nombre pegadizo y los pasos clave para entender el flujo, destacando que tu API principal reside fuera de la máquina virtual (VM).
-
 Arquitectura: "Orquestador de Pipelines Seguros"
 Esta arquitectura te permite tener una interfaz de usuario moderna (Next.js) que orquesta la ejecución de flujos de trabajo computacionales intensivos (Nextflow) en una máquina virtual remota y privada, todo mientras la API principal permanece accesible y separada, y la comunicación se realiza de forma segura a través de un "proxy jump".
 
@@ -235,13 +233,18 @@ Actualización de Estado y Resultados (Redis/DB)
 
 El Worker de Celery puede monitorear la ejecución del Nextflow y actualizar el estado de la tarea en Redis (o en una base de datos) para que tu API y Next.js puedan informar al usuario sobre el progreso o si el pipeline terminó.
 
-
 ## correo
 
-1er desafio: almacenar los archivos 
+1er desafio: almacenar los archivos
 2do desafio: generar un endpoint que consulte la mv
 
-## genomas 
+## genomas
 
 se hicieorn 2 helper uno para la infraestructura de la api, y otro para el front que es para reutilizar los catch try
 
+
+# semana 14-07-2025
+
+breaking changes repositorio annomaf, configuración exitosa de paramiko, se consulta la memoria disponible
+
+TODO: instalar en mv minIO
