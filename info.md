@@ -242,7 +242,6 @@ El Worker de Celery puede monitorear la ejecución del Nextflow y actualizar el 
 
 se hicieorn 2 helper uno para la infraestructura de la api, y otro para el front que es para reutilizar los catch try
 
-
 # semana 14-07-2025
 
 breaking changes repositorio annomaf, configuración exitosa de paramiko, se consulta la memoria disponible
@@ -254,13 +253,31 @@ se generó el primer worker test con exito, al tener nextflow soporte nativo a s
 se genero un install para el worker uno, para generar la imagen, la idea es que con una imagen se generen n-containers
 y sería la propuesta para futuros workers
 
->[!NOTE]
+> [!NOTE]
 > ES NECESARIO QUE TODOS LOS WORKERS SE EJECUTEN EN LA MISMA RED (DOCKER NETWORKS)
 
 se modificaron los requiriments, ya no dependemos de uvicorn solo de fastapi
 
 TODO: Necesito tener acceso al repositorio desde la cuenta de mathbio-gitlab
-TODO: Vps 1 se quedó sin espacio, sería posible comprar otra? jeje solo por un mes para 
+TODO: Vps 1 se quedó sin espacio, sería posible comprar otra? jeje solo por un mes para
 TODO: ejecutar los docker en minio
-TODO: hacer pruebas de conectividad, y hacer cambios para implementar paramiko a la ecuación del primer worker test 
+TODO: hacer pruebas de conectividad, y hacer cambios para implementar paramiko a la ecuación del primer worker test
 todo: el install en el root directory del project de APIRESOURCEANNOMAF quedo deprecado, veré una futura forma de adaptarlo a lo nuevo NO USAR!
+
+TODO: Cola de tareas separada tipo scheduler
+Puedes diseñar un componente scheduler que mantenga una cola de tareas pending y revise periódicamente (cada minuto, por ejemplo) si ya hay recursos. Si los hay, saca una tarea pending y la lanza.
+
+```py
+# Script remoto para evaluar memoria libre mínima
+MEM_DISPONIBLE=$(free -m | awk '/Mem:/ {print $7}')  # Memoria libre real
+MINIMO=4096  # 4GB
+
+if [ "$MEM_DISPONIBLE" -lt "$MINIMO" ]; then
+    echo "NOT_ENOUGH_MEMORY"
+    exit 1
+else
+    echo "ENOUGH_MEMORY"
+    exit 0
+fi
+
+```
