@@ -281,3 +281,9 @@ else
 fi
 
 ```
+
+TODO: DEFINIR S3 SAVE
+todo: Definir entrega structure workers
+todo: que pasara con la info que le llega a la api
+
+const worker_vcf = () => { organizationId, userId, workspaceId, inputFiles, workerName, genomeVersionRef(hg19?, hg38) }
