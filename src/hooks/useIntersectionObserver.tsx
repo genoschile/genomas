@@ -21,7 +21,7 @@ export const useIntersectionObserver = ({
     if (!observerRef.current) {
       observerRef.current = new IntersectionObserver(
         (observedEntries) => {
-          console.log("Observed entries:", observedEntries);
+          // console.log("Observed entries:", observedEntries);
           setEntries(observedEntries);
         },
         { root, rootMargin, threshold }
@@ -41,7 +41,7 @@ export const useIntersectionObserver = ({
       element &&
       !observedElements.current.has(element)
     ) {
-      console.log("Observing element:", element);
+      // console.log("Observing element:", element);
       observerRef.current.observe(element);
       observedElements.current.add(element);
     }
@@ -53,7 +53,7 @@ export const useIntersectionObserver = ({
       element &&
       observedElements.current.has(element)
     ) {
-      console.log("Unobserving element:", element);
+      // console.log("Unobserving element:", element);
       observerRef.current.unobserve(element);
       observedElements.current.delete(element);
     }

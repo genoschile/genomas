@@ -296,4 +296,4 @@ se genero en landing una section de pipelines para que pipe route tenga sentido
 
 se corrigio error en el login
 
-se migró base de datos de genomas que se encontraba en mi vps  personal al de la profesora karen
+se migró base de datos de genomas que se encontraba en mi vps personal al de la profesora karen

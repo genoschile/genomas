@@ -8,7 +8,6 @@ export const ConfigOptions = () => {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(true);
 
-  // Listener para scroll
   useEffect(() => {
     let lastScroll = window.scrollY;
 
@@ -80,7 +79,6 @@ export const ConfigOptions = () => {
         }}
       >
         <li style={{ padding: "6px 8px", cursor: "pointer" }}>
-          {" "}
           <I18nButton />
         </li>
       </ul>
