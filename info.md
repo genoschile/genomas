@@ -287,3 +287,13 @@ todo: Definir entrega structure workers
 todo: que pasara con la info que le llega a la api
 
 const worker_vcf = () => { organizationId, userId, workspaceId, inputFiles, workerName, genomeVersionRef(hg19?, hg38) }
+
+# semana 21-07-2025
+
+se reestructuro project, se elimino ruta genomas pq quedaba raro genomas.cl/genomas/user
+
+se genero en landing una section de pipelines para que pipe route tenga sentido
+
+se corrigio error en el login
+
+se migró base de datos de genomas que se encontraba en mi vps  personal al de la profesora karen
