@@ -27,6 +27,11 @@ const links = [
     href: "/contact",
     isNextLink: true,
   },
+  {
+    label: "Pipelines",
+    href: "/pipe",
+    isNextLink: true,
+  }
 ];
 
 const Header = () => {

@@ -9,12 +9,12 @@ import "@styles/default.css";
 
 export default function Home() {
   return (
-    <>
+    <div className="landing-container">
       <Section1 />
       <Section2 />
       <Section3 />
       <Section4 />
       <TeamCarrousel />
-    </>
+    </div>
   );
 }

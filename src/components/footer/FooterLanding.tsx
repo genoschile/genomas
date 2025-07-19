@@ -59,7 +59,7 @@ export function FooterLanding({ className = "" }: { className?: string }) {
             <label htmlFor="inputText">
               <p>
                 <strong>{t("layout.footer.inputPlaceholder")}</strong>
-
+    
                 {t("layout.footer.inputPlaceholder.2")}
               </p>
             </label>

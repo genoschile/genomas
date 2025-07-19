@@ -70,7 +70,7 @@ export const FormEnterprice = () => {
           name: state.data?.name || "",
         });
 
-        router.push("/genomas/enterprise");
+        router.push("/enterprise");
       } else if (state.message) {
         toast.error(state.message || "Something went wrong!");
       }

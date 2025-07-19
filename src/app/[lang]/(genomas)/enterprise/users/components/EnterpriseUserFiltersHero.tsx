@@ -1,4 +1,4 @@
-import { SearchFilterEnterpriseUser } from "@/app/[lang]/(users)/genomas/enterprise/users/components/tablesUser/SearchFilterEnterpriseUser";
+import { SearchFilterEnterpriseUser } from "@/app/[lang]/(genomas)/enterprise/users/components/tablesUser/SearchFilterEnterpriseUser";
 import { ContainerDefaultEnterprise } from "../../components/ContainerDefaultEnterprise";
 
 export const EnterpriseUserFiltersHero = () => {

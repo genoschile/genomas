@@ -20,7 +20,7 @@ import { FaHome } from "react-icons/fa";
 /* styles */
 import "./sidebarUser.css";
 
-const path = "genomas/user";
+const path = "/user";
 
 const sidebarItems = [
   {

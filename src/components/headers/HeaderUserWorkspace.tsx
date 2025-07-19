@@ -6,28 +6,25 @@ import { usePathname } from "next/navigation";
 import FeaturesContainer from "./FeaturesContainer";
 import UserOptions from "./UserOptions";
 
-export function HeaderUserWorkspace({ className = "" }: { className?: string }) {
+export function HeaderUserWorkspace({
+  className = "",
+}: {
+  className?: string;
+}) {
   const currentPath = usePathname();
 
-  const isUserOrGenomaPath =
-    currentPath.startsWith("/genomas/user") ||
-    currentPath.startsWith("/genoma/");
-  const isGenomasPath = currentPath === "/genomas";
+  const isPipePath =
+    currentPath === "/pipe" || currentPath.startsWith("/pipe/");
 
   return (
     <header className={`headerUserWorkspace ${className}`}>
       <div className="headerUserWorkspace__container">
-        {isUserOrGenomaPath ? (
-          <figure>
-            <Logo />
-            <figcaption>Descripción breve de la imagen.</figcaption>
-          </figure>
-        ) : isGenomasPath ? (
-          <FeaturesContainer />
-        ) : (
-          <p style={{ color: "red" }}>something went wrong</p>
-        )}
-        <UserOptions />
+        <figure>
+          <Logo />
+          <figcaption>Descripción breve de la imagen.</figcaption>
+        </figure>
+
+        {isPipePath ? <FeaturesContainer /> : <UserOptions />}
       </div>
     </header>
   );

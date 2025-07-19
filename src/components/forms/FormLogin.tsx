@@ -19,6 +19,7 @@ import { useTranslations } from "@/context/I18nClientProvider";
 import Link from "next/link";
 import { useSessionContext } from "@/hooks/useSession";
 import { IoEyeSharp } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
 
 const initialState: ActionResponseWithoutRepeatPassword = {
   success: false,
@@ -70,7 +71,7 @@ export default function FormLogin() {
           organizationId: state.data?.organizationId || "",
         });
 
-        router.push("/genomas/user");
+        router.push("/user");
       } else if (state.message) {
         toast.error(state.message || "Something went wrong!");
       }
@@ -124,7 +125,7 @@ export default function FormLogin() {
               />
 
               {isPasswordVisible ? (
-                <IoEyeSharp
+                <FaEyeSlash
                   className="eyes-icons"
                   onClick={togglePasswordVisibility}
                 />

@@ -1,17 +1,12 @@
 .features-header__container {
   display: flex;
   inline-size: 100%;
-  max-inline-size: 1200px;
-  margin: 0 auto;
   align-items: center;
-
-  > a {
-    margin-right: auto;
-  }
 
   > div {
     display: flex;
     align-items: center;
+    margin-inline-start: auto;
     gap: min(2em, 5%);
     padding: 0 16px;
     font-size: clamp(1em, calc(1vw + 0.2rem), 1.5em);

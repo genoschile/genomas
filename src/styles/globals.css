@@ -76,6 +76,7 @@
 
   body {
     font-family: "Inter", Helvetica, sans-serif;
+    min-block-size: 100vh;
   }
 }
 
@@ -186,6 +187,6 @@
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
-    white-space: nowrap; /* Evita el salto de línea */
+    white-space: nowrap;
   }
 }

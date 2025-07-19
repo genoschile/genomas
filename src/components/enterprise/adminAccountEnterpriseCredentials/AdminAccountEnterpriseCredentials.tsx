@@ -45,9 +45,7 @@ export const AdminAccountEnterpriseCredentials = () => {
       }
 
       try {
-        const res = await fetch(
-          routes.getCredentialsUserAdmin(organizationId),
-        );
+        const res = await fetch(routes.getCredentialsUserAdmin(organizationId));
         if (!res.ok) throw new Error("Failed to fetch credentials");
 
         const result = await res.json();
@@ -103,7 +101,7 @@ export const AdminAccountEnterpriseCredentials = () => {
 
           clearOrganization();
 
-          router.push("/genomas/user");
+          router.push("/user");
         } else {
           alert(`Error: ${data.message}`);
         }

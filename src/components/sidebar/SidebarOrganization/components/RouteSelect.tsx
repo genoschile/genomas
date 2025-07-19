@@ -10,7 +10,7 @@ import { GiGlowingHands } from "react-icons/gi";
 
 import "./routeSelect.css";
 
-const pathNameBase = "/genomas/enterprise";
+const pathNameBase = "/enterprise";
 
 const routes = [
   { Icon: FiHome, title: "Home", path: pathNameBase },

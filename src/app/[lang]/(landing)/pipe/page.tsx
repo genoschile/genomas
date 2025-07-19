@@ -32,31 +32,26 @@ export default function page() {
   ];
 
   return (
-    <>
-      <div className="container--genomas">
-        <HeaderUserWorkspace />
+    <div className="container--genomas">
+      <article className="container--genomas__main">
+        <AuthFormLogo />
 
-        <main className="container--genomas__main">
-          <AuthFormLogo />
-
-          <ul>
-            {infoCard.map(({ title, description, href, srcImg }, index) => {
-              return (
-                <li key={index}>
-                  <CardAnalysis
-                    srcImg={srcImg}
-                    title={title}
-                    description={description}
-                    redirect={href}
-                    key={index}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </main>
-      </div>
-      <FooterLanding />
-    </>
+        <ul>
+          {infoCard.map(({ title, description, href, srcImg }, index) => {
+            return (
+              <li key={index}>
+                <CardAnalysis
+                  srcImg={srcImg}
+                  title={title}
+                  description={description}
+                  redirect={href}
+                  key={index}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </article>
+    </div>
   );
 }
