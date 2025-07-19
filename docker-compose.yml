@@ -1,7 +1,9 @@
 services:
   bdService:
-    image: postgres:17
+    #image: postgres:17
+    image: docker.io/library/postgres:17
     container_name: bd_genomas_services
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -12,21 +14,6 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - genomas_network
-  # genomas:
-  #   build:
-  #     context: .
-  #     dockerfile: dockerfile.bdService
-  #   container_name: genomasApp
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@bd_genomas_services:${POSTGRES_PORT}/${POSTGRES_DB}
-  #   volumes:
-  #     - ./:/app
-  #   depends_on:
-  #     - bdService
-  #   networks:
-  #     - genomas_network
 
 networks:
   genomas_network:
