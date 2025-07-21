@@ -44,7 +44,7 @@ export const I18nButton = () => {
   };
 
   return (
-    <div className="select-dropdown">
+    <div className="select-dropdown" onClick={(e) => e.stopPropagation()}>
       <label htmlFor="language-select" className="visually-hidden">
         Seleccionar idioma
       </label>

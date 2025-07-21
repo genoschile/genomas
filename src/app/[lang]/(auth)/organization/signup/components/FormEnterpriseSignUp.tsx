@@ -115,7 +115,7 @@ export function FormSignUp() {
           name: data.data.name,
         });
 
-        router.push("/genomas/enterprise");
+        router.push("/enterprise");
       }
     } catch (error) {
       console.error("Unexpected error:", error);

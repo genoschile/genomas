@@ -1,11 +1,9 @@
 "use client";
 
 import CardAnalysis from "@/components/cards/CardAnalysis";
-import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
 import "./page.css";
-import { FooterLanding } from "@/components/footer/FooterLanding";
 import { AuthFormLogo } from "@/components/forms/components/AuthFormLogo";
-import { useTranslations } from "../../../../context/I18nClientProvider";
+import { useTranslations } from "@/context/I18nClientProvider";
 
 export default function page() {
   const { t } = useTranslations();
@@ -14,7 +12,7 @@ export default function page() {
     {
       title: t("genomas.card.0.title"),
       description: t("genomas.card.0.description"),
-      href: "/genomas/user",
+      href: "#",
       srcImg: "/images/adn.png",
     },
     {
