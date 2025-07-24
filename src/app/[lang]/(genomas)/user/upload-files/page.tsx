@@ -12,16 +12,15 @@ export default function Page() {
   return (
     <section>
       <ArticleContainer>
-        <h2 className="upload-files__title">
-          Upload your VCF file and/or Clinical data (optional)
-        </h2>
+        <div className="" style={{ display: "flex", flexDirection: "column" }}>
+          <h2 className="upload-files__title">
+            Upload your VCF file and/or Clinical data (optional)
+          </h2>
+          <ExampleFormClinical />
+        </div>
         <div className="upload-files--init">
           <FileSelector />
         </div>
-        <ExampleFormClinical />
-      </ArticleContainer>
-
-      <ArticleContainer>
         <ListUploadedFiles />
       </ArticleContainer>
     </section>

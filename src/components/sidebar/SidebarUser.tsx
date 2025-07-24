@@ -24,17 +24,17 @@ const path = "/user";
 
 const sidebarItems = [
   {
-    href: `/${path}`,
+    href: `${path}`,
     icon: <FaHome size={32} className="sidebar__icon" />,
     text: "Home",
   },
   {
-    href: `/${path}/upload-files`,
+    href: `${path}/upload-files`,
     icon: <MdFileUpload size={32} className="sidebar__icon" />,
     text: "Upload Files",
   },
   {
-    href: `/${path}/analysis`,
+    href: `${path}/analysis`,
     icon: <IoDocumentOutline size={32} className="sidebar__icon" />,
     text: "Analysis",
     disabled: true,
@@ -69,7 +69,9 @@ export const SidebarUser = ({ className = "" }: { className?: string }) => {
 
   const isActive = (href: string) => {
     if (pathname === href) return true;
-    if (href !== `/${path}` && pathname.startsWith(href)) return true;
+
+    if (href !== "/user" && pathname.startsWith(href + "/")) return true;
+
     return false;
   };
 

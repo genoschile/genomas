@@ -12,6 +12,7 @@ export const genomasUserRoutes = {
   annomafTest: () => `/api/pipes/annomaf`,
 
   /* files upload */
-  decompressFiles: () => `/api/document/utils`,
+  // decompressFiles: () => `/api/document/utils`,
+  decompressFiles: () => `http://localhost:8000/validate`,
   uploadFiles: () => `/api/document/upload`,
 };

@@ -17,6 +17,8 @@ import {
 import { useCurrentProject } from "@/context/currentProject";
 import axios from "axios";
 import { routes } from "@/lib/api/routes";
+import { useSessionContext } from "@/hooks/useSession";
+import { useEffect, useState } from "react";
 
 export interface resUpload_DB {
   success: boolean;
@@ -53,17 +55,36 @@ export default function FileProcessor() {
     setProgressMap({});
   };
 
+  const { user } = useSessionContext();
+
   const handleUpload = async () => {
     if (!files || files.length === 0) {
       toast.error("Por favor, selecciona al menos un archivo.");
       return;
     }
 
+    if (!currentProject) {
+      toast.error("No hay un proyecto POR DEFAULT seleccionado.");
+      return;
+    }
+
+    if (!user) {
+      toast.error("No hay un usuario autenticado.");
+      return;
+    }
+
+    const jobId = `${currentProject.workspaceId}_${
+      currentProject.id
+    }_upload_${crypto.randomUUID().replace(/-/g, "").slice(0, 8)}`;
+
     setUploadStatus(UploadStatus.PENDING);
     setUploading(true);
 
     try {
       const formData = new FormData();
+      setUploadJobId(jobId);
+
+      formData.append("upload_id", jobId);
       files.forEach((file) => formData.append("files", file));
 
       const response = await fetch(routes.decompressFiles(), {
@@ -74,6 +95,8 @@ export default function FileProcessor() {
       const data = await response.json();
 
       if (!data.success) {
+        const text = await response.text();
+        console.error("Error al procesar los archivos:", text);
         toast.error("Error al procesar los archivos");
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
         return;
@@ -81,8 +104,8 @@ export default function FileProcessor() {
 
       console.log("Respuesta del servidor:", data);
 
-      setDecompressedFiles(data.data.files);
-      setUploadJobId(data.data.jobId);
+      setDecompressedFiles(data.data.files ?? []);
+      setUploadJobId(data.data.jobId ?? "");
       setUploadStatus(UploadStatus.STAGED);
       toast.success("Archivos cargados y descomprimidos.");
     } catch (error) {

@@ -4,13 +4,10 @@ import { UploadStatus } from "@/context/UploadStatusContext";
 import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
 import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { getFileSize } from "@/utils/getFileSize";
-import { useMemo } from "react";
 
 export const ListUploadedFiles = () => {
   const { files, decompressedFiles, progressMap } = useFileStagingAreaContext();
   const { uploadStatus } = useUploadStatusContext();
-
-  const procesoId = useMemo(() => `#${Date.now()}`, []);
 
   const safeProgressMap = progressMap ?? {};
 
@@ -19,7 +16,6 @@ export const ListUploadedFiles = () => {
       <table className="upload-table">
         <thead>
           <tr>
-            <th>Proceso ID</th>
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Tamaño</th>
@@ -28,7 +24,6 @@ export const ListUploadedFiles = () => {
         <tbody>
           {files.map((file, index) => (
             <tr key={index}>
-              <td>{procesoId}</td>
               <td>{file.name}</td>
               <td>{file.type}</td>
               <td>
@@ -46,7 +41,6 @@ export const ListUploadedFiles = () => {
       <table className="upload-table">
         <thead>
           <tr>
-            <th>Proceso ID</th>
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Progreso</th>
@@ -56,11 +50,10 @@ export const ListUploadedFiles = () => {
           </tr>
         </thead>
         <tbody>
-          {decompressedFiles.map((file, index) => {
+          {(decompressedFiles ?? []).map((file, index) => {
             const progress = safeProgressMap[file.name] ?? 0;
             return (
               <tr key={index}>
-                <td>{procesoId}</td>
                 <td>{file.name}</td>
                 <td>{file.type}</td>
                 <td>
@@ -83,7 +76,6 @@ export const ListUploadedFiles = () => {
                     <span style={{ color: "red" }}>❌</span>
                   )}
                 </td>
-
                 <td>{file.message}</td>
                 <td>{getFileSize(file?.size)}</td>
               </tr>

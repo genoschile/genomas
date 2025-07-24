@@ -9,7 +9,6 @@ export const UploadLabel = ({
 }) => {
   const { files } = useFileStagingAreaContext();
   const { renderUploadIcon } = useUploadStatusContext();
-  const { uploadStatus } = useUploadStatusContext();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   return (
@@ -17,7 +16,7 @@ export const UploadLabel = ({
       {renderUploadIcon()}
       <h3>
         {files.length > 0
-          ? `Files: ${files.map((file) => file.name).join(", ")}`
+          ? `Files: ${files.length}`
           : "Drag and drop your files here or click to upload them"}
       </h3>
       <input
@@ -29,12 +28,6 @@ export const UploadLabel = ({
         onChange={handleFileChange}
       />
       <hr />
-      <div className="upload-file-formats">
-        <small>
-          Allowed formats: .zip,
-          {"   " + uploadStatus}
-        </small>
-      </div>
     </div>
   );
 };
