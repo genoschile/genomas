@@ -10,18 +10,35 @@ import * as tar from "tar";
 
 const config = {
   supportedArchiveExtensions: ["zip", "tar.gz"],
-  supportedFileTypes: ["txt", "jpg", "jpeg", "png", "gif", "json", "csv", "xml", "pdf", "docx", "xlsx"],
+  supportedFileTypes: [
+    "txt",
+    "jpg",
+    "jpeg",
+    "png",
+    "gif",
+    "json",
+    "csv",
+    "xml",
+    "pdf",
+    "docx",
+    "xlsx",
+  ],
   maxIndividualFileSize: 10 * 1024 * 1024,
   maxArchiveFileSize: 50 * 1024 * 1024,
   maxFilesInArchive: 1000,
 };
 
 function isSupportedArchive(filename: string): boolean {
-  return filename.toLowerCase().endsWith(".tar.gz") || filename.toLowerCase().endsWith(".zip");
+  return (
+    filename.toLowerCase().endsWith(".tar.gz") ||
+    filename.toLowerCase().endsWith(".zip")
+  );
 }
 
 function isSupportedFileExtension(filename: string): boolean {
-  return config.supportedFileTypes.includes(path.extname(filename).replace(".", "").toLowerCase());
+  return config.supportedFileTypes.includes(
+    path.extname(filename).replace(".", "").toLowerCase()
+  );
 }
 
 async function processZipFile(zipPath: string, extractDir: string) {
@@ -70,10 +87,9 @@ export async function POST(req: NextRequest) {
       const tempUploadPath = path.join(extractDir, filename);
       await writeFile(tempUploadPath, Buffer.from(await file.arrayBuffer()));
 
-      const extracted =
-        filename.endsWith(".zip")
-          ? await processZipFile(tempUploadPath, extractDir)
-          : await processTarGzFile(tempUploadPath, extractDir);
+      const extracted = filename.endsWith(".zip")
+        ? await processZipFile(tempUploadPath, extractDir)
+        : await processTarGzFile(tempUploadPath, extractDir);
 
       fileStatuses.push(...extracted);
     }
@@ -88,6 +104,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (err) {
     console.error("Error al procesar archivo:", err);
-    return NextResponse.json({ success: false, message: "Error interno del servidor" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: "Error interno del servidor" },
+      { status: 500 }
+    );
   }
 }
