@@ -14,5 +14,6 @@ export const genomasUserRoutes = {
   /* files upload */
   // decompressFiles: () => `/api/document/utils`,
   decompressFiles: () => `http://localhost:8000/validate`,
-  uploadFiles: () => `/api/document/upload`,
+  // uploadFiles: () => `/api/document/upload`,
+  uploadFiles: () => `http://localhost:8000/genomas/upload`,
 };

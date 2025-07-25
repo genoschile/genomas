@@ -95,8 +95,6 @@ export default function FileProcessor() {
       const data = await response.json();
 
       if (!data.success) {
-        const text = await response.text();
-        console.error("Error al procesar los archivos:", text);
         toast.error("Error al procesar los archivos");
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
         return;
@@ -105,7 +103,7 @@ export default function FileProcessor() {
       console.log("Respuesta del servidor:", data);
 
       setDecompressedFiles(data.data.files ?? []);
-      setUploadJobId(data.data.jobId ?? "");
+      setUploadJobId(data.jobId ?? "");
       setUploadStatus(UploadStatus.STAGED);
       toast.success("Archivos cargados y descomprimidos.");
     } catch (error) {
@@ -121,7 +119,7 @@ export default function FileProcessor() {
 
   const handleStageToDatabase = async () => {
     if (!currentProject) {
-      toast.error("No hay un proyecto POR DEFAULT seleccionado.");
+      toast.error("No hay un proyecto seleccionado.");
       return;
     }
 
@@ -130,55 +128,52 @@ export default function FileProcessor() {
       return;
     }
 
+    console.log("uploadJobId:", uploadJobId);
+
     if (!uploadJobId) {
       toast.error("No se encontró un jobId para la subida.");
       return;
     }
 
-    const { id: projectId, workspace } = currentProject;
-    const { id: workspaceId, organizationId } = workspace;
+    // Solo los aceptados
+    const acceptedFiles = decompressedFiles.filter((file) => file.accepted);
+
+    console.log("Archivos aceptados:", acceptedFiles);
+
+    if (acceptedFiles.length === 0) {
+      toast.error("No hay archivos válidos para subir al bucket.");
+      return;
+    }
 
     const formData = new FormData();
-    formData.append("workspaceId", workspaceId);
-    formData.append("projectId", projectId);
-    formData.append("jobId", uploadJobId);
-    formData.append("organizationId", organizationId);
+    formData.append("upload_id", uploadJobId);
+    formData.append("files", JSON.stringify(acceptedFiles));
 
     setUploadStatus(UploadStatus.UPLOAD_DB);
     setUploading(true);
 
-    const toastId = toast.loading("Subiendo archivos a la base de datos...");
+    const toastId = toast.loading("Subiendo archivos al bucket...");
 
     try {
-      const res = await axios.post(routes.uploadFiles(), formData, {
-        onUploadProgress: (progressEvent) => {
-          const percent = Math.round(
-            (progressEvent.loaded * 100) / (progressEvent.total || 1)
-          );
-          setProgressMap((prev) => ({
-            ...prev,
-            ["files"]: percent,
-          }));
-        },
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const res = await axios.post(routes.uploadFiles(), {
+        upload_id: uploadJobId,
+        files: acceptedFiles,
       });
 
+      console.log("Respuesta del servidor up:", res.data);
       toast.dismiss(toastId);
 
       if (res.data.success) {
-        setDecompressedFiles(res.data.data.files);
-        setUploadStatus(UploadStatus.STAGED);
-        toast.success("¡Archivos subidos correctamente!");
+        toast.success("¡Archivos copiados exitosamente al bucket!");
+        setUploadStatus(UploadStatus.STAGED); 
       } else {
         toast.error("Error: " + res.data.message);
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
       }
     } catch (error) {
-      console.error("Error en la subida:", error);
+      console.error("Error en la subida al bucket:", error);
       toast.dismiss(toastId);
-      toast.error("Error al procesar archivos");
+      toast.error("Error al copiar archivos al bucket.");
       setUploadStatus(UploadStatus.UPLOAD_ERROR);
     } finally {
       setUploading(false);

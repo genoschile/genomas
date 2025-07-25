@@ -312,3 +312,6 @@ TODO: consultar que es lo mejor trabajar con mc en contenedor o en global a nive
 TODO: DEFINIR ESTRUCTURA DE CARPETAS, SE ACABA DE ROMPER VARIAS COSSAS DE GENOMAS, pero esta bien, ahora si tiene sentido guardar las cosas en el s3, corregir upload files, se eliminara la primera etapa de comprimir, ya no es necesario comprimir en primera instancia, corregir endpoint de consulta de archivos porproject 
 se tuvo reunión con josefa, para hablar sobre dificultades en la instalación de annomaf, y compararlo con el paper enviado por profesara karen.
 
+subida y validación de archivos en genoma paso primera etapa, falta organizar los archivos por project o por algo dentro del bucket, solo se suben los que el script de validación aceptaa jeje, genomas ya no usa su api para subir si no que quedo abstraida en la api de fastapi que tiene comunicación directa con la vm
+
+TODO: para subir archivos grandes se debe usar Stream directo a MinIO, más dificil, pero vamos por parte
