@@ -309,9 +309,28 @@ se montó 4 docker en vps posterior al rebuild, (redis, celery, backend, y postg
 se montaron 2 docker en vm (minio y mc)
 
 TODO: consultar que es lo mejor trabajar con mc en contenedor o en global a nivel de host de maquina virtual
-TODO: DEFINIR ESTRUCTURA DE CARPETAS, SE ACABA DE ROMPER VARIAS COSSAS DE GENOMAS, pero esta bien, ahora si tiene sentido guardar las cosas en el s3, corregir upload files, se eliminara la primera etapa de comprimir, ya no es necesario comprimir en primera instancia, corregir endpoint de consulta de archivos porproject 
+TODO: DEFINIR ESTRUCTURA DE CARPETAS, SE ACABA DE ROMPER VARIAS COSSAS DE GENOMAS, pero esta bien, ahora si tiene sentido guardar las cosas en el s3, corregir upload files, se eliminara la primera etapa de comprimir, ya no es necesario comprimir en primera instancia, corregir endpoint de consulta de archivos porproject
 se tuvo reunión con josefa, para hablar sobre dificultades en la instalación de annomaf, y compararlo con el paper enviado por profesara karen.
 
 subida y validación de archivos en genoma paso primera etapa, falta organizar los archivos por project o por algo dentro del bucket, solo se suben los que el script de validación aceptaa jeje, genomas ya no usa su api para subir si no que quedo abstraida en la api de fastapi que tiene comunicación directa con la vm
 
 TODO: para subir archivos grandes se debe usar Stream directo a MinIO, más dificil, pero vamos por parte
+
+# 28-07-2025
+
+Esta semana se genero dos endpoint para el upload files de genomas y de mathbio,
+y junto también 2 endpoint de validación uno para cada uno.
+Cada endpoint de validación tiene 1 script de validación, faltan agregar más modulos
+
+Se han reemplazo los endpoint anterior del backend de ambas app, falta vincular con base de datos, mejorar algunas cosas
+
+en data4life se generaron e instalon dependencias para la generación de graficos en home user
+
+TODO: se detecto un error que provoca que no se pueda validar -data4life-
+
+se genero docker-compose del modelo en la mv y se genero un endpoint para recibir prompt
+
+se genero submodulo para trabajar con el codigo de denise
+se generará otro submodulo para trabajar en el codigo de nicolas
+
+TODO: crear un script para extraer el texto de toda la carpeta de guias clinicas en drive
