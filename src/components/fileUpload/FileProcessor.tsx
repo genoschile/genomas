@@ -18,7 +18,6 @@ import { useCurrentProject } from "@/context/currentProject";
 import axios from "axios";
 import { routes } from "@/lib/api/routes";
 import { useSessionContext } from "@/hooks/useSession";
-import { useEffect, useState } from "react";
 
 export interface resUpload_DB {
   success: boolean;
@@ -135,7 +134,7 @@ export default function FileProcessor() {
       return;
     }
 
-    // Solo los aceptados
+    // only accepted files.
     const acceptedFiles = decompressedFiles.filter((file) => file.accepted);
 
     console.log("Archivos aceptados:", acceptedFiles);
@@ -165,7 +164,7 @@ export default function FileProcessor() {
 
       if (res.data.success) {
         toast.success("¡Archivos copiados exitosamente al bucket!");
-        setUploadStatus(UploadStatus.STAGED); 
+        setUploadStatus(UploadStatus.STAGED);
       } else {
         toast.error("Error: " + res.data.message);
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
