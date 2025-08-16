@@ -334,3 +334,9 @@ se genero submodulo para trabajar con el codigo de denise
 se generará otro submodulo para trabajar en el codigo de nicolas
 
 TODO: crear un script para extraer el texto de toda la carpeta de guias clinicas en drive
+
+
+# 04-08-2025 and 11-08-2025
+
+resumenes congreso genetica
+agente RAG wsp y guias clinicas en desarrollo
