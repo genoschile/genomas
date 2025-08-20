@@ -81,7 +81,7 @@ export const SidebarInfoProjectSelect = () => {
       <button
         onClick={toggleSidebarSize}
         type="button"
-        className="sidebar--toggle-button"
+        className={`sidebar--toggle-button ${isExpanded ? "rot-angle-side" : ""}`}
       >
         <MdArrowCircleLeft />
       </button>

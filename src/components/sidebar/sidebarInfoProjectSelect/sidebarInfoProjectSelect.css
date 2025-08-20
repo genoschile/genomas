@@ -89,6 +89,12 @@
     }
   }
 
+  &.rot-angle-side {
+    & svg {
+      transform: rotate(180deg);
+    }
+  }
+
   & svg {
     transition: transform 0.3s ease, fill 0.3s ease;
     fill: var(--text-color);

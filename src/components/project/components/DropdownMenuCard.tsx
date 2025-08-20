@@ -4,6 +4,9 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdDownload, MdEdit, MdInfoOutline } from "react-icons/md";
 import "./dropdownMenuCard.css";
 import { useProjectContext } from "@/hooks/useProjectContext";
+import { useModalContext } from "@/hooks/useModalsProject";
+import { MODAL_IDS } from "@/context/ModalsProject";
+import { toast } from "react-toastify";
 
 export const DropdownMenuCard = ({
   openToLeft,
@@ -13,11 +16,22 @@ export const DropdownMenuCard = ({
   cardId: string;
 }) => {
   const { onSetOpen } = useProjectContext();
+  const { openModal } = useModalContext();
 
   const handleSetOpenInfoCard = () => {
     console.log("Abriendo información del proyecto con ID:", cardId);
-
     onSetOpen({ id: cardId, onOpen: true });
+  };
+
+  const handleDownload = () => {
+    const resolveAfter3Sec = new Promise((_, reject) =>
+      setTimeout(reject, 2000)
+    );
+    toast.promise(resolveAfter3Sec, {
+      pending: "Descargando directorio...",
+      success: "Directorio descargado correctamente ✅",
+      error: "Descarga fallida ❌",
+    });
   };
 
   const menuItems = [
@@ -25,7 +39,7 @@ export const DropdownMenuCard = ({
       id: 1,
       label: "Download",
       icon: <MdDownload />,
-      onClick: () => console.log("Descargando archivo..."),
+      onClick: handleDownload,
     },
     {
       id: 2,
@@ -37,7 +51,7 @@ export const DropdownMenuCard = ({
       id: 3,
       label: "Add Members",
       icon: <IoMdPersonAdd />,
-      onClick: () => alert("Abriendo modal para agregar miembros"),
+      onClick: () => openModal(MODAL_IDS.MEMBERS),
     },
     {
       id: 4,
