@@ -3,13 +3,17 @@
 import { useSessionContext } from "@/hooks/useSession";
 import { routes } from "@/lib/api/routes";
 import { IProject } from "@/lib/types/contextTypes";
-import { createContext, useEffect, useState } from "react";
-
-
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
 interface ProjectContextProps {
   projects: IProject[];
-  setProjects: (projects: IProject[]) => void;
+  setProjects: Dispatch<SetStateAction<IProject[]>>;
   selectedCards: string[];
   toggleCardSelection: (cardId: string) => void;
   isSelected: (cardId: string) => boolean;
@@ -18,6 +22,7 @@ interface ProjectContextProps {
   addProject: (project: IProject) => void;
   onOpen: { id: string; onOpen: boolean };
   onSetOpen: ({ id, onOpen }: { id: string; onOpen: boolean }) => void;
+  setSelectedCards: (cards: string[]) => void;
 }
 
 export const ProjectContext = createContext<ProjectContextProps | undefined>(
@@ -87,6 +92,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     addProject,
     onOpen,
     onSetOpen,
+    setSelectedCards,
   };
 
   return (

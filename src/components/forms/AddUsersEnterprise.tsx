@@ -1,6 +1,8 @@
 "use client";
 
+import "./addUsersEnterprise.css";
 import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { useModalContext } from "@/hooks/useModalsProject";
 import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { useState } from "react";
@@ -8,6 +10,7 @@ import { toast } from "react-toastify";
 
 export const AddUsersEnterprise = () => {
   const { addUsers } = useDataTableUserEnterpriseContext();
+  const { closeModal } = useModalContext();
 
   const [form, setForm] = useState({
     email: "",
@@ -61,6 +64,7 @@ export const AddUsersEnterprise = () => {
 
       addUsers([data.data]);
       toast.success("User added successfully!");
+      closeModal();
 
       setForm({
         email: "",
@@ -75,11 +79,8 @@ export const AddUsersEnterprise = () => {
   };
 
   return (
-    <div style={{ padding: "1rem", maxWidth: "400px", margin: "0 auto" }}>
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
-      >
+    <div className="add-users-enterprise">
+      <form onSubmit={handleSubmit}>
         <label>
           Email:
           <input
@@ -88,7 +89,6 @@ export const AddUsersEnterprise = () => {
             value={form.email}
             onChange={handleChange}
             required
-            style={{ padding: "0.5rem", width: "100%" }}
           />
         </label>
 
@@ -100,7 +100,6 @@ export const AddUsersEnterprise = () => {
             value={form.name}
             onChange={handleChange}
             required
-            style={{ padding: "0.5rem", width: "100%" }}
           />
         </label>
 
@@ -112,18 +111,12 @@ export const AddUsersEnterprise = () => {
             value={form.encryptedPassword}
             onChange={handleChange}
             required
-            style={{ padding: "0.5rem", width: "100%" }}
           />
         </label>
 
         <label>
           Role:
-          <select
-            name="userType"
-            value={form.userType}
-            onChange={handleChange}
-            style={{ padding: "0.5rem", width: "100%" }}
-          >
+          <select name="userType" value={form.userType} onChange={handleChange}>
             <option value="CLIENT">Client</option>
             <option value="ADMIN">Admin</option>
           </select>
@@ -131,19 +124,7 @@ export const AddUsersEnterprise = () => {
 
         <p>{errorMessage}</p>
 
-        <button
-          type="submit"
-          style={{
-            padding: "0.75rem",
-            backgroundColor: "#0070f3",
-            color: "white",
-            border: "none",
-            borderRadius: "0.25rem",
-            cursor: "pointer",
-          }}
-        >
-          Add User
-        </button>
+        <button type="submit">Add User</button>
       </form>
     </div>
   );
