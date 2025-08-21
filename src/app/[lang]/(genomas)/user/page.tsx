@@ -16,10 +16,10 @@ export default function Page() {
     <>
       <UserProject />
 
-      <FilesProject />
+      {/* <FilesProject /> */}
 
       <InputFilesProjects />
-      
+
       <TrashProject />
 
       <OutputFilesProjects />

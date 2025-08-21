@@ -4,10 +4,8 @@
 }
 .files__project--list {
   list-style: none;
-  block-size: 500px;
 }
 
 .files__project--container {
-  block-size: 100%;
   overflow: auto;
 }

@@ -36,18 +36,49 @@
 .project__home--header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   padding-inline: 2rem;
   width: 100%;
   border: 1px solid transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding-block: 0.8rem;
   margin-bottom: 0.5rem;
-  /* max-block-size: 80px; */
 
   & > h2 {
     font-size: 1.875em;
     font-weight: bold;
+    margin-inline-end: auto;
+  }
+
+  & label {
+    margin-inline-end: 1rem;
+    display: flex;
+    align-items: center;
+
+    & input {
+      padding: 0.5rem;
+    }
+  }
+
+  & button {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    padding: 0.5rem 0.9rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    color: var(--button-blue);
+
+    &.workflow-btn {
+      background-color: rgba(246, 0, 0, 0.1);
+
+      &:hover {
+        background-color: rgba(246, 0, 0, 0.2);
+      }
+    }
   }
 
   & > nav {
@@ -57,17 +88,6 @@
     gap: 0.5rem;
 
     & button {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-      padding: 0.5rem 0.9rem;
-      font-size: 1rem;
-      cursor: pointer;
-      background-color: transparent;
-      border: 1px solid transparent;
-      border-radius: 0.5rem;
-      color: var(--button-blue);
-
       &:first-child {
         color: white;
         background-color: var(--button-blue);

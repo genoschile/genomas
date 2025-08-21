@@ -1,6 +1,7 @@
 "use client";
 
 import "./style.css";
+import { LuWorkflow } from "react-icons/lu";
 
 interface NavButton {
   id: string;
@@ -26,6 +27,9 @@ export const ProjectHomeHeaderContainer: React.FC<ProjectHeaderProps> = ({
       <h2>{title}</h2>
 
       {children}
+      <label htmlFor="project-select">
+        <input type="text" id="project-select" />
+      </label>
 
       <nav>
         {navButtons.map((button) => (
@@ -42,6 +46,10 @@ export const ProjectHomeHeaderContainer: React.FC<ProjectHeaderProps> = ({
           </button>
         ))}
       </nav>
+
+      <button className="workflow-btn">
+        <LuWorkflow />
+      </button>
     </header>
   );
 };

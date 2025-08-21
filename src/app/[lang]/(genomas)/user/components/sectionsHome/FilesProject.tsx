@@ -52,39 +52,7 @@ export const FilesProject = () => {
 
   const [taskState, setTaskState] = useState<string | null>(null);
 
-  const toggleSelect = (fileId: string) => {
-    setSelectedFiles((prev) => {
-      const updated = new Set(prev);
-      updated.has(fileId) ? updated.delete(fileId) : updated.add(fileId);
-      return updated;
-    });
-  };
 
-  const onChangeProject = (project: { id: string; name: string } | null) => {
-    if (!project) {
-      setCurrentProject(null);
-      return;
-    }
-
-    setCurrentProject(project);
-  };
-
-  const navButtonsProjectFiles = [
-    {
-      id: "new-project",
-      label: "New",
-      icon: <IoIosAdd size="24" />,
-      onClick: () => openModal(MODAL_IDS.WORKSPACE),
-      disabled: false,
-    },
-    {
-      id: "move-to-trash",
-      label: "Move To Trash",
-      icon: null,
-      onClick: () => openModal(MODAL_IDS.DELETE_CONFIRMATION),
-      disabled: projects.length === 0,
-    },
-  ];
 
   const handleClick = async (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -175,38 +143,7 @@ export const FilesProject = () => {
         onSubmit={handleClick}
         className="project__files--form"
       >
-        <ProjectHomeHeaderContainer
-          title="Project Files"
-          navButtons={navButtonsProjectFiles}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.5rem",
-            }}
-          >
-            <ProjectFilesSelected
-              projects={projects}
-              onChangeProject={onChangeProject}
-              currentProject={currentProject}
-            />
 
-            <WorkerNameSelected />
-
-            <GenomeVersionRefSelected />
-
-            {taskState && <p>Estado actual de la tarea: {taskState}</p>}
-          </div>
-        </ProjectHomeHeaderContainer>
-
-        <FilesProjectSelected
-          currentProject={currentProject}
-          toggleSelect={toggleSelect}
-          selectedFiles={selectedFiles}
-          files={files}
-          setFiles={setFiles}
-        />
       </form>
       {taskState && (
         <strong

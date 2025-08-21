@@ -14,6 +14,7 @@ export const ProjectCard = ({
   id,
   description,
   sharedWith,
+  name
 }: {
   id: string;
   name: string;
@@ -95,7 +96,6 @@ export const ProjectCard = ({
         </label>
       </header>
       <figure>
-        {/* <button onClick={() => openModal(MODAL_IDS.MEMBERS, { projectId: id })}> */}
         <button onClick={() => openModal(MODAL_IDS.MEMBERS)}>
           {sharedWith.length > 0 ? (
             <FaUser size={20} />
@@ -106,7 +106,7 @@ export const ProjectCard = ({
         <FaFolder color="gray" size={"100"} className="project__list--icon" />
       </figure>
       <footer>
-        <p>{description}</p>
+        <p>{name}</p>
       </footer>
     </li>
   );

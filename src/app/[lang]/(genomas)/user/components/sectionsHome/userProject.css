@@ -1,0 +1,4 @@
+.project__options--list {
+    display: flex;
+    list-style: none;
+}
