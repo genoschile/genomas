@@ -11,6 +11,9 @@ import { AddProjectEnterpriseForm } from "../forms/AddProjectEnterpriseForm";
 import { AddUsersEnterprise } from "../forms/AddUsersEnterprise";
 import { TbBulb } from "react-icons/tb";
 import { ModalGroupsDeleteEnterprise } from "../forms/DeleteGroupsEnterprise";
+import { ModalUtilsUsers } from "./modalUtilsUsers";
+import { WorkflowsForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/WorkflowsForm";
+import { StepsProvider } from "@/app/[lang]/(genomas)/user/components/utilsForm/workflowContext";
 
 export const ModalContainer = () => {
   return (
@@ -55,6 +58,17 @@ export const ModalContainer = () => {
       <Modal id={MODAL_IDS.EDIT_GROUPS_ENTERPRISE} title="Edit Group">
         <ModalGroupsEditEnterprise />
       </Modal>
+
+      <ModalUtilsUsers id={MODAL_IDS.UPLOAD_FILES} title="Upload Files">
+        {/* <UploadFilesForm /> */}
+        <h1>hola</h1>
+      </ModalUtilsUsers>
+
+      <ModalUtilsUsers id={MODAL_IDS.WORKFLOWS} title="Workflows">
+        <StepsProvider>
+          <WorkflowsForm />
+        </StepsProvider>
+      </ModalUtilsUsers>
     </>
   );
 };

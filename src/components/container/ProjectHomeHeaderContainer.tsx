@@ -1,7 +1,10 @@
 "use client";
 
+import { MdCloudUpload } from "react-icons/md";
 import "./style.css";
 import { LuWorkflow } from "react-icons/lu";
+import { useModalContext } from "@/hooks/useModalsProject";
+import { MODAL_IDS } from "@/context/ModalsProject";
 
 interface NavButton {
   id: string;
@@ -14,42 +17,57 @@ interface NavButton {
 interface ProjectHeaderProps {
   title: string;
   navButtons: NavButton[];
-  children?: React.ReactNode;
 }
 
 export const ProjectHomeHeaderContainer: React.FC<ProjectHeaderProps> = ({
   title,
   navButtons,
-  children,
 }) => {
+  const { openModal } = useModalContext();
+
   return (
     <header className="project__home--header">
-      <h2>{title}</h2>
+      <div className="project__home--header__info">
+        <h2>{title}</h2>
+      </div>
 
-      {children}
-      <label htmlFor="project-select">
-        <input type="text" id="project-select" />
-      </label>
+      <div className="project__home--header__controls">
+        <nav className="trash-button-header content-controls-header">
+          <label htmlFor="project-select">
+            <input type="text" id="project-select" />
+          </label>
 
-      <nav>
-        {navButtons.map((button) => (
+          {navButtons.map((button) => (
+            <button
+              key={button.id}
+              onClick={button.onClick}
+              disabled={button.disabled}
+              type="button"
+            >
+              {button.icon && (
+                <span style={{ marginRight: "0.5rem" }}>{button.icon}</span>
+              )}{" "}
+              {button.label}
+            </button>
+          ))}
+        </nav>
+
+        <nav className="content-controls-header">
           <button
-            key={button.id}
-            onClick={button.onClick}
-            disabled={button.disabled}
-            type="button"
+            className="workflow-btn"
+            onClick={() => openModal(MODAL_IDS.WORKFLOWS)}
           >
-            {button.icon && (
-              <span style={{ marginRight: "0.5rem" }}>{button.icon}</span>
-            )}{" "}
-            {button.label}
+            <LuWorkflow />
           </button>
-        ))}
-      </nav>
 
-      <button className="workflow-btn">
-        <LuWorkflow />
-      </button>
+          <button
+            className="workflow-btn"
+            onClick={() => openModal(MODAL_IDS.UPLOAD_FILES)}
+          >
+            <MdCloudUpload />
+          </button>
+        </nav>
+      </div>
     </header>
   );
 };

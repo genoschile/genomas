@@ -44,19 +44,12 @@
   padding-block: 0.8rem;
   margin-bottom: 0.5rem;
 
-  & > h2 {
-    font-size: 1.875em;
-    font-weight: bold;
+  .project__home--header__info {
     margin-inline-end: auto;
-  }
 
-  & label {
-    margin-inline-end: 1rem;
-    display: flex;
-    align-items: center;
-
-    & input {
-      padding: 0.5rem;
+    & > h2 {
+      font-size: 1.875em;
+      font-weight: bold;
     }
   }
 
@@ -81,14 +74,35 @@
     }
   }
 
-  & > nav {
+  .project__home--header__controls {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  & .content-controls-header {
     display: flex;
     flex-wrap: nowrap;
     text-wrap: nowrap;
     gap: 0.5rem;
 
+    &:nth-child(1) {
+      margin-inline-end: 1rem;
+    }
+  }
+
+  & .trash-button-header {
+    & label {
+      
+      display: flex;
+      align-items: center;
+
+      & input {
+        padding: 0.5rem;
+      }
+    }
+
     & button {
-      &:first-child {
+      &:first-of-type {
         color: white;
         background-color: var(--button-blue);
         gap: 0.5rem;
@@ -98,7 +112,7 @@
         }
       }
 
-      &:last-child {
+      &:last-of-type {
         text-decoration: underline;
         &:hover {
           background-color: rgba(0, 0, 0, 0.1);
