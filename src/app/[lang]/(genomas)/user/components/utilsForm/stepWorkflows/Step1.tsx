@@ -12,7 +12,7 @@ export const Step1 = () => {
 
   const handleWorkflowSelect = async (workflowName: string) => {
     setValue("workflow", workflowName, { shouldValidate: true });
-    const isValid = await trigger("workflow"); // valida solo este campo
+    const isValid = await trigger("workflow"); 
     if (isValid) {
       nextStep();
     }
@@ -21,8 +21,10 @@ export const Step1 = () => {
   return (
     <div>
       <h2>Step 1: Selecciona un workflow</h2>
+        <hr />
+        
 
-      <ul>
+      <ul className="workflows-list">
         {WorkflowsList.map((workflow, index) => (
           <li key={index}>
             <div>

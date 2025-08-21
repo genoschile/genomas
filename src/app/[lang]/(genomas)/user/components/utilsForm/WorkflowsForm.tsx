@@ -1,8 +1,9 @@
 "use client";
-
+import "./workflowsForm.css";
 import { lazy, Suspense } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSteps } from "./workflowContext";
+import { StepWorkflowsProgress } from "./StepWorkflowsProgress";
 
 export type SignUpForm = {
   workflow?: string;
@@ -30,6 +31,7 @@ export const WorkflowsForm = () => {
 
   return (
     <div>
+      <StepWorkflowsProgress />
       <form className="signup__step" onSubmit={handleSubmit(onSubmit)}>
         <Suspense fallback={<div className="signup__loading">Loading...</div>}>
           {currentStep === 1 && <Step1 />}
