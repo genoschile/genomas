@@ -171,3 +171,20 @@
     }
   }
 }
+
+.upload-files--container {
+  --max-inline-width: 600px;
+}
+
+.upload-files--container {
+  display: grid;
+  grid-template-columns:
+    [full-width] minmax(2rem, 1fr)
+    [content-start] min(var(--max-inline-width), 100% - 4rem)
+    [content-end] minmax(2rem, 1fr)
+    [full-width-end];
+}
+
+.upload-files--container > * {
+  grid-column: content-start / content-end;
+}

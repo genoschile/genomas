@@ -1,42 +1,75 @@
 :root {
-    --second-color: var(--primary-color);
+  --second-color: var(--primary-color);
 }
 
 /* Indicador de progreso */
 .signup__progress {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    inline-size: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inline-size: 100%;
+  gap: 0.5rem;
+}
+
+:root {
+  --second-color: var(--primary-color);
 }
 
 .signup__progress-step {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #000000;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: background-color 0.3s;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+/* Círculos de los pasos */
+.signup__progress-step {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: bold;
+  flex-shrink: 0;
+  transition: background-color 0.3s;
+  z-index: 2;
+}
+/* Contenedor del step + línea */
+.signup__progress-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
 
 .signup__progress-step--active {
-    background-color: var(--second-color);
+  background-color: var(--second-color);
 }
 
+/* Líneas de conexión entre pasos */
 .signup__progress-line {
-    width: 50px;
-    height: 4px;
-    background-color: #000000;
-    transition: background-color 0.3s;
+  flex: 1;
+  height: 4px;
+  background-color: #000;
+  transition: background-color 0.3s, width 0.3s;
+  margin: 0 0.25rem;
+}
+
+.signup__progress-item:last-child .signup__progress-line {
+  display: none;
 }
 
 .signup__progress-line--active {
-    background-color: var(--second-color);
+  background-color: var(--second-color);
 }

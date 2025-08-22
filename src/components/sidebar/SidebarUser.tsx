@@ -10,11 +10,7 @@ import Link from "next/link";
 /* icons */
 import { FaChevronRight } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-import { MdFileUpload } from "react-icons/md";
-import { AiOutlineExperiment } from "react-icons/ai";
 import { VscGraphLine } from "react-icons/vsc";
-import { GrConfigure } from "react-icons/gr";
-import { IoDocumentOutline } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
 
 /* styles */
@@ -29,20 +25,9 @@ const sidebarItems = [
     text: "Home",
   },
   {
-    href: `${path}/upload-files`,
-    icon: <MdFileUpload size={32} className="sidebar__icon" />,
-    text: "Upload Files",
-  },
-  {
     href: `/${path}/summary`,
     icon: <VscGraphLine size={32} className="sidebar__icon" />,
     text: "Summary",
-    disabled: true,
-  },
-  {
-    href: `/${path}/configuration`,
-    icon: <GrConfigure size={32} className="sidebar__icon" />,
-    text: "Configuration",
     disabled: true,
   },
 ];

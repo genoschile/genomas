@@ -4,7 +4,8 @@
   gap: 1rem;
   padding-block-start: 1rem;
 
-  button, a {
+  button,
+  a {
     display: flex;
     gap: 0.3rem;
     align-items: center;
@@ -34,5 +35,46 @@
       align-items: center;
       gap: 0.5rem;
     }
+  }
+}
+
+.workflow-form-footer {
+  padding-block-start: 1rem;
+  display: flex;
+
+  button {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    padding: 0.5rem 0.9rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 8);
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    color: var(--button-blue);
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+  }
+
+  & > :last-child {
+    display: flex;
+    align-items: center;
+    margin-inline-start: auto;
+    gap: 0.5rem;
+  }
+}
+
+.workflow-form {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  inline-size: 100%;
+  gap: 2rem;
+  
+  > :nth-child(even) {
+    flex: 1;
   }
 }

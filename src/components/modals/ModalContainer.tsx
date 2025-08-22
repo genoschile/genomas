@@ -14,6 +14,9 @@ import { ModalGroupsDeleteEnterprise } from "../forms/DeleteGroupsEnterprise";
 import { ModalUtilsUsers } from "./modalUtilsUsers";
 import { WorkflowsForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/WorkflowsForm";
 import { StepsProvider } from "@/app/[lang]/(genomas)/user/components/utilsForm/workflowContext";
+import { FileStagingAreaProvider } from "@/context/FileStagingAreaContext";
+import { UploadStatusProvider } from "@/context/UploadStatusContext";
+import { UploadForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/UploadForm";
 
 export const ModalContainer = () => {
   return (
@@ -60,8 +63,11 @@ export const ModalContainer = () => {
       </Modal>
 
       <ModalUtilsUsers id={MODAL_IDS.UPLOAD_FILES} title="Upload Files">
-        {/* <UploadFilesForm /> */}
-        <h1>hola</h1>
+        <FileStagingAreaProvider>
+          <UploadStatusProvider>
+              <UploadForm />
+            </UploadStatusProvider>
+        </FileStagingAreaProvider>
       </ModalUtilsUsers>
 
       <ModalUtilsUsers id={MODAL_IDS.WORKFLOWS} title="Workflows">

@@ -1,45 +1,43 @@
 import "./progress.css";
-
 import { useSteps } from "./workflowContext";
 
-export const StepWorkflowsProgress = () => {
+interface StepWorkflowsProgressProps {
+  totalSteps?: number;
+}
+
+export const StepWorkflowsProgress: React.FC<StepWorkflowsProgressProps> = ({
+  totalSteps = 3,
+}) => {
   const { currentStep } = useSteps();
 
   return (
     <div className="signup__progress">
-      <div
-        className={`signup__progress-step ${
-          currentStep >= 1 ? "signup__progress-step--active" : ""
-        }`}
-      >
-        1
-      </div>
+      {Array.from({ length: totalSteps }).map((_, index) => {
+        const stepNumber = index + 1;
 
-      <div
-        className={`signup__progress-line ${
-          currentStep > 1 ? "signup__progress-line--active" : ""
-        }`}
-      />
-      <div
-        className={`signup__progress-step ${
-          currentStep >= 2 ? "signup__progress-step--active" : ""
-        }`}
-      >
-        2
-      </div>
+        return (
+          <div key={stepNumber} className="signup__progress-item">
+            {/* Círculo */}
+            <div
+              className={`signup__progress-step ${
+                currentStep >= stepNumber ? "signup__progress-step--active" : ""
+              }`}
+            >
+              {stepNumber}
+            </div>
 
-      <div
-        className={`signup__progress-line ${
-          currentStep > 2 ? "signup__progress-line--active" : ""
-        }`}
-      />
-      <div
-        className={`signup__progress-step ${
-          currentStep === 3 ? "signup__progress-step--active" : ""
-        }`}
-      >
-        3
-      </div>
+            {stepNumber !== totalSteps && (
+              <div
+                className={`signup__progress-line ${
+                  currentStep > stepNumber
+                    ? "signup__progress-line--active"
+                    : ""
+                }`}
+              />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

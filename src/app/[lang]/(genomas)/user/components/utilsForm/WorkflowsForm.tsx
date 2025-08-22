@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSteps } from "./workflowContext";
 import { StepWorkflowsProgress } from "./StepWorkflowsProgress";
+import { FooterModalUsersOptions } from "./FooterModalUsersOptions";
 
 export type SignUpForm = {
   workflow?: string;
@@ -30,7 +31,7 @@ export const WorkflowsForm = () => {
   };
 
   return (
-    <div>
+    <div className="workflow-form">
       <StepWorkflowsProgress />
       <form className="signup__step" onSubmit={handleSubmit(onSubmit)}>
         <Suspense fallback={<div className="signup__loading">Loading...</div>}>
@@ -41,6 +42,7 @@ export const WorkflowsForm = () => {
           {currentStep === 3 && <Step3 />}
         </Suspense>
       </form>
+      <FooterModalUsersOptions />
     </div>
   );
 };

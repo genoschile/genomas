@@ -11,10 +11,14 @@ import { FaTimes } from "react-icons/fa";
 import { ModalProps } from "@/context/ModalsProject";
 
 /* styles */
-import "./modal.css";
+import "./modalUtils.css";
 
-export const ModalUtilsUsers: React.FC<ModalProps> = ({ id, title, children }) => {
-  const { activeModal, closeModal } = useModalContext();
+export const ModalUtilsUsers: React.FC<ModalProps> = ({
+  id,
+  title,
+  children,
+}) => {
+  const { activeModal } = useModalContext();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -29,19 +33,7 @@ export const ModalUtilsUsers: React.FC<ModalProps> = ({ id, title, children }) =
 
   return (
     <dialog ref={dialogRef} className="modal">
-      <div className="modal__content" onMouseDown={(e) => e.stopPropagation()}>
-        <header className="modal__header">
-          <h4 className="modal__title" aria-labelledby="modal-title">
-            {title}
-          </h4>
-          <form method="dialog">
-            <button className="modal__close-button" onClick={closeModal}>
-              <FaTimes />
-            </button>
-          </form>
-        </header>
-        {children}
-      </div>
+      {children}
     </dialog>
   );
 };
