@@ -1,13 +1,17 @@
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
 
 const APP_LANGUAGE = process.env.APP_LANGUAGE;
 
 if (!APP_LANGUAGE) throw new Error("APP_LANGUAGE IS NOT SET");
 
+/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
+  pageExtensions: ["md", "mdx", "ts", "tsx"],
   /* config options here */
   experimental: {
     viewTransition: true,
+    mdxRs: true,
   },
   allowedDevOrigins: [
     "http://localhost:3000",
@@ -30,4 +34,13 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  // Add markdown plugins here, as desired
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+});
+
+// Merge MDX config with Next.js config
+export default withMDX(nextConfig);

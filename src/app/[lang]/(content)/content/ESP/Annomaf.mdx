@@ -1,0 +1,155 @@
+# ![nf-core/annomaf](docs/images/nf-core-annomaf_logo_light.png#gh-light-mode-only) ![nf-core/annomaf](docs/images/nf-core-annomaf_logo_dark.png#gh-dark-mode-only)
+
+[![GitHub Actions CI Status](https://github.com/nf-core/annomaf/workflows/nf-core%20CI/badge.svg)](https://github.com/nf-core/annomaf/actions?query=workflow%3A%22nf-core+CI%22)
+[![GitHub Actions Linting Status](https://github.com/nf-core/annomaf/workflows/nf-core%20linting/badge.svg)](https://github.com/nf-core/annomaf/actions?query=workflow%3A%22nf-core+linting%22)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/annomaf/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A523.04.0-23aa62.svg)](https://www.nextflow.io/)
+[![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
+[![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
+[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
+[![Launch on Nextflow Tower](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Nextflow%20Tower-%234256e7)](https://tower.nf/launch?pipeline=https://github.com/nf-core/annomaf)
+
+[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23annomaf-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/annomaf)[![Follow on Twitter](http://img.shields.io/badge/twitter-%40nf__core-1DA1F2?labelColor=000000&logo=twitter)](https://twitter.com/nf_core)[![Follow on Mastodon](https://img.shields.io/badge/mastodon-nf__core-6364ff?labelColor=FFFFFF&logo=mastodon)](https://mstdn.science/@nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
+
+## Introduction
+
+**nf-core/annomaf** is a bioinformatics pipeline designed to annotate and analyze somatic variant data, with a particular focus on supporting both traditional VCF-based input as well as BAM files derived from liquid biopsy samples. The pipeline enables consistent annotation and transformation of variant data into Mutation Annotation Format (MAF), which is commonly used in cancer genomics and downstream interpretation tools.
+
+The workflow includes optional variant calling from BAMs using `MismatchFinder`, followed by functional annotation via `VEP`, conversion to MAF with `vcf2maf`, enrichment with `OncoKB` and `reporter`, a module that generates a PDF report with clinical insights. It supports VCF/BAM formats and produces per-sample results, including the findings' report.
+
+
+![diagram](docs/images/nf-core-annomaf-diagram.png)
+
+<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
+     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
+<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
+
+### Default workflow steps include:
+- [x] Sample sheet validation
+- [x] Support for both VCF and BAM inputs
+- [x] Variant calling from BAMs (MismatchFinder)
+- [x] Variant annotation with Ensembl VEP
+- [x] VCF to MAF conversion
+- [x] OncoKB annotation of MAF files
+- [x] MAF merging and reduction steps
+- [x] REPORTER. Custom report generation module
+
+## Usage
+
+> [!NOTE]
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
+
+### Requirements
+
+> **IMPORTANT:** This workflow requires that [this service](https://github.com/Fermin-Cloud/docker-cli-aws/tree/main) is available. The ***REPORTER*** process relies on it, but since the service is running on AWS, there is no need to run it on the host machine.
+
+### Example `samplesheet.csv`:
+
+```csv
+sample,path,variantcaller,lb_bam
+sample1,/path/to/sample1.mutect2.vcf.gz,mutect2,no
+sample2,/path/to/sample2.bam,mismatchfinder,yes
+```
+
+- `sample`: Unique sample identifier.
+- `path`: Path to either a `.vcf.gz` or a `.bam` file.
+- `variantcaller`: Name of the tool used for variant calling (used in naming downstream outputs).
+- `lb_bam`: Set to `yes` for BAMs derived from liquid biopsy, `no` otherwise.
+
+Now, you can run the pipeline using, for example:
+
+```bash
+nextflow run nf-core-annomaf \
+  --input samplesheet.csv \
+  --fasta /path/to/genome.fa \
+  --gnomad /path/to/gnomad.v3.1.2.echtvar.v2.zip \
+  --whitelist_bed /path/to/GCA_000001405.15_GRCh38_full_analysis_set.100mer.highMappability.bed \
+  --oncokb_token {token_oncokb} \
+  --args_vcf2maf "--inhibit-vep --retain-ann HGVSg" \
+  --vep_fasta /path/to/genome.fa \
+  --vep_cache /path/to/vep_cache \
+  --vep_extra_args "--everything --vcf --hgvs --hgvsg" \
+  --outdir test_out \
+  -profile docker
+
+```
+
+> **Notes:**  
+> - If your input samples are **only VCFs**, you can omit:
+>   - `--gnomad`
+>   - `--whitelist_bed`
+>
+> - If you **do not wish to annotate with VEP**, you can omit:
+>   - `--vep_fasta`
+>   - `--vep_cache`
+>   - `--vep_extra_args`  
+>   :exclamation: If you don't annotate with VEP, make sure you VCFs are properly annotated. They have to include the HGVS annotations, including the HGVSg, otherwise the pipeline will crash because oncokb expects the HGVS annotations.
+>
+> - ***VEP and cache versions:*** This pipeline uses VEP 111 for GRCh38 by default. The cache files must be compatible with the selected VEP version. If you wish to use a different cache version, make sure to update the VEP version accordingly. This can be configured by adding the following section to a `nextflow.config` file in the directory where the pipeline is executed:
+>
+>   Example of a specific version of VEP.
+>   ```bash
+>   process {
+>       withName: 'ENSEMBLVEP_VEP_BAM' {
+>           container = "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+>      'https://depot.galaxyproject.org/singularity/ensembl-vep:113.0--pl5321h2a3209d_0' :
+>      'biocontainers/ensembl-vep:113.0--pl5321h2a3209d_0' }"
+>       }
+>    }
+>    ```
+
+
+> [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
+> see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
+
+For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/annomaf/usage) and the [parameter documentation](https://nf-co.re/annomaf/parameters).
+
+## Pipeline output
+
+<!-- TODO : add results of a test example -->
+To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/annomaf/results) tab on the nf-core website pipeline page.
+
+Main output include:
+- `.vcf.gz` files annotated with Ensembl VEP or result of mismatchfinder
+- `.maf` files converted from VCFs and annotated with OncoKB
+- `combined.maf` and `unique.maf` files for cohort analysis
+
+For more details about the output files and reports, please refer to the
+[output documentation](https://nf-co.re/annomaf/output).
+
+
+## Credits
+
+nf-core/annomaf was originally written by ablanco.
+
+**nf-core/annomaf** was originally written by [ablancomu](https://github.com/ablancomu).
+
+We thank the following contributors:
+- [Your future collaborators here]
+
+Built with ❤️ using the [nf-core](https://nf-co.re) community framework.
+
+## Contributions and Support
+
+If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
+
+For questions or help, join the [Slack `#annomaf` channel](https://nfcore.slack.com/channels/annomaf) (join via [nf-core Slack invite](https://nf-co.re/join/slack)).
+
+## Citations
+
+<!-- TODO: Update Zenodo badge and DOI upon first release -->
+
+If you use **nf-core/annomaf** for your analysis, please cite it using:
+
+>  *et al*. **ANNOMAF: An annotation and transformation pipeline for MAF files**. nf-core. doi: [10.5281/zenodo.XXXXXXX](https://doi.org/10.5281/zenodo.XXXXXXX)
+
+You can cite the `nf-core` publication as follows:
+
+> **The nf-core framework for community-curated bioinformatics pipelines.**
+>
+> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
+>
+> _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).
+
+An extensive list of tool citations can be found in [`CITATIONS.md`](CITATIONS.md).
