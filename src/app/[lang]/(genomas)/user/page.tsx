@@ -18,11 +18,11 @@ export default function Page() {
 
       {/* <FilesProject /> */}
 
-      <InputFilesProjects />
+      {/* <InputFilesProjects /> */}
 
-      <TrashProject />
+      {/* <TrashProject /> */}
 
-      <OutputFilesProjects />
+      {/* <OutputFilesProjects /> */}
 
       <SidebarInfoProjectSelect />
     </>

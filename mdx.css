@@ -1,0 +1,9 @@
+@layer mdx {
+  a.mdxa {
+    color: #09f;
+
+    &:hover {
+      color: #06c;
+    }
+  }
+}

@@ -2,10 +2,11 @@
 
 import { MdCloudUpload } from "react-icons/md";
 import "./style.css";
-import { LuWorkflow } from "react-icons/lu";
+import { LuFileInput, LuFileOutput, LuWorkflow } from "react-icons/lu";
 import { useModalContext } from "@/hooks/useModalsProject";
 import { MODAL_IDS } from "@/context/ModalsProject";
-
+import { FaRegTrashAlt, FaTasks } from "react-icons/fa";
+import { HiOutlineDocumentReport } from "react-icons/hi";
 interface NavButton {
   id: string;
   label: string;
@@ -65,6 +66,26 @@ export const ProjectHomeHeaderContainer: React.FC<ProjectHeaderProps> = ({
             onClick={() => openModal(MODAL_IDS.UPLOAD_FILES)}
           >
             <MdCloudUpload />
+          </button>
+
+          <button className="workflow-btn">
+            <FaRegTrashAlt />
+          </button>
+
+          <button className="workflow-btn">
+            <FaTasks />
+          </button>
+
+          <button>
+            <LuFileInput />
+          </button>
+
+          <button>
+            <LuFileOutput />
+          </button>
+
+          <button>
+            <HiOutlineDocumentReport />
           </button>
         </nav>
       </div>

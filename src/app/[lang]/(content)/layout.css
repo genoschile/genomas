@@ -1,0 +1,18 @@
+.pipelines-guides {
+    --max-inline-width: 1200px;
+}
+
+@supports (display: grid) {
+  .pipelines-guides {
+    display: grid;
+    grid-template-columns:
+      [full-width] minmax(2rem, 1fr)
+      [content-start] min(var(--max-inline-width), 100% - 4rem)
+      [content-end] minmax(2rem, 1fr)
+      [full-width-end];
+  }
+
+  .pipelines-guides > * {
+    grid-column: content-start / content-end;
+  }
+}

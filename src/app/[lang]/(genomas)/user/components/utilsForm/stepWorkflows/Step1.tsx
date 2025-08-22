@@ -1,10 +1,19 @@
 import { IoIosArrowForward } from "react-icons/io";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { useSteps } from "../workflowContext";
+import Link from "next/link";
 
 export const WorkflowsList = [
-  { nombre: "Annomaf", description: "Workflow for Annomaf" },
-  { nombre: "BetaFlow", description: "Workflow for BetaFlow" },
+  {
+    nombre: "Annomaf",
+    description: "Workflow for Annomaf",
+    href: "/content/annomaf",
+  },
+  {
+    nombre: "BetaFlow",
+    description: "Workflow for BetaFlow",
+    href: "/content/2",
+  },
 ];
 
 export const Step1 = () => {
@@ -12,7 +21,7 @@ export const Step1 = () => {
 
   const handleWorkflowSelect = async (workflowName: string) => {
     setValue("workflow", workflowName, { shouldValidate: true });
-    const isValid = await trigger("workflow"); 
+    const isValid = await trigger("workflow");
     if (isValid) {
       nextStep();
     }
@@ -21,8 +30,7 @@ export const Step1 = () => {
   return (
     <div>
       <h2>Step 1: Selecciona un workflow</h2>
-        <hr />
-        
+      <hr />
 
       <ul className="workflows-list">
         {WorkflowsList.map((workflow, index) => (
@@ -32,9 +40,9 @@ export const Step1 = () => {
               <p>{workflow.description}</p>
             </div>
             <div>
-              <button type="button">
+              <Link type="button" href={workflow.href}>
                 <IoInformationCircleOutline />
-              </button>
+              </Link>
               <button
                 type="button"
                 onClick={() => handleWorkflowSelect(workflow.nombre)}

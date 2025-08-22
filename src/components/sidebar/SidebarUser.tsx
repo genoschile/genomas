@@ -34,18 +34,6 @@ const sidebarItems = [
     text: "Upload Files",
   },
   {
-    href: `${path}/analysis`,
-    icon: <IoDocumentOutline size={32} className="sidebar__icon" />,
-    text: "Analysis",
-    disabled: true,
-  },
-  {
-    href: `/${path}/documents`,
-    icon: <AiOutlineExperiment size={32} className="sidebar__icon" />,
-    text: "Documents",
-    disabled: true,
-  },
-  {
     href: `/${path}/summary`,
     icon: <VscGraphLine size={32} className="sidebar__icon" />,
     text: "Summary",

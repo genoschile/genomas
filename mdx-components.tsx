@@ -1,66 +1,92 @@
-import React, { ComponentPropsWithoutRef } from 'react';
-import Link from 'next/link';
-import { highlight } from 'sugar-high';
+import React, { ComponentPropsWithoutRef } from "react";
+import Link from "next/link";
+import { highlight } from "sugar-high";
+import "./mdx.css";
 
-type HeadingProps = ComponentPropsWithoutRef<'h1'>;
-type ParagraphProps = ComponentPropsWithoutRef<'p'>;
-type ListProps = ComponentPropsWithoutRef<'ul'>;
-type ListItemProps = ComponentPropsWithoutRef<'li'>;
-type AnchorProps = ComponentPropsWithoutRef<'a'>;
-type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>;
+type HeadingProps = ComponentPropsWithoutRef<"h1">;
+type ParagraphProps = ComponentPropsWithoutRef<"p">;
+type ListProps = ComponentPropsWithoutRef<"ul">;
+type ListItemProps = ComponentPropsWithoutRef<"li">;
+type AnchorProps = ComponentPropsWithoutRef<"a">;
+type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
 
 const components = {
   h1: (props: HeadingProps) => (
-    <h1 className="font-medium pt-12 mb-0" {...props} />
+    <h1
+      {...props}
+      style={{
+        fontWeight: 500,
+        lineHeight: "1.25",
+        fontSize: "2.25rem",
+        paddingTop: "3rem",
+        marginBottom: 0,
+        blockSize: "fit-content"
+      }}
+    />
   ),
   h2: (props: HeadingProps) => (
     <h2
-      className="text-gray-800 dark:text-zinc-200 font-medium mt-8 mb-3"
+      style={{
+        color: "red",
+        fontWeight: 500,
+      }}
       {...props}
     />
   ),
   h3: (props: HeadingProps) => (
     <h3
-      className="text-gray-800 dark:text-zinc-200 font-medium mt-8 mb-3"
+      style={{
+        fontWeight: 500,
+      }}
       {...props}
     />
   ),
-  h4: (props: HeadingProps) => <h4 className="font-medium" {...props} />,
-  p: (props: ParagraphProps) => (
-    <p className="text-gray-800 dark:text-zinc-300 leading-snug" {...props} />
-  ),
+  h4: (props: HeadingProps) => <h4 style={{ fontWeight: 500 }} {...props} />,
+  p: (props: ParagraphProps) => <p style={{ lineHeight: 1.375 }} {...props} />,
   ol: (props: ListProps) => (
     <ol
-      className="text-gray-800 dark:text-zinc-300 list-decimal pl-5 space-y-2"
+      style={{
+        listStyleType: "decimal",
+        paddingLeft: "1.25rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.5rem",
+      }}
       {...props}
     />
   ),
   ul: (props: ListProps) => (
     <ul
-      className="text-gray-800 dark:text-zinc-300 list-disc pl-5 space-y-1"
+      style={{
+        listStyleType: "disc",
+        paddingLeft: "1.25rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.25rem",
+      }}
       {...props}
     />
   ),
-  li: (props: ListItemProps) => <li className="pl-1" {...props} />,
-  em: (props: ComponentPropsWithoutRef<'em'>) => (
-    <em className="font-medium" {...props} />
+  li: (props: ListItemProps) => (
+    <li style={{ paddingLeft: "0.25rem" }} {...props} />
   ),
-  strong: (props: ComponentPropsWithoutRef<'strong'>) => (
-    <strong className="font-medium" {...props} />
+  em: (props: ComponentPropsWithoutRef<"em">) => (
+    <em style={{ fontWeight: 500 }} {...props} />
+  ),
+  strong: (props: ComponentPropsWithoutRef<"strong">) => (
+    <strong style={{ fontWeight: 500 }} {...props} />
   ),
   a: ({ href, children, ...props }: AnchorProps) => {
-    const className =
-      'text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800';
-    if (href?.startsWith('/')) {
+    if (href?.startsWith("/")) {
       return (
-        <Link href={href} className={className} {...props}>
+        <Link href={href} className={"mdxa"} {...props}>
           {children}
         </Link>
       );
     }
-    if (href?.startsWith('#')) {
+    if (href?.startsWith("#")) {
       return (
-        <a href={href} className={className} {...props}>
+        <a href={href} className={"mdxa"} {...props}>
           {children}
         </a>
       );
@@ -70,14 +96,14 @@ const components = {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={className}
+        className={"mdxa"}
         {...props}
       >
         {children}
       </a>
     );
   },
-  code: ({ children, ...props }: ComponentPropsWithoutRef<'code'>) => {
+  code: ({ children, ...props }: ComponentPropsWithoutRef<"code">) => {
     const codeHTML = highlight(children as string);
     return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
   },
@@ -103,7 +129,14 @@ const components = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="ml-[0.075em] border-l-3 border-gray-300 pl-4 text-gray-700 dark:border-zinc-600 dark:text-zinc-300"
+      style={{
+        marginLeft: "0.075em",
+        borderLeftWidth: "3px",
+        borderLeftStyle: "solid",
+        borderLeftColor: "#d1d5db", // gray-300
+        paddingLeft: "1rem", // pl-4
+        color: "#374151", // text-gray-700
+      }}
       {...props}
     />
   ),
