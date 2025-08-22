@@ -1,3 +1,32 @@
 .select-dropdown--workspaces {
     width: fit-content;
 }
+
+.workspace-search-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.select-dropdown--workspaces select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+  font-size: 0.95rem;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.search-input-wrapper input {
+  flex: 1;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.search-input-wrapper input:focus {
+  outline: none;
+  border-color: var(--button-blue);
+  box-shadow: 0 0 3px var(--button-blue);
+}

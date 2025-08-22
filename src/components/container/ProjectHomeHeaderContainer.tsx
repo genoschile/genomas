@@ -2,11 +2,12 @@
 
 import { MdCloudUpload } from "react-icons/md";
 import "./style.css";
-import { LuFileInput, LuFileOutput, LuWorkflow } from "react-icons/lu";
+import { LuWorkflow } from "react-icons/lu";
 import { useModalContext } from "@/hooks/useModalsProject";
 import { MODAL_IDS } from "@/context/ModalsProject";
 import { FaRegTrashAlt, FaTasks } from "react-icons/fa";
-import { HiOutlineDocumentReport } from "react-icons/hi";
+import { ProjectWorkspaceSelector } from "../project/ProjectWorkspaceSelected";
+
 interface NavButton {
   id: string;
   label: string;
@@ -34,9 +35,7 @@ export const ProjectHomeHeaderContainer: React.FC<ProjectHeaderProps> = ({
 
       <div className="project__home--header__controls">
         <nav className="trash-button-header content-controls-header">
-          <label htmlFor="project-select">
-            <input type="text" id="project-select" />
-          </label>
+          <ProjectWorkspaceSelector />
 
           {navButtons.map((button) => (
             <button
@@ -71,21 +70,8 @@ export const ProjectHomeHeaderContainer: React.FC<ProjectHeaderProps> = ({
           <button className="workflow-btn">
             <FaRegTrashAlt />
           </button>
-
           <button className="workflow-btn">
             <FaTasks />
-          </button>
-
-          <button>
-            <LuFileInput />
-          </button>
-
-          <button>
-            <LuFileOutput />
-          </button>
-
-          <button>
-            <HiOutlineDocumentReport />
           </button>
         </nav>
       </div>

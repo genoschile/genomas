@@ -1,38 +1,70 @@
 "use client";
 
+import React, { useState } from "react";
 import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
 import "./projectWorkspacesSelected.css";
 
-export const ProjectWorkspaceSelected = () => {
+export const ProjectWorkspaceSelector: React.FC = () => {
   const { workspaces, selectedWorkspaceId, setSelectedWorkspaceId } =
     useUserWorkspacesContext();
 
-  return (
-    <div className="select-dropdown--workspaces select-dropdown">
-      <label htmlFor="workspaces-select" className="visually-hidden">
-        Seleccionar idioma
-      </label>
-      <select
-        id="workspaces-select"
-        value={selectedWorkspaceId || ""}
-        onChange={(e) => setSelectedWorkspaceId(e.target.value)}
-      >
-        <option value="" disabled>
-          Select a workspace
-        </option>
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-        {workspaces ? (
-          workspaces.map((workspace) => (
-            <option key={workspace.id} value={workspace.id}>
-              {workspace.name}
-            </option>
-          ))
-        ) : (
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+
+    // Aquí decides: buscar globalmente o en el workspace actual
+    // Podrías levantar un evento o llamar a un hook de búsqueda
+    console.log(
+      e.target.value
+        ? `Buscando globalmente: ${e.target.value}`
+        : `Mostrando archivos del workspace ${selectedWorkspaceId}`
+    );
+  };
+
+  return (
+    <div className="workspace-search-container">
+      {/* Selector de workspace */}
+      <div className="select-dropdown--workspaces select-dropdown">
+        <label htmlFor="workspaces-select" className="visually-hidden">
+          Seleccionar workspace
+        </label>
+        <select
+          id="workspaces-select"
+          value={selectedWorkspaceId || ""}
+          onChange={(e) => setSelectedWorkspaceId(e.target.value)}
+        >
           <option value="" disabled>
-            Loading workspaces...
+            Select a workspace
           </option>
-        )}
-      </select>
+
+          {workspaces ? (
+            workspaces.map((workspace) => (
+              <option key={workspace.id} value={workspace.id}>
+                {workspace.name}
+              </option>
+            ))
+          ) : (
+            <option value="" disabled>
+              Loading workspaces...
+            </option>
+          )}
+        </select>
+      </div>
+
+      {/* Input de búsqueda */}
+      <div className="search-input-wrapper">
+        <label htmlFor="workspace-search" className="visually-hidden">
+          Buscar archivos
+        </label>
+        <input
+          id="workspace-search"
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search files..."
+        />
+      </div>
     </div>
   );
 };

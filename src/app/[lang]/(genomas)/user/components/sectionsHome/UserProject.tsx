@@ -1,7 +1,6 @@
 import { ArticleContainer } from "@/components/container/ProjectHomeArticleContainer";
 import { ProjectHomeHeaderContainer } from "@/components/container/ProjectHomeHeaderContainer";
 import { ProjectCardList } from "@/components/project/ProjectCardList";
-import { ProjectWorkspaceSelected } from "@/components/project/ProjectWorkspaceSelected";
 import { MODAL_IDS } from "@/context/ModalsProject";
 import { useModalContext } from "@/hooks/useModalsProject";
 import { useProjectContext } from "@/hooks/useProjectContext";
@@ -12,8 +11,10 @@ import { GenomeVersionRefSelected } from "../GenomeVersionRefSelected";
 import { FilesProjectSelected } from "../FilesProjectSelected";
 import { useState } from "react";
 import { IFile } from "@/lib/types/files";
-
 import "./userProject.css";
+import { LuFileInput, LuFileOutput } from "react-icons/lu";
+import { HiOutlineDocumentReport } from "react-icons/hi";
+import { FilesTypeSwift } from "./FilesTypeSwift";
 
 export const UserProject = () => {
   const { openModal } = useModalContext();
@@ -43,10 +44,11 @@ export const UserProject = () => {
         navButtons={navButtonsUserProject}
       />
 
-      <div className="project__home--header">
-        <ProjectWorkspaceSelected />
+      <FilesTypeSwift />
+
+      {/* <div className="project__home--header">
         <ProjectOptionsUser />
-      </div>
+      </div> */}
 
       <section className="project__list--container">
         <ProjectCardList />
