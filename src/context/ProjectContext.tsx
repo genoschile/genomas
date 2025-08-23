@@ -23,6 +23,8 @@ interface ProjectContextProps {
   onOpen: { id: string; onOpen: boolean };
   onSetOpen: ({ id, onOpen }: { id: string; onOpen: boolean }) => void;
   setSelectedCards: (cards: string[]) => void;
+  ChangeSelectedProjectId: (id: string | null) => void;
+  selectedProjectId: string | null;
 }
 
 export const ProjectContext = createContext<ProjectContextProps | undefined>(
@@ -39,6 +41,15 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     id: "",
     onOpen: false,
   });
+
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
+    null
+  );
+
+  const ChangeSelectedProjectId = (id: string | null) => {
+    console.log("Changing selected project ID to:", id);
+    setSelectedProjectId(id);
+  };
 
   const { user } = useSessionContext();
 
@@ -93,6 +104,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     onOpen,
     onSetOpen,
     setSelectedCards,
+    ChangeSelectedProjectId,
+    selectedProjectId,
   };
 
   return (

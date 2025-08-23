@@ -14,7 +14,7 @@ export const ProjectCard = ({
   id,
   description,
   sharedWith,
-  name
+  name,
 }: {
   id: string;
   name: string;
@@ -80,8 +80,13 @@ export const ProjectCard = ({
     setIsOpen((prev) => !prev);
   };
 
+  const { ChangeSelectedProjectId } = useProjectContext();
+
   return (
-    <li className={`project__list--card ${isSelected(id) ? "selected" : ""}`}>
+    <li
+      onDoubleClick={() => ChangeSelectedProjectId(id)}
+      className={`project__list--card ${isSelected(id) ? "selected" : ""}`}
+    >
       <header>
         <span ref={dropdownRef} onClick={handleDropdownToggle}>
           <SlOptionsVertical />
