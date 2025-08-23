@@ -16,6 +16,8 @@ export const MODAL_IDS = {
   EDIT_GROUPS_ENTERPRISE: "edit_group_enterprise",
   UPLOAD_FILES: "upload_files",
   WORKFLOWS: "workflows",
+  TRASH_USER: "trash_user",
+  EXECUTOR: "executor_user",
 } as const;
 
 export type ModalID = (typeof MODAL_IDS)[keyof typeof MODAL_IDS] | null;

@@ -10,6 +10,14 @@ interface Task {
 }
 
 export default function Page() {
+  return (
+    <div>
+      <h1>Task Management</h1>
+    </div>
+  );
+}
+
+export function Drag() {
   /* task active */
   const [draggedTask, setDraggedTask] = useState<string | null>(null);
 

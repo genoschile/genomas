@@ -48,11 +48,13 @@
     align-items: center;
     padding: 0.5rem 0.9rem;
     font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
-    background-color: rgba(255, 0, 0, 8);
+    background-color: var(--primary-color);
     border: 1px solid transparent;
     border-radius: 0.5rem;
-    color: var(--button-blue);
+    color: black;
+    text-transform: capitalize;
 
     &:hover {
       background-color: var(--primary-color-hover);
@@ -73,7 +75,7 @@
   block-size: 100%;
   inline-size: 100%;
   gap: 2rem;
-  
+
   > :nth-child(even) {
     flex: 1;
   }

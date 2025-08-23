@@ -67,10 +67,16 @@ export const ProjectHomeHeaderContainer: React.FC<ProjectHeaderProps> = ({
             <MdCloudUpload />
           </button>
 
-          <button className="workflow-btn">
+          <button
+            className="workflow-btn"
+            onClick={() => openModal(MODAL_IDS.TRASH_USER)}
+          >
             <FaRegTrashAlt />
           </button>
-          <button className="workflow-btn">
+          <button
+            className="workflow-btn"
+            onClick={() => openModal(MODAL_IDS.EXECUTOR)}
+          >
             <FaTasks />
           </button>
         </nav>

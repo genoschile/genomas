@@ -23,12 +23,13 @@ const sidebarItems = [
     href: `${path}`,
     icon: <FaHome size={32} className="sidebar__icon" />,
     text: "Home",
+    disabled: false,
   },
   {
-    href: `/${path}/summary`,
+    href: `${path}/summary`,
     icon: <VscGraphLine size={32} className="sidebar__icon" />,
     text: "Summary",
-    disabled: true,
+    disabled: false,
   },
 ];
 

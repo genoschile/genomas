@@ -1,3 +1,5 @@
+import { FooterModalUsersOptions } from "./utilsForm/FooterModalUsersOptions";
+
 export const HeaderTableTrash = [
   "Select",
   "File Name",
@@ -34,6 +36,8 @@ export const TrashContainer = () => {
           </div>
         </li>
       </ul>
+
+      <FooterModalUsersOptions />
     </div>
   );
 };

@@ -5,15 +5,27 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useSteps } from "./workflowContext";
 import { StepWorkflowsProgress } from "./StepWorkflowsProgress";
 import { FooterModalUsersOptions } from "./FooterModalUsersOptions";
+import dynamic from "next/dynamic";
 
 export type SignUpForm = {
   workflow?: string;
 };
 
 /* lazy */
-const Step1 = lazy(() => import("./stepWorkflows/Step1"));
-const Step2 = lazy(() => import("./stepWorkflows/Step2"));
-const Step3 = lazy(() => import("./stepWorkflows/Step3"));
+const Step1 = dynamic(() => import("./stepWorkflows/Step1"), {
+  loading: () => <div className="signup__loading">Loading...</div>,
+  ssr: false, 
+});
+
+const Step2 = dynamic(() => import("./stepWorkflows/Step2"), {
+  loading: () => <div className="signup__loading">Loading...</div>,
+  ssr: false,
+});
+
+const Step3 = dynamic(() => import("./stepWorkflows/Step3"), {
+  loading: () => <div className="signup__loading">Loading...</div>,
+  ssr: false,
+});
 
 /*
 

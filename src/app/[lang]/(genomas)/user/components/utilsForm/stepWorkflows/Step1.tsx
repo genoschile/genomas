@@ -40,7 +40,12 @@ export const Step1 = () => {
               <p>{workflow.description}</p>
             </div>
             <div>
-              <Link type="button" href={workflow.href}>
+              <Link
+                type="button"
+                href={workflow.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <IoInformationCircleOutline />
               </Link>
               <button
