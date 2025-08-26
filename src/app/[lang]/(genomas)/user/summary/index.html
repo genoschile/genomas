@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genomas Dashboard de Ejecuciones</title>
+    <style>
+        /* CSS Variables for a clean and reusable color palette */
+        :root {
+            --color-primary: #4A60A1;    /* Deep Blue */
+            --color-secondary: #5BC0BE;  /* Teal/Turquoise */
+            --color-tertiary: #F7B96D;   /* Orange */
+            --color-accent: #AF8CEB;     /* Lilac */
+            --color-success: #4ade80;    /* Green */
+            --color-in-progress: #60a5fa; /* Blue */
+            --color-failure: #ef4444;    /* Red */
+            --color-background: #f1f5f9; /* Light gray background */
+            --color-card-bg: #ffffff;    /* White card background */
+            --color-text: #1e293b;       /* Dark text */
+            --color-text-secondary: #64748b; /* Secondary text */
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            --border-radius-lg: 16px;
+            --border-radius-md: 10px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Main Dashboard Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto 1fr auto;
+            grid-template-areas:
+                "header"
+                "filters"
+                "kpis"
+                "main"
+                "footer";
+            gap: 24px;
+            min-height: 100vh;
+            padding: 32px;
+        }
+
+        /* General Card Styling */
+        .card {
+            background-color: var(--color-card-bg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            transition: transform 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Header Section */
+        .header {
+            grid-area: header;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-logo {
+            height: 40px;
+        }
+
+        .header-title {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: var(--color-primary);
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid #e2e8f0;
+            background-color: var(--color-background);
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-card-bg);
+        }
+        .btn-primary:hover {
+            background-color: #3b508f;
+        }
+
+        /* Filters Section */
+        .filters {
+            grid-area: filters;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .filter-chip, .filter-select {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--color-card-bg);
+            border-radius: 9999px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-chip.active, .filter-chip:hover {
+            background-color: var(--color-primary);
+            color: var(--color-card-bg);
+            border-color: var(--color-primary);
+        }
+
+        /* KPIs Section */
+        .kpis {
+            grid-area: kpis;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        .kpi-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+        
+        .kpi-card p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin: 0;
+        }
+
+        /* Main Content Grid */
+        .main {
+            grid-area: main;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        
+        /* Execution Card */
+        .run-card {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pipeline-badge {
+            background-color: var(--color-secondary);
+            color: var(--color-card-bg);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+
+        .run-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .run-info-item h5 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .run-info-item p {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin: 0;
+        }
+
+        .chip {
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .chip.success { background-color: var(--color-success); }
+        .chip.in-progress { background-color: var(--color-in-progress); }
+        .chip.failure { background-color: var(--color-failure); }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--color-secondary);
+            transition: width 0.5s ease-in-out;
+        }
+
+        .path-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--color-background);
+            border-radius: var(--border-radius-md);
+            padding: 10px 12px;
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            font-family: monospace;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .path-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .path-actions {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: var(--border-radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            background-color: #f1f5f9;
+            color: var(--color-text-secondary);
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-card-bg);
+            border-color: var(--color-primary);
+        }
+        
+        /* Utility Classes for Icons */
+        .icon-sm { width: 18px; height: 18px; }
+
+        /* Footer Section */
+        .footer {
+            grid-area: footer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                padding: 16px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-controls {
+                width: 100%;
+                margin-top: 16px;
+            }
+            .filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .kpis {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-grid">
+
+        <!-- Filters Section -->
+        <section class="filters">
+            <div class="filter-chip active">Estado: Completado</div>
+            <div class="filter-chip">Estado: En progreso</div>
+            <div class="filter-chip">Estado: Fallido</div>
+            <select class="filter-select">
+                <option selected disabled>Pipeline</option>
+                <option>Sarek</option>
+                <option>AnnoMAF</option>
+                <option>BLAST</option>
+            </select>
+            <input type="text" placeholder="Tipo de muestra" class="filter-select">
+            <input type="date" class="filter-select">
+            <select class="filter-select">
+                <option selected disabled>Ordenar por</option>
+                <option>Más recientes</option>
+                <option>Más antiguos</option>
+            </select>
+        </section>
+
+        <!-- KPIs Section -->
+        <section class="kpis">
+            <div class="kpi-card card">
+                <h4>Duración media</h4>
+                <p>1h 25m</p>
+            </div>
+            <div class="kpi-card card">
+                <h4>Tasa de éxito (180 días)</h4>
+                <p>92%</p>
+            </div>
+            <div class="kpi-card card">
+                <h4>Ejecuciones activas</h4>
+                <p>12</p>
+            </div>
+            <div class="kpi-card card">
+                <h4>Fallas más comunes</h4>
+                <p>Error en Sarek</p>
+            </div>
+        </section>
+
+        <!-- Main Content (Execution Cards Grid) -->
+        <section class="main">
+
+            <!-- Execution Card Example 1: Completed -->
+            <div class="run-card card">
+                <div class="card-header-row">
+                    <span class="pipeline-badge" style="background-color: var(--color-secondary);">AnnoMAF</span>
+                    <span class="chip success">Completado</span>
+                </div>
+                <div class="path-container">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm0 12H4V8h16v10z"/></svg>
+                    <span class="path-text">/projects/genomas/runs/annomaf/CC001BTUCH</span>
+                    <div class="path-actions">
+                        <button title="Copiar ruta"><svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
+                        <button title="Abrir carpeta"><svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 12h-2c0 3.31-2.69 6-6 6s-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8zm0-10c-4.42 0-8 3.58-8 8h2c0-3.31 2.69-6 6-6s6 2.69 6 6h2c0-4.42-3.58-8-8-8z"/></svg></button>
+                    </div>
+                </div>
+                <div class="run-info-grid">
+                    <div class="run-info-item"><h5>Run ID</h5><p>CC001BTUCH</p></div>
+                    <div class="run-info-item"><h5>Tipo de Muestra</h5><p>Somatic</p></div>
+                    <div class="run-info-item"><h5>Fecha</h5><p>2024-10-26</p></div>
+                    <div class="run-info-item"><h5>Duración</h5><p>1h 25m</p></div>
+                    <div class="run-info-item"><h5>Progreso</h5><p>100%</p></div>
+                    <div class="progress-bar col-span-2"><div class="progress-fill" style="width: 100%;"></div></div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M17 19.22H5V7.78h12zm-1-10H8V8h8v1.22zM21 7.21v12.57L17 23l4-3.22V7.21z"/></svg>
+                        Reporte
+                    </button>
+                    <button class="action-btn">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11H8V9h8v2zm-2 4H8v-2h6v2zM20 7h-2V5h-2v2h-2V5h-2v2h-2V5H8v2H6V5H4v2H2v14h20V7h-2z"/></svg>
+                        Métricas
+                    </button>
+                    <button class="action-btn">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6V6h12v8zm-2-5H8V8h8v1z"/></svg>
+                        Logs (0)
+                    </button>
+                    <button class="action-btn">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.84 5.91l-4.52 4.52-2.12-2.12c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l2.83 2.83c.39.39 1.02.39 1.41 0l5.23-5.23c.39-.39.39-1.02 0-1.41-.39-.39-1.03-.39-1.42 0z"/></svg>
+                        Re-Run
+                    </button>
+                    <button class="action-btn">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.99.78l-7.2-4.15c.19-.51.29-1.07.29-1.64s-.1-1.13-.29-1.64l7.19-4.15c.55.48 1.23.78 1.99.78 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .57.1 1.12.29 1.63L7.15 9.8c-.56-.47-1.24-.77-2.01-.77-1.65 0-3 1.34-3 3s1.34 3 3 3c.77 0 1.45-.3 2.01-.77l7.14 4.12c-.19.51-.29 1.06-.29 1.63 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        Compartir
+                    </button>
+                    <div class="run-info-item"><h5>Costo</h5><p>~125 créditos</p></div>
+                </div>
+                <div class="chip" style="background-color: var(--color-tertiary);">Sensibles</div>
+            </div>
+
+            <!-- Execution Card Example 2: In Progress -->
+            <div class="run-card card">
+                <div class="card-header-row">
+                    <span class="pipeline-badge" style="background-color: var(--color-primary);">Sarek</span>
+                    <span class="chip in-progress">En progreso</span>
+                </div>
+                <div class="path-container">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm0 12H4V8h16v10z"/></svg>
+                    <span class="path-text">/projects/genomas/runs/sarek/CC002PAGL</span>
+                    <div class="path-actions">
+                        <button title="Copiar ruta"><svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
+                        <button title="Abrir carpeta"><svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 12h-2c0 3.31-2.69 6-6 6s-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8zm0-10c-4.42 0-8 3.58-8 8h2c0-3.31 2.69-6 6-6s6 2.69 6 6h2c0-4.42-3.58-8-8-8z"/></svg></button>
+                    </div>
+                </div>
+                <div class="run-info-grid">
+                    <div class="run-info-item"><h5>Run ID</h5><p>CC002PAGL</p></div>
+                    <div class="run-info-item"><h5>Tipo de Muestra</h5><p>Germline</p></div>
+                    <div class="run-info-item"><h5>Fecha</h5><p>2024-10-25</p></div>
+                    <div class="run-info-item"><h5>Duración</h5><p>35m</p></div>
+                    <div class="run-info-item"><h5>Progreso</h5><p>45%</p></div>
+                    <div class="progress-bar col-span-2"><div class="progress-fill" style="width: 45%;"></div></div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" disabled>Reporte</button>
+                    <button class="action-btn" disabled>Métricas</button>
+                    <button class="action-btn">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6V6h12v8zm-2-5H8V8h8v1z"/></svg>
+                        Logs (0)
+                    </button>
+                    <button class="action-btn" disabled>Re-Run</button>
+                    <button class="action-btn" disabled>Compartir</button>
+                    <div class="run-info-item"><h5>Costo</h5><p>~52 créditos</p></div>
+                </div>
+            </div>
+
+            <!-- Execution Card Example 3: Failed -->
+            <div class="run-card card">
+                <div class="card-header-row">
+                    <span class="pipeline-badge" style="background-color: var(--color-tertiary);">BLAST</span>
+                    <span class="chip failure">Fallido</span>
+                </div>
+                <div class="path-container">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm0 12H4V8h16v10z"/></svg>
+                    <span class="path-text">/projects/genomas/runs/blast/CC003ABF</span>
+                    <div class="path-actions">
+                        <button title="Copiar ruta"><svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
+                        <button title="Abrir carpeta"><svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 12h-2c0 3.31-2.69 6-6 6s-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8zm0-10c-4.42 0-8 3.58-8 8h2c0-3.31 2.69-6 6-6s6 2.69 6 6h2c0-4.42-3.58-8-8-8z"/></svg></button>
+                    </div>
+                </div>
+                <div class="run-info-grid">
+                    <div class="run-info-item"><h5>Run ID</h5><p>CC003ABF</p></div>
+                    <div class="run-info-item"><h5>Tipo de Muestra</h5><p>Bacterial</p></div>
+                    <div class="run-info-item"><h5>Fecha</h5><p>2024-10-24</p></div>
+                    <div class="run-info-item"><h5>Duración</h5><p>--</p></div>
+                    <div class="run-info-item"><h5>Progreso</h5><p>10%</p></div>
+                    <div class="progress-bar col-span-2"><div class="progress-fill" style="width: 10%;"></div></div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" disabled>Reporte</button>
+                    <button class="action-btn" disabled>Métricas</button>
+                    <button class="action-btn">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6V6h12v8zm-2-5H8V8h8v1z"/></svg>
+                        Logs (1)
+                    </button>
+                    <button class="action-btn">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.84 5.91l-4.52 4.52-2.12-2.12c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l2.83 2.83c.39.39 1.02.39 1.41 0l5.23-5.23c.39-.39.39-1.02 0-1.41-.39-.39-1.03-.39-1.42 0z"/></svg>
+                        Re-Run
+                    </button>
+                    <button class="action-btn" disabled>Compartir</button>
+                    <div class="run-info-item"><h5>Costo</h5><p>~15 créditos</p></div>
+                </div>
+            </div>
+            
+        </section>
+    </div>
+</body>
+</html>
