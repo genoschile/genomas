@@ -19,6 +19,7 @@ import { UploadStatusProvider } from "@/context/UploadStatusContext";
 import { UploadForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/UploadForm";
 import { TrashContainer } from "@/app/[lang]/(genomas)/user/components/TrashContainer";
 import { ExecutorContainer } from "@/app/[lang]/(genomas)/user/components/utilsForm/ExecutorContainer";
+import { UploadStepsProvider } from "@/app/[lang]/(genomas)/user/components/utilsForm/stepUploads/UploadStepContext";
 
 export const ModalContainer = () => {
   return (
@@ -65,11 +66,13 @@ export const ModalContainer = () => {
       </Modal>
 
       <ModalUtilsUsers id={MODAL_IDS.UPLOAD_FILES} title="Upload Files">
-        <FileStagingAreaProvider>
-          <UploadStatusProvider>
-            <UploadForm />
-          </UploadStatusProvider>
-        </FileStagingAreaProvider>
+        <UploadStepsProvider>
+          <FileStagingAreaProvider>
+            <UploadStatusProvider>
+              <UploadForm />
+            </UploadStatusProvider>
+          </FileStagingAreaProvider>
+        </UploadStepsProvider>
       </ModalUtilsUsers>
 
       <ModalUtilsUsers id={MODAL_IDS.WORKFLOWS} title="Workflows">
