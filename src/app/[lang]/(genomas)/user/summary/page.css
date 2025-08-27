@@ -1,0 +1,336 @@
+/* CSS Variables for a clean and reusable color palette */
+:root {
+  --color-primary: #4a60a1; /* Deep Blue */
+  --color-secondary: #5bc0be; /* Teal/Turquoise */
+  --color-tertiary: #f7b96d; /* Orange */
+  --color-accent: #af8ceb; /* Lilac */
+  --color-success: #4ade80; /* Green */
+  --color-in-progress: #60a5fa; /* Blue */
+  --color-failure: #ef4444; /* Red */
+  --color-background: #f1f5f9; /* Light gray background */
+  --color-card-bg: #ffffff; /* White card background */
+  --color-text: #1e293b; /* Dark text */
+  --color-text-secondary: #64748b; /* Secondary text */
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --border-radius-lg: 16px;
+  --border-radius-md: 10px;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Main Dashboard Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "filters"
+    "kpis"
+    "main"
+    "footer";
+  gap: 24px;
+  min-height: 100vh;
+  padding: 32px;
+}
+
+/* General Card Styling */
+.card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Header Section */
+.header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-logo {
+  height: 40px;
+}
+
+.header-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.search-bar {
+  flex-grow: 1;
+  padding: 12px 20px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid #e2e8f0;
+  background-color: var(--color-background);
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.btn {
+  padding: 12px 20px;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-card-bg);
+}
+.btn-primary:hover {
+  background-color: #3b508f;
+}
+
+/* Filters Section */
+.filters {
+  grid-area: filters;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-chip,
+.filter-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: var(--color-card-bg);
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-chip.active,
+.filter-chip:hover {
+  background-color: var(--color-primary);
+  color: var(--color-card-bg);
+  border-color: var(--color-primary);
+}
+
+/* KPIs Section */
+.kpis {
+  grid-area: kpis;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.kpi-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.kpi-card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+/* Main Content Grid */
+.main {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Execution Card */
+.run-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pipeline-badge {
+  background-color: var(--color-secondary);
+  color: var(--color-card-bg);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.run-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.run-info-item h5 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.run-info-item p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.chip {
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+.chip.success {
+  background-color: var(--color-success);
+}
+.chip.in-progress {
+  background-color: var(--color-in-progress);
+}
+.chip.failure {
+  background-color: var(--color-failure);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--color-secondary);
+  transition: width 0.5s ease-in-out;
+}
+
+.path-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-md);
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-family: monospace;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.path-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.path-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.action-btn {
+  padding: 8px 12px;
+  border-radius: var(--border-radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: #f1f5f9;
+  color: var(--color-text-secondary);
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-card-bg);
+  border-color: var(--color-primary);
+}
+
+/* Utility Classes for Icons */
+.icon-sm {
+  width: 18px;
+  height: 18px;
+}
+
+/* Footer Section */
+.footer {
+  grid-area: footer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    padding: 16px;
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header-controls {
+    width: 100%;
+    margin-top: 16px;
+  }
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+}
