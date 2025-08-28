@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import { FaChevronRight } from "react-icons/fa";
-import { DropdownWorkspace } from "@/components/sidebar/components/DropdownWorkspace";
 import { useCurrentProject } from "@/context/currentProject";
 import { SiOpenproject } from "react-icons/si";
 
@@ -79,16 +78,21 @@ const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ isExpanded }) => {
           <SiOpenproject className="sidebar__icon" />
         )}
       </button>
-
-      {isOpen && (
-        <DropdownWorkspace
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          dropdownRef={dropdownRef as React.RefObject<HTMLDivElement>}
-        />
-      )}
     </header>
   );
 };
 
-export default HeaderSidebar;
+const HeaderSidebarV2 = ({ isExpanded }: { isExpanded: boolean }) => {
+  return (
+    <header
+      className="sidebar__header"
+      data-expanded={isExpanded ? "true" : "false"}
+    >
+      <button className="sidebar__header--button">
+        <SiOpenproject className="sidebar__icon" />
+      </button>
+    </header>
+  );
+};
+
+export default HeaderSidebarV2;

@@ -5,19 +5,23 @@ import "./currentListProjectsSelect.css";
 
 export const CurrentListProjectsSelect = () => {
   const { projects } = useProjectContext();
-  const { setCurrentProject } = useCurrentProject();
+  const { ChangeCurrentProject } = useCurrentProject();
 
   if (!projects || projects.length === 0) {
     return <p className="no-projects-message">No projects available.</p>;
   }
 
   return (
-    <ul role="menu" aria-label="project List" className="dropdown-projects--list">
+    <ul
+      role="menu"
+      aria-label="project List"
+      className="dropdown-projects--list"
+    >
       {projects.map((project, index) => (
         <li key={index} className="dropdown-item">
           <button
             className="dropdown-link"
-            onClick={() => setCurrentProject(project)}
+            onClick={() => ChangeCurrentProject(project)}
           >
             {project.name}
           </button>

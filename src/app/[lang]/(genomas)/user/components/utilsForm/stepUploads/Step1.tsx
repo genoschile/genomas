@@ -1,14 +1,14 @@
-import FileSelector from "@/components/fileUpload/FileSelector";
-import { ListUploadedFiles } from "../../../upload-files/components/ListUploadedFiles";
+import { CurrentListProjectsSelect } from "./components/CurrentListProjectsSelect";
+import "./components/dropdownWorkspace.css";
 
 export const UploadStep1 = () => {
   return (
-    <div>
-      <div className="upload-files--init">
-        <FileSelector />
+    <>
+      <h2>What project are you going to upload your files to?</h2>
+      <div className="dropdown-content">
+        <CurrentListProjectsSelect />
       </div>
-      <ListUploadedFiles />
-    </div>
+    </>
   );
 };
 

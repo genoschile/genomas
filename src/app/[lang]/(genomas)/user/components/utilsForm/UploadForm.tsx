@@ -25,7 +25,7 @@ const Step3 = dynamic(() => import("./stepUploads/Step3"), {
 
 export const UploadForm = () => {
   const { handleSubmit } = useForm<UploadInterfaceForm>();
-  const { currentStep } = useUploadSteps();
+  const { currentStep, nextStep, previousStep } = useUploadSteps();
 
   const onSubmit: SubmitHandler<UploadInterfaceForm> = async (data) => {
     console.log(data);
@@ -42,6 +42,10 @@ export const UploadForm = () => {
           {currentStep === 3 && <Step3 />}
         </Suspense>
       </form>
+      <nav>
+        <button onClick={previousStep}>back</button>
+        <button onClick={nextStep}>Next</button>
+      </nav>
       <FooterModalUsersOptions />
     </div>
   );

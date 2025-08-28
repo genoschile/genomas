@@ -7,6 +7,7 @@ import { createContext, useContext, useState, ReactNode } from "react";
 interface CurrentProjectContextType {
   currentProject: IProject | null;
   setCurrentProject: (project: IProject | null) => void;
+  ChangeCurrentProject: (project: IProject | null) => void;
 }
 
 const CurrentProjectContext = createContext<
@@ -20,9 +21,13 @@ export const CurrentProjectProvider = ({
 }) => {
   const [currentProject, setCurrentProject] = useState<IProject | null>(null);
 
+  const ChangeCurrentProject = (project: IProject | null) => {
+    setCurrentProject(project);
+  };
+
   return (
     <CurrentProjectContext.Provider
-      value={{ currentProject, setCurrentProject }}
+      value={{ currentProject, setCurrentProject, ChangeCurrentProject }}
     >
       {children}
     </CurrentProjectContext.Provider>

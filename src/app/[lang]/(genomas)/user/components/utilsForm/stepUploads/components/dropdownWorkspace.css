@@ -1,0 +1,10 @@
+.dropdown-content {
+  padding: 0.4rem;
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-block-size: 220px;
+  max-inline-size: 400px;
+}

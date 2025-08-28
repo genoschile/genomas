@@ -3,6 +3,9 @@
   block-size: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: var(--card-background);
+  padding: 0.2rem;
+  border-radius: 0.3rem;
 
   & li {
     padding: 0.2rem;
