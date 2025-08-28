@@ -2,7 +2,6 @@
   --second-color: var(--primary-color);
 }
 
-/* Indicador de progreso */
 .signup__progress {
   margin: 0 auto;
   display: flex;
@@ -30,7 +29,6 @@
   transition: background-color 0.3s;
 }
 
-/* Círculos de los pasos */
 .signup__progress-step {
   width: 32px;
   height: 32px;
@@ -46,7 +44,7 @@
   transition: background-color 0.3s;
   z-index: 2;
 }
-/* Contenedor del step + línea */
+
 .signup__progress-item {
   display: flex;
   align-items: center;
@@ -57,7 +55,6 @@
   background-color: var(--second-color);
 }
 
-/* Líneas de conexión entre pasos */
 .signup__progress-line {
   flex: 1;
   height: 4px;

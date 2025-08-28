@@ -7,6 +7,7 @@ import {
   useUploadSteps,
 } from "./stepUploads/UploadStepContext";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { StepUploadProgress } from "./StepUploadProgress";
 
 const Step1 = dynamic(() => import("./stepUploads/Step1"), {
   loading: () => <div className="signup__loading">Loading...</div>,
@@ -33,6 +34,8 @@ export const UploadForm = () => {
 
   return (
     <div className="upload-files--container">
+      <StepUploadProgress />
+
       <form className="signup__step" onSubmit={handleSubmit(onSubmit)}>
         <Suspense fallback={<div className="signup__loading">Loading...</div>}>
           {currentStep === 1 && <Step1 />}

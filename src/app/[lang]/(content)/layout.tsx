@@ -1,4 +1,5 @@
 import "./layout.css";
+import "./style.css";
 import { FooterLanding } from "@/components/footer/FooterLanding";
 import HeaderLanding from "@/components/headers/HeaderLanding";
 import { unstable_ViewTransition as ViewTransition } from "react";
