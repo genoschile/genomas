@@ -1,0 +1,42 @@
+.files-view {
+  inline-size: 100%;
+}
+
+.file-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+
+    +hr {
+        margin-block-start: 1rem;
+    }
+}
+
+.files-actions {
+  display: flex;
+
+  & > :first-child {
+    margin-right: auto;
+  }
+
+  button {
+    align-items: center;
+    padding: 0.9rem 0.9rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    color: var(--button-blue);
+    font-size: 1.2rem;
+
+    & svg {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+    &:hover {
+      
+    }
+  }
+}

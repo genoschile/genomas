@@ -1,7 +1,6 @@
 .modal {
   inset: 0;
   margin: auto;
-  width: min(90%, max-content);
   padding-block: 0.5rem;
   padding-inline: 1.5rem;
   border-radius: 10px;
@@ -11,6 +10,8 @@
   transition-behavior: allow-discrete;
   border: 1px solid rgba(0, 0, 0, 0.2);
   z-index: 1000;
+
+  max-inline-size: fit-content;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.4);

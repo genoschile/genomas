@@ -9,7 +9,7 @@ type ListProps = ComponentPropsWithoutRef<"ul">;
 type ListItemProps = ComponentPropsWithoutRef<"li">;
 type AnchorProps = ComponentPropsWithoutRef<"a">;
 type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
-
+ 
 const components = {
   h1: (props: HeadingProps) => (
     <h1
@@ -20,7 +20,7 @@ const components = {
         fontSize: "2.25rem",
         paddingTop: "3rem",
         marginBottom: 0,
-        blockSize: "fit-content"
+        blockSize: "fit-content",
       }}
     />
   ),
@@ -133,9 +133,9 @@ const components = {
         marginLeft: "0.075em",
         borderLeftWidth: "3px",
         borderLeftStyle: "solid",
-        borderLeftColor: "#d1d5db", // gray-300
-        paddingLeft: "1rem", // pl-4
-        color: "#374151", // text-gray-700
+        borderLeftColor: "#d1d5db",
+        paddingLeft: "1rem",
+        color: "#374151",
       }}
       {...props}
     />

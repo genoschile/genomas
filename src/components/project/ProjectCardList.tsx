@@ -13,14 +13,12 @@ import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
 
 /* styles */
 import "./projectCardList.css";
-import { useFilesContext } from "./context/FilesContext";
+import { FilesViewsList } from "./FilesViewList";
 
 export const ProjectCardList = () => {
-  const { projects, isLoading, ChangeSelectedProjectId, selectedProjectId } = useProjectContext();
+  const { projects, isLoading, selectedProjectId } = useProjectContext();
   const { selectedWorkspaceId } = useUserWorkspacesContext();
   const [currentPage, setCurrentPage] = useState(1);
-
-  const { files, isLoadingFiles, clearFiles } = useFilesContext();
 
   const postsPerPage = 6;
 
@@ -30,35 +28,7 @@ export const ProjectCardList = () => {
 
   // Si hay un proyecto seleccionado, mostramos sus archivos
   if (selectedProjectId) {
-    return (
-      <div className="files-view">
-        <button
-          onClick={() => {
-            ChangeSelectedProjectId(null);
-            clearFiles();
-          }}
-          className="back-button"
-        >
-          ← Volver a proyectos
-        </button>
-
-        <h2>Archivos del proyecto</h2>
-
-        {isLoadingFiles ? (
-          <p>Cargando archivos...</p>
-        ) : files.length === 0 ? (
-          <p>No hay archivos en este proyecto.</p>
-        ) : (
-          <ul className="files-list">
-            {files.map((file) => (
-              <li key={file.id}>
-                <strong>{file.name}</strong> — {file.size} KB
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    );
+    return <FilesViewsList />;
   }
 
   if (!projects || projects.length === 0) {

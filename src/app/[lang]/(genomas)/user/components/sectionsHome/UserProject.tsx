@@ -12,8 +12,6 @@ import { FilesProjectSelected } from "../FilesProjectSelected";
 import { useState } from "react";
 import { IFile } from "@/lib/types/files";
 import "./userProject.css";
-import { LuFileInput, LuFileOutput } from "react-icons/lu";
-import { HiOutlineDocumentReport } from "react-icons/hi";
 import { FilesTypeSwift } from "./FilesTypeSwift";
 
 export const UserProject = () => {
@@ -43,8 +41,6 @@ export const UserProject = () => {
         title="Projects"
         navButtons={navButtonsUserProject}
       />
-
-      <FilesTypeSwift />
 
       {/* <div className="project__home--header">
         <ProjectOptionsUser />
