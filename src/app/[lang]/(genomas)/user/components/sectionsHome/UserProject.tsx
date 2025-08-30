@@ -12,7 +12,6 @@ import { FilesProjectSelected } from "../FilesProjectSelected";
 import { useState } from "react";
 import { IFile } from "@/lib/types/files";
 import "./userProject.css";
-import { FilesTypeSwift } from "./FilesTypeSwift";
 
 export const UserProject = () => {
   const { openModal } = useModalContext();

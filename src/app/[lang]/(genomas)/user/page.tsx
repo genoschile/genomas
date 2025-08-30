@@ -2,8 +2,6 @@
 
 /* components */
 import { SidebarInfoProjectSelect } from "@/components/sidebar/sidebarInfoProjectSelect/SidebarInfoProjectSelect";
-import { FilesProject } from "./components/sectionsHome/FilesProject";
-import { InputFilesProjects } from "./components/sectionsHome/InputFilesProjects";
 import { UserProject } from "./components/sectionsHome/UserProject";
 
 /* style */

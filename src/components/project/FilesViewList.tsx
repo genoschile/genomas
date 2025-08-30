@@ -12,20 +12,21 @@ export const FilesViewsList = () => {
   return (
     <div className="files-view">
       <div className="files-actions">
-        <button
-          onClick={() => {
-            ChangeSelectedProjectId(null);
-            clearFiles();
-          }}
-          className="back-button"
-        >
-          <IoArrowBackCircleSharp />
-        </button>
-
+        <div>
+          <button
+            onClick={() => {
+              ChangeSelectedProjectId(null);
+              clearFiles();
+            }}
+            className="back-button"
+          >
+            <IoArrowBackCircleSharp />
+          </button>
+          <h2 className="file-title">Archivos del proyecto</h2>
+        </div>
         <FilesTypeSwift />
       </div>
 
-      <h2 className="file-title">Archivos del proyecto</h2>
       <hr />
 
       {isLoadingFiles ? (
