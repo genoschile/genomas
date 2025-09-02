@@ -1,17 +1,29 @@
 import * as z from "zod/v4";
 
-import { createDocument } from "zod-openapi";
+import { createDocument, ZodOpenApiOperationObject } from "zod-openapi";
 
-const jobId = z.string().meta({
-  description: "A unique identifier for a job",
-  example: "12345",
-  id: "jobId",
-});
-
-const title = z.string().meta({
-  description: "Job title",
-  example: "My job",
-});
+export const putJob: ZodOpenApiOperationObject = {
+  requestParams: {
+    path: z.object({ jobId: z.string() }),
+  },
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: z.object({ title: z.string() }),
+      },
+    },
+  },
+  responses: {
+    "200": {
+      description: "200 OK",
+      content: {
+        "application/json": {
+          schema: z.object({ jobId: z.string(), title: z.string() }),
+        },
+      },
+    },
+  },
+};
 
 export const openApiDoc = createDocument({
   openapi: "3.1.0",
@@ -21,22 +33,7 @@ export const openApiDoc = createDocument({
   },
   paths: {
     "/jobs/{jobId}": {
-      put: {
-        requestParams: { path: z.object({ jobId }) },
-        requestBody: {
-          content: {
-            "application/json": { schema: z.object({ title }) },
-          },
-        },
-        responses: {
-          "200": {
-            description: "200 OK",
-            content: {
-              "application/json": { schema: z.object({ jobId, title }) },
-            },
-          },
-        },
-      },
+      put: putJob,
     },
   },
 });
