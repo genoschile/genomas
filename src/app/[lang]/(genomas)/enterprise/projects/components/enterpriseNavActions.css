@@ -20,7 +20,7 @@
       cursor: pointer;
 
       &:hover {
-        background-color: var(--secondary-hover-color);
+        background-color: var(--secondary-hover-color-enterprise);
       }
     }
   }

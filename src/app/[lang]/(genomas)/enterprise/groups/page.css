@@ -20,13 +20,13 @@
     border-radius: 9999px;
     transition: background-color 0.2s ease-in-out, transform 0.4s ease-in-out;
 
-    color: var(--text-color);
-    background: var(--primary-color);
+    color: var(--text-color-enterprise);
+    background: var(--primary-color-enterprise);
 
     margin-inline-start: auto;
 
     &:hover {
-      background-color: var(--secondary-hover-color);
+      background-color: var(--secondary-hover-color-enterprise);
     }
   }
 
@@ -76,7 +76,7 @@
   padding-inline: 0.5rem;
   padding-block: 0.375rem;
 
-  background-color: var(--primary-color);
+  background-color: var(--primary-color-enterprise);
 
   gap: 0.5rem;
 
@@ -99,14 +99,14 @@
 
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 
-      background-color: var(--secondary-color);
+      background-color: var(--secondary-color-enterprise);
 
-      color: var(--text-color);
+      color: var(--text-color-enterprise);
     }
   }
 
   input {
-    color: var(--text-color);
+    color: var(--text-color-enterprise);
     inline-size: 100%;
     background-color: transparent;
     border: 1px solid transparent;
@@ -115,17 +115,17 @@
     outline: 1px solid transparent;
 
     &::placeholder {
-      color: var(--subheading-color);
+      color: var(--subheading-color-enterprise);
     }
 
     &:is(:focus-visible, :focus, :active) {
       background-color: var(--secondary-hover-color);
       border-radius: 0.25rem;
-      outline: 1px solid var(--secondary-hover-color);
+      outline: 1px solid var(--secondary-hover-color-enterprise);
     }
 
     &:focus {
-      outline: 1px solid var(--secondary-hover-color);
+      outline: 1px solid var(--secondary-hover-color-enterprise);
     }
   }
 }

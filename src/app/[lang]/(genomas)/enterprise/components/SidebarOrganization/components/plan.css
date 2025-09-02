@@ -9,7 +9,7 @@
 
   > div {
     padding-block: 0.5rem;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-enterprise);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -31,14 +31,14 @@
       place-content: center;
 
       &:hover {
-        background-color: var(--secondary-hover-color);
+        background-color: var(--secondary-hover-color-enterprise);
       }
     }
 
     > div {
       p {
         font-weight: bold;
-        color: var(--text-color);
+        color: var(--text-color-enterprise);
       }
     }
   }

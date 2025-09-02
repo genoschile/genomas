@@ -2,7 +2,7 @@
 
 .typing-area {
   padding: 1rem;
-  background: var(--primary-color);
+  background: var(--primary-color-enterprise);
   display: block;
   inline-size: 100%;
   flex: 0;
@@ -24,16 +24,16 @@
   outline: none;
   resize: none;
   font-size: 1rem;
-  color: var(--text-color);
+  color: var(--text-color-enterprise);
   padding: 1.1rem 4rem 1.1rem 1.5rem;
   border-radius: 100px;
-  background: var(--secondary-color);
+  background: var(--secondary-color-enterprise);
 }
 .typing-form .typing-input:focus {
-  background: var(--secondary-hover-color);
+  background: var(--secondary-hover-color-enterprise);
 }
 .typing-form .typing-input::placeholder {
-  color: var(--placeholder-color);
+  color: var(--placeholder-color-enterprise);
 }
 .typing-area .icon {
   width: 56px;
@@ -43,14 +43,14 @@
   border-radius: 50%;
   display: flex;
   font-size: 1.4rem;
-  color: var(--text-color);
+  color: var(--text-color-enterprise);
   align-items: center;
   justify-content: center;
-  background: var(--secondary-color);
+  background: var(--secondary-color-enterprise);
   transition: 0.2s ease;
 }
 .typing-area .icon:hover {
-  background: var(--secondary-hover-color);
+  background: var(--secondary-hover-color-enterprise);
 }
 .typing-form #send-message-button {
   position: absolute;
@@ -68,7 +68,7 @@
   text-align: center;
   font-size: 0.85rem;
   margin-top: 1rem;
-  color: var(--placeholder-color);
+  color: var(--placeholder-color-enterprise);
 }
 
 @media (max-width: 768px) {
@@ -92,7 +92,7 @@
 }
 
 .eyes-attention {
-  outline: 2px solid var(--text-color);
+  outline: 2px solid var(--text-color-enterprise);
   animation: outline-dance 1.2s infinite;
 }
 

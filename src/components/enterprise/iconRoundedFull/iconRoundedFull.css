@@ -6,6 +6,6 @@
   align-items: center;
   border-radius: 50%;
   justify-content: center;
-  color: var(--text-color);
-  background: var(--primary-color);
+  color: var(--text-color-enterprise);
+  background: var(--primary-color-enterprise);
 }

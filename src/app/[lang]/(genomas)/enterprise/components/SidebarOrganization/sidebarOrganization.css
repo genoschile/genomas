@@ -3,8 +3,8 @@
   max-inline-size: 250px;
   inline-size: 100%;
   border: 1px solid transparent;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
+  background-color: var(--secondary-color-enterprise);
+  color: var(--text-color-enterprise);
 
   position: sticky;
   top: 0;
@@ -28,10 +28,8 @@
   flex-direction: column;
 }
 
-/* Oculta el sidebar en móviles y lo convierte en overlay */
 @media (max-width: 640px) {
   .sidebar-org {
-    /* lo saca de la grid y flujo */
     grid-area: none;
     position: fixed;
     top: 0;

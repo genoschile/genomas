@@ -1,9 +1,9 @@
 .container__list-workspaces-item {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color-enterprise);
 
-  color: var(--text-color);
+  color: var(--text-color-enterprise);
   border-radius: 0.75rem;
-  box-shadow: 0 0 0.5rem var(--secondary-color);
+  box-shadow: 0 0 0.5rem var(--secondary-color-enterprise);
 
   display: block;
 
@@ -12,7 +12,6 @@
   font-size: 1rem;
 
   inline-size: 100%;
-
 
   > div {
     padding: 0.75rem;
@@ -38,7 +37,7 @@
     align-items: center;
 
     > span {
-      background-color: var(--secondary-color);
+      background-color: var(--secondary-color-enterprise);
 
       &:hover {
         cursor: pointer;
@@ -48,7 +47,7 @@
   }
 
   p {
-    color: var(--subheading-color);
+    color: var(--subheading-color-enterprise);
   }
 }
 
@@ -77,8 +76,8 @@
 
     button {
       max-inline-size: fit-content;
-      background-color: var(--secondary-color);
-      color: var(--text-color);
+      background-color: var(--secondary-color-enterprise);
+      color: var(--text-color-enterprise);
       border-radius: 0.75rem;
       padding: 0.5rem 1rem;
       border: none;
@@ -86,7 +85,7 @@
       transition: background-color 0.3s;
 
       &:hover {
-        background-color: var(--secondary-hover-color);
+        background-color: var(--secondary-hover-color-enterprise);
       }
     }
   }

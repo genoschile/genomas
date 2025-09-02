@@ -1,7 +1,7 @@
 .default-container-enterprise {
   display: flex;
 
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-color-enterprise);
   border-radius: 0.75rem;
 
   align-items: center;
@@ -15,6 +15,6 @@
   margin: 0 auto;
   margin-block-end: 2rem;
 
-  color: var(--text-color);
-  fill: var(--text-color);
+  color: var(--text-color-enterprise);
+  fill: var(--text-color-enterprise);
 }

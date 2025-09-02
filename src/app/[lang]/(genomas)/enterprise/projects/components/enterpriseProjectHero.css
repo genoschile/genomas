@@ -11,12 +11,12 @@
     .custom-select {
       position: relative;
 
-      background-color: var(--primary-color);
-      color: var(--text-color);
+      background-color: var(--primary-color-enterprise);
+      color: var(--text-color-enterprise);
       border-radius: 0.75rem;
 
       &:hover {
-        background-color: var(--secondary-hover-color);
+        background-color: var(--secondary-hover-color-enterprise);
       }
 
       button {
@@ -31,7 +31,7 @@
       ul {
         position: absolute;
         list-style: none;
-        background-color: var(--secondary-color);
+        background-color: var(--secondary-color-enterprise);
         top: 110%;
         left: 0;
         right: 0;
@@ -39,14 +39,14 @@
         z-index: 10;
         overflow-y: auto;
 
-        scrollbar-color: var(--primary-color) var(--secondary-color);
+        scrollbar-color: var(--primary-color-enterprise) var(--secondary-color-enterprise);
 
         max-block-size: 150px;
 
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 
         &:has(:hover) {
-          outline: 1px solid var(--secondary-color);
+          outline: 1px solid var(--secondary-color-enterprise);
           outline-offset: -1px;
         }
 
@@ -56,7 +56,7 @@
           cursor: pointer;
 
           &:hover {
-            background-color: var(--secondary-hover-color);
+            background-color: var(--secondary-hover-color-enterprise);
           }
         }
       }

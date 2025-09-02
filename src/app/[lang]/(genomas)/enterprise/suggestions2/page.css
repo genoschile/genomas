@@ -56,7 +56,7 @@
   position: fixed;
   bottom: 0;
   padding: 1rem;
-  background: var(--primary-color);
+  background: var(--primary-color-enterprise);
   width: 100%;
   z-index: 1;
   left: 50%;

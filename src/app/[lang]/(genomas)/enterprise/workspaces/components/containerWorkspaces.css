@@ -1,7 +1,7 @@
 .container__workspaces {
   display: flex;
 
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-color-enterprise);
   border-radius: 0.75rem;
 
   align-items: center;

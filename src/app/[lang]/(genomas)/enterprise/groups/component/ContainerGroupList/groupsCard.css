@@ -4,11 +4,11 @@
   align-items: center;
   aspect-ratio: 16/9;
   font-size: 0.9rem;
-  color: var(--text-color);
+  color: var(--text-color-enterprise);
   border-radius: 0.75rem;
   flex-direction: column;
 
-  background-color: var(--primary-color);
+  background-color: var(--primary-color-enterprise);
 
   inline-size: 100%;
   max-inline-size: 300px;
@@ -75,7 +75,7 @@
 
     padding-block: 0.25rem;
 
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-enterprise);
 
     flex-direction: column;
 
@@ -94,7 +94,7 @@
       }
 
       > span {
-        background-color: var(--secondary-color);
+        background-color: var(--secondary-color-enterprise);
       }
 
       & > *:nth-child(1) {
@@ -106,7 +106,7 @@
       font-size: 0.8rem;
       align-self: flex-start;
       margin-block-end: 1.2rem;
-      color: var(--subheading-color);
+      color: var(--subheading-color-enterprise);
     }
   }
 
@@ -114,7 +114,7 @@
     padding-inline: 0.5rem;
     padding-block: 0.25rem;
     border-radius: 0.75rem;
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-color-enterprise);
     inline-size: fit-content;
     font-size: 1rem;
   }
@@ -164,8 +164,8 @@
 
       &.groupsCardRolesList {
         span {
-          background-color: var(--secondary-color);
-          color: var(--text-color);
+          background-color: var(--secondary-color-enterprise);
+          color: var(--text-color-enterprise);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -179,11 +179,11 @@
       }
 
       &.groupsCardMembersList {
-        background-color: var(--primary-color);
+        background-color: var(--primary-color-enterprise);
       }
 
       p {
-        color: var(--subheading-color);
+        color: var(--subheading-color-enterprise);
       }
 
       li {
@@ -194,8 +194,8 @@
           width: 2rem;
           aspect-ratio: 1/1;
           border-radius: 50%;
-          background-color: var(--secondary-color);
-          color: var(--text-color);
+          background-color: var(--secondary-color-enterprise);
+          color: var(--text-color-enterprise);
           display: flex;
           align-items: center;
           justify-content: center;

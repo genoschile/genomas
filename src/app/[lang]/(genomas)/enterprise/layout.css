@@ -1,25 +1,25 @@
 :root {
   /* Dark mode colors */
-  --text-color: #e3e3e3;
-  --subheading-color: #828282;
-  --placeholder-color: #a6a6a6;
-  --primary-color: #242424;
-  --secondary-color: #383838;
-  --secondary-hover-color: #444;
+  --text-color-enterprise: #e3e3e3;
+  --subheading-color-enterprise: #828282;
+  --placeholder-color-enterprise: #a6a6a6;
+  --primary-color-enterprise: #242424;
+  --secondary-color-enterprise: #383838cd;
+  --secondary-hover-color-enterprise: #444;
 
   --bg-style-color: #73e3db;
 }
 
 .light_mode {
   /* Light mode colors */
-  --text-color: #222;
-  --subheading-color: #a0a0a0;
-  --placeholder-color: #6c6c6c;
-  --primary-color: #fff;
-  --secondary-color: #e9eef6;
-  --secondary-hover-color: #dbe1ea;
+  --text-color-enterprise: #222;
+  --subheading-color-enterprise: #a0a0a0;
+  --placeholder-color-enterprise: #6c6c6c;
+  --primary-color-enterprise: #fff;
+  --secondary-color-enterprise: #e9eef6;
+  --secondary-hover-color-enterprise: #dbe1ea;
 }
 
 .enterpriselayout {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-enterprise);
 }

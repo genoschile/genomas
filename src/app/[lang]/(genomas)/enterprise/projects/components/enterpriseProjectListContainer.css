@@ -10,8 +10,8 @@
   .table-row {
     /* display: grid;
     grid-template-columns: repeat(4, 1fr); */
-    background: var(--primary-color);
-    color: var(--text-color);
+    background: var(--primary-color-enterprise);
+    color: var(--text-color-enterprise);
     padding: 0.75rem;
     border-radius: 0.5rem;
     list-style: none;
@@ -30,6 +30,6 @@
 
   .table-header {
     font-weight: bold;
-    background: var(--secondary-color);
+    background: var(--secondary-color-enterprise);
   }
 }

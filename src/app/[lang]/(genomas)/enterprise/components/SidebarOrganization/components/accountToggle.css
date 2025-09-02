@@ -18,13 +18,13 @@
     gap: 0.5rem;
     inline-size: 100%;
     border: 1px solid transparent;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-enterprise);
 
     > span {
       position: absolute;
       right: 0.5rem;
       top: 50%;
-      background-color: var(--secondary-color);
+      background-color: var(--secondary-color-enterprise);
 
       display: grid;
       place-content: center;
@@ -37,13 +37,13 @@
 
       .icon {
         font-size: 1rem;
-        color: var(--text-color);
-        fill: var(--text-color);
+        color: var(--text-color-enterprise);
+        fill: var(--text-color-enterprise);
       }
 
       &:hover {
-        background-color: var(--secondary-hover-color);
-        outline: 2px solid var(--secondary-hover-color);
+        background-color: var(--secondary-hover-color-enterprise);
+        outline: 2px solid var(--secondary-hover-color-enterprise);
         outline-offset: 2px;
       }
     }
@@ -72,7 +72,7 @@
       & > *:last-child {
         font-size: 0.75rem;
         display: block;
-        color: var(--subheading-color);
+        color: var(--subheading-color-enterprise);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

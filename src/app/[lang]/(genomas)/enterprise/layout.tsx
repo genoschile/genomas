@@ -13,10 +13,10 @@ import { ModalProvider } from "@/context/ModalsProject";
 import { GroupsProvider } from "@/context/enterprise/GroupsEnterpriseContext";
 
 /* components */
-import { SidebarOrganization } from "@/components/sidebar/SidebarOrganization/SidebarOrganization";
-import { TopBar } from "@/components/sidebar/SidebarOrganization/components/TopBar";
+import { SidebarOrganization } from "@/app/[lang]/(genomas)/enterprise/components/SidebarOrganization/SidebarOrganization";
+import { TopBar } from "@/app/[lang]/(genomas)/enterprise/components/SidebarOrganization/components/TopBar";
 import { ModalContainer } from "@/components/modals/ModalContainer";
-import { CommandMenu } from "@/components/sidebar/SidebarOrganization/components/Search";
+import { CommandMenu } from "@/app/[lang]/(genomas)/enterprise/components/SidebarOrganization/components/Search";
 
 /* hooks */
 import { Suspense, useState } from "react";
