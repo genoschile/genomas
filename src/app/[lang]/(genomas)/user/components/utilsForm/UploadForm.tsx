@@ -43,6 +43,8 @@ export const UploadForm = () => {
           {currentStep === 2 && <Step2 />}
 
           {currentStep === 3 && <Step3 />}
+
+          {currentStep === 4 && <Step4 />}
         </Suspense>
       </form>
       <nav>
@@ -52,4 +54,8 @@ export const UploadForm = () => {
       <FooterModalUsersOptions />
     </div>
   );
+};
+
+export const Step4 = () => {
+  return <div>Step 4: Review and Submit</div>;
 };

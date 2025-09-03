@@ -1,11 +1,11 @@
-import { useCurrentProject } from "@/context/currentProject";
 import { useProjectContext } from "@/hooks/useProjectContext";
 
 import "./currentListProjectsSelect.css";
+import { useUploadSteps } from "../UploadStepContext";
 
 export const CurrentListProjectsSelect = () => {
   const { projects } = useProjectContext();
-  const { ChangeCurrentProject } = useCurrentProject();
+  const { ChangeCurrentProject } = useUploadSteps();
 
   if (!projects || projects.length === 0) {
     return <p className="no-projects-message">No projects available.</p>;

@@ -39,20 +39,13 @@ const ExampleResFastAPI = {
 };
 
 export const FilesProject = () => {
-  const { openModal } = useModalContext();
   const { projects } = useProjectContext();
   const { addTask, updateTaskStatus } = useProcessContext();
 
-  const [currentProject, setCurrentProject] = useState<{
-    id: string;
-    name: string;
-  } | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
   const [files, setFiles] = useState<IFile[]>([]);
 
   const [taskState, setTaskState] = useState<string | null>(null);
-
-
 
   const handleClick = async (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -142,9 +135,7 @@ export const FilesProject = () => {
         id="project-files-form"
         onSubmit={handleClick}
         className="project__files--form"
-      >
-
-      </form>
+      ></form>
       {taskState && (
         <strong
           style={{

@@ -1,5 +1,5 @@
 import FileSelector from "@/components/fileUpload/FileSelector";
-import { ListUploadedFiles } from "../../../upload-files/components/ListUploadedFiles";
+import { ListUploadedFiles } from "./components/ListUploadedFiles";
 
 export const UploadStep2 = () => {
   return (

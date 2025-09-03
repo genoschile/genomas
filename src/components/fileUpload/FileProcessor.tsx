@@ -14,10 +14,10 @@ import {
   FaTimesCircle,
   FaUpload,
 } from "react-icons/fa";
-import { useCurrentProject } from "@/context/currentProject";
 import axios from "axios";
 import { routes } from "@/lib/api/routes";
 import { useSessionContext } from "@/hooks/useSession";
+import { useUploadSteps } from "@/app/[lang]/(genomas)/user/components/utilsForm/stepUploads/UploadStepContext";
 
 export interface resUpload_DB {
   success: boolean;
@@ -114,7 +114,7 @@ export default function FileProcessor() {
     }
   };
 
-  const { currentProject } = useCurrentProject();
+  const { currentProject } = useUploadSteps();
 
   const handleStageToDatabase = async () => {
     if (!currentProject) {

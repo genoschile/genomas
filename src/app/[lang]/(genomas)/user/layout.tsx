@@ -2,7 +2,6 @@
 
 /* context */
 import { ProjectProvider } from "@/context/ProjectContext";
-import { CurrentProjectProvider } from "@/context/currentProject";
 import { UserWorkspacesProvider } from "@/context/userWorkspacesContext";
 import { ProcessContextProvider } from "@/context/ProcessContext";
 
@@ -23,21 +22,19 @@ export default function userLayout({
 }) {
   return (
     <ProcessContextProvider>
-      <CurrentProjectProvider>
-        <UserWorkspacesProvider>
-          <ProjectProvider>
-            <ModalContainer />
-            <FilesProvider>
-              <div className="userWorkspace--container">
-                <HeaderUserWorkspace className="wu-header" />
-                <SidebarUser className="wu-aside" />
-                <main className="wu-main">{children}</main>
-                <FooterLanding className="wu-footer" />
-              </div>
-            </FilesProvider>
-          </ProjectProvider>
-        </UserWorkspacesProvider>
-      </CurrentProjectProvider>
+      <UserWorkspacesProvider>
+        <ProjectProvider>
+          <ModalContainer />
+          <FilesProvider>
+            <div className="userWorkspace--container">
+              <HeaderUserWorkspace className="wu-header" />
+              <SidebarUser className="wu-aside" />
+              <main className="wu-main">{children}</main>
+              <FooterLanding className="wu-footer" />
+            </div>
+          </FilesProvider>
+        </ProjectProvider>
+      </UserWorkspacesProvider>
     </ProcessContextProvider>
   );
 }
