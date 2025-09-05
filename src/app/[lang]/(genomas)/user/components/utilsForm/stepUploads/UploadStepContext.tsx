@@ -3,6 +3,7 @@ import { createContext, useContext, useState, ReactNode } from "react";
 import { useForm } from "react-hook-form";
 
 export interface UploadForm {
+  currentProjectId: string;
   files: File[];
 }
 

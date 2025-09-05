@@ -5,11 +5,17 @@ import { useUploadSteps } from "../UploadStepContext";
 
 export const CurrentListProjectsSelect = () => {
   const { projects } = useProjectContext();
-  const { ChangeCurrentProject } = useUploadSteps();
 
   if (!projects || projects.length === 0) {
     return <p className="no-projects-message">No projects available.</p>;
   }
+
+  const { ChangeCurrentProject, setValue } = useUploadSteps();
+
+  const handleSelectProject = (project: any) => {
+    ChangeCurrentProject(project);
+    setValue("currentProjectId", project.id, { shouldValidate: true });
+  };
 
   return (
     <ul
@@ -21,7 +27,7 @@ export const CurrentListProjectsSelect = () => {
         <li key={index} className="dropdown-item">
           <button
             className="dropdown-link"
-            onClick={() => ChangeCurrentProject(project)}
+            onClick={() => handleSelectProject(project)}
           >
             {project.name}
           </button>
