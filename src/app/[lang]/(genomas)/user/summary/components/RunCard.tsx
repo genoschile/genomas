@@ -1,13 +1,15 @@
-import React from "react";
-import { RunData } from "./Run";
+import { RunData } from "../context/RunsContext";
 
-export default function RunCard({ data }: { data: RunData }) {
+interface RunCardProps {
+  run: RunData;
+}
+
+export default function RunCard({ run }: RunCardProps) {
   const {
     pipeline,
     status,
     statusType,
     color,
-    path,
     runId,
     sampleType,
     date,
@@ -16,7 +18,7 @@ export default function RunCard({ data }: { data: RunData }) {
     logs,
     cost,
     tags,
-  } = data;
+  } = run;
 
   const isCompleted = statusType === "success";
   const isInProgress = statusType === "in-progress";
@@ -31,8 +33,6 @@ export default function RunCard({ data }: { data: RunData }) {
         </span>
         <span className={`chip ${statusType}`}>{status}</span>
       </div>
-
-
 
       {/* Info Grid */}
       <div className="run-info-grid">
@@ -69,25 +69,18 @@ export default function RunCard({ data }: { data: RunData }) {
         <button className="action-btn" disabled={!isCompleted}>
           Reporte
         </button>
-        <button className="action-btn" disabled={!isCompleted}>
-          Métricas
-        </button>
         <button className="action-btn">
           <svg className="icon-sm" viewBox="0 0 24 24" fill="currentColor">
             <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6V6h12v8zm-2-5H8V8h8v1z" />
           </svg>
           Logs ({logs})
         </button>
-        <button className="action-btn" disabled={!isFailed && !isCompleted}>
-          Re-Run
-        </button>
-        <button className="action-btn" disabled={!isCompleted}>
-          Compartir
-        </button>
-        <div className="run-info-item">
-          <h5>Costo</h5>
-          <p>{cost}</p>
-        </div>
+      </div>
+
+      {/* Costo */}
+      <div className="run-info-item">
+        <h5>Costo</h5>
+        <p>{cost}</p>
       </div>
 
       {/* Tags */}

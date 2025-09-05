@@ -18,12 +18,27 @@ export const Modal: React.FC<ModalProps> = ({ id, title, children }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (activeModal === id && dialogRef.current) {
-      dialogRef.current.showModal();
-    } else if (activeModal !== id && dialogRef.current?.open) {
-      dialogRef.current.close();
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    // Mostrar o cerrar según estado
+    if (activeModal === id && !dialog.open) {
+      dialog.showModal();
+    } else if (activeModal !== id && dialog.open) {
+      dialog.close();
     }
-  }, [activeModal, id]);
+
+    // Escucha ESC y sincroniza estado
+    const handleCancel = (event: Event) => {
+      event.preventDefault();
+      closeModal();
+    };
+
+    dialog.addEventListener("cancel", handleCancel);
+    return () => {
+      dialog.removeEventListener("cancel", handleCancel);
+    };
+  }, [activeModal, id, closeModal]);
 
   if (activeModal !== id) return null;
 
