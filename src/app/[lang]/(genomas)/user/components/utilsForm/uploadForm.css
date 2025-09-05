@@ -88,7 +88,6 @@
   background-color: #fff;
 }
 
-
 .upload-files__example-link {
   text-decoration: none;
   color: var(--primary-color);
@@ -103,8 +102,6 @@
     outline-offset: -2px;
   }
 }
-
-
 
 .upload-files--container {
   --max-inline-width: 400px;
@@ -121,4 +118,27 @@
 
 .upload-files--container > * {
   grid-column: content-start / content-end;
+}
+
+.upload-files--nav {
+  display: flex;
+  gap: 0.3rem;
+
+  > button {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    padding: 0.5rem 0.9rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    color: black;
+    text-transform: capitalize;
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+  }
 }

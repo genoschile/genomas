@@ -8,6 +8,8 @@ import {
 } from "./stepUploads/UploadStepContext";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { StepUploadProgress } from "./StepUploadProgress";
+import { UploadStepButtons } from "./stepUploads/UploadStepButtons";
+import { Step4 } from "./stepUploads/Step4";
 
 const Step1 = dynamic(() => import("./stepUploads/Step1"), {
   loading: () => <div className="signup__loading">Loading...</div>,
@@ -26,7 +28,7 @@ const Step3 = dynamic(() => import("./stepUploads/Step3"), {
 
 export const UploadForm = () => {
   const { handleSubmit } = useForm<UploadInterfaceForm>();
-  const { currentStep, nextStep, previousStep } = useUploadSteps();
+  const { currentStep } = useUploadSteps();
 
   const onSubmit: SubmitHandler<UploadInterfaceForm> = async (data) => {
     console.log(data);
@@ -47,15 +49,8 @@ export const UploadForm = () => {
           {currentStep === 4 && <Step4 />}
         </Suspense>
       </form>
-      <nav>
-        <button onClick={previousStep}>back</button>
-        <button onClick={nextStep}>Next</button>
-      </nav>
+      <UploadStepButtons />
       <FooterModalUsersOptions />
     </div>
   );
-};
-
-export const Step4 = () => {
-  return <div>Step 4: Review and Submit</div>;
 };
