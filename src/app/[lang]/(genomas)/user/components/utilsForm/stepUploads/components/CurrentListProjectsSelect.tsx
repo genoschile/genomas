@@ -1,6 +1,4 @@
 import { useProjectContext } from "@/hooks/useProjectContext";
-
-import "./currentListProjectsSelect.css";
 import { useUploadSteps } from "../UploadStepContext";
 
 export const CurrentListProjectsSelect = () => {
