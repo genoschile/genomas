@@ -14,6 +14,13 @@ import {
 
 import { createContext, useState } from "react";
 
+interface Files extends File {
+  name: string;
+  accepted?: true | false;
+  message?: string;
+  type: string;
+}
+
 export const UploadStatus = {
   IDLE: "idle", // Esperando la acción del usuario
   STAGED_IDLE: "staged_idle", // Archivos subidos, aún no procesados
@@ -34,6 +41,8 @@ export interface UploadStatusContextType {
   renderUploadIcon: () => React.JSX.Element;
   uploadJobId: string;
   setUploadJobId: (jobId: string) => void;
+  setDecompressedFiles: (decompressedFiles: Files[]) => void;
+  decompressedFiles: Files[];
 }
 
 export const UploadStatusContext = createContext<UploadStatusContextType>({
@@ -46,6 +55,8 @@ export const UploadStatusContext = createContext<UploadStatusContextType>({
   ),
   uploadJobId: "",
   setUploadJobId: () => {},
+  decompressedFiles: [],
+  setDecompressedFiles: () => {},
 });
 
 export function UploadStatusProvider({
@@ -56,6 +67,7 @@ export function UploadStatusProvider({
   const [uploadStatus, setUploadStatus] = useState<string>(UploadStatus.IDLE);
   const [isUploading, setUploading] = useState<boolean>(false);
   const [uploadJobId, setUploadJobId] = useState<string>("");
+  const [decompressedFiles, setDecompressedFiles] = useState<Files[]>([]);
 
   const renderUploadIcon = () => {
     switch (uploadStatus) {
@@ -106,6 +118,8 @@ export function UploadStatusProvider({
         renderUploadIcon,
         uploadJobId,
         setUploadJobId,
+        setDecompressedFiles,
+        decompressedFiles,
       }}
     >
       {children}

@@ -1,13 +1,14 @@
-import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
 import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { useRef } from "react";
+import { useUploadSteps } from "../UploadStepContext";
 
 export const UploadLabel = ({
   handleFileChange,
 }: {
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
-  const { files } = useFileStagingAreaContext();
+  const { watch } = useUploadSteps();
+  const files = watch("files") ?? [];
   const { renderUploadIcon } = useUploadStatusContext();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 

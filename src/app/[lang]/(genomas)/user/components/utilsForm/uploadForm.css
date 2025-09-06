@@ -4,7 +4,6 @@
   margin-bottom: 0.4rem;
 }
 
-/* footer */
 .upload-files__warnings {
   & > * {
     display: block;
@@ -13,13 +12,11 @@
   }
 
   .upload-files__warning-text {
-    /*small*/
     font-size: clamp(0.8rem, calc(1vw + 0.2rem), 1rem);
     font-weight: 500;
   }
 
   .upload-files__example-link {
-    /*strong*/
     margin-top: 0.4rem;
     font-size: clamp(2rem, calc(1vw + 0.2rem), 2.2rem);
     font-weight: bold;
@@ -104,16 +101,14 @@
 }
 
 .upload-files--container {
-  --max-inline-width: 400px;
-}
-
-.upload-files--container {
   display: grid;
   grid-template-columns:
     [full-width] minmax(2rem, 1fr)
     [content-start] min(var(--max-inline-width), 100% - 4rem)
     [content-end] minmax(2rem, 1fr)
     [full-width-end];
+  align-items: center;
+  block-size: 100%;
 }
 
 .upload-files--container > * {

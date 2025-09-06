@@ -15,6 +15,7 @@ interface StepsContextProps {
   errors: ReturnType<typeof useForm<UploadForm>>["formState"]["errors"];
   setValue: ReturnType<typeof useForm<UploadForm>>["setValue"];
   trigger: ReturnType<typeof useForm<UploadForm>>["trigger"];
+  watch: ReturnType<typeof useForm<UploadForm>>["watch"];
   currentProject: IProject | null;
   setCurrentProject: (project: IProject | null) => void;
   ChangeCurrentProject: (project: IProject | null) => void;
@@ -36,6 +37,7 @@ export const UploadStepsProvider = ({ children }: { children: ReactNode }) => {
     formState: { errors },
     trigger,
     setValue,
+    watch,
   } = useForm<UploadForm>();
 
   const nextStep = async () => {
@@ -62,6 +64,7 @@ export const UploadStepsProvider = ({ children }: { children: ReactNode }) => {
         currentProject,
         setCurrentProject,
         ChangeCurrentProject,
+        watch
       }}
     >
       {children}

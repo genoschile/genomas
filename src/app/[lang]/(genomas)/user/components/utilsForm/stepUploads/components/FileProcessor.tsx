@@ -1,7 +1,6 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
 import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { UploadStatus } from "@/context/UploadStatusContext";
 import {
@@ -17,25 +16,12 @@ import {
 import axios from "axios";
 import { routes } from "@/lib/api/routes";
 import { useSessionContext } from "@/hooks/useSession";
-import { useUploadSteps } from "@/app/[lang]/(genomas)/user/components/utilsForm/stepUploads/UploadStepContext";
-
-export interface resUpload_DB {
-  success: boolean;
-  data: {
-    files: File[];
-  };
-  message?: string;
-  error?: string;
-}
+import { useUploadSteps } from "../UploadStepContext";
 
 export default function FileProcessor() {
-  const {
-    files,
-    setFiles,
-    setDecompressedFiles,
-    setProgressMap,
-    decompressedFiles,
-  } = useFileStagingAreaContext();
+  const { watch } = useUploadSteps();
+  const files = watch("files");
+  const currentProject = watch("currentProjectId");
 
   const {
     uploadStatus,
@@ -46,15 +32,12 @@ export default function FileProcessor() {
     uploadJobId,
   } = useUploadStatusContext();
 
+  const { user } = useSessionContext();
+
   const handleClean = () => {
     setUploading(false);
-    setDecompressedFiles([]);
     setUploadStatus(UploadStatus.IDLE);
-    setFiles([]);
-    setProgressMap({});
   };
-
-  const { user } = useSessionContext();
 
   const handleUpload = async () => {
     if (!files || files.length === 0) {
@@ -63,28 +46,28 @@ export default function FileProcessor() {
     }
 
     if (!currentProject) {
-      toast.error("No hay un proyecto POR DEFAULT seleccionado.");
+      toast.error("Debes seleccionar un proyecto.");
       return;
     }
 
     if (!user) {
-      toast.error("No hay un usuario autenticado.");
+      toast.error("Usuario no autenticado.");
       return;
     }
 
-    const jobId = `${currentProject.workspaceId}_${
-      currentProject.id
-    }_upload_${crypto.randomUUID().replace(/-/g, "").slice(0, 8)}`;
+    const jobId = `${currentProject}_upload_${crypto
+      .randomUUID()
+      .replace(/-/g, "")
+      .slice(0, 8)}`;
 
     setUploadStatus(UploadStatus.PENDING);
     setUploading(true);
 
     try {
       const formData = new FormData();
-      setUploadJobId(jobId);
-
       formData.append("upload_id", jobId);
-      files.forEach((file) => formData.append("files", file));
+      files.forEach((file: any) => formData.append("files", file));
+      setUploadJobId(jobId);
 
       const response = await fetch(routes.decompressFiles(), {
         method: "POST",
@@ -99,10 +82,6 @@ export default function FileProcessor() {
         return;
       }
 
-      console.log("Respuesta del servidor:", data);
-
-      setDecompressedFiles(data.data.files ?? []);
-      setUploadJobId(data.jobId ?? "");
       setUploadStatus(UploadStatus.STAGED);
       toast.success("Archivos cargados y descomprimidos.");
     } catch (error) {
@@ -114,39 +93,11 @@ export default function FileProcessor() {
     }
   };
 
-  const { currentProject } = useUploadSteps();
-
   const handleStageToDatabase = async () => {
-    if (!currentProject) {
-      toast.error("No hay un proyecto seleccionado.");
-      return;
-    }
-
-    if (decompressedFiles.length === 0) {
-      toast.error("No hay archivos descomprimidos para subir.");
-      return;
-    }
-
-    console.log("uploadJobId:", uploadJobId);
-
     if (!uploadJobId) {
       toast.error("No se encontró un jobId para la subida.");
       return;
     }
-
-    // only accepted files.
-    const acceptedFiles = decompressedFiles.filter((file) => file.accepted);
-
-    console.log("Archivos aceptados:", acceptedFiles);
-
-    if (acceptedFiles.length === 0) {
-      toast.error("No hay archivos válidos para subir al bucket.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("upload_id", uploadJobId);
-    formData.append("files", JSON.stringify(acceptedFiles));
 
     setUploadStatus(UploadStatus.UPLOAD_DB);
     setUploading(true);
@@ -156,15 +107,13 @@ export default function FileProcessor() {
     try {
       const res = await axios.post(routes.uploadFiles(), {
         upload_id: uploadJobId,
-        files: acceptedFiles,
       });
 
-      console.log("Respuesta del servidor up:", res.data);
       toast.dismiss(toastId);
 
       if (res.data.success) {
         toast.success("¡Archivos copiados exitosamente al bucket!");
-        setUploadStatus(UploadStatus.STAGED);
+        setUploadStatus(UploadStatus.UPLOAD_SUCCESS);
       } else {
         toast.error("Error: " + res.data.message);
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
@@ -198,28 +147,10 @@ export default function FileProcessor() {
       case UploadStatus.IDLE:
       case UploadStatus.STAGED_IDLE:
         return handleUpload;
-
-      case UploadStatus.PENDING:
-        return () => {};
-
       case UploadStatus.STAGED:
         return handleStageToDatabase;
-
-      case UploadStatus.UPLOAD_DB:
-        return () => toast.info("Subida ya en progreso.");
-
-      case UploadStatus.UPLOAD_SUCCESS:
-        return () => toast.info("Carga ya completada.");
-
-      case UploadStatus.UPLOAD_ERROR:
-        return handleUpload;
-
-      case UploadStatus.UPLOAD_CANCELLED:
-        return handleUpload;
-
       case UploadStatus.UPLOAD_RESUME:
         return handleResumeUpload;
-
       default:
         return () => {};
     }
@@ -230,28 +161,16 @@ export default function FileProcessor() {
       case UploadStatus.IDLE:
       case UploadStatus.STAGED_IDLE:
         return "Subir archivo ZIP";
-
       case UploadStatus.PENDING:
         return "Procesando ZIP...";
-
       case UploadStatus.STAGED:
         return "Subir a la base de datos";
-
       case UploadStatus.UPLOAD_DB:
         return "Subiendo...";
-
       case UploadStatus.UPLOAD_SUCCESS:
         return "Carga completada";
-
       case UploadStatus.UPLOAD_ERROR:
         return "Reintentar carga";
-
-      case UploadStatus.UPLOAD_CANCELLED:
-        return "Nuevo intento";
-
-      case UploadStatus.UPLOAD_RESUME:
-        return "Reanudar carga";
-
       default:
         return "Cargar";
     }
@@ -262,28 +181,16 @@ export default function FileProcessor() {
       case UploadStatus.IDLE:
       case UploadStatus.STAGED_IDLE:
         return <FaPlay />;
-
       case UploadStatus.PENDING:
         return <FaSpinner className="rotate" />;
-
       case UploadStatus.STAGED:
         return <FaDatabase />;
-
       case UploadStatus.UPLOAD_DB:
         return <FaSpinner className="rotate" />;
-
       case UploadStatus.UPLOAD_SUCCESS:
         return <FaCheckCircle color="green" />;
-
       case UploadStatus.UPLOAD_ERROR:
         return <FaTimesCircle color="red" />;
-
-      case UploadStatus.UPLOAD_CANCELLED:
-        return <FaPause />;
-
-      case UploadStatus.UPLOAD_RESUME:
-        return <FaUpload />;
-
       default:
         return null;
     }

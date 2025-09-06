@@ -1,10 +1,22 @@
 .dropdown-content {
-  padding: 0.4rem;
-  width: 100%;
-  height: max-content;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  max-block-size: 220px;
-  max-inline-size: 400px;
+}
+
+.dropdown-projects--list {
+  list-style: none;
+  background-color: var(--card-background);
+
+  & li {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    button {
+      text-wrap: wrap;
+    }
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
 }

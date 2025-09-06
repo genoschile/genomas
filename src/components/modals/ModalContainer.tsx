@@ -14,7 +14,6 @@ import { ModalGroupsDeleteEnterprise } from "../forms/DeleteGroupsEnterprise";
 import { ModalUtilsUsers } from "./modalUtilsUsers";
 import { WorkflowsForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/WorkflowsForm";
 import { StepsProvider } from "@/app/[lang]/(genomas)/user/components/utilsForm/workflowContext";
-import { FileStagingAreaProvider } from "@/context/FileStagingAreaContext";
 import { UploadStatusProvider } from "@/context/UploadStatusContext";
 import { UploadForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/UploadForm";
 import { TrashContainer } from "@/app/[lang]/(genomas)/user/components/TrashContainer";
@@ -67,11 +66,9 @@ export const ModalContainer = () => {
 
       <ModalUtilsUsers id={MODAL_IDS.UPLOAD_FILES} title="Upload Files">
         <UploadStepsProvider>
-          <FileStagingAreaProvider>
-            <UploadStatusProvider>
-              <UploadForm />
-            </UploadStatusProvider>
-          </FileStagingAreaProvider>
+          <UploadStatusProvider>
+            <UploadForm />
+          </UploadStatusProvider>
         </UploadStepsProvider>
       </ModalUtilsUsers>
 
@@ -140,7 +137,6 @@ export const ModalGroupsEditEnterprise = () => {
         Use this form to edit the details of an existing group. Make sure to
         review all changes before saving.
       </p>
-      {/* Add your form component here */}
     </section>
   );
 };

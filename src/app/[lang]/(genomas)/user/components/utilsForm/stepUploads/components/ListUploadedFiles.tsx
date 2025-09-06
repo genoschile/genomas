@@ -1,15 +1,16 @@
 "use client";
 
 import { UploadStatus } from "@/context/UploadStatusContext";
-import { useFileStagingAreaContext } from "@/hooks/useFileStagingArea";
 import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { getFileSize } from "@/utils/getFileSize";
+import { useUploadSteps } from "../UploadStepContext";
 
 export const ListUploadedFiles = () => {
-  const { files, decompressedFiles, progressMap } = useFileStagingAreaContext();
-  const { uploadStatus } = useUploadStatusContext();
+  const { watch } = useUploadSteps();
+  const files = watch("files") ?? [];
 
-  const safeProgressMap = progressMap ?? {};
+  const { uploadStatus } = useUploadStatusContext();
+  const { decompressedFiles } = useUploadStatusContext();
 
   const renderStagedIdleTable = () => (
     <div className="upload-table-container">
@@ -22,7 +23,7 @@ export const ListUploadedFiles = () => {
           </tr>
         </thead>
         <tbody>
-          {files.map((file, index) => (
+          {files.map((file: File, index: number) => (
             <tr key={index}>
               <td>{file.name}</td>
               <td>{file.type}</td>
@@ -50,22 +51,23 @@ export const ListUploadedFiles = () => {
           </tr>
         </thead>
         <tbody>
-          {(decompressedFiles ?? []).map((file, index) => {
-            const progress = safeProgressMap[file.name] ?? 0;
+          {decompressedFiles.map((file: any, index: number) => {
             return (
               <tr key={index}>
                 <td>{file.name}</td>
                 <td>{file.type}</td>
                 <td>
-                  {progress === 100 ? (
+                  {file.progress === 100 ? (
                     <span style={{ color: "green" }}>✅</span>
                   ) : (
                     <div className="progress-bar">
                       <div
                         className="progress-bar__fill"
-                        style={{ width: `${progress}%` }}
+                        style={{ width: `${file.progress}%` }}
                       />
-                      <span className="progress-bar__text">{progress}%</span>
+                      <span className="progress-bar__text">
+                        {file.progress}%
+                      </span>
                     </div>
                   )}
                 </td>
