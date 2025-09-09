@@ -39,19 +39,24 @@ export const UploadStep2 = () => {
   };
 
   return (
-    <div
-      className={`upload-container ${isDragOver ? "drag-over" : ""}`}
-      onDragOver={(e) => {
-        e.preventDefault();
-        setIsDragOver(true);
-      }}
-      onDragLeave={() => setIsDragOver(false)}
-      onDrop={handleDrop}
-    >
-      <label htmlFor="file-upload"></label>
-      <UploadLabel handleFileChange={handleFileChange} />
-      <FileProcessor />
-    </div>
+    <>
+      <div
+        className={`upload-container ${isDragOver ? "drag-over" : ""}`}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDragOver(true);
+        }}
+        onDragLeave={() => setIsDragOver(false)}
+        onDrop={handleDrop}
+      >
+        <label htmlFor="file-upload"></label>
+        <UploadLabel handleFileChange={handleFileChange} />
+        <FileProcessor />
+      </div>
+      {errors.files && (
+        <p className="error-message">{errors.files.message as string}</p>
+      )}
+    </>
   );
 };
 

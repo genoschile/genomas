@@ -36,6 +36,12 @@ export const UploadForm = () => {
 
   return (
     <div className="upload-files--container">
+      <h1>
+        {currentStep === 1 && "Select project:"}
+        {currentStep === 2 && "Upload to valid files:"}
+        {currentStep === 3 && "Review and confirm:"}
+        {currentStep === 4 && "Upload complete:"}
+      </h1>
       <StepUploadProgress />
 
       <form className="signup__step" onSubmit={handleSubmit(onSubmit)}>

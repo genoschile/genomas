@@ -45,20 +45,16 @@ export const submitLoginEnterprise = async (
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     });
-
-    if (!restLogin.ok) {
-      return {
-        success: false,
-        message: "Login failed",
-        error: {},
-        input: rawData,
-      };
-    }
 
     const responseData: ActionResponse = await restLogin.json();
 
     if (responseData.success) {
+      if (responseData.data?.accessToken) {
+        localStorage.setItem("accessToken", responseData.data.accessToken);
+      }
+
       return {
         success: true,
         message: "Login successful",
@@ -70,7 +66,7 @@ export const submitLoginEnterprise = async (
 
     return {
       success: false,
-      message: "Enterprise does not exist",
+      message: responseData.message || "Login failed",
       input: rawData,
       error: {},
     };

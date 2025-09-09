@@ -7,9 +7,7 @@ export const UploadStep1 = () => {
 
   return (
     <div className="dropdown-content">
-      <h2>What project are you going to upload your files to?</h2>
       <CurrentListProjectsSelect />
-
       <input
         type="hidden"
         {...register("currentProjectId", {

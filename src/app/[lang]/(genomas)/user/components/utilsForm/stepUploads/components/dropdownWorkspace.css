@@ -1,12 +1,7 @@
-.dropdown-content {
-  display: flex;
-  flex-direction: column;
-}
-
 .dropdown-projects--list {
   list-style: none;
   background-color: var(--card-background);
-
+  flex: 1;
   & li {
     cursor: pointer;
     transition: background-color 0.3s ease;

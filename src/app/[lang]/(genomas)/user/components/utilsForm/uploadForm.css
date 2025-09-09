@@ -104,7 +104,7 @@
   display: grid;
   grid-template-columns:
     [full-width] minmax(2rem, 1fr)
-    [content-start] min(var(--max-inline-width), 100% - 4rem)
+    [content-start] min(500px, 100% - 4rem)
     [content-end] minmax(2rem, 1fr)
     [full-width-end];
   align-items: center;

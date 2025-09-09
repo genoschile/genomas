@@ -3,6 +3,7 @@ import { useUploadSteps } from "../UploadStepContext";
 
 export const CurrentListProjectsSelect = () => {
   const { projects } = useProjectContext();
+  const { nextStep } = useUploadSteps();
 
   if (!projects || projects.length === 0) {
     return <p className="no-projects-message">No projects available.</p>;
@@ -13,6 +14,7 @@ export const CurrentListProjectsSelect = () => {
   const handleSelectProject = (project: any) => {
     ChangeCurrentProject(project);
     setValue("currentProjectId", project.id, { shouldValidate: true });
+    nextStep();
   };
 
   return (
