@@ -19,6 +19,10 @@ interface StepsContextProps {
   currentProject: IProject | null;
   setCurrentProject: (project: IProject | null) => void;
   ChangeCurrentProject: (project: IProject | null) => void;
+  control: ReturnType<typeof useForm<UploadForm>>["control"];
+  hasAutoAdvanced: boolean;
+  handleChangeAutoAdvance: (value: boolean) => void;
+  setError: ReturnType<typeof useForm<UploadForm>>["setError"];
 }
 
 const UploadStepsContext = createContext<StepsContextProps | undefined>(
@@ -28,6 +32,11 @@ const UploadStepsContext = createContext<StepsContextProps | undefined>(
 export const UploadStepsProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [currentProject, setCurrentProject] = useState<IProject | null>(null);
+  const [hasAutoAdvanced, setHasAutoAdvanced] = useState(false);
+
+  const handleChangeAutoAdvance = (value: boolean) => {
+    setHasAutoAdvanced(!value);
+  };
 
   const ChangeCurrentProject = (project: IProject | null) => {
     setCurrentProject(project);
@@ -38,6 +47,8 @@ export const UploadStepsProvider = ({ children }: { children: ReactNode }) => {
     trigger,
     setValue,
     watch,
+    control,
+    setError,
   } = useForm<UploadForm>();
 
   const nextStep = async () => {
@@ -64,7 +75,11 @@ export const UploadStepsProvider = ({ children }: { children: ReactNode }) => {
         currentProject,
         setCurrentProject,
         ChangeCurrentProject,
-        watch
+        watch,
+        control,
+        hasAutoAdvanced,
+        handleChangeAutoAdvance,
+        setError,
       }}
     >
       {children}

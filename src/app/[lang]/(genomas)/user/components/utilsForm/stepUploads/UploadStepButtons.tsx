@@ -1,3 +1,4 @@
+import FileProcessor from "./components/FileProcessor";
 import { useUploadSteps } from "./UploadStepContext";
 
 export const UploadStepButtons = () => {
@@ -20,7 +21,13 @@ export const UploadStepButtons = () => {
   return (
     <nav className="upload-files--nav">
       <button onClick={previousStep}>back</button>
-      <button onClick={nextStep}>Next</button>
+
+      {currentStep !== 2 && currentStep !== 3 && (
+        <button onClick={nextStep}>Next</button>
+      )}
+
+      {currentStep === 2 && <FileProcessor />}
+      {currentStep === 3 && <FileProcessor />}
     </nav>
   );
 };

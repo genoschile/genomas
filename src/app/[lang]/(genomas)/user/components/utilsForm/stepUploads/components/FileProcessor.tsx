@@ -9,19 +9,42 @@ import {
   FaDatabase,
   FaRedo,
   FaCheckCircle,
-  FaPause,
   FaTimesCircle,
-  FaUpload,
 } from "react-icons/fa";
 import axios from "axios";
 import { routes } from "@/lib/api/routes";
 import { useSessionContext } from "@/hooks/useSession";
 import { useUploadSteps } from "../UploadStepContext";
+import { useEffect } from "react";
 
 export default function FileProcessor() {
-  const { watch } = useUploadSteps();
+  const {
+    watch,
+    currentStep,
+    trigger,
+    nextStep,
+    hasAutoAdvanced,
+    handleChangeAutoAdvance,
+    setError,
+  } = useUploadSteps();
+
   const files = watch("files");
+
   const currentProject = watch("currentProjectId");
+
+  useEffect(() => {
+    const handleAutoNext = async () => {
+      if (currentStep === 2 && files && files.length > 0 && !hasAutoAdvanced) {
+        const isValid = await trigger("files");
+        if (isValid) {
+          handleChangeAutoAdvance(true);
+          await nextStep();
+        }
+      }
+    };
+
+    handleAutoNext();
+  }, [files, hasAutoAdvanced]);
 
   const {
     uploadStatus,
@@ -32,28 +55,31 @@ export default function FileProcessor() {
     uploadJobId,
   } = useUploadStatusContext();
 
-  const { user } = useSessionContext();
-
   const handleClean = () => {
     setUploading(false);
     setUploadStatus(UploadStatus.IDLE);
   };
 
   const handleUpload = async () => {
+    let hasError = false;
+
     if (!files || files.length === 0) {
-      toast.error("Por favor, selecciona al menos un archivo.");
-      return;
+      setError("files", {
+        type: "manual",
+        message: "Por favor, selecciona al menos un archivo.",
+      });
+      hasError = true;
     }
 
     if (!currentProject) {
-      toast.error("Debes seleccionar un proyecto.");
-      return;
+      setError("currentProjectId", {
+        type: "manual",
+        message: "Debes seleccionar un proyecto.",
+      });
+      hasError = true;
     }
 
-    if (!user) {
-      toast.error("Usuario no autenticado.");
-      return;
-    }
+    if (hasError) return;
 
     const jobId = `${currentProject}_upload_${crypto
       .randomUUID()
@@ -81,6 +107,8 @@ export default function FileProcessor() {
         setUploadStatus(UploadStatus.UPLOAD_ERROR);
         return;
       }
+
+      console.log("Respuesta del servidor:", data);
 
       setUploadStatus(UploadStatus.STAGED);
       toast.success("Archivos cargados y descomprimidos.");
