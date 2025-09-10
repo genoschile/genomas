@@ -12,26 +12,21 @@ import "./routeSelect.css";
 
 const pathNameBase = "/enterprise";
 
-const routes = [
-  { Icon: FiHome, title: "Home", path: pathNameBase },
-  { Icon: FiUser, title: "Users", path: `${pathNameBase}/users` },
-  { Icon: MdGroups2, title: "Groups", path: `${pathNameBase}/groups` },
-  {
-    Icon: FiHome,
-    title: "Project",
-    path: `${pathNameBase}/projects`,
-  },
-  {
-    Icon: FiHome,
-    title: "Workspaces",
-    path: `${pathNameBase}/workspaces`,
-  },
-  {
-    Icon: GiGlowingHands,
-    title: "AI Suggestions",
-    path: `${pathNameBase}/suggestions2`,
-  },
-];
+const ROUTES_BY_ROLE = {
+  user: [
+    { Icon: FiHome, title: "Home", path: pathNameBase },
+    { Icon: FiUser, title: "Users", path: `${pathNameBase}/users` },
+    { Icon: MdGroups2, title: "Groups", path: `${pathNameBase}/groups` },
+    { Icon: FiHome, title: "Project", path: `${pathNameBase}/projects` },
+    { Icon: FiHome, title: "Workspaces", path: `${pathNameBase}/workspaces` },
+    {
+      Icon: GiGlowingHands,
+      title: "AI Suggestions",
+      path: `${pathNameBase}/suggestions2`,
+    },
+  ],
+  admin: [{ Icon: FiHome, title: "Organization", path: pathNameBase }],
+} as const;
 
 const Route = ({
   selected,
@@ -54,14 +49,16 @@ const Route = ({
   );
 };
 
-export function RouteSelect() {
+export function RouteSelect({ role }: { role?: "admin" | "user" }) {
   const pathname = usePathname();
+
+  const routes = role ? ROUTES_BY_ROLE[role] : ROUTES_BY_ROLE.user;
 
   return (
     <div className="sidebar-org--routecontainer">
       <ul>
         {routes.map(({ Icon, title, path }, index) => {
-          const isHome = path === pathNameBase;
+          const isHome = path === "/enterprise";
           const isSelected = isHome
             ? pathname === path
             : pathname === path || pathname.startsWith(path + "/");

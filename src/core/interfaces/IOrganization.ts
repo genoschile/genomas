@@ -36,4 +36,5 @@ export interface IOrganizationRepository {
     data: CreateGroupDTO
   ): Promise<ResponseGroupDTO | null>;
   organizationByEmail(email: string): Promise<OrgDTO | null>;
+  getAllOrganizations(): Promise<OrgDTO[] | null>;
 }

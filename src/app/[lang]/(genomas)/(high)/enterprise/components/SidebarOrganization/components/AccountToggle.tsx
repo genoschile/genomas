@@ -1,9 +1,24 @@
 import { GrConfigure } from "react-icons/gr";
-
 import "./accountToggle.css";
 import { useSessionContext } from "@/hooks/useSession";
 
-export function AccountToggle() {
+interface AccountToggleProps {
+  role?: "admin" | "user";
+}
+
+export function AccountToggle({ role }: AccountToggleProps) {
+  if (role === "admin") {
+    return <AdminContentToggle />;
+  }
+
+  if (role === "user") {
+    return <AccountContentToggle />;
+  }
+
+  return <div className="loading">Cargando...</div>;
+}
+
+export const AccountContentToggle = () => {
   const { organization } = useSessionContext();
   const { name, email } = organization || {};
 
@@ -27,4 +42,14 @@ export function AccountToggle() {
       </button>
     </header>
   );
-}
+};
+
+export const AdminContentToggle = () => {
+  return (
+    <header className="sidebar-org--account-header ">
+      <button>
+        <span>👑 Admin Panel</span>
+      </button>
+    </header>
+  );
+};

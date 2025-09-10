@@ -34,4 +34,8 @@ export class useCaseOrganizationUseCase {
   async organizationByEmail(email: string): Promise<OrgDTO | null> {
     return await this.orgRepo.organizationByEmail(email);
   }
+
+  async getAllOrganizations(): Promise<OrgDTO[] | null> {
+    return await this.orgRepo.getAllOrganizations();
+  }
 }

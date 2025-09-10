@@ -25,7 +25,7 @@ export default function EnterpriseLayout({
             <ProjectsProvider>
               <DataTableUserEnterpriseProvider>
                 <ModalProvider>
-                  <BaseLayout>{children}</BaseLayout>
+                  <BaseLayout role="user">{children}</BaseLayout>
                 </ModalProvider>
               </DataTableUserEnterpriseProvider>
             </ProjectsProvider>

@@ -12,16 +12,15 @@ import { CommandMenu } from "@/app/[lang]/(genomas)/(high)/enterprise/components
 
 interface BaseLayoutProps {
   children: React.ReactNode;
+  role: "admin" | "user";
 }
 
-export default function BaseLayout({ children }: BaseLayoutProps) {
+export default function BaseLayout({ children, role }: BaseLayoutProps) {
   const [openSidebar, setOpenSidebar] = useState(false);
 
   const handleSetOpenSidebar = () => {
     setOpenSidebar((prev) => !prev);
   };
-
-  const user = { role: "admin" }; 
 
   return (
     <>
@@ -30,7 +29,7 @@ export default function BaseLayout({ children }: BaseLayoutProps) {
         <SidebarOrganization
           openSidebar={openSidebar}
           handleSetOpenSidebar={handleSetOpenSidebar}
-          role={user.role}
+          role={role}
         />
         <TopBar handleSetOpenSidebar={handleSetOpenSidebar} />
         <section>

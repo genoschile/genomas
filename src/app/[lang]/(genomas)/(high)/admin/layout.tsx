@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/context/enterprise/ThemeContext";
 import { ModalProvider } from "@/context/ModalsProject";
 
 /* hooks */
-
 import BaseLayout from "../BaseLayout";
 
 export default function EnterpriseLayout({
@@ -16,7 +15,7 @@ export default function EnterpriseLayout({
   return (
     <ThemeProvider>
       <ModalProvider>
-        <BaseLayout>{children}</BaseLayout>
+        <BaseLayout role="admin">{children}</BaseLayout>
       </ModalProvider>
     </ThemeProvider>
   );

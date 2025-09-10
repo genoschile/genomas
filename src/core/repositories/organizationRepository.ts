@@ -230,6 +230,28 @@ export class OrganizationRepository implements IOrganizationRepository {
       password: org.password,
     };
   }
+
+  async getAllOrganizations(): Promise<OrgDTO[] | null> {
+    const orgs = await prisma.organization.findMany({
+      include: {
+        users: { select: { id: true } },
+        workspaces: { select: { id: true } },
+        license: { select: { id: true } },
+      },
+    });
+
+    if (!orgs) return null;
+
+    return orgs.map((org) => ({
+      id: org.id,
+      name: org.name,
+      email: org.email,
+      userIds: org.users.map((u) => u.id),
+      workspaceIds: org.workspaces.map((w) => w.id),
+      licenseId: org.license?.id ?? undefined,
+      password: org.password,
+    }));
+  }
 }
 
 async function createUser(user: Omit<IUser, "id">): Promise<IUser> {
