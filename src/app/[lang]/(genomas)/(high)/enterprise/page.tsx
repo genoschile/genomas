@@ -1,5 +1,3 @@
-import "./style.css";
-
 import { AdminAccountEnterpriseCredentials } from "@/components/enterprise/adminAccountEnterpriseCredentials/AdminAccountEnterpriseCredentials";
 import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 import {

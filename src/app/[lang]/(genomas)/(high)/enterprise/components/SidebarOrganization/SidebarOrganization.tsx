@@ -10,9 +10,11 @@ import "./sidebarOrganization.css";
 export function SidebarOrganization({
   openSidebar,
   handleSetOpenSidebar,
+  role,
 }: {
   openSidebar?: boolean;
   handleSetOpenSidebar?: () => void;
+  role?: "admin" | "user";
 }) {
   return (
     <>
@@ -21,8 +23,8 @@ export function SidebarOrganization({
       )}
       <aside className={`sidebar-org ${openSidebar ? "open" : ""}`}>
         <div className="sidebar-org--container">
-          <AccountToggle />
-          <Search />
+          <AccountToggle role={role} />
+          <RouteSelect role={role} />
           <RouteSelect />
         </div>
         <Plan />
