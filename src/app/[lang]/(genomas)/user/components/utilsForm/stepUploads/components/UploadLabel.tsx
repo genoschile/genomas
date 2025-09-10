@@ -39,9 +39,6 @@ export const UploadLabel = ({
               handleFileChange(e);
             }}
           />
-          {/* {fieldState.error && (
-            <p className="error-message">{fieldState.error.message}</p>
-          )} */}
         </label>
       )}
     />

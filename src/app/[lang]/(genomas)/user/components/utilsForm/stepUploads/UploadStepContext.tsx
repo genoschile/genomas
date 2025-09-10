@@ -2,9 +2,20 @@ import { IProject } from "@/lib/types/contextTypes";
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useForm } from "react-hook-form";
 
+export interface CustomFile {
+  name: string;
+  path: string;
+  size: number;
+  type?: string;
+  accepted: boolean;
+  message?: string;
+  progress?: number;
+}
+
 export interface UploadForm {
   currentProjectId: string;
   files: File[];
+  decompressFiles: CustomFile[];
 }
 
 interface StepsContextProps {
@@ -16,13 +27,14 @@ interface StepsContextProps {
   setValue: ReturnType<typeof useForm<UploadForm>>["setValue"];
   trigger: ReturnType<typeof useForm<UploadForm>>["trigger"];
   watch: ReturnType<typeof useForm<UploadForm>>["watch"];
+  setError: ReturnType<typeof useForm<UploadForm>>["setError"];
+  control: ReturnType<typeof useForm<UploadForm>>["control"];
   currentProject: IProject | null;
   setCurrentProject: (project: IProject | null) => void;
   ChangeCurrentProject: (project: IProject | null) => void;
-  control: ReturnType<typeof useForm<UploadForm>>["control"];
   hasAutoAdvanced: boolean;
   handleChangeAutoAdvance: (value: boolean) => void;
-  setError: ReturnType<typeof useForm<UploadForm>>["setError"];
+  goToStep: (step: number) => void;
 }
 
 const UploadStepsContext = createContext<StepsContextProps | undefined>(
@@ -62,6 +74,11 @@ export const UploadStepsProvider = ({ children }: { children: ReactNode }) => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
+  const goToStep = (step: number) => {
+    const validStep = Math.max(1, Math.min(step, 4));
+    setCurrentStep(validStep);
+  };
+
   return (
     <UploadStepsContext.Provider
       value={{
@@ -80,6 +97,7 @@ export const UploadStepsProvider = ({ children }: { children: ReactNode }) => {
         hasAutoAdvanced,
         handleChangeAutoAdvance,
         setError,
+        goToStep,
       }}
     >
       {children}

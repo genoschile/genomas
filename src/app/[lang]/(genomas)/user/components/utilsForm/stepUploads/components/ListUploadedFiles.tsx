@@ -8,9 +8,9 @@ import { useUploadSteps } from "../UploadStepContext";
 export const ListUploadedFiles = () => {
   const { watch } = useUploadSteps();
   const files = watch("files") ?? [];
+  const decompressFiles = watch("decompressFiles") ?? [];
 
   const { uploadStatus } = useUploadStatusContext();
-  const { decompressedFiles } = useUploadStatusContext();
 
   const renderStagedIdleTable = () => (
     <div className="upload-table-container">
@@ -18,7 +18,6 @@ export const ListUploadedFiles = () => {
         <thead>
           <tr>
             <th>Nombre</th>
-            <th>Tipo</th>
             <th>Tamaño</th>
           </tr>
         </thead>
@@ -26,7 +25,6 @@ export const ListUploadedFiles = () => {
           {files.map((file: File, index: number) => (
             <tr key={index}>
               <td>{file.name}</td>
-              <td>{file.type}</td>
               <td>
                 {file.size ? `${(file.size / 1024).toFixed(2)} KB` : "N/D"}
               </td>
@@ -43,46 +41,27 @@ export const ListUploadedFiles = () => {
         <thead>
           <tr>
             <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Progreso</th>
             <th>Aceptado</th>
             <th>Mensaje</th>
             <th>Tamaño</th>
           </tr>
         </thead>
         <tbody>
-          {decompressedFiles.map((file: any, index: number) => {
-            return (
-              <tr key={index}>
-                <td>{file.name}</td>
-                <td>{file.type}</td>
-                <td>
-                  {file.progress === 100 ? (
-                    <span style={{ color: "green" }}>✅</span>
-                  ) : (
-                    <div className="progress-bar">
-                      <div
-                        className="progress-bar__fill"
-                        style={{ width: `${file.progress}%` }}
-                      />
-                      <span className="progress-bar__text">
-                        {file.progress}%
-                      </span>
-                    </div>
-                  )}
-                </td>
-                <td>
-                  {file.accepted ? (
-                    <span style={{ color: "green" }}>✔️</span>
-                  ) : (
-                    <span style={{ color: "red" }}>❌</span>
-                  )}
-                </td>
-                <td>{file.message}</td>
-                <td>{getFileSize(file?.size)}</td>
-              </tr>
-            );
-          })}
+          {decompressFiles.map((file: any, index: number) => (
+            <tr key={index}>
+              <td>{file.name}</td>
+
+              <td>
+                {file.accepted ? (
+                  <span style={{ color: "green" }}>✔️</span>
+                ) : (
+                  <span style={{ color: "red" }}>❌</span>
+                )}
+              </td>
+              <td>{file.message}</td>
+              <td>{getFileSize(file.size)}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

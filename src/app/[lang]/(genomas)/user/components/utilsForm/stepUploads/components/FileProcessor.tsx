@@ -13,7 +13,6 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import { routes } from "@/lib/api/routes";
-import { useSessionContext } from "@/hooks/useSession";
 import { useUploadSteps } from "../UploadStepContext";
 import { useEffect } from "react";
 
@@ -26,6 +25,8 @@ export default function FileProcessor() {
     hasAutoAdvanced,
     handleChangeAutoAdvance,
     setError,
+    goToStep,
+    setValue,
   } = useUploadSteps();
 
   const files = watch("files");
@@ -56,6 +57,9 @@ export default function FileProcessor() {
   } = useUploadStatusContext();
 
   const handleClean = () => {
+    setValue("files", []);
+    setValue("decompressFiles", []);
+    goToStep(2);
     setUploading(false);
     setUploadStatus(UploadStatus.IDLE);
   };
@@ -108,7 +112,7 @@ export default function FileProcessor() {
         return;
       }
 
-      console.log("Respuesta del servidor:", data);
+      setValue("decompressFiles", data.data.files ?? []);
 
       setUploadStatus(UploadStatus.STAGED);
       toast.success("Archivos cargados y descomprimidos.");

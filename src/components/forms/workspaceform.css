@@ -3,7 +3,7 @@
   padding: 20px;
   background: #fff;
   border-radius: 8px;
-  width: 600px;
+  inline-size: 100%;
 
   & .input-group {
     width: 100%;
