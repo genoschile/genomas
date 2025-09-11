@@ -4,7 +4,6 @@ import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEn
 import { FiltersTableUserEnterpriseContextProvider } from "@/context/enterprise/FiltersTableUserEnterpriseContext";
 import { DataTableUserEnterpriseProvider } from "@/context/enterprise/DataTableUserEnterpriseContext";
 import { EnterpriseUserHero } from "./components/EnterpriseUserHero";
-import { EnterpriseUserFiltersHero } from "./components/EnterpriseUserFiltersHero";
 import { TableEnterpriseUserContainer } from "./components/TableEnterpriseUserContainer";
 
 import "./page.css";
@@ -21,7 +20,7 @@ export default function page() {
             description="Puedes agregar, editar y eliminar usuarios de tu organización."
           />
           <EnterpriseUserHero />
-          <EnterpriseUserFiltersHero />
+          {/* <EnterpriseUserFiltersHero /> */}
           <TableEnterpriseUserContainer />
         </div>
       </FiltersTableUserEnterpriseContextProvider>

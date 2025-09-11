@@ -10,6 +10,8 @@ import {
   QuickActionsGroups,
   QuickActionsProjects,
 } from "@/components/enterprise/quickactions/QuickActions";
+import { ContainerWorkspaces } from "./components/workspaces/components/ContainerWorkspaces";
+import { ContainerListWorkspaces } from "./components/workspaces/components/ContainerListWorkspaces";
 
 export default function page() {
   return (
@@ -19,31 +21,27 @@ export default function page() {
         description="What do you think of your organization's summary?"
       />
 
-      <div className="grid">
-        <div className="left-top">
-          <TotalUsersCard />
+      <ContainerWorkspaces>
+        <ContainerListWorkspaces />
+      </ContainerWorkspaces>
+
+      <ContainerWorkspaces>
+        <div className="container__grid-metrics">
+          <div className="container__metrics">
+            <TotalUsersCard />
+            <TotalGroupsCard />
+            <MonthlyGrowthCard />
+          </div>
+          <div className="container__quick-actions">
+            <AdminAccountEnterpriseCredentials />
+            <div>
+              <QuickActionsGroups />
+              <QuickActionsUsers />
+              <QuickActionsProjects />
+            </div>
+          </div>
         </div>
-        <div className="left-bottom">
-          <TotalGroupsCard />
-        </div>
-        <article className="main-top-left">
-          <QuickActionsGroups />
-        </article>
-        <div className="main-top-right">
-          <QuickActionsUsers />
-        </div>
-        <article className="main admincredential">
-          <AdminAccountEnterpriseCredentials />
-        </article>
-        <div className="main-bottom-left"></div>
-        <div className="main-bottom-right"></div>
-        <div className="right-top">
-          <MonthlyGrowthCard />
-        </div>
-        <div className="right-bottom">
-          <QuickActionsProjects />
-        </div>
-      </div>
+      </ContainerWorkspaces>
     </>
   );
 }

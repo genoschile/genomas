@@ -6,12 +6,13 @@ import { useModalContext } from "@/hooks/useModalsProject";
 import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { useState } from "react";
+import { FaEyeSlash } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 
 export const AddUsersEnterprise = () => {
   const { addUsers } = useDataTableUserEnterpriseContext();
   const { closeModal } = useModalContext();
-
   const [form, setForm] = useState({
     email: "",
     encryptedPassword: "",
@@ -19,7 +20,12 @@ export const AddUsersEnterprise = () => {
     name: "",
   });
 
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -102,16 +108,28 @@ export const AddUsersEnterprise = () => {
             required
           />
         </label>
-
-        <label>
+        <label className="password-label-add-enterprise">
           Password:
-          <input
-            type="password"
-            name="encryptedPassword"
-            value={form.encryptedPassword}
-            onChange={handleChange}
-            required
-          />
+          <div>
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              name="encryptedPassword"
+              value={form.encryptedPassword}
+              onChange={handleChange}
+              required
+            />
+            {isPasswordVisible ? (
+              <FaEyeSlash
+                className="eyes-icons"
+                onClick={togglePasswordVisibility}
+              />
+            ) : (
+              <IoEyeSharp
+                className="eyes-icons"
+                onClick={togglePasswordVisibility}
+              />
+            )}
+          </div>
         </label>
 
         <label>

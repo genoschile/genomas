@@ -85,6 +85,10 @@ export const ModalContainer = () => {
       <ModalUtilsUsers id={MODAL_IDS.EXECUTOR} title="Executor">
         <ExecutorContainer />
       </ModalUtilsUsers>
+
+      <Modal id={MODAL_IDS.ADD_USER_ENTERPRISE} title="Add Users">
+        <AddUsersEnterprise />
+      </Modal>
     </>
   );
 };

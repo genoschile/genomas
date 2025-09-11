@@ -34,8 +34,6 @@
   transition: transform 0.3s ease, background-color 0.3s ease,
     box-shadow 0.3s ease;
 
-  background-color: var(--secondary-color);
-
   &:hover {
     transform: translateY(-2px);
   }
@@ -47,9 +45,11 @@
   padding-block: 0.25rem;
   padding-inline: 0.5rem;
 
+  background-color: var(--primary-color-enterprise);
+
   &:hover {
     box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
-    background-color: var(--secondary-hover-color);
+    background-color: var(--secondary-hover-color-enterprise);
   }
 
   img {
@@ -67,6 +67,7 @@
 
     > :first-child {
       margin-right: auto;
+      color: var(--text-color-enterprise);
     }
   }
 
@@ -78,12 +79,12 @@
 
     strong {
       font-size: 1.25em;
-      color: var(--subheading-color);
+      color: var(--subheading-color-enterprise);
     }
 
     small {
       & mark {
-        background-color: var(--bg-style-color);
+        background-color: var(--primary-color);
       }
     }
   }
@@ -113,8 +114,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-
-  padding-inline: 1rem;
+  background-color: var(--primary-color-enterprise);
 
   > div {
     margin-block-end: 0.5rem;
@@ -127,14 +127,12 @@
 
     transition: background-color 0.3s ease, fill 0.3s ease;
 
-    background-color: var(--primary-color);
-
     svg {
-      fill: var(--secondary-color);
+      fill: var(--secondary-color-enterprise);
     }
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: var(--secondary-hover-color-enterprise);
 
       > svg {
         fill: rgba(250, 250, 250, 0.7);
@@ -142,11 +140,11 @@
     }
   }
 
-  > a {
-    background-color: var(--primary-color);
-
+  > button.bg {
+    background-color: transparent;
+    border: 1px solid var(--bg-style-color);
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-color-enterprise);
 
     padding-inline: 0.5rem;
     padding-block: 0.5rem;
@@ -156,7 +154,7 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 
     &:hover {
-      background-color: var(--secondary-hover-color);
+      background-color: var(--secondary-hover-color-enterprise);
     }
   }
 }

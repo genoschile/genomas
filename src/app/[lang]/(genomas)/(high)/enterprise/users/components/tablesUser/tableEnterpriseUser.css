@@ -1,181 +1,93 @@
-table {
+.enterprise-user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   inline-size: 100%;
-  overflow-x: auto;
 
-  border-collapse: collapse;
-
-  & input[type="checkbox"] {
-    width: 1rem;
-    height: 1rem;
-    aspect-ratio: 1;
+  button {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    padding: 0.5rem 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
-  }
+    background-color: var(--primary-color);
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    color: var(--button-blue);
 
-  & td {
-    vertical-align: top;
-    text-align: center;
-  }
-
-  & tr {
-    height: auto;
-    background-color: transparent;
-    transition: background-color 0.3s ease;
-  }
-
-  & tr.selected td {
-    background-color: var(--hover-row-table);
-  }
-
-  & caption {
-    font-size: 1.875em;
-    font-weight: bold;
-    color: var(--text-color-enterprise);
-    text-align: center;
-
-    margin-inline: auto;
-    inline-size: 100%;
-    margin-block-end: 1rem;
-
-    position: relative;
-
-    &::after {
-      position: absolute;
-      content: "";
-      display: block;
-      bottom: -15px;
-      width: 100%;
-      height: 0.25rem;
-      background-color: var(--primary-color-enterprise);
-    }
-  }
-
-  & thead {
-    & tr {
-      &:first-child > th:is(:first-child, :last-child) {
-        visibility: hidden;
-      }
-
-      & th {
-        padding: 1rem;
-      }
-    }
-  }
-
-  & tbody {
-    display: table-row-group;
-    vertical-align: top;
-    inline-size: 100%;
-
-    /**/
-    td button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 18px;
+    &:first-child {
+      background-color: #09f;
+      color: white;
     }
 
-    td div ul li button {
-      width: 100%;
-      text-align: left;
-      padding: 0.5rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-    /*  */
-    & tr {
-      & td {
-        padding: 0.4rem;
-
-        &:first-child {
-          width: 1rem;
-          text-align: center;
-
-          & svg {
-            margin-left: 0.5rem;
-            stroke: black;
-            stroke-width: 10px;
-            fill: none;
-            cursor: pointer;
-
-            &.favorite {
-              fill: yellow;
-              stroke: yellow;
-            }
-          }
-        }
-
-        & > div {
-          padding: 0.25rem;
-          border-radius: 4px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 40px;
-        }
-      }
-    }
-  }
-
-  & tfood {
-    width: 100%;
-    margin-top: 1rem;
-    & tr {
-      width: 100%;
-      & td {
-        margin: 0 auto;
-      }
+    &:last-child {
+      background-color: #f44336;
+      color: white;
     }
   }
 }
 
-td.user-avatar {
+.enterprise-user-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.enterprise-user-item.selected {
+  background-color: var(--hover-row-table);
+}
+
+.user-select {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.user-avatar {
   position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
 
-  &::before {
-    content: attr(data-name);
-    content: attr(data-name) " ";
-    content: attr(data-name) !important;
+.user-avatar::before {
+  content: attr(data-name);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
 
-    content: attr(data-name) " ";
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+.user-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
 
-    border-radius: 50%;
-    background-color: #ccc;
-    color: #fff;
-    font-weight: bold;
-    font-size: 18px;
-    text-transform: uppercase;
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex-grow: 1;
+  text-align: left;
+}
 
-    position: absolute;
-    inset: 0;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-
-    z-index: 10;
-  }
-
-  & img {
-    height: 40px;
-    aspect-ratio: 1 / 1;
-    max-inline-size: 100%;
-    border-radius: 100%;
-    object-fit: cover;
-    background-color: red;
-    background-size: cover;
-    display: block;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-
-    max-width: 40px;
-    max-height: 40px;
-  }
-
-  & img:empty + &::before {
-    display: flex;
-  }
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
 }

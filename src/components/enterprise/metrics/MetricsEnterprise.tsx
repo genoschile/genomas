@@ -7,18 +7,10 @@ type Props = {
   icon: JSX.Element;
   value: string;
   change: string;
-  image: string;
   caption: string;
 };
 
-export const MetricCard = ({
-  title,
-  icon,
-  value,
-  change,
-  image,
-  caption,
-}: Props) => {
+export const MetricCard = ({ title, icon, value, change }: Props) => {
   return (
     <div className="box box-metrics">
       <header>
@@ -32,11 +24,6 @@ export const MetricCard = ({
           <mark>{change}</mark>
         </small>
       </main>
-
-      <figure>
-        <figcaption>{caption}</figcaption>
-        <img src={image} alt={title} />
-      </figure>
     </div>
   );
 };
@@ -47,7 +34,6 @@ export const TotalUsersCard = () => (
     icon={<FaUser />}
     value="1,250"
     change="+ 12% from last month"
-    image="/images/carrousel/car1.svg"
     caption="Usuarios activos"
   />
 );
@@ -58,7 +44,6 @@ export const TotalGroupsCard = () => (
     icon={<FaUsers />}
     value="320"
     change="+ 2% from last month"
-    image="/images/carrousel/car2.svg"
     caption="Grupos creados"
   />
 );
@@ -69,7 +54,6 @@ export const MonthlyGrowthCard = () => (
     icon={<FaChartLine />}
     value="8.5%"
     change="+ 1.3% from last month"
-    image="/images/carrousel/car3.svg"
     caption="Crecimiento mensual"
   />
 );

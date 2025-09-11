@@ -113,49 +113,41 @@ export const AdminAccountEnterpriseCredentials = () => {
   };
 
   return (
-    <div className="admincredential--container">
+    <div className="admin-credentials-card">
       {loading ? (
         <p>Cargando credenciales...</p>
       ) : credentials ? (
-        <form id="admin-credentials-form" onSubmit={handleSubmit}>
-          <fieldset>
-            <legend>
-              credentials <IconRoundedFull icon={<VscAccount />} />
-            </legend>
-            <div>
-              <label>
-                Correo
-                <input type="text" value={credentials.email} readOnly />
-              </label>
+        <>
+          <h2 className="card-title">
+            <VscAccount /> Credenciales de Admin
+          </h2>
 
-              <label>
-                Password
-                <div>
-                  <input
-                    type="password"
-                    value={credentials.password}
-                    readOnly
-                  />
-                  <button type="button" onClick={handleCopyPassword}>
-                    <FaRegCopy />
-                  </button>
-                </div>
-              </label>
+          <div className="field">
+            <label>Correo</label>
+            <input type="text" value={credentials.email} readOnly />
+          </div>
+
+          <div className="field">
+            <label>Password</label>
+            <div className="password-field">
+              <input type="password" value={credentials.password} readOnly />
+              <button type="button" onClick={handleCopyPassword}>
+                <FaRegCopy />
+              </button>
             </div>
-          </fieldset>
-        </form>
+          </div>
+
+          <button className="switch-btn" onClick={handleSubmit}>
+            <MdManageAccounts className="icon" /> Switch Session to User
+          </button>
+
+          <small className="note">
+            Guarda estas credenciales de manera segura.
+          </small>
+        </>
       ) : (
         <p>No se pudieron cargar las credenciales.</p>
       )}
-
-      <hr className="no-flex" />
-
-      <footer>
-        <small>Ensure these credentials are stored securely.</small>
-        <button form="admin-credentials-form" type="submit">
-          <MdManageAccounts /> Switch Session to User
-        </button>
-      </footer>
     </div>
   );
 };

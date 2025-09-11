@@ -1,14 +1,27 @@
-.skeleton {
-  background-color: #e0e0e0;
-  border-radius: 4px;
+.skeleton-user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   width: 100%;
+}
+
+.skeleton-user-item {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.skeleton {
+  background-color: #eee;
+  border-radius: 4px;
   height: 20px;
+  flex: 1 1 100px;
   animation: pulse 1.5s infinite ease-in-out;
 }
 
 .skeleton-cell {
+  flex: 1 1 100px;
   height: 20px;
-  width: 100%;
 }
 
 @keyframes pulse {

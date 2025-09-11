@@ -18,7 +18,6 @@ const ROUTES_BY_ROLE = {
     { Icon: FiUser, title: "Users", path: `${pathNameBase}/users` },
     { Icon: MdGroups2, title: "Groups", path: `${pathNameBase}/groups` },
     { Icon: FiHome, title: "Project", path: `${pathNameBase}/projects` },
-    { Icon: FiHome, title: "Workspaces", path: `${pathNameBase}/workspaces` },
     {
       Icon: GiGlowingHands,
       title: "AI Suggestions",

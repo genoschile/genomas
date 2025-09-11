@@ -51,9 +51,9 @@ export const submitLoginEnterprise = async (
     const responseData: ActionResponse = await restLogin.json();
 
     if (responseData.success) {
-      if (responseData.data?.accessToken) {
-        localStorage.setItem("accessToken", responseData.data.accessToken);
-      }
+      // if (responseData.data?.accessToken) {
+      //   localStorage.setItem("accessToken", responseData.data.accessToken);
+      // }
 
       return {
         success: true,
