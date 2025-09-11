@@ -1,19 +1,31 @@
 "use client";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+
 import "./style.css";
+
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
+import { ContainerDefaultEnterprise } from "../../enterprise/components/ContainerDefaultEnterprise";
+import { ContainerSearch } from "../components/SearchOrganization";
 
 type Organization = {
   id: string;
   name: string;
   email: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export default function Page() {
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Cargar organizaciones desde la API
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setSearchTerm(event.target.value);
+  };
+
   useEffect(() => {
     const fetchOrganizations = async () => {
       try {
@@ -29,7 +41,6 @@ export default function Page() {
     fetchOrganizations();
   }, []);
 
-  // Eliminar organización
   const handleDelete = async (id: string) => {
     if (!confirm("¿Seguro que deseas eliminar esta organización?")) return;
 
@@ -48,50 +59,62 @@ export default function Page() {
     }
   };
 
-  // Editar organización
   const handleEdit = (id: string) => {
     alert(`Editar organización con ID: ${id}`);
-    // Aquí puedes abrir un modal o redirigir a /admin/organizations/edit/[id]
   };
-
-  if (loading) {
-    return <p className="text-gray-500">Cargando organizaciones...</p>;
-  }
 
   return (
     <div className="org-container">
-      <h1 className="org-title">Mantenedor de Organizaciones</h1>
+      <ChatSuggestionTitle
+        title="Administra Organizaciones"
+        description="Puedes agregar, editar y eliminar organizaciones."
+      />
 
-      {organizations.length === 0 ? (
-        <p className="org-empty">No hay organizaciones registradas.</p>
+      {loading ? (
+        <ContainerDefaultEnterprise>
+          <p>Cargando organizaciones...</p>
+        </ContainerDefaultEnterprise>
       ) : (
-        <div className="org-list">
-          {organizations.map((org) => (
-            <div key={org.id} className="org-card">
-              {/* Información de la organización */}
-              <div>
-                <h2 className="org-name">{org.name}</h2>
-                <p className="org-email">{org.email}</p>
-              </div>
+        <>
+          <ContainerDefaultEnterprise dinamicStyle="enterprise-groups__hero">
+            <ContainerSearch
+              onSearchChange={handleSearchChange}
+              searchTerm={searchTerm}
+            />
+          </ContainerDefaultEnterprise>
 
-              {/* Botones de acción */}
-              <div className="org-actions">
-                <button
-                  onClick={() => handleEdit(org.id)}
-                  className="org-edit-btn"
-                >
-                  <FaEdit /> Editar
-                </button>
-                <button
-                  onClick={() => handleDelete(org.id)}
-                  className="org-delete-btn"
-                >
-                  <FaTrashAlt /> Eliminar
-                </button>
+          <ContainerDefaultEnterprise>
+            {organizations.length === 0 ? (
+              <p className="org-empty">No hay organizaciones registradas.</p>
+            ) : (
+              <div className="org-list">
+                {organizations.map((org) => (
+                  <div key={org.id} className="org-card">
+                    <div>
+                      <h2 className="org-name">{org.name}</h2>
+                      <p className="org-email">{org.email}</p>
+                    </div>
+
+                    <div className="org-actions">
+                      <button
+                        onClick={() => handleEdit(org.id)}
+                        className="org-edit-btn"
+                      >
+                        <FaEdit /> Editar
+                      </button>
+                      <button
+                        onClick={() => handleDelete(org.id)}
+                        className="org-delete-btn"
+                      >
+                        <FaTrashAlt /> Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          ))}
-        </div>
+            )}
+          </ContainerDefaultEnterprise>
+        </>
       )}
     </div>
   );
