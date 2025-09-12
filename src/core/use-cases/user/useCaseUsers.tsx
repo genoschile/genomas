@@ -57,4 +57,9 @@ export class useCaseUsers {
   async findWorkspacesByUserId(id: string): Promise<ResponseWorkspacesDTO[] | null> {
     return this.userRepo.findWorkspacesByUserId(id);
   }
+
+  async removeUserFromOrg(orgId: string, userId: string): Promise<IUser> {
+    // Podrías agregar validaciones de negocio aquí (ej: permisos, auditoría, etc.)
+    return this.userRepo.removeUserFromOrg(orgId, userId);
+  }
 }

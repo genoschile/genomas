@@ -34,6 +34,7 @@ type TableContextType = {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
   addUsers: (newUsers: User[]) => void;
+  removeUser: (id: string) => void;
 };
 
 const DataTableUserEnterpriseContext = createContext<
@@ -108,6 +109,10 @@ export const DataTableUserEnterpriseProvider = ({
     );
   };
 
+  const removeUser = (id: string) => {
+    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+  };
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const paginatedUsers = filteredUsers.slice(indexOfFirstPost, indexOfLastPost);
@@ -127,6 +132,7 @@ export const DataTableUserEnterpriseProvider = ({
         setCurrentPage,
         loading,
         searchTerm,
+        removeUser,
         setSearchTerm,
       }}
     >

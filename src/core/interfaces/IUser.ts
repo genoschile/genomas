@@ -61,4 +61,5 @@ export interface IUserRepository {
   findWorkspacesByUserId(
     userId: string
   ): Promise<ResponseWorkspacesDTO[] | null>;
+  removeUserFromOrg(orgId: string, userId: string): Promise<IUser>;
 }

@@ -283,4 +283,35 @@ export class UserRepository implements IUserRepository {
 
     return Array.from(uniqueProjectsMap.values()) as IProject[];
   }
+
+  async removeUserFromOrg(orgId: string, userId: string): Promise<IUser> {
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+        organizationId: orgId,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found in the specified organization.");
+    }
+
+    await prisma.projectShare.deleteMany({
+      where: { userId },
+    });
+
+    await prisma.userGroup.deleteMany({
+      where: { userId },
+    });
+
+    await prisma.workspaceMember.deleteMany({
+      where: { userId },
+    });
+
+    const deletedUser = await prisma.user.delete({
+      where: { id: userId },
+    });
+
+    return mapToIUser(deletedUser);
+  }
 }

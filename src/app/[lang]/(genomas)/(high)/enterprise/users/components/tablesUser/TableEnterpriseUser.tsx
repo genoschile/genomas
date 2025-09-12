@@ -7,6 +7,8 @@ import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTabl
 
 import { FaStar } from "react-icons/fa";
 import { SkeletonTable } from "./SkeletonTableUser";
+import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
+import { toast } from "react-toastify";
 
 export const headerTablesEnterpriseUser = [
   "Imagen",
@@ -28,7 +30,33 @@ export const TableEnterpriseUser = () => {
     users,
     postsPerPage,
     loading,
+    removeUser,
   } = useDataTableUserEnterpriseContext();
+
+  const orgId = getLocalStorageOrganization();
+
+  const handleDelete = async (userId: string) => {
+    if (!confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/organization/${orgId}/users`, {
+        method: "DELETE",
+        body: JSON.stringify({ userId }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res.ok) {
+        removeUser(userId);
+        toast.success("Usuario eliminado correctamente");
+      } else {
+        toast.error("Error al eliminar el usuario");
+      }
+    } catch (error) {
+      toast.error("Error al eliminar el usuario");
+    }
+  };
 
   if (loading) return <SkeletonTable rows={2} />;
 
@@ -79,9 +107,7 @@ export const TableEnterpriseUser = () => {
             <button onClick={() => console.log("Editar", user.id)}>
               Editar
             </button>
-            <button onClick={() => console.log("Eliminar", user.id)}>
-              Eliminar
-            </button>
+            <button onClick={() => handleDelete(user.id)}>Eliminar</button>
           </div>
         </li>
       ))}

@@ -102,3 +102,46 @@ export async function GET(
     });
   }
 }
+
+type DeleteRequestBody = {
+  userId: string;
+};
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id: orgId } = await params;
+    const body: DeleteRequestBody = await request.json();
+
+    if (!orgId || !body?.userId) {
+      return NextResponse.json(
+        { message: "Organization ID or User ID is missing", success: false },
+        { status: 400 }
+      );
+    }
+
+    console.log("DELETE request body:", body.userId);
+    const updatedUser = await useCaseUser.removeUserFromOrg(orgId, body.userId);
+
+    return NextResponse.json(
+      {
+        message: "Usuario eliminado correctamente de la organización",
+        success: true,
+        data: updatedUser,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error in DELETE /api/organization/[id]/users", error);
+
+    return NextResponse.json(
+      {
+        message: error instanceof Error ? error.message : "Unexpected error",
+        success: false,
+      },
+      { status: 500 }
+    );
+  }
+}

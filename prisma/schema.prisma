@@ -148,7 +148,7 @@ model ProjectGroupShare {
   access    AccessType
   createdAt DateTime   @default(now())
   group     Group      @relation("GroupProjectShares", fields: [groupId], references: [id])
-  project   Project    @relation("ProjectGroupShares", fields: [projectId], references: [id])
+  project   Project    @relation("ProjectGroupShares", fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([groupId, projectId])
 }
