@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSessionContext } from "@/hooks/useSession";
 import { routes } from "@/lib/api/routes";
+import { SkeletonWorkspace } from "@/app/[lang]/(genomas)/(high)/enterprise/components/workspaces/components/ContainerListWorkspaces";
 
 type Credentials = {
   email: string;
@@ -115,7 +116,11 @@ export const AdminAccountEnterpriseCredentials = () => {
   return (
     <div className="admin-credentials-card">
       {loading ? (
-        <p>Cargando credenciales...</p>
+        <ul className="container__list-workspaces">
+          {[...Array(1)].map((_, i) => (
+            <SkeletonWorkspace key={i} />
+          ))}
+        </ul>
       ) : credentials ? (
         <>
           <h2 className="card-title">

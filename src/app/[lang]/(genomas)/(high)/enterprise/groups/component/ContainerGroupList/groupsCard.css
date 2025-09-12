@@ -31,7 +31,7 @@
     background-color: transparent;
     border-radius: 0.5rem;
     pointer-events: none;
-    background-color: #09f;
+    background-color: rgb(0, 255, 119);
     color: white;
     border-radius: 50%;
     width: 25px;
@@ -72,13 +72,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding-block: 0.25rem;
-
-    background-color: var(--primary-color-enterprise);
-
     flex-direction: column;
-
     gap: 0.3rem;
 
     > div {
@@ -176,10 +171,6 @@
           padding-block: 0.125rem;
           border-radius: 0.75rem;
         }
-      }
-
-      &.groupsCardMembersList {
-        background-color: var(--primary-color-enterprise);
       }
 
       p {

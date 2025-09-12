@@ -24,12 +24,12 @@ export function SearchFilterEnterpriseGroups({
 }) {
   return (
     <search className="searchFilterEnterpriseGroups">
-      <CheckboxButtonFilterTable id="1" />
+      {/* <CheckboxButtonFilterTable id="1" /> */}
       <DateCreatedButtonFilterTable
         onChangeDateCreateAscDesc={onChangeDateCreateAscDesc}
         isAscending={isAscending}
       />
-      <FiltersButtonFilterTable id="2" />
+      {/* <FiltersButtonFilterTable id="2" /> */}
       <ExportButtonFilterTable id="3" />
       <MoveTrashButtonFilterTable />
     </search>

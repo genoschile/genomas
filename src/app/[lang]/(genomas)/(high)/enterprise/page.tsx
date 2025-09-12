@@ -12,6 +12,7 @@ import {
 } from "@/components/enterprise/quickactions/QuickActions";
 import { ContainerWorkspaces } from "./components/workspaces/components/ContainerWorkspaces";
 import { ContainerListWorkspaces } from "./components/workspaces/components/ContainerListWorkspaces";
+import { DataTableUserEnterpriseProvider } from "@/context/enterprise/DataTableUserEnterpriseContext";
 
 export default function page() {
   return (
@@ -20,15 +21,17 @@ export default function page() {
         title="Hello there"
         description="What do you think of your organization's summary?"
       />
-
+      {/* 
       <ContainerWorkspaces>
         <ContainerListWorkspaces />
-      </ContainerWorkspaces>
+      </ContainerWorkspaces> */}
 
       <ContainerWorkspaces>
         <div className="container__grid-metrics">
           <div className="container__metrics">
-            <TotalUsersCard />
+            <DataTableUserEnterpriseProvider>
+              <TotalUsersCard />
+            </DataTableUserEnterpriseProvider>
             <TotalGroupsCard />
             <MonthlyGrowthCard />
           </div>

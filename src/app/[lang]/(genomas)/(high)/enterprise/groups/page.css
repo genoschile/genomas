@@ -64,71 +64,10 @@
 }
 
 .flip {
-  position: relative;
-  padding: 2rem 3rem;
-  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 1s ease;
 
-  &:hover span::before,
-  &:hover span::after {
-    transform: scaleY(1.1);
-    opacity: 1;
-  }
-
-  /* Horizontales (top y bottom) */
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    height: 2px;
-    background: #00fff7;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-    transform-origin: center;
-    transform: scaleX(0.6);
-    opacity: 0;
-    width: 100%;
-  }
-
-  &:before {
-    top: 0;
-    left: 0;
-  }
-
-  &::after {
-    bottom: 0;
-    left: 0;
-  }
-
-  &:hover::before,
-  &:hover::after {
-    transform: scaleX(1.1);
-    /* expande a full desde el centro */
-    opacity: 1;
-  }
-
-  /* Verticales (left y right) */
-  > span {
-    &::before,
-    &::after {
-      content: "";
-      position: absolute;
-      width: 2px;
-      background: #00fff7;
-      transition: transform 0.8s ease, opacity 0.4s ease;
-      transform-origin: center;
-      transform: scaleY(0.6);
-      /* comienza al 60% */
-      opacity: 0;
-      height: 100%;
-    }
-
-    &::before {
-      left: 0;
-      top: 0;
-    }
-
-    &::after {
-      right: 0;
-      top: 0;
-    }
+  &:hover {
+    transform: translate(0, -5px);
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.8);
   }
 }
