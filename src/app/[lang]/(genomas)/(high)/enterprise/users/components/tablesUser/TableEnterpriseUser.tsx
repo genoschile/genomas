@@ -9,6 +9,9 @@ import { FaStar } from "react-icons/fa";
 import { SkeletonTable } from "./SkeletonTableUser";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { toast } from "react-toastify";
+import { useModalContext } from "@/hooks/useModalsProject";
+import { MODAL_IDS } from "@/context/ModalsProject";
+import { routes } from "@/lib/api/routes";
 
 export const headerTablesEnterpriseUser = [
   "Imagen",
@@ -41,7 +44,12 @@ export const TableEnterpriseUser = () => {
     }
 
     try {
-      const res = await fetch(`/api/organization/${orgId}/users`, {
+      if (!orgId) {
+        toast.error("ID de organización no encontrado");
+        return;
+      }
+
+      const res = await fetch(routes.deleteUserFromOrganization(orgId), {
         method: "DELETE",
         body: JSON.stringify({ userId }),
         headers: { "Content-Type": "application/json" },
@@ -104,9 +112,7 @@ export const TableEnterpriseUser = () => {
             <span>{user.groups?.join(", ")}</span>
           </div>
           <div className="user-actions">
-            <button onClick={() => console.log("Editar", user.id)}>
-              Editar
-            </button>
+            <ButtonEditUser userId={user.id} />
             <button onClick={() => handleDelete(user.id)}>Eliminar</button>
           </div>
         </li>
@@ -120,5 +126,19 @@ export const TableEnterpriseUser = () => {
         />
       </li>
     </ul>
+  );
+};
+
+export const ButtonEditUser = ({ userId }: { userId: string }) => {
+  const { openModal } = useModalContext();
+
+  console.log("ButtonEditUser userId:", userId);
+
+  return (
+    <button
+      onClick={() => openModal(MODAL_IDS.EDIT_USERS_ENTERPRISE, { userId })}
+    >
+      Editar
+    </button>
   );
 };

@@ -1,8 +1,6 @@
 export const genomasEnterpriseRoutes = {
-  /* suggestions */
   getSuggestionsEnterpise: () => `/api/suggestions/enterprise`,
 
-  /* groups */
   getGroupsEnterprise: (organization: string) =>
     `/api/organization/${organization}/groups`,
 
@@ -28,4 +26,7 @@ export const genomasEnterpriseRoutes = {
 
   getCredentialsUserAdmin: (organizationId: string) =>
     `/api/organization/${organizationId}/defaultAdmin`,
+
+  deleteUserFromOrganization: (organizationId: string) =>
+    `/api/organization/${organizationId}/users`,
 };

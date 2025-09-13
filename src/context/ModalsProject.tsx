@@ -18,6 +18,7 @@ export const MODAL_IDS = {
   WORKFLOWS: "workflows",
   TRASH_USER: "trash_user",
   EXECUTOR: "executor_user",
+  EDIT_USERS_ENTERPRISE: "edit_users_enterprise",
 } as const;
 
 export type ModalID = (typeof MODAL_IDS)[keyof typeof MODAL_IDS] | null;
@@ -25,13 +26,15 @@ export type ModalID = (typeof MODAL_IDS)[keyof typeof MODAL_IDS] | null;
 export interface ModalProps {
   id: ModalID;
   title: string;
-  children: React.ReactNode;
+  children: React.ReactNode | ((args: { payload: any }) => React.ReactNode);
+  payload?: any;
 }
 
 export interface ModalContextProps {
   activeModal: ModalID;
-  openModal: (id: ModalID) => void;
+  openModal: (id: ModalID, payload?: any) => void;
   closeModal: () => void;
+  payload: any;
 }
 
 export const ModalContext = createContext<ModalContextProps | undefined>(
@@ -42,16 +45,22 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [activeModal, setActiveModal] = useState<ModalID>(null);
+  const [payload, setPayload] = useState<any>(null);
 
-  const openModal = (id: ModalID) => {
+  const openModal = (id: ModalID, payload?: any) => {
     setActiveModal(id);
+    setPayload(payload ?? null);
   };
+
   const closeModal = () => {
     setActiveModal(null);
+    setPayload(null);
   };
 
   return (
-    <ModalContext.Provider value={{ activeModal, openModal, closeModal }}>
+    <ModalContext.Provider
+      value={{ activeModal, payload, openModal, closeModal }}
+    >
       {children}
     </ModalContext.Provider>
   );

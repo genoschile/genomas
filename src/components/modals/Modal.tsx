@@ -14,7 +14,7 @@ import { ModalProps } from "@/context/ModalsProject";
 import "./modal.css";
 
 export const Modal: React.FC<ModalProps> = ({ id, title, children }) => {
-  const { activeModal, closeModal } = useModalContext();
+  const { activeModal, closeModal, payload } = useModalContext();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const Modal: React.FC<ModalProps> = ({ id, title, children }) => {
             </button>
           </form>
         </header>
-        {children}
+        {typeof children === "function" ? children({ payload }) : children}
       </div>
     </dialog>
   );

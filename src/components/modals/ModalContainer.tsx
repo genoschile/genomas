@@ -19,6 +19,7 @@ import { UploadForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/Upl
 import { TrashContainer } from "@/app/[lang]/(genomas)/user/components/TrashContainer";
 import { ExecutorContainer } from "@/app/[lang]/(genomas)/user/components/utilsForm/ExecutorContainer";
 import { UploadStepsProvider } from "@/app/[lang]/(genomas)/user/components/utilsForm/stepUploads/UploadStepContext";
+import { ModalEditsUsersEnterprise } from "@/app/[lang]/(genomas)/(high)/enterprise/users/components/ModalEditsUsersEnterprise";
 
 export const ModalContainer = () => {
   return (
@@ -39,9 +40,7 @@ export const ModalContainer = () => {
         id={MODAL_IDS.ADD_GROUPS_ENTERPRISE}
         title="Add Groups(s) to Enterprise"
       >
-        <>
-          <AddGroupsFormEnterprise />
-        </>
+        <AddGroupsFormEnterprise />
       </Modal>
 
       <Modal id={MODAL_IDS.WORKSPACE_ENTERPRISE} title="Create new Workspace">
@@ -62,6 +61,12 @@ export const ModalContainer = () => {
 
       <Modal id={MODAL_IDS.EDIT_GROUPS_ENTERPRISE} title="Edit Group">
         <ModalGroupsEditEnterprise />
+      </Modal>
+
+      <Modal id={MODAL_IDS.EDIT_USERS_ENTERPRISE} title="Edit Users">
+        {({ payload }) => (
+          <ModalEditsUsersEnterprise userId={payload.userId} />
+        )}
       </Modal>
 
       <ModalUtilsUsers id={MODAL_IDS.UPLOAD_FILES} title="Upload Files">

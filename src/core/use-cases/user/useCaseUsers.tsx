@@ -59,7 +59,6 @@ export class useCaseUsers {
   }
 
   async removeUserFromOrg(orgId: string, userId: string): Promise<IUser> {
-    // Podrías agregar validaciones de negocio aquí (ej: permisos, auditoría, etc.)
     return this.userRepo.removeUserFromOrg(orgId, userId);
   }
 }
