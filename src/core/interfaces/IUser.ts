@@ -63,3 +63,98 @@ export interface IUserRepository {
   ): Promise<ResponseWorkspacesDTO[] | null>;
   removeUserFromOrg(orgId: string, userId: string): Promise<IUser>;
 }
+
+export interface UserProps {
+  id: string;
+  name?: string | null;
+  email: string;
+  encryptedPassword: string;
+  userType: UserType;
+  organizationId: string;
+  isDefaultAdmin: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export class User {
+  private props: UserProps;
+
+  constructor(props: UserProps) {
+    this.props = props;
+  }
+
+  // ✅ Getters seguros (solo exponen lo que se necesita)
+  get id(): string {
+    return this.props.id;
+  }
+
+  get name(): string | null | undefined {
+    return this.props.name;
+  }
+
+  get email(): string {
+    return this.props.email;
+  }
+
+  get userType(): UserType {
+    return this.props.userType;
+  }
+
+  get organizationId(): string {
+    return this.props.organizationId;
+  }
+
+  get isDefaultAdmin(): boolean {
+    return this.props.isDefaultAdmin;
+  }
+
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  get updatedAt(): Date {
+    return this.props.updatedAt;
+  }
+
+  // ✅ Métodos de negocio (reglas de dominio)
+  public changeName(newName: string): void {
+    if (!newName || newName.trim().length === 0) {
+      throw new Error("Name cannot be empty");
+    }
+    this.props.name = newName.trim();
+  }
+
+  public promoteToAdmin(): void {
+    this.props.userType = UserType.ADMIN;
+  }
+
+  public isAdmin(): boolean {
+    return this.props.userType === UserType.ADMIN;
+  }
+
+  public isDefault(): boolean {
+    return this.props.isDefaultAdmin;
+  }
+
+  // ✅ Método de fábrica para crear usuarios nuevos
+  static createNew(
+    name: string,
+    email: string,
+    encryptedPassword: string,
+    organizationId: string,
+    userType: UserType = UserType.CLIENT,
+    isDefaultAdmin = false
+  ): User {
+    return new User({
+      id: crypto.randomUUID(), // o cuid si quieres ser consistente con Prisma
+      name,
+      email,
+      encryptedPassword,
+      userType,
+      organizationId,
+      isDefaultAdmin,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  }
+}

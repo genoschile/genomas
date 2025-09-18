@@ -296,6 +296,10 @@ export class UserRepository implements IUserRepository {
       throw new Error("User not found in the specified organization.");
     }
 
+    if (user.isDefaultAdmin) {
+      throw new Error("Cannot remove the default admin of the organization.");
+    }
+    
     await prisma.projectShare.deleteMany({
       where: { userId },
     });

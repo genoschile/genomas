@@ -16,12 +16,12 @@
     border-radius: 0.5rem;
     color: var(--button-blue);
 
-    &:first-child {
+    &.edit {
       background-color: #09f;
       color: white;
     }
 
-    &:last-child {
+    &.delete {
       background-color: #f44336;
       color: white;
     }

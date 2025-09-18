@@ -113,7 +113,11 @@ export const TableEnterpriseUser = () => {
           </div>
           <div className="user-actions">
             <ButtonEditUser userId={user.id} />
-            <button onClick={() => handleDelete(user.id)}>Eliminar</button>
+            {!user.isDefaultAdmin && (
+              <button className="delete" onClick={() => handleDelete(user.id)}>
+                Eliminar
+              </button>
+            )}
           </div>
         </li>
       ))}
@@ -132,10 +136,9 @@ export const TableEnterpriseUser = () => {
 export const ButtonEditUser = ({ userId }: { userId: string }) => {
   const { openModal } = useModalContext();
 
-  console.log("ButtonEditUser userId:", userId);
-
   return (
     <button
+      className="edit"
       onClick={() => openModal(MODAL_IDS.EDIT_USERS_ENTERPRISE, { userId })}
     >
       Editar

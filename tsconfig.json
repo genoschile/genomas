@@ -28,10 +28,16 @@
       "@Config/*": ["./src/lib/config/*"],
       "@core/*": ["./src/core/*"],
       "@utils/*": ["./src/utils/*"],
-      "@styles/*": ["./src/styles/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[lang]/(content)/pipelines/betaflow/page.mdx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/[lang]/(content)/pipelines/betaflow/page.mdx"
+  ],
   "exclude": ["node_modules"],
   "typeRoots": ["./node_modules/@types", "./.next/types"]
 }

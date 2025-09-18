@@ -2,6 +2,7 @@
 
 import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
+import { toast } from "react-toastify";
 
 import React, {
   createContext,
@@ -18,6 +19,9 @@ type User = {
   email: string;
   role: string;
   groups: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  isDefaultAdmin: boolean;
 };
 
 type TableContextType = {
@@ -68,16 +72,15 @@ export const DataTableUserEnterpriseProvider = ({
         const res = await fetch(routes.getUserFromOrganization(org));
 
         if (!res.ok) {
-          throw new Error("Error al obtener los usuarios");
+          toast.error("Error al obtener los usuarios");
         }
 
         const data = await res.json();
 
-        console.log("Usuarios obtenidos:", data);
-
         setUsers(data.data || []);
       } catch (err) {
         console.error("Error al cargar usuarios:", err);
+        toast.error("Error al cargar usuarios");
       } finally {
         setLoading(false);
       }
