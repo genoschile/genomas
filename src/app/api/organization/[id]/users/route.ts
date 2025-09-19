@@ -11,6 +11,8 @@ export async function POST(
     const id = (await params).id;
     const body = await request.json();
 
+    console.log("POST request body:", body);
+
     if (!id || !body) {
       return NextResponse.json(
         { message: "ID or body is missing", success: false },

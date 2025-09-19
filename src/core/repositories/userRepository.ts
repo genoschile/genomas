@@ -151,19 +151,14 @@ export class UserRepository implements IUserRepository {
     orgId: string,
     data?: Omit<IUser, "id"> & { userId?: string }
   ): Promise<IUser> {
-    console.log("aqui");
+
+    console.log("addUserToOrg called with:", { orgId, data });
 
     if (data?.userId) {
-      await prisma.user.update({
+      const updatedUser = await prisma.user.update({
         where: { id: data.userId },
         data: { organizationId: orgId },
       });
-
-      const updatedUser = await prisma.user.findUnique({
-        where: { id: data.userId },
-      });
-
-      if (!updatedUser) throw new Error("User not found after update.");
 
       return mapToIUser(updatedUser);
     }
@@ -174,7 +169,6 @@ export class UserRepository implements IUserRepository {
       );
     }
 
-    // Crear nuevo usuario
     const hashedPassword = await bcrypt.hash(data.encryptedPassword, 10);
 
     const user = await prisma.user.create({
@@ -184,8 +178,6 @@ export class UserRepository implements IUserRepository {
         userType: MapToPrismaUserType(data.userType),
         organizationId: orgId,
         encryptedPassword: hashedPassword,
-        createdAt: data.createdAt,
-        updatedAt: data.updatedAt,
       },
     });
 
@@ -299,7 +291,7 @@ export class UserRepository implements IUserRepository {
     if (user.isDefaultAdmin) {
       throw new Error("Cannot remove the default admin of the organization.");
     }
-    
+
     await prisma.projectShare.deleteMany({
       where: { userId },
     });

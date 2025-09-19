@@ -8,20 +8,25 @@ export async function GET(
   const id = (await params).id;
 
   if (!id) {
-    return NextResponse.json({
-      success: false,
-      message: "Organization ID is required",
-
-    }, { status: 400 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Organization ID is required",
+      },
+      { status: 400 }
+    );
   }
 
   const orgWorkspacesList = await useCaseOrganization.findWorkspacesByOrgId(id);
 
   if (!orgWorkspacesList) {
-    return NextResponse.json({
-      success: false,
-      message: `No groups found for org with id: ${id}`,
-    }, { status: 400 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: `No groups found for org with id: ${id}`,
+      },
+      { status: 400 }
+    );
   }
 
   return NextResponse.json({

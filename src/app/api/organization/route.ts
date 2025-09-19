@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     if (!validated.success) {
       console.warn(
         "❌ Error de validación:",
-        validated.error.flatten().fieldErrors
+        z.treeifyError(validated.error).properties
       );
 
       return NextResponse.json<ApiResponse>(
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
           status: 400,
           success: false,
           message: "Validation failed",
-          data: validated.error.flatten().fieldErrors as any,
+          data: z.treeifyError(validated.error).properties as any,
         },
         { status: 400 }
       );
@@ -62,11 +62,11 @@ export async function POST(request: Request) {
 
     const { name, email, password } = validated.data;
 
-    // ¿Existe ya?
+    // already exists?
     const existingOrg = await useCaseOrganization.organizationByEmail(email);
 
     if (existingOrg) {
-      console.warn("⚠️ Organización ya existe:", email);
+      console.warn("⚠️ Organization already exists:", email);
 
       return NextResponse.json<ApiResponse>(
         {
@@ -78,10 +78,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // 🔐 Encriptar contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Crear organización
     const org: OrgDTO = await useCaseOrganization.execute({
       name,
       email,
@@ -99,7 +97,7 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log("✅ Organización creada:", org);
+    console.log("✅ Organization created:", org);
 
     return NextResponse.json<ApiResponse<OrgDTO>>(
       {
@@ -111,7 +109,7 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("❌ Error inesperado:", error);
+    console.error("❌ Unexpected error:", error);
 
     return NextResponse.json<ApiResponse>(
       {
