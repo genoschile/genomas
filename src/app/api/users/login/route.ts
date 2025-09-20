@@ -1,6 +1,8 @@
 import { useCaseUser } from "@/core/instances";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import { generateAccessToken, generateRefreshToken } from "@/lib/api/auth/auth";
+import { serialize } from "cookie";
 
 export async function POST(req: Request) {
   try {
@@ -28,9 +30,16 @@ export async function POST(req: Request) {
       );
     }
 
-    // TODO: generar token JWT
+    const accessToken = await generateAccessToken({
+      id: isExistUser.id,
+      type: "user",
+    });
+    const refreshToken = await generateRefreshToken({
+      id: isExistUser.id,
+      type: "user",
+    });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       message: "Login exitoso",
       data: {
@@ -39,8 +48,22 @@ export async function POST(req: Request) {
         name: isExistUser.name,
         userType: isExistUser.userType,
         organizationId: isExistUser.organizationId,
+        accessToken,
       },
     });
+
+    response.headers.append(
+      "Set-Cookie",
+      serialize("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60, // 7 días
+        path: "/",
+      })
+    );
+
+    return response;
   } catch (error) {
     console.error("Error en login:", error);
 

@@ -22,6 +22,7 @@ type User = {
   createdAt: Date;
   updatedAt: Date;
   isDefaultAdmin: boolean;
+  userType: string;
 };
 
 type TableContextType = {

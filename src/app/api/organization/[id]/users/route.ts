@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { UserType } from "@/core/interfaces/enums";
 import { useCaseUser } from "@/core/instances";
+import { AuthPayload, verifyAccessToken } from "@/lib/api/auth/auth";
 
 export async function POST(
   request: Request,
@@ -148,35 +149,4 @@ export async function DELETE(
   }
 }
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const id = (await params).id;
-    const body = await request.json();
 
-    if (!id || !body) {
-      return NextResponse.json(
-        { message: "ID or body is missing", success: false },
-        { status: 400 }
-      );
-    }
-
-    console.log("PATCH request body:", body);
-    return {
-      message: "Funcionalidad no implementada",
-      success: false,
-    };
-  } catch (error) {
-    console.error("Error in PATCH /api/organization/[id]/users", error);
-
-    return NextResponse.json(
-      {
-        message: error instanceof Error ? error.message : "Unexpected error",
-        success: false,
-      },
-      { status: 500 }
-    );
-  }
-}

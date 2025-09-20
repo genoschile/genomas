@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { decrypt } from "@lib/actions/session";
 import { Roles } from "@/lib/types/global";
-import {
-  generateAccessToken,
-  verifyAccessToken,
-  verifyRefreshToken,
-} from "./lib/api/auth/auth";
 
 export default async function middleware(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") || "unknown";
@@ -67,64 +61,6 @@ export default async function middleware(req: NextRequest) {
     ? authHeader.split(" ")[1]
     : null;
 
-  if (accessToken) {
-    try {
-      verifyAccessToken(accessToken);
-    } catch (err) {
-      // Si el access token es inválido o expiró, probamos el refresh token
-      const refreshToken = req.cookies.get("refreshToken")?.value;
-
-      if (!refreshToken) {
-        return NextResponse.redirect(new URL("/login", req.url));
-      }
-
-      try {
-        const payload = verifyRefreshToken(refreshToken) as {
-          id: string;
-          email: string;
-        };
-
-        // Generamos un nuevo access token
-        const newAccessToken = generateAccessToken({
-          id: payload.id,
-          email: payload.email,
-        });
-
-        // Clonamos la respuesta y agregamos el nuevo header Authorization
-        const response = NextResponse.next();
-        response.headers.set("Authorization", `Bearer ${newAccessToken}`);
-
-        return response;
-      } catch {
-        return NextResponse.redirect(new URL("/login", req.url));
-      }
-    }
-  } else {
-    // No hay access token → probamos refresh token
-    const refreshToken = req.cookies.get("refreshToken")?.value;
-
-    if (!refreshToken) {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    try {
-      const payload = verifyRefreshToken(refreshToken) as {
-        id: string;
-        email: string;
-      };
-      const newAccessToken = generateAccessToken({
-        id: payload.id,
-        email: payload.email,
-      });
-
-      const response = NextResponse.next();
-      response.headers.set("Authorization", `Bearer ${newAccessToken}`);
-      return response;
-    } catch {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
-  }
-
   // 🔐 Verificación de roles en rutas específicas
   const roleProtectedPrefixes: { prefix: string; role: Roles }[] = [
     { prefix: "/admin", role: "admin" },
@@ -136,18 +72,7 @@ export default async function middleware(req: NextRequest) {
   );
 
   if (matchingRoute) {
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get("session")?.value;
-
-    if (!sessionCookie) {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    const session = await decrypt(sessionCookie);
-
-    // if (session.role !== matchingRoute.role) {
-    //   return NextResponse.redirect(new URL("/403", req.url)); // No autorizado
-    // }
+    console.log("Ruta protegida por rol:", matchingRoute.role);
   }
 
   return res;

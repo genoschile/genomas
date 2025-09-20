@@ -20,12 +20,14 @@ interface SessionContextType {
   user: User | null;
   organization: Organization | null;
   isLogged: boolean;
-  switchSession: (user: User, org: Organization) => void;
+  switchSession: (user: User, org: Organization, token: string) => void;
   logout: () => void;
   updateOrganization: (org: Organization) => void;
   clearOrganization: () => void;
   clearUser: () => void;
   updateUser: (user: User) => void;
+  accessToken: string | null;
+  setAccessToken: (token: string) => void;
 }
 
 export const SessionContext = createContext<SessionContextType>({
@@ -38,6 +40,8 @@ export const SessionContext = createContext<SessionContextType>({
   clearOrganization: () => {},
   clearUser: () => {},
   updateUser: () => {},
+  accessToken: null,
+  setAccessToken: () => {},
 });
 
 export function SessionContextProvider({
@@ -48,12 +52,15 @@ export function SessionContextProvider({
   const [user, setUser] = useState<User | null>(null);
   const [organization, setOrganization] = useState<Organization | null>(null);
   const [isLogged, setIsLogged] = useState(false);
+  const [accessToken, setAccessTokenState] = useState<string | null>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("genomaUser");
     const storedOrg = localStorage.getItem("genomaOrganization");
     const storedAuth = localStorage.getItem("genomaAuth");
+    const storedToken = localStorage.getItem("genomaAccessToken");
 
+    if (storedToken) setAccessTokenState(storedToken);
     if (storedUser) setUser(JSON.parse(storedUser));
     if (storedOrg) setOrganization(JSON.parse(storedOrg));
     if (storedAuth) {
@@ -67,15 +74,24 @@ export function SessionContextProvider({
     localStorage.setItem("genomaOrganization", JSON.stringify(org));
   }, []);
 
-  const switchSession = useCallback((user: User, org: Organization) => {
-    setUser(user);
-    setOrganization(org);
-    setIsLogged(true);
-
-    localStorage.setItem("genomaUser", JSON.stringify(user));
-    localStorage.setItem("genomaOrganization", JSON.stringify(org));
-    localStorage.setItem("genomaAuth", JSON.stringify({ isLogged: true }));
+  const setAccessToken = useCallback((token: string) => {
+    setAccessTokenState(token);
+    localStorage.setItem("genomaAccessToken", token);
   }, []);
+
+  const switchSession = useCallback(
+    (user: User, org: Organization, token: string) => {
+      setUser(user);
+      setOrganization(org);
+      setIsLogged(true);
+      setAccessTokenState(token);
+      localStorage.setItem("genomaAccessToken", token);
+      localStorage.setItem("genomaUser", JSON.stringify(user));
+      localStorage.setItem("genomaOrganization", JSON.stringify(org));
+      localStorage.setItem("genomaAuth", JSON.stringify({ isLogged: true }));
+    },
+    [setAccessTokenState]
+  );
 
   const logout = useCallback(() => {
     setUser(null);
@@ -109,6 +125,8 @@ export function SessionContextProvider({
         organization,
         isLogged,
         switchSession,
+        accessToken,
+        setAccessToken,
         logout,
         updateOrganization,
         clearOrganization,

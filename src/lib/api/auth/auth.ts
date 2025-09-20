@@ -1,20 +1,41 @@
-import jwt from "jsonwebtoken";
+import { SignJWT, jwtVerify } from "jose";
 
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET!;
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET!;
+const ACCESS_TOKEN_SECRET = new TextEncoder().encode(
+  process.env.ACCESS_TOKEN_SECRET!
+);
+const REFRESH_TOKEN_SECRET = new TextEncoder().encode(
+  process.env.REFRESH_TOKEN_SECRET!
+);
 
-export function generateAccessToken(payload: object) {
-  return jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: "15m" }); // 15 minutos
+// export interface AuthPayload extends JWTPayload {}
+
+export type AuthPayload = {
+  id: string;
+  type: "user" | "organization";
+  userType?: "admin" | "client";
+  role?: "OWNER" | "ADMIN" | "EDITOR" | "VIEWER";
+} & Record<string, unknown>;
+
+export async function generateAccessToken(payload: AuthPayload) {
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("15m")
+    .sign(ACCESS_TOKEN_SECRET);
 }
 
-export function generateRefreshToken(payload: object) {
-  return jwt.sign(payload, REFRESH_TOKEN_SECRET, { expiresIn: "7d" }); // 7 días
+export async function generateRefreshToken(payload: AuthPayload) {
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("7d")
+    .sign(REFRESH_TOKEN_SECRET);
 }
 
-export function verifyAccessToken(token: string) {
-  return jwt.verify(token, ACCESS_TOKEN_SECRET);
+export async function verifyAccessToken(token: string): Promise<AuthPayload> {
+  const { payload } = await jwtVerify(token, ACCESS_TOKEN_SECRET);
+  return payload as AuthPayload; // casteo seguro
 }
 
-export function verifyRefreshToken(token: string) {
-  return jwt.verify(token, REFRESH_TOKEN_SECRET);
+export async function verifyRefreshToken(token: string): Promise<AuthPayload> {
+  const { payload } = await jwtVerify(token, REFRESH_TOKEN_SECRET);
+  return payload as AuthPayload; // casteo seguro
 }

@@ -7,7 +7,7 @@ import { AuthLink } from "@/components/forms/components/AuthLink";
 import { useSessionContext } from "@/hooks/useSession";
 import { useRouter } from "next/navigation";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
@@ -29,9 +29,8 @@ type ActionResponse = {
 const initialState: ActionResponse = {
   success: false,
   message: "",
-  error: {}, // Asegúrate de incluir 'error' también
+  error: {},
   input: {
-    // Y todas las propiedades de 'input'
     email: "",
     password: "",
     name: "",

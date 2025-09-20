@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { useCaseOrganization } from "@/core/instances";
-
 import { serialize } from "cookie";
 import { generateAccessToken, generateRefreshToken } from "@/lib/api/auth/auth";
 
+/* login enterprise */
 export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
@@ -27,8 +27,15 @@ export async function POST(req: Request) {
       );
     }
 
-    const accessToken = generateAccessToken({ id: org.id, email: org.email });
-    const refreshToken = generateRefreshToken({ id: org.id, email: org.email });
+    // genera tokens
+    const accessToken = await generateAccessToken({
+      id: org.id,
+      type: "organization",
+    });
+    const refreshToken = await generateRefreshToken({
+      id: org.id,
+      type: "organization",
+    });
 
     const response = NextResponse.json({
       success: true,

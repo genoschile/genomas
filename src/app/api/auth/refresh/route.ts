@@ -1,29 +1,30 @@
-import { generateAccessToken, verifyRefreshToken } from "@/lib/api/auth/auth";
 import { NextResponse } from "next/server";
+import { generateAccessToken, verifyRefreshToken } from "@/lib/api/auth/auth";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   try {
-    const cookies = req.headers.get("cookie");
-    const refreshToken = cookies
+    const refreshToken = req.headers
+      .get("cookie")
       ?.split("; ")
       .find((c) => c.startsWith("refreshToken="))
       ?.split("=")[1];
 
     if (!refreshToken) {
       return NextResponse.json(
-        { success: false, message: "No hay refresh token" },
+        { success: false, message: "No refresh token" },
         { status: 401 }
       );
     }
 
-    const payload = verifyRefreshToken(refreshToken) as {
-      id: string;
-      email: string;
-    };
+    // verify refresh token
+    const payload = await verifyRefreshToken(refreshToken);
 
-    const newAccessToken = generateAccessToken({
-      id: payload.id,
-      email: payload.email,
+    // Generar nuevo access token con la info del payload
+    const newAccessToken = await generateAccessToken({
+      id: payload.id as string,
+      type: payload.type as "user" | "organization",
+      userType: payload.userType,
+      role: payload.role,
     });
 
     return NextResponse.json({
@@ -31,9 +32,9 @@ export async function GET(req: Request) {
       accessToken: newAccessToken,
     });
   } catch (error) {
-    console.error("Error al refrescar token:", error);
+    console.error("Error en refresh:", error);
     return NextResponse.json(
-      { success: false, message: "Refresh token inválido" },
+      { success: false, message: "Invalid refresh token" },
       { status: 401 }
     );
   }

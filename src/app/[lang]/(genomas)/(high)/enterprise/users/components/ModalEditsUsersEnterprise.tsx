@@ -7,24 +7,30 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
+import { useSessionContext } from "@/hooks/useSession";
 
 export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
   const { addUsers, users } = useDataTableUserEnterpriseContext();
 
-  const findUserById = (id: string) => {
-    return users.find((u) => u.id === id);
-  };
+  const { accessToken } = useSessionContext();
 
   const { closeModal } = useModalContext();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState("");
+
   const [form, setForm] = useState({
     email: "",
     encryptedPassword: "",
+    confirmPassword: "",
     userType: "CLIENT",
     name: "",
   });
+
+  const findUserById = (id: string) => {
+    return users.find((u) => u.id === id);
+  };
 
   useEffect(() => {
     if (userId) {
@@ -33,9 +39,15 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
         setForm({
           email: user.email,
           encryptedPassword: "",
-          userType: user.role,
+          confirmPassword: "",
+          userType: user.userType,
           name: user.name,
         });
+      }
+
+      if (!user) {
+        toast.error("User not found.");
+        closeModal();
       }
     }
   }, [userId, users]);
@@ -53,7 +65,17 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (form.encryptedPassword || form.confirmPassword) {
+      if (form.encryptedPassword !== form.confirmPassword) {
+        setErrorMessage("Las contraseñas no coinciden.");
+        toast.error("Las contraseñas no coinciden.");
+        return;
+      }
+    }
+
     try {
+      console.log("Submitting form:", accessToken);
+
       const organizationId = getLocalStorageOrganization();
 
       if (!organizationId) {
@@ -61,43 +83,42 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
         return;
       }
 
-      const res = await fetch(routes.addUserEnterprise(organizationId), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          organizationId,
-        }),
+      const payload: any = {
+        email: form.email,
+        name: form.name,
+        userType: form.userType,
+      };
+
+      if (form.encryptedPassword) {
+        payload.encryptedPassword = form.encryptedPassword;
+      }
+
+      const res = await fetch(routes.editUserFromOrganization(), {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ ...payload }),
+        credentials: "include",
       });
 
       if (!res.ok) {
         const errorData = await res.json();
-        toast.error(`Error: ${errorData.message || "Failed to add user."}`);
-        setErrorMessage(`Failed to add user: ${errorData.message}`);
+        toast.error(`Error: ${errorData.message || "Failed to edit user."}`);
+        setErrorMessage(`Failed to edit user: ${errorData.message}`);
         return;
       }
 
       const data = await res.json();
 
       if (!data || !data.success) {
-        toast.error("Error adding user.");
-        setErrorMessage(`Failed to add user: ${data.message}`);
+        toast.error("Error edit user.");
+        setErrorMessage(`Failed to edit user: ${data.message}`);
         return;
       }
-
-      addUsers([data.data]);
-      toast.success("User added successfully!");
-      closeModal();
-
-      setForm({
-        email: "",
-        encryptedPassword: "",
-        userType: "CLIENT",
-        name: "",
-      });
-      setErrorMessage("");
     } catch (error) {
-      toast.error("Error adding user.");
+      toast.error("Error edit user.");
     }
   };
 
@@ -125,15 +146,38 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
             required
           />
         </label>
+
         <label className="password-label-add-enterprise">
-          Password:
+          New Password:
           <div>
             <input
               type={isPasswordVisible ? "text" : "password"}
               name="encryptedPassword"
               value={form.encryptedPassword}
               onChange={handleChange}
-              required
+            />
+            {isPasswordVisible ? (
+              <FaEyeSlash
+                className="eyes-icons"
+                onClick={togglePasswordVisibility}
+              />
+            ) : (
+              <IoEyeSharp
+                className="eyes-icons"
+                onClick={togglePasswordVisibility}
+              />
+            )}
+          </div>
+        </label>
+
+        <label className="password-label-add-enterprise">
+          Repeat New Password:
+          <div>
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              name="confirmPassword"
+              value={form.confirmPassword}
+              onChange={handleChange}
             />
             {isPasswordVisible ? (
               <FaEyeSlash

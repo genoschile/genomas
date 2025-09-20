@@ -1,14 +1,10 @@
 "use client";
 
-/* server actions */
-import { submitLogin } from "@/lib/actions/auth";
-
 /* types */
-import type { ActionResponseWithoutRepeatPassword } from "@/lib/types/formTypes";
 import { useRouter } from "next/navigation";
 
 /* hooks */
-import { useActionState, useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 /* styles */
@@ -20,23 +16,26 @@ import Link from "next/link";
 import { useSessionContext } from "@/hooks/useSession";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
-
-const initialState: ActionResponseWithoutRepeatPassword = {
-  success: false,
-  message: "",
-};
+import z from "zod";
+import { useAuth } from "@/hooks/useAuth";
+import { clear } from "console";
 
 export default function FormLogin() {
-  const [state, actions, isPending] = useActionState(submitLogin, initialState);
   const router = useRouter();
 
+  const { loginUser } = useAuth();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [formErrors, setFormErrors] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
+  const [isPending, setIsPending] = useState(false);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
 
-  const { updateUser } = useSessionContext();
+  const { updateUser, clearUser } = useSessionContext();
 
   const { t } = useTranslations();
 
@@ -54,29 +53,63 @@ export default function FormLogin() {
     loginErrorToast: t("auth.login.toast.error"),
   };
 
-  useEffect(() => {
-    if (!isPending) {
-      if (state.success) {
-        toast.success(state.message || "Login successful!");
+  const loginSchema = z.object({
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z
+      .string()
+      .min(6, { message: "Password must be at least 6 characters long" }),
+  });
 
-        if (!state.data) {
-          toast.error("User data is missing!");
-          return;
-        }
+  const handleSubmit = async (formData: FormData) => {
+    setFormErrors({});
+    setIsPending(true);
 
-        updateUser({
-          id: state.data?.id || "",
-          email: state.data?.email || "",
-          name: state.data?.name || "",
-          organizationId: state.data?.organizationId || "",
-        });
+    clearUser();
 
-        router.push("/user");
-      } else if (state.message) {
-        toast.error(state.message || "Something went wrong!");
-      }
+    const rawData = {
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
+
+    const validatedData = loginSchema.safeParse(rawData);
+
+    if (!validatedData.success) {
+      const errors = validatedData.error.format();
+      setFormErrors({
+        email: errors.email?._errors[0],
+        password: errors.password?._errors[0],
+      });
+      setIsPending(false);
+      return;
     }
-  }, [state, updateUser]);
+
+    const { email, password } = validatedData.data;
+
+    try {
+      const loginResult = await loginUser(email, password);
+
+      if (!loginResult.success || !loginResult.data) {
+        toast.error(loginResult.message || authTranslations.loginErrorToast);
+        setIsPending(false);
+        return;
+      }
+
+      updateUser({
+        id: loginResult.data.id,
+        email: loginResult.data.email,
+        name: loginResult.data.name,
+        organizationId: loginResult.data.organizationId,
+      });
+
+      toast.success(authTranslations.loginSuccessToast);
+      router.push("/user");
+    } catch (error) {
+      console.error(error);
+      toast.error(authTranslations.loginErrorToast);
+    } finally {
+      setIsPending(false);
+    }
+  };
 
   return (
     <section className="auth-form">
@@ -84,7 +117,13 @@ export default function FormLogin() {
         <AuthFormLogo />
 
         {/* Formulario */}
-        <form action={actions} className="auth-form__form">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(new FormData(e.currentTarget));
+          }}
+          className="auth-form__form"
+        >
           <fieldset>
             <legend className="auth-form__title">
               {authTranslations.title}
@@ -97,14 +136,11 @@ export default function FormLogin() {
                 type="email"
                 id="email"
                 name="email"
-                defaultValue={state?.input?.email}
                 placeholder={`${authTranslations.emailPlaceholder}`}
                 className="login__input"
               />
-              {state?.error?.email && (
-                <p className="auth-form__error-message">
-                  {state.error.email[0]}
-                </p>
+              {formErrors.email && (
+                <p className="auth-form__error-message">{formErrors.email}</p>
               )}
             </div>
 
@@ -115,7 +151,6 @@ export default function FormLogin() {
                 type={isPasswordVisible ? "text" : "password"}
                 id="password"
                 name="password"
-                defaultValue={state?.input?.password}
                 placeholder={`${
                   isPasswordVisible
                     ? authTranslations.passwordPlaceholder
@@ -136,9 +171,9 @@ export default function FormLogin() {
                 />
               )}
 
-              {state?.error?.password && (
+              {formErrors.password && (
                 <p className="auth-form__error-message">
-                  {state.error.password[0]}
+                  {formErrors.password}
                 </p>
               )}
             </div>

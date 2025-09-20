@@ -29,4 +29,6 @@ export const genomasEnterpriseRoutes = {
 
   deleteUserFromOrganization: (organizationId: string) =>
     `/api/organization/${organizationId}/users`,
+
+  editUserFromOrganization: () => `/api/users/`,
 };

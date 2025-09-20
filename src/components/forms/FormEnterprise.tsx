@@ -6,42 +6,21 @@ import Link from "next/link";
 import { AuthLink } from "./components/AuthLink";
 import { AuthFormLogo } from "./components/AuthFormLogo";
 import { toast } from "react-toastify";
-import { useActionState, useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "@/context/I18nClientProvider";
 import { useRouter } from "next/navigation";
-
-import { ActionResponseWithoutRepeatPassword } from "@/lib/types/formTypes";
-import { submitLoginEnterprise } from "@/core/use-cases/organization/auth";
-import { useSessionContext } from "@/hooks/useSession";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 
-const initialState: ActionResponseWithoutRepeatPassword = {
-  success: false,
-  message: "",
-  error: {},
-  input: {
-    email: "",
-    password: "",
-  },
-};
+import { useAuth } from "@/hooks/useAuth";
+import { useSessionContext } from "@/hooks/useSession";
 
 export const FormEnterprice = () => {
-  const [state, actions, isPending] = useActionState(
-    submitLoginEnterprise,
-    initialState
-  );
   const router = useRouter();
-
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible((prev) => !prev);
-  };
+  const { loginEnterprise } = useAuth();
+  const { updateOrganization, clearUser, setAccessToken } = useSessionContext();
 
   const { t } = useTranslations();
-
-  const { updateOrganization, clearUser } = useSessionContext();
 
   const authTranslations = {
     title: t("auth.login.title"),
@@ -57,69 +36,114 @@ export const FormEnterprice = () => {
     loginErrorToast: t("auth.login.toast.error"),
   };
 
-  useEffect(() => {
-    if (!isPending) {
-      if (state.success) {
-        toast.success(state.message || "Login successful!");
+  const [input, setInput] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
+  const [isPending, setIsPending] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-        clearUser(); // Clear any previous user session
-        // Set the organization in the session context
-        updateOrganization({
-          id: state.data?.id || "",
-          email: state.data?.email || "",
-          name: state.data?.name || "",
-        });
+  const togglePasswordVisibility = () => setIsPasswordVisible((prev) => !prev);
 
-        router.push("/enterprise");
-      } else if (state.message) {
-        toast.error(state.message || "Something went wrong!");
-      }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrors({});
+    setIsPending(true);
+
+    const { email, password } = input;
+
+    if (!email) {
+      setErrors((prev) => ({ ...prev, email: "Email is required" }));
+      setIsPending(false);
+      return;
     }
-  }, [isPending, state.success, state.message]);
+    if (!password) {
+      setErrors((prev) => ({ ...prev, password: "Password is required" }));
+      setIsPending(false);
+      return;
+    }
+
+    try {
+      const result = await loginEnterprise(email, password);
+
+      if (!result.success) {
+        toast.error(result.message || authTranslations.loginErrorToast);
+        setIsPending(false);
+        return;
+      }
+
+      toast.success(authTranslations.loginSuccessToast);
+
+      clearUser();
+      updateOrganization({
+        id: result.data?.id || "",
+        email: result.data?.email || "",
+        name: result.data?.name || "",
+      });
+
+      if (result.data?.accessToken) {
+        setAccessToken(result.data.accessToken);
+      }
+
+      if (!result.data?.accessToken) {
+        toast.error("No access token received");
+        setIsPending(false);
+        return;
+      }
+
+      router.push("/enterprise");
+    } catch (err) {
+      console.error(err);
+      toast.error(authTranslations.loginErrorToast);
+    } finally {
+      setIsPending(false);
+    }
+  };
 
   return (
     <section className="auth-form">
       <div className="auth-form__container">
         <AuthFormLogo />
 
-        <form action={actions} className="auth-form__form">
+        <form onSubmit={handleSubmit} className="auth-form__form">
           <fieldset>
             <legend className="auth-form__title">
               {authTranslations.title} <small>enterprise</small>
             </legend>
 
-            {/* Campo de Email */}
             <div className="auth-form__input-group">
               <label htmlFor="email">{authTranslations.emailLabel}</label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                defaultValue={state?.input?.email}
-                placeholder={`${authTranslations.emailPlaceholder}`}
+                value={input.email}
+                onChange={(e) =>
+                  setInput((prev) => ({ ...prev, email: e.target.value }))
+                }
+                placeholder={authTranslations.emailPlaceholder}
                 className="login__input"
               />
-              {state?.error?.email && (
-                <p className="auth-form__error-message">
-                  {state.error.email[0]}
-                </p>
+              {errors.email && (
+                <p className="auth-form__error-message">{errors.email}</p>
               )}
             </div>
 
-            {/* Campo de Contraseña */}
             <div className="auth-form__input-group">
               <label htmlFor="password">{authTranslations.passwordLabel}</label>
               <input
                 type={isPasswordVisible ? "text" : "password"}
                 id="password"
                 name="password"
-                defaultValue={state?.input?.password}
-                placeholder={`${
+                value={input.password}
+                onChange={(e) =>
+                  setInput((prev) => ({ ...prev, password: e.target.value }))
+                }
+                placeholder={
                   isPasswordVisible
                     ? authTranslations.passwordPlaceholder
                     : "********"
                 }
-                  `}
                 className="auth-form__input"
               />
               {isPasswordVisible ? (
@@ -133,10 +157,8 @@ export const FormEnterprice = () => {
                   onClick={togglePasswordVisibility}
                 />
               )}
-              {state?.error?.password && (
-                <p className="auth-form__error-message">
-                  {state.error.password[0]}
-                </p>
+              {errors.password && (
+                <p className="auth-form__error-message">{errors.password}</p>
               )}
             </div>
 
@@ -158,7 +180,7 @@ export const FormEnterprice = () => {
               </div>
 
               <Link href="/login" className="auth-form__submit-button">
-                {"Continue with User ID"}
+                Continue with User ID
               </Link>
 
               <AuthLink

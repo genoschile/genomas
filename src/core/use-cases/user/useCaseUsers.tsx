@@ -61,4 +61,12 @@ export class useCaseUsers {
   async removeUserFromOrg(orgId: string, userId: string): Promise<IUser> {
     return this.userRepo.removeUserFromOrg(orgId, userId);
   }
+
+  async editUserInOrg(
+    orgId: string,
+    userId: string,
+    updates: Partial<IUser>
+  ): Promise<IUser> {
+    return this.userRepo.editUserInOrg(orgId, userId, updates);
+  }
 }
