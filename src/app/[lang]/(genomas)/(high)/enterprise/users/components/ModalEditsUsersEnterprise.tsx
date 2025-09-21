@@ -1,4 +1,3 @@
-import "./editUsersEnterprise.css";
 import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
 import { useModalContext } from "@/hooks/useModalsProject";
 import { useEffect, useState } from "react";
@@ -7,14 +6,14 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { useSessionContext } from "@/hooks/useSession";
+import { useFetchWithAuth } from "@/lib/api/auth/fetchAuth";
 
 export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
-  const { addUsers, users } = useDataTableUserEnterpriseContext();
-
-  const { accessToken } = useSessionContext();
+  const { users, editUser } = useDataTableUserEnterpriseContext();
 
   const { closeModal } = useModalContext();
+
+  const { fetchWithAuth } = useFetchWithAuth();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -74,10 +73,9 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
     }
 
     try {
-      console.log("Submitting form:", accessToken);
+      console.log("Submitting form...");
 
       const organizationId = getLocalStorageOrganization();
-
       if (!organizationId) {
         toast.error("Organization ID is, error interno.");
         return;
@@ -87,19 +85,18 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
         email: form.email,
         name: form.name,
         userType: form.userType,
+        userId: userId,
       };
-
       if (form.encryptedPassword) {
         payload.encryptedPassword = form.encryptedPassword;
       }
 
-      const res = await fetch(routes.editUserFromOrganization(), {
+      const res = await fetchWithAuth(routes.editUserFromOrganization(), {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ ...payload }),
+        body: JSON.stringify(payload),
         credentials: "include",
       });
 
@@ -117,7 +114,19 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
         setErrorMessage(`Failed to edit user: ${data.message}`);
         return;
       }
+
+      const { userId: _, id: __, ...updates } = data.data;
+
+      console.log("User updated successfully:", data.data);
+      console.log("Applying updates:", updates);
+
+      editUser(userId, updates);
+      closeModal();
+      setErrorMessage("");
+
+      toast.success("Usuario editado correctamente");
     } catch (error) {
+      console.error(error);
       toast.error("Error edit user.");
     }
   };

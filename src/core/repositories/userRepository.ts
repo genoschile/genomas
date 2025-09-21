@@ -151,7 +151,6 @@ export class UserRepository implements IUserRepository {
     orgId: string,
     data?: Omit<IUser, "id"> & { userId?: string }
   ): Promise<IUser> {
-
     console.log("addUserToOrg called with:", { orgId, data });
 
     if (data?.userId) {
@@ -309,5 +308,51 @@ export class UserRepository implements IUserRepository {
     });
 
     return mapToIUser(deletedUser);
+  }
+
+  async editUserInOrg(
+    orgId: string,
+    userId: string,
+    updates: Partial<IUser>
+  ): Promise<IUser> {
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+        organizationId: orgId,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found in the specified organization.");
+    }
+
+    if (updates.isDefaultAdmin && !user.isDefaultAdmin) {
+      const existingAdmin = await prisma.user.findFirst({
+        where: {
+          organizationId: orgId,
+          isDefaultAdmin: true,
+        },
+      });
+
+      if (existingAdmin) {
+        throw new Error(
+          "There is already a default admin in this organization."
+        );
+      }
+    }
+
+    if (updates.encryptedPassword) {
+      updates.encryptedPassword = await bcrypt.hash(
+        updates.encryptedPassword,
+        10
+      );
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updates,
+    });
+
+    return mapToIUser(updatedUser);
   }
 }

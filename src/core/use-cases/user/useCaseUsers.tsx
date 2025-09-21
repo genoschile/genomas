@@ -42,7 +42,9 @@ export class useCaseUsers {
     return this.userRepo.findByEmail(email);
   }
 
-  async findDefaultAdminByOrgId(orgId: string): Promise<UserDefaultAdminResponse | null> {
+  async findDefaultAdminByOrgId(
+    orgId: string
+  ): Promise<UserDefaultAdminResponse | null> {
     return this.userRepo.findDefaultAdminByOrgId(orgId);
   }
 
@@ -54,7 +56,9 @@ export class useCaseUsers {
     return this.userRepo.currentProjectsByUserId(id);
   }
 
-  async findWorkspacesByUserId(id: string): Promise<ResponseWorkspacesDTO[] | null> {
+  async findWorkspacesByUserId(
+    id: string
+  ): Promise<ResponseWorkspacesDTO[] | null> {
     return this.userRepo.findWorkspacesByUserId(id);
   }
 

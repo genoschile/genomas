@@ -86,35 +86,6 @@ export function useAuth() {
     return { success: true, message: "Login successful", data: data.data };
   }
 
-  async function fetchWithAuth(url: string, options: RequestInit = {}) {
-    let res = await fetch(url, {
-      ...options,
-      headers: {
-        ...(options.headers || {}),
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
 
-    if (res.status === 401) {
-      const refreshRes = await fetch("/api/auth/refresh", {
-        credentials: "include",
-        method: "POST",
-      });
-      if (refreshRes.ok) {
-        const { accessToken: newAccess } = await refreshRes.json();
-        setAccessToken(newAccess);
-        res = await fetch(url, {
-          ...options,
-          headers: {
-            ...(options.headers || {}),
-            Authorization: `Bearer ${newAccess}`,
-          },
-        });
-      }
-    }
-
-    return res;
-  }
-
-  return { accessToken, loginEnterprise, loginUser, fetchWithAuth, logout };
+  return { accessToken, loginEnterprise, loginUser, logout };
 }

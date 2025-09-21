@@ -16,7 +16,21 @@ export async function PATCH(request: Request) {
 
     const token = authHeader.split(" ")[1];
 
-    const organization: AuthPayload = await verifyAccessToken(token);
+    let organization: AuthPayload;
+    try {
+      organization = await verifyAccessToken(token);
+    } catch (err: any) {
+      if (err.code === "ERR_JWT_EXPIRED") {
+        return NextResponse.json(
+          { success: false, error: "Token expired" },
+          { status: 401 }
+        );
+      }
+      return NextResponse.json(
+        { success: false, error: "Invalid token" },
+        { status: 401 }
+      );
+    }
 
     if (organization.type !== "organization") {
       return NextResponse.json(
@@ -26,12 +40,13 @@ export async function PATCH(request: Request) {
     }
 
     const body = await request.json();
-
-    console.log("PATCH request body:", body);
-
-    if (!body || !body.userId || !body.role) {
+    
+    if (!body || !body.name || !body.email || !body.userType || !body.userId) {
       return NextResponse.json(
-        { message: "Body, userId or role is missing", success: false },
+        {
+          message: "Body, name, email, userType or userId is missing",
+          success: false,
+        },
         { status: 400 }
       );
     }
@@ -43,7 +58,24 @@ export async function PATCH(request: Request) {
       userId,
       updates
     );
-    
+
+    if (!updatedUser) {
+      return NextResponse.json(
+        { message: "User not found or could not be updated", success: false },
+        { status: 404 }
+      );
+    }
+
+    const { encryptedPassword, ...userWithoutPassword } = updatedUser;
+
+    return NextResponse.json(
+      {
+        message: "User updated successfully",
+        success: true,
+        data: userWithoutPassword,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error in PATCH /api/users/", error);
 

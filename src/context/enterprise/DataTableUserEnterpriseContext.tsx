@@ -29,17 +29,12 @@ type TableContextType = {
   users: User[];
   selectedIds: string[];
   favoriteIds: string[];
-  currentPage: number;
-  postsPerPage: number;
-  paginatedUsers: User[];
   loading: boolean;
   toggleSelect: (id: string) => void;
   toggleFavorite: (id: string) => void;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
   addUsers: (newUsers: User[]) => void;
   removeUser: (id: string) => void;
+  editUser: (id: string, updates: Partial<User>) => void;
 };
 
 const DataTableUserEnterpriseContext = createContext<
@@ -55,10 +50,6 @@ export const DataTableUserEnterpriseProvider = ({
   const [loading, setLoading] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const postsPerPage = 3;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -90,13 +81,6 @@ export const DataTableUserEnterpriseProvider = ({
     fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter((user) =>
-    [user.name, user.email, user.role]
-      .join(" ")
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
-
   const addUsers = async (newUsers: User[]) => {
     setUsers((prevUsers) => [...prevUsers, ...newUsers]);
   };
@@ -117,9 +101,18 @@ export const DataTableUserEnterpriseProvider = ({
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
   };
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const paginatedUsers = filteredUsers.slice(indexOfFirstPost, indexOfLastPost);
+  const editUser = (userId: string, updates: Partial<User>) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => {
+        if (user.id === userId) {
+          const updatedUser = { ...user, ...updates };
+          console.log("Usuario actualizado:", updatedUser);
+          return updatedUser;
+        }
+        return user;
+      })
+    );
+  };
 
   return (
     <DataTableUserEnterpriseContext.Provider
@@ -128,16 +121,11 @@ export const DataTableUserEnterpriseProvider = ({
         users,
         selectedIds,
         favoriteIds,
-        currentPage,
-        postsPerPage,
-        paginatedUsers,
         toggleSelect,
         toggleFavorite,
-        setCurrentPage,
         loading,
-        searchTerm,
         removeUser,
-        setSearchTerm,
+        editUser,
       }}
     >
       {children}

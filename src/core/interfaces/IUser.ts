@@ -62,6 +62,11 @@ export interface IUserRepository {
     userId: string
   ): Promise<ResponseWorkspacesDTO[] | null>;
   removeUserFromOrg(orgId: string, userId: string): Promise<IUser>;
+  editUserInOrg(
+    orgId: string,
+    userId: string,
+    updates: Partial<IUser>
+  ): Promise<IUser>;
 }
 
 export interface UserProps {
@@ -83,7 +88,6 @@ export class User {
     this.props = props;
   }
 
-  // ✅ Getters seguros (solo exponen lo que se necesita)
   get id(): string {
     return this.props.id;
   }
