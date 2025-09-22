@@ -20,6 +20,7 @@ import { TrashContainer } from "@/app/[lang]/(genomas)/user/components/TrashCont
 import { ExecutorContainer } from "@/app/[lang]/(genomas)/user/components/utilsForm/ExecutorContainer";
 import { UploadStepsProvider } from "@/app/[lang]/(genomas)/user/components/utilsForm/stepUploads/UploadStepContext";
 import { ModalEditsUsersEnterprise } from "@/app/[lang]/(genomas)/(high)/enterprise/users/components/ModalEditsUsersEnterprise";
+import { ModalEditGroups } from "@/app/[lang]/(genomas)/(high)/enterprise/groups/component/ModalEditGroups";
 
 export const ModalContainer = () => {
   return (
@@ -60,13 +61,11 @@ export const ModalContainer = () => {
       </Modal>
 
       <Modal id={MODAL_IDS.EDIT_GROUPS_ENTERPRISE} title="Edit Group">
-        <ModalGroupsEditEnterprise />
+        {({ payload }) => <ModalEditGroups groupId={payload.userId} />}
       </Modal>
 
       <Modal id={MODAL_IDS.EDIT_USERS_ENTERPRISE} title="Edit Users">
-        {({ payload }) => (
-          <ModalEditsUsersEnterprise userId={payload.userId} />
-        )}
+        {({ payload }) => <ModalEditsUsersEnterprise userId={payload.userId} />}
       </Modal>
 
       <ModalUtilsUsers id={MODAL_IDS.UPLOAD_FILES} title="Upload Files">

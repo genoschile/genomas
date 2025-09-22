@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import "./addGroupsEnterprise.css";
 import { MultiSelectChips } from "./componentsAddGroupsEnterprise/MultiSelectChips";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
@@ -34,8 +34,6 @@ export const AddGroupsFormEnterprise = () => {
       description: description || undefined,
       users: userIds.map((id) => ({ id })),
     };
-
-    console.log("submitting", dto);
 
     const id = getLocalStorageOrganization();
 
@@ -117,17 +115,31 @@ export const AddGroupsFormEnterprise = () => {
   );
 };
 
-export const RoleSelector = () => {
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+export const RoleSelector = ({
+  initialRoles = [],
+  onChange,
+}: {
+  initialRoles?: string[];
+  onChange?: (roles: string[]) => void;
+}) => {
+  const [selectedRoles, setSelectedRoles] = useState<string[]>(initialRoles);
+
+  useEffect(() => {
+    setSelectedRoles(initialRoles);
+  }, [initialRoles]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const options = Array.from(e.target.selectedOptions).map(
       (opt) => opt.value
     );
     setSelectedRoles(options);
+    onChange?.(options);
   };
+
   const removeRole = (role: string) => {
-    setSelectedRoles((prev) => prev.filter((r) => r !== role));
+    const updated = selectedRoles.filter((r) => r !== role);
+    setSelectedRoles(updated);
+    onChange?.(updated);
   };
 
   return (

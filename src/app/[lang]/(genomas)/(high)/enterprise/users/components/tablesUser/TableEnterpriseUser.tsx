@@ -39,7 +39,6 @@ const UserItem = ({
   toggleFavorite,
   handleDelete,
 }: UserItemProps) => {
-
   console.log("Rendering UserItem:", { id, name, email, role, groups });
 
   return (
@@ -60,10 +59,7 @@ const UserItem = ({
           className={favoriteIds.includes(id) ? "favorite" : ""}
         />
       </div>
-      <div
-        className="user-avatar"
-        data-name={name?.charAt(0).toUpperCase()}
-      >
+      <div className="user-avatar" data-name={name?.charAt(0).toUpperCase()}>
         {image && (
           <img
             src={image}

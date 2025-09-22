@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { useState, useEffect } from "react";
 
 type SelectableItem = {
   id: string;
@@ -12,13 +12,22 @@ export const MultiSelectChips = ({
   name,
   label,
   onChange,
+  initialSelected = [],
 }: {
   data: SelectableItem[];
   name: string;
   label: string;
   onChange?: (selected: string[]) => void;
+  initialSelected?: string[];
 }) => {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>(initialSelected);
+
+  useEffect(() => {
+    const valid = initialSelected.filter((id) =>
+      data.some((el) => el.id === id)
+    );
+    setSelectedIds(valid);
+  }, [initialSelected, data]);
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = Array.from(e.target.selectedOptions).map(
@@ -42,9 +51,10 @@ export const MultiSelectChips = ({
       <div className="selected-chips">
         {selectedIds.map((id) => {
           const item = data.find((el) => el.id === id);
+          if (!item) return null; // evita key undefined
           return (
-            <div key={id} className="chip">
-              {item?.name || id}
+            <div key={`chip-${id}`} className="chip">
+              {item.name}
               <button type="button" onClick={() => remove(id)}>
                 &times;
               </button>

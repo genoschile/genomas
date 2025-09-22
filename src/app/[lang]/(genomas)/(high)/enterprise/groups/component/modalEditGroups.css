@@ -1,0 +1,140 @@
+.add-groups-enterprise {
+  block-size: 100%;
+  inline-size: 100%;
+
+  display: block;
+  margin: 0 auto;
+
+  > fieldset {
+    display: flex;
+
+    border: none;
+
+    legend {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      text-wrap: nowrap;
+      margin-block-end: 1rem;
+    }
+
+    > * {
+      outline: 1px solid green;
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+
+      padding-inline: 0.5rem;
+    }
+
+    > :first-child {
+      background-color: red;
+    }
+
+    label:not(:first-of-type) {
+      margin-block-start: 1rem;
+    }
+
+    :is(input, select, textarea) {
+      margin-block-start: 0.5rem;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      width: 100%;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: blue;
+      }
+    }
+  }
+
+  > button {
+    margin-block-start: 1rem;
+    margin-inline-start: auto;
+    inline-size: 100%;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+.chip {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 2px;
+  background: #e0e0e0;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.chip button {
+  background: none;
+  border: none;
+  margin-left: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.select-list {
+  width: min(100%, 240px);
+
+  padding: 12px;
+  line-height: 24px;
+
+  border: solid 1px #999;
+  border-radius: 12px;
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  background-image: url(/caret.svg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 12px) center;
+  padding-right: 24px;
+
+  outline: none;
+}
+
+optgroup {
+  counter-reset: count;
+  font-size: 0;
+  font-weight: 400;
+  font-style: italic;
+  color: steelblue;
+  text-indent: 12px;
+}
+optgroup:before {
+  content: attr(label);
+  display: block;
+  padding: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  background-color: aliceblue;
+  border-radius: 6px;
+}
+option {
+  counter-increment: count;
+  padding: 12px;
+  font-size: 14px;
+  color: slategray;
+  text-indent: 0;
+  background-color: #fff;
+}
+option:before {
+  content: counter(count) ". ";
+}
+option + option {
+  border-top: solid 2px aliceblue;
+}

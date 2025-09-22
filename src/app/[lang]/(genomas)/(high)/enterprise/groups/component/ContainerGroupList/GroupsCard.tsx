@@ -29,7 +29,7 @@ export const GroupsCard = ({ item }: { item: Group }) => {
 
   const handleEdit = () => {
     handleChangeCurrentGroup(item);
-    openModal("edit_group_enterprise");
+    openModal("edit_group_enterprise", { userId: item.id });
   };
 
   const handleDelete = () => {

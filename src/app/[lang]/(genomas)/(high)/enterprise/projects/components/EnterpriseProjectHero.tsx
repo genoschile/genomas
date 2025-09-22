@@ -4,9 +4,16 @@ import React, { useEffect } from "react";
 import { ContainerDefaultEnterprise } from "../../components/ContainerDefaultEnterprise";
 import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
 import "./enterpriseProjectHero.css";
+import "./enterpriseNavActions.css";
 import { useProjectsContextEnterprise } from "@/context/enterprise/ProjectContextEnterprise";
+import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
+import { MODAL_IDS } from "@/context/ModalsProject";
+import { FaAndroid } from "react-icons/fa";
+import { useModalContext } from "@/hooks/useModalsProject";
 
 export const EnterpriseProjectHero = () => {
+  const { openModal } = useModalContext();
+
   const {
     workspaces,
     selectedWorkspaceId,
@@ -50,9 +57,7 @@ export const EnterpriseProjectHero = () => {
               : "No workspace seleccionado"}
           </button>
           {showList && (
-            <ul
-              onClick={(e) => e.stopPropagation()}
-            >
+            <ul onClick={(e) => e.stopPropagation()}>
               {workspaces.map((workspace) => (
                 <li
                   key={workspace.id}
@@ -71,7 +76,15 @@ export const EnterpriseProjectHero = () => {
 
       <div>
         <h4>Projects:</h4>
-          <small>{selectedProjects.length}</small>
+        <small>{selectedProjects.length}</small>
+      </div>
+
+      <div className="buttonAdd-groups">
+        <nav>
+          <button onClick={() => openModal(MODAL_IDS.ADD_PROJECT_ENTERPRISE)}>
+            <IconRoundedFull icon={<FaAndroid />} />
+          </button>
+        </nav>
       </div>
     </ContainerDefaultEnterprise>
   );
