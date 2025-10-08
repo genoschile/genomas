@@ -115,12 +115,18 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
         return;
       }
 
-      const { userId: _, id: __, ...updates } = data.data;
+      const serverUser = data.data;
 
-      console.log("User updated successfully:", data.data);
-      console.log("Applying updates:", updates);
+      const normalized = {
+        ...serverUser,
+        role: serverUser.role ?? serverUser.userType,
+        userType: serverUser.userType ?? serverUser.role,
+        image: serverUser.image ?? "",
+        groups: serverUser.groups ?? [],
+      };
 
-      editUser(userId, updates);
+      editUser(normalized.id ?? userId, normalized);
+
       closeModal();
       setErrorMessage("");
 

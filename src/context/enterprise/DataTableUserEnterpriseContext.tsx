@@ -17,13 +17,14 @@ type User = {
   image: string;
   name: string;
   email: string;
-  role: string;
+  userType: string; 
+  role?: string;    
   groups: string[];
   createdAt: Date;
   updatedAt: Date;
   isDefaultAdmin: boolean;
-  userType: string;
 };
+
 
 type TableContextType = {
   users: User[];
@@ -52,6 +53,10 @@ export const DataTableUserEnterpriseProvider = ({
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
 
   useEffect(() => {
+    console.log("Users state changed:", JSON.stringify(users, null, 2));
+  }, [users]);
+
+  useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
@@ -68,8 +73,22 @@ export const DataTableUserEnterpriseProvider = ({
         }
 
         const data = await res.json();
+        // dentro de fetchUsers, después de obtener data
+        const normalize = (u: any) => ({
+          id: u.id,
+          image: u.image ?? "",
+          name: u.name ?? "",
+          email: u.email ?? "",
+          // asegurar que haya un campo role que la UI use
+          role: u.role ?? u.userType ?? "",
+          userType: u.userType ?? u.role ?? "",
+          groups: u.groups ?? [],
+          createdAt: u.createdAt ? new Date(u.createdAt) : undefined,
+          updatedAt: u.updatedAt ? new Date(u.updatedAt) : undefined,
+          isDefaultAdmin: !!u.isDefaultAdmin,
+        });
 
-        setUsers(data.data || []);
+        setUsers((data.data || []).map(normalize));
       } catch (err) {
         console.error("Error al cargar usuarios:", err);
         toast.error("Error al cargar usuarios");
@@ -104,12 +123,17 @@ export const DataTableUserEnterpriseProvider = ({
   const editUser = (userId: string, updates: Partial<User>) => {
     setUsers((prevUsers) =>
       prevUsers.map((user) => {
-        if (user.id === userId) {
-          const updatedUser = { ...user, ...updates };
-          console.log("Usuario actualizado:", updatedUser);
-          return updatedUser;
-        }
-        return user;
+        if (user.id !== userId) return user;
+
+        const merged = {
+          ...user,
+          ...updates,
+          role: updates.role ?? updates.userType ?? user.role,
+          userType: updates.userType ?? updates.role ?? user.userType,
+        };
+
+        // 💡 aseguramos nuevo objeto (sin referencias viejas)
+        return JSON.parse(JSON.stringify(merged)) as User;
       })
     );
   };

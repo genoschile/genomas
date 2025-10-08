@@ -1,14 +1,12 @@
 "use client";
 
 import "./tableEnterpriseUser.css";
-import { Pagination } from "@/components/analysis/tables/Pagination";
 import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { SkeletonTable } from "./SkeletonTableUser";
 import { ButtonEditUser } from "./ButtonEditUser";
-import { useState, useEffect } from "react";
 
 type UserItemProps = {
   id: string;
@@ -73,7 +71,7 @@ const UserItem = ({
       <div className="user-info">
         <span>{name}</span>
         <span>{email}</span>
-        <span>{role}</span>
+        <span>{role ?? "—"}</span>
         <span>{groups?.join(", ")}</span>
       </div>
       <div className="user-actions">
@@ -137,7 +135,7 @@ export const TableEnterpriseUser = () => {
           id={user.id}
           name={user.name}
           email={user.email}
-          role={user.role}
+          role={user.userType}
           groups={user.groups}
           image={user.image}
           isDefaultAdmin={user.isDefaultAdmin}
