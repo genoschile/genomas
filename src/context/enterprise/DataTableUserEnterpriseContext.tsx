@@ -22,7 +22,7 @@ type User = {
   groups: string[];
   createdAt: Date;
   updatedAt: Date;
-  isDefaultAdmin: boolean;
+  isDefaultAdmin: boolean; 
 };
 
 

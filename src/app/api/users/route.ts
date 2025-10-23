@@ -40,7 +40,7 @@ export async function PATCH(request: Request) {
     }
 
     const body = await request.json();
-    
+
     if (!body || !body.name || !body.email || !body.userType || !body.userId) {
       return NextResponse.json(
         {
