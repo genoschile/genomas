@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { Roles } from "@/lib/types/global";
 
-export default async function middleware(req: NextRequest) {
+export default async function proxy(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") || "unknown";
   const pathname = req.nextUrl.pathname;
   const lang = req.headers.get("accept-language")?.split(",")[0] || "es";
