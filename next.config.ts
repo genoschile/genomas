@@ -8,7 +8,7 @@ if (!APP_LANGUAGE) throw new Error("APP_LANGUAGE IS NOT SET");
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   pageExtensions: ["md", "mdx", "ts", "tsx"],
-  /* config options here */
+  reactCompiler: true,
   experimental: {
     viewTransition: true,
     mdxRs: true,
