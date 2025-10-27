@@ -2,7 +2,7 @@ import "./layout.css";
 import "./style.css";
 import { FooterLanding } from "@/components/footer/FooterLanding";
 import HeaderLanding from "@/components/headers/HeaderLanding";
-import { unstable_ViewTransition as ViewTransition } from "react";
+// import { ViewTransition } from "react";
 import { ExampleFormClinical } from "../(genomas)/user/components/utilsForm/stepUploads/components/ExampleFormClinical";
 
 export default function landingLayout({
@@ -13,7 +13,7 @@ export default function landingLayout({
   return (
     <>
       <HeaderLanding />
-      <ViewTransition name="page">
+      {/* <ViewTransition name="page"> */}
         <div
           style={{
             minBlockSize: "100vh",
@@ -32,7 +32,7 @@ export default function landingLayout({
             {children}
           </main>
         </div>
-      </ViewTransition>
+      {/* </ViewTransition> */}
       <FooterLanding />
     </>
   );
