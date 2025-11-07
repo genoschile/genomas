@@ -96,8 +96,8 @@ export default function FileProcessor() {
     try {
       const formData = new FormData();
       formData.append("upload_id", jobId);
-      files.forEach((file: any) => formData.append("files", file));
-      setUploadJobId(jobId);
+      
+      setUploadJobId(jobId);files.forEach((file: any) => formData.append("files", file)); 
 
       const response = await fetch(routes.decompressFiles(), {
         method: "POST",

@@ -15,6 +15,7 @@ import { I18nServerProvider } from "@/context/I18nServerProvider";
 import { Language } from "@/lib/i18n/i18n.types";
 import { ModalProvider } from "@/context/ModalsProject";
 import { ReactNode } from "react";
+import { APP_LANGUAGE } from "@/lib/config/env";
 
 export type LangLayoutProps = {
   children: ReactNode;
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
 export async function generateStaticParams() {
   return [
     {
-      lang: process.env.APP_LANGUAGE as Language,
+      lang: APP_LANGUAGE as Language,
     },
   ];
 }
@@ -42,12 +43,12 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
 }) {
-  const lang = (await params).lang as Language;
+  const { lang } = await params;
 
   return (
     <html lang={lang}>
       <body className={`${inter} antialiased`}>
-        <I18nServerProvider lang={lang}>
+        <I18nServerProvider lang={lang as Language}>
           <ModalProvider>
             {children}
             <ToastContainer position="top-right" autoClose={5000} />

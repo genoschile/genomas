@@ -1,7 +1,7 @@
 import "./layout.css";
 import { FooterLanding } from "@/components/footer/FooterLanding";
 import HeaderLanding from "@/components/headers/HeaderLanding";
-import { unstable_ViewTransition as ViewTransition } from "react";
+import { ViewTransition } from "react";
 import { ConfigOptions } from "./ConfigOptions";
 
 export default function landingLayout({

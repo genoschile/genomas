@@ -32,6 +32,7 @@ export const UploadLabel = ({
             className="upload-input"
             id="file-upload"
             type="file"
+            accept=".vcf,.vcf.gz,.zip"
             multiple
             onChange={(e) => {
               const selectedFiles = Array.from(e.target.files || []);

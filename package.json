@@ -16,7 +16,7 @@
     "prisma:validate": "npx prisma validate "
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.918.0",
+    "@aws-sdk/client-s3": "^3.926.0",
     "@google/genai": "^0.13.0",
     "@mdx-js/react": "^3.1.0",
     "@prisma/client": "^6.11.1",

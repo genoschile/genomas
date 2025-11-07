@@ -18,7 +18,8 @@ const envSchema = z.object({
     .default(10),
   PORT: z.coerce.number().min(1, 'PORT must be a valid number').default(4000),
   NODE_ENV: z.string().min(1, 'Node env is required').default('development'),
-  GOOGLE_API_KEY: z.string().min(1, 'GOOGLE_API_KEY is required')
+  GOOGLE_API_KEY: z.string().min(1, 'GOOGLE_API_KEY is required'),
+  APP_LANGUAGE: z.string().min(1, 'APP_LANGUAGE is required').default('es'),
 });
 
 const { success, error, data } = envSchema.safeParse(process.env);
@@ -39,5 +40,6 @@ export const {
   SALT_ROUNDS,
   PORT,
   NODE_ENV,
-  GOOGLE_API_KEY
+  GOOGLE_API_KEY,
+  APP_LANGUAGE
 } = data;
