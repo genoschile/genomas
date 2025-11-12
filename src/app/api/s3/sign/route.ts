@@ -8,7 +8,6 @@ import {
   AWS_BUCKET_NAME,
   AWS_SECRET_ACCESS_KEY,
 } from "@lib/config/env";
-import { file } from "zod";
 
 const s3 = new S3Client({
   region: AWS_REGION,

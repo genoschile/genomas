@@ -5,7 +5,21 @@ export function useS3Uploader() {
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
 
-  const uploadToS3 = async (file: File, expireSeconds = 300) => {
+  const uploadToS3 = async (
+    file: File,
+    {
+      organizationId,
+      workspaceId,
+      projectId,
+      fileRole,
+    }: {
+      organizationId: string;
+      workspaceId: string;
+      projectId: string;
+      fileRole: string;
+    },
+    expireSeconds = 300
+  ) => {
     try {
       setUploading(true);
       setProgress(0);
@@ -17,6 +31,10 @@ export function useS3Uploader() {
           fileName: file.name,
           fileType: file.type,
           expireSeconds,
+          organizationId: organizationId,
+          workspaceId: workspaceId,
+          projectId: projectId,
+          fileRole: fileRole,
         }),
       });
 

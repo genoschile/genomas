@@ -6,10 +6,10 @@ import { useUploadSteps } from "../UploadStepContext";
 import { useEffect, useState } from "react";
 import { ButtonHandleClean } from "./ButtonHandleClean";
 import { useS3Uploader } from "@/hooks/useS3Uploader";
+import { useSessionContext } from "@/hooks/useSession";
+import { useProjectContext } from "@/hooks/useProjectContext";
 
 export default function FileProcessor() {
-  const [uploadJobId, setUploadJobId] = useState<string>("");
-
   const {
     watch,
     currentStep,
@@ -32,6 +32,8 @@ export default function FileProcessor() {
 
   const currentProject = watch("currentProjectId");
 
+  console.log("project id", currentProject);
+  
   const { uploadToS3, uploading: s3Uploading, progress } = useS3Uploader();
 
   useEffect(() => {
@@ -76,27 +78,30 @@ export default function FileProcessor() {
       return;
     }
 
-    // --- GENERAR jobId ---
-    const jobId = `${currentProject}_upload_${crypto
-      .randomUUID()
-      .replace(/-/g, "")
-      .slice(0, 8)}`;
-
     setUploadStatus(UploadStatus.PENDING);
-    setUploadJobId(jobId);
 
     try {
-      // --- SUBIDA DIRECTA A S3 ---
       const uploadedFiles: { name: string; key: string }[] = [];
 
       for (const file of files) {
-        const result = await uploadToS3(file, 600); // URL válida por 10 min
+        const result = await uploadToS3(
+          file,
+          {
+            organizationId: "org-123",
+            workspaceId: "ws-456",
+            projectId: currentProject,
+            fileRole: "input",
+          },
+          600
+        ); // URL válida por 10 min
+
         if (result.success) {
           uploadedFiles.push({ name: file.name, key: result.key });
         } else {
           throw new Error(`Error al subir ${file.name}`);
         }
       }
+
       // --- REGISTRAR ARCHIVOS EN BACKEND ---
       const saveResponse = await fetch("/api/files/bulk", {
         method: "POST",
@@ -107,7 +112,7 @@ export default function FileProcessor() {
             filename: f.name,
             path: f.key,
             fileType: "FASTQ", // o según corresponda
-            fileRole: "INPUT",
+            fileRole: "input",
           })),
         }),
       });
