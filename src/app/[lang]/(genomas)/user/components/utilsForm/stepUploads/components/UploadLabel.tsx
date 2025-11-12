@@ -1,15 +1,17 @@
+"use client";
+
 import { Controller } from "react-hook-form";
 import { useUploadSteps } from "../UploadStepContext";
-import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
-
+import { useState } from "react";
 export const UploadLabel = ({
   handleFileChange,
 }: {
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
-  const { control, watch } = useUploadSteps();
+  const { control, watch, renderUploadIcon } = useUploadSteps();
   const files = watch("files") ?? [];
-  const { renderUploadIcon } = useUploadStatusContext();
+
+
 
   return (
     <Controller

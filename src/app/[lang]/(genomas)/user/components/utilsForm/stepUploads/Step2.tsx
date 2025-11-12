@@ -1,15 +1,12 @@
 "use client";
 
-import { useUploadSteps } from "./UploadStepContext";
+import { UploadStatus, useUploadSteps } from "./UploadStepContext";
 import { useState } from "react";
-import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
-import { UploadStatus } from "@/context/UploadStatusContext";
 import "./components/FileUpload.css";
 import { UploadLabel } from "./components/UploadLabel";
 
 export const UploadStep2 = () => {
-  const { setValue, errors } = useUploadSteps();
-  const { setUploadStatus } = useUploadStatusContext();
+  const { setValue, errors, setUploadStatus, uploadStatus } = useUploadSteps();
   const [isDragOver, setIsDragOver] = useState(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

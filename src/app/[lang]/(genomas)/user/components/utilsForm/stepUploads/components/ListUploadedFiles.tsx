@@ -1,16 +1,12 @@
 "use client";
 
-import { UploadStatus } from "@/context/UploadStatusContext";
-import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
 import { getFileSize } from "@/utils/getFileSize";
 import { useUploadSteps } from "../UploadStepContext";
 
 export const ListUploadedFiles = () => {
-  const { watch } = useUploadSteps();
+  const { watch, uploadStatus, UploadStatus } = useUploadSteps();
   const files = watch("files") ?? [];
   const decompressFiles = watch("decompressFiles") ?? [];
-
-  const { uploadStatus } = useUploadStatusContext();
 
   const renderStagedIdleTable = () => (
     <div className="upload-table-container">
@@ -75,7 +71,7 @@ export const ListUploadedFiles = () => {
       case UploadStatus.STAGED_IDLE:
         return (
           <div className="upload-step upload-step--staged-idle">
-            <p>Archivo subido. Aún no ha sido procesado.</p>
+            <p>Archivo subido. </p>
             {renderStagedIdleTable()}
           </div>
         );
@@ -83,16 +79,8 @@ export const ListUploadedFiles = () => {
       case UploadStatus.PENDING:
         return (
           <div className="upload-step upload-step--pending">
-            <p>Procesando archivo ZIP...</p>
+            <p>subiendo ... </p>
             <div className="spinner" />
-          </div>
-        );
-
-      case UploadStatus.STAGED:
-        return (
-          <div className="upload-step upload-step--staged">
-            <h3>Archivos listos para subir</h3>
-            {renderTable()}
           </div>
         );
 

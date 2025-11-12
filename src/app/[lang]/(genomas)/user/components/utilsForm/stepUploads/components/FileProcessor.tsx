@@ -1,22 +1,15 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { useUploadStatusContext } from "@/hooks/useUploadStatusContext";
-import { UploadStatus } from "@/context/UploadStatusContext";
-import {
-  FaSpinner,
-  FaPlay,
-  FaDatabase,
-  FaRedo,
-  FaCheckCircle,
-  FaTimesCircle,
-} from "react-icons/fa";
-import axios from "axios";
 import { routes } from "@/lib/api/routes";
 import { useUploadSteps } from "../UploadStepContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ButtonHandleClean } from "./ButtonHandleClean";
+import { useS3Uploader } from "@/hooks/useS3Uploader";
 
 export default function FileProcessor() {
+  const [uploadJobId, setUploadJobId] = useState<string>("");
+
   const {
     watch,
     currentStep,
@@ -25,13 +18,21 @@ export default function FileProcessor() {
     hasAutoAdvanced,
     handleChangeAutoAdvance,
     setError,
-    goToStep,
     setValue,
+    UploadStatus,
+    setUploadStatus,
+    uploadStatus,
+    getButtonIcon,
+    getButtonLabel,
   } = useUploadSteps();
+
+  const [isUploading, setUploading] = useState<boolean>(false);
 
   const files = watch("files");
 
   const currentProject = watch("currentProjectId");
+
+  const { uploadToS3, uploading: s3Uploading, progress } = useS3Uploader();
 
   useEffect(() => {
     const handleAutoNext = async () => {
@@ -47,24 +48,11 @@ export default function FileProcessor() {
     handleAutoNext();
   }, [files, hasAutoAdvanced]);
 
-  const {
-    uploadStatus,
-    setUploadStatus,
-    isUploading,
-    setUploading,
-    setUploadJobId,
-    uploadJobId,
-  } = useUploadStatusContext();
+  const handleToS3Upload = async () => {
+    setUploadStatus(UploadStatus.UPLOAD_DB);
+    setUploading(true);
 
-  const handleClean = () => {
-    setValue("files", []);
-    setValue("decompressFiles", []);
-    goToStep(2);
-    setUploading(false);
-    setUploadStatus(UploadStatus.IDLE);
-  };
-
-  const handleUpload = async () => {
+    // --- VALIDACIONES ---
     let hasError = false;
 
     if (!files || files.length === 0) {
@@ -83,77 +71,69 @@ export default function FileProcessor() {
       hasError = true;
     }
 
-    if (hasError) return;
+    if (hasError) {
+      setUploading(false);
+      return;
+    }
 
+    // --- GENERAR jobId ---
     const jobId = `${currentProject}_upload_${crypto
       .randomUUID()
       .replace(/-/g, "")
       .slice(0, 8)}`;
 
     setUploadStatus(UploadStatus.PENDING);
-    setUploading(true);
+    setUploadJobId(jobId);
 
     try {
-      const formData = new FormData();
-      formData.append("upload_id", jobId);
-      
-      setUploadJobId(jobId);files.forEach((file: any) => formData.append("files", file)); 
+      // --- SUBIDA DIRECTA A S3 ---
+      const uploadedFiles: { name: string; key: string }[] = [];
 
-      const response = await fetch(routes.decompressFiles(), {
+      for (const file of files) {
+        const result = await uploadToS3(file, 600); // URL válida por 10 min
+        if (result.success) {
+          uploadedFiles.push({ name: file.name, key: result.key });
+        } else {
+          throw new Error(`Error al subir ${file.name}`);
+        }
+      }
+      // --- REGISTRAR ARCHIVOS EN BACKEND ---
+      const saveResponse = await fetch("/api/files/bulk", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          projectId: currentProject,
+          files: uploadedFiles.map((f) => ({
+            filename: f.name,
+            path: f.key,
+            fileType: "FASTQ", // o según corresponda
+            fileRole: "INPUT",
+          })),
+        }),
       });
 
-      const data = await response.json();
+      const saveData = await saveResponse.json();
+      if (!saveData.success)
+        throw new Error("Error al registrar archivos en BD");
 
-      if (!data.success) {
-        toast.error("Error al procesar los archivos");
-        setUploadStatus(UploadStatus.UPLOAD_ERROR);
-        return;
-      }
-
-      setValue("decompressFiles", data.data.files ?? []);
-
-      setUploadStatus(UploadStatus.STAGED);
-      toast.success("Archivos cargados y descomprimidos.");
+      // --- PROCESO FINAL ---
+      setValue(
+        "decompressFiles",
+        uploadedFiles.map((f) => ({
+          name: f.name,
+          path: f.key,
+          size: 0,
+          type: "application/octet-stream",
+          accepted: true,
+          message: "Subido correctamente",
+          progress: 100,
+        }))
+      );
+      toast.success("Archivos subidos exitosamente a S3");
+      setUploadStatus(UploadStatus.UPLOAD_SUCCESS);
     } catch (error) {
-      console.error("Error al subir archivos:", error);
-      toast.error("Error al procesar archivos.");
-      setUploadStatus(UploadStatus.UPLOAD_ERROR);
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const handleStageToDatabase = async () => {
-    if (!uploadJobId) {
-      toast.error("No se encontró un jobId para la subida.");
-      return;
-    }
-
-    setUploadStatus(UploadStatus.UPLOAD_DB);
-    setUploading(true);
-
-    const toastId = toast.loading("Subiendo archivos al bucket...");
-
-    try {
-      const res = await axios.post(routes.uploadFiles(), {
-        upload_id: uploadJobId,
-      });
-
-      toast.dismiss(toastId);
-
-      if (res.data.success) {
-        toast.success("¡Archivos copiados exitosamente al bucket!");
-        setUploadStatus(UploadStatus.UPLOAD_SUCCESS);
-      } else {
-        toast.error("Error: " + res.data.message);
-        setUploadStatus(UploadStatus.UPLOAD_ERROR);
-      }
-    } catch (error) {
-      console.error("Error en la subida al bucket:", error);
-      toast.dismiss(toastId);
-      toast.error("Error al copiar archivos al bucket.");
+      console.error("Error durante la subida:", error);
+      toast.error("Error durante la subida.");
       setUploadStatus(UploadStatus.UPLOAD_ERROR);
     } finally {
       setUploading(false);
@@ -178,53 +158,11 @@ export default function FileProcessor() {
     switch (uploadStatus) {
       case UploadStatus.IDLE:
       case UploadStatus.STAGED_IDLE:
-        return handleUpload;
-      case UploadStatus.STAGED:
-        return handleStageToDatabase;
+        return handleToS3Upload;
       case UploadStatus.UPLOAD_RESUME:
         return handleResumeUpload;
       default:
         return () => {};
-    }
-  };
-
-  const getButtonLabel = () => {
-    switch (uploadStatus) {
-      case UploadStatus.IDLE:
-      case UploadStatus.STAGED_IDLE:
-        return "Subir archivo ZIP";
-      case UploadStatus.PENDING:
-        return "Procesando ZIP...";
-      case UploadStatus.STAGED:
-        return "Subir a la base de datos";
-      case UploadStatus.UPLOAD_DB:
-        return "Subiendo...";
-      case UploadStatus.UPLOAD_SUCCESS:
-        return "Carga completada";
-      case UploadStatus.UPLOAD_ERROR:
-        return "Reintentar carga";
-      default:
-        return "Cargar";
-    }
-  };
-
-  const getButtonIcon = () => {
-    switch (uploadStatus) {
-      case UploadStatus.IDLE:
-      case UploadStatus.STAGED_IDLE:
-        return <FaPlay />;
-      case UploadStatus.PENDING:
-        return <FaSpinner className="rotate" />;
-      case UploadStatus.STAGED:
-        return <FaDatabase />;
-      case UploadStatus.UPLOAD_DB:
-        return <FaSpinner className="rotate" />;
-      case UploadStatus.UPLOAD_SUCCESS:
-        return <FaCheckCircle color="green" />;
-      case UploadStatus.UPLOAD_ERROR:
-        return <FaTimesCircle color="red" />;
-      default:
-        return null;
     }
   };
 
@@ -244,9 +182,7 @@ export default function FileProcessor() {
         <span className="text">{getButtonLabel()}</span>
       </button>
 
-      <button onClick={handleClean} className="clean-button">
-        <FaRedo /> Limpiar
-      </button>
+      <ButtonHandleClean setUploading={setUploading} />
     </div>
   );
 }
