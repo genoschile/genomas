@@ -6,8 +6,7 @@ import { useUploadSteps } from "../UploadStepContext";
 import { useEffect, useState } from "react";
 import { ButtonHandleClean } from "./ButtonHandleClean";
 import { useS3Uploader } from "@/hooks/useS3Uploader";
-import { useSessionContext } from "@/hooks/useSession";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 
 export default function FileProcessor() {
   const {
@@ -31,8 +30,6 @@ export default function FileProcessor() {
   const files = watch("files");
 
   const currentProject = watch("currentProjectId");
-
-  console.log("project id", currentProject);
 
   const { uploadToS3, uploading: s3Uploading, progress } = useS3Uploader();
 
@@ -83,11 +80,15 @@ export default function FileProcessor() {
     try {
       const uploadedFiles: { name: string; key: string }[] = [];
 
+      const organizationId = getLocalStorageOrganization();
+      
+      if (!organizationId) throw new Error("ID de organización no encontrado");
+
       for (const file of files) {
         const result = await uploadToS3(
           file,
           {
-            organizationId: "org-123",
+            organizationId: organizationId,
             workspaceId: "ws-456",
             projectId: currentProject,
             fileRole: "input",
