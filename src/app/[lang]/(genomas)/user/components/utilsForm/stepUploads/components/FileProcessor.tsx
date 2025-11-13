@@ -22,6 +22,7 @@ export default function FileProcessor() {
     setUploadStatus,
     uploadStatus,
     getButtonIcon,
+    currentProject,
     getButtonLabel,
   } = useUploadSteps();
 
@@ -29,7 +30,12 @@ export default function FileProcessor() {
 
   const files = watch("files");
 
-  const currentProject = watch("currentProjectId");
+  if (!currentProject) return null;
+
+  const { workspaceId, id } = currentProject;
+
+
+
 
   const { uploadToS3, uploading: s3Uploading, progress } = useS3Uploader();
 
@@ -81,7 +87,7 @@ export default function FileProcessor() {
       const uploadedFiles: { name: string; key: string }[] = [];
 
       const organizationId = getLocalStorageOrganization();
-      
+
       if (!organizationId) throw new Error("ID de organización no encontrado");
 
       for (const file of files) {
@@ -89,8 +95,8 @@ export default function FileProcessor() {
           file,
           {
             organizationId: organizationId,
-            workspaceId: "ws-456",
-            projectId: currentProject,
+            workspaceId: workspaceId,
+            projectId: id,
             fileRole: "input",
           },
           600
