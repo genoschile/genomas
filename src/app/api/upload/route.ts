@@ -20,6 +20,17 @@ export async function POST(req: Request) {
       );
     }
 
+    console.log(files);
+
+    //     [
+    //   {
+    //     filename: 'InterativeGenome.zip',
+    //     path: 'organization/org-123/workspace/ws-456/project/proj-789/input/1763037834168-InterativeGenome.zip',
+    //     fileType: 'FASTQ',
+    //     fileRole: 'input'
+    //   }
+    // ]
+
     console.log(
       "📂 Registrando archivos:",
       fileArray.length,

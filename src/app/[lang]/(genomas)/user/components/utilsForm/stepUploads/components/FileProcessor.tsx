@@ -33,7 +33,7 @@ export default function FileProcessor() {
   const currentProject = watch("currentProjectId");
 
   console.log("project id", currentProject);
-  
+
   const { uploadToS3, uploading: s3Uploading, progress } = useS3Uploader();
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export default function FileProcessor() {
       }
 
       // --- REGISTRAR ARCHIVOS EN BACKEND ---
-      const saveResponse = await fetch("/api/files/bulk", {
+      const saveResponse = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
