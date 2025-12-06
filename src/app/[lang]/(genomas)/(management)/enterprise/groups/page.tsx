@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
+import { ChatSuggestionTitle } from "@/features/enterprise/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 
 import "./page.css";
 
@@ -9,7 +9,7 @@ import { ContainerGroupsList } from "./component/ContainerGroupsList";
 import { ContainerDefaultEnterprise } from "../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
 import { useMemo, useState } from "react";
 import { SearchFilterEnterpriseGroups } from "./component/ContainerGroupsFiltersComponent/SearchFilterEnterpriseGroups";
-import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
+import { useGroupsContext } from "@/features/enterprise/context/GroupsEnterpriseContext";
 import { toast } from "react-toastify";
 
 export default function page() {

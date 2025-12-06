@@ -3,7 +3,7 @@
 /* hooks */
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 
 /* styles */
 import "./sidebarInfoProjectSelect.css";

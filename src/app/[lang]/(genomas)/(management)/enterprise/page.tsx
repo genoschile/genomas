@@ -1,18 +1,18 @@
-import { AdminAccountEnterpriseCredentials } from "@/components/enterprise/adminAccountEnterpriseCredentials/AdminAccountEnterpriseCredentials";
-import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
+import { AdminAccountEnterpriseCredentials } from "@/features/enterprise/components/enterprise/adminAccountEnterpriseCredentials/AdminAccountEnterpriseCredentials";
+import { ChatSuggestionTitle } from "@/features/enterprise/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 import {
   MonthlyGrowthCard,
   TotalGroupsCard,
   TotalUsersCard,
-} from "@/components/enterprise/metrics/MetricsEnterprise";
+} from "@/features/enterprise/components/enterprise/metrics/MetricsEnterprise";
 import {
   QuickActionsUsers,
   QuickActionsGroups,
   QuickActionsProjects,
-} from "@/components/enterprise/quickactions/QuickActions";
+} from "@/features/enterprise/components/enterprise/quickactions/QuickActions";
 import { ContainerWorkspaces } from "../../../../../features/enterprise/components/workspaces/components/ContainerWorkspaces";
 import { ContainerListWorkspaces } from "../../../../../features/enterprise/components/workspaces/components/ContainerListWorkspaces";
-import { DataTableUserEnterpriseProvider } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { DataTableUserEnterpriseProvider } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 
 export default function page() {
   return (

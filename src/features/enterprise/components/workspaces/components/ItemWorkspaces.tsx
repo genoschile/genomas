@@ -1,7 +1,7 @@
-import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
+import { IconRoundedFull } from "@/features/enterprise/components/enterprise/iconRoundedFull/IconRoundedFull";
 import "./itemWorkspaces.css";
 import { MdWorkspacesFilled } from "react-icons/md";
-import { Workspace } from "@/context/enterprise/WorkspacesEnterpriseContext";
+import { Workspace } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 
 export const ItemWorkspace = ({ workspace }: { workspace: Workspace }) => {
   return (

@@ -4,7 +4,7 @@ import "./style.css";
 
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
+import { ChatSuggestionTitle } from "@/features/enterprise/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 import { ContainerDefaultEnterprise } from "../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
 import { ContainerSearch } from "../../../../../../features/admin/components/SearchOrganization";
 

@@ -5,7 +5,7 @@ import { routes } from "@/lib/api/routes";
 import { useUploadSteps } from "../UploadStepContext";
 import { useEffect, useState } from "react";
 import { ButtonHandleClean } from "./ButtonHandleClean";
-import { useS3Uploader } from "@/hooks/useS3Uploader";
+import { useS3Uploader } from "@/features/user/hooks/useS3Uploader";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 
 export default function FileProcessor() {

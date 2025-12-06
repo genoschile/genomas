@@ -1,4 +1,4 @@
-import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
+import { IconRoundedFull } from "@/features/enterprise/components/enterprise/iconRoundedFull/IconRoundedFull";
 import { FaUser } from "react-icons/fa";
 
 export const GroupsCardMembersImg = ({

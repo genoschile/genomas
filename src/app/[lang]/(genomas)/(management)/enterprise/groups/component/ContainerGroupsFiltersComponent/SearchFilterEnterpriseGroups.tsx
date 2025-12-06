@@ -1,6 +1,6 @@
 "use client";
 
-import { useFiltersTableUserEnterpriseContext } from "@/context/enterprise/FiltersTableUserEnterpriseContext";
+import { useFiltersTableUserEnterpriseContext } from "@/features/enterprise/context/FiltersTableUserEnterpriseContext";
 import { useEffect, useRef, useState } from "react";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { FaArrowDownLong } from "react-icons/fa6";
@@ -12,7 +12,7 @@ import "./searchFilterEnterpriseGroups.css";
 import {
   Group,
   useGroupsContext,
-} from "@/context/enterprise/GroupsEnterpriseContext";
+} from "@/features/enterprise/context/GroupsEnterpriseContext";
 import { routes } from "@/lib/api/routes";
 
 export function SearchFilterEnterpriseGroups({

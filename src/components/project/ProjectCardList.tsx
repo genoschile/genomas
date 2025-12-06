@@ -1,7 +1,7 @@
 "use client";
 
 /* hooks */
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 import { useState } from "react";
 
 /* components */
@@ -9,7 +9,7 @@ import { Pagination } from "../analysis/tables/Pagination";
 import { ProjectCardListItems } from "./ProjectCardListItems";
 
 /* context */
-import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
+import { useUserWorkspacesContext } from "@/features/user/context/userWorkspacesContext";
 
 /* styles */
 import "./projectCardList.css";

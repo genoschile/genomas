@@ -1,9 +1,9 @@
 "use client";
 
 /* context */
-import { ProjectProvider } from "@/context/ProjectContext";
-import { UserWorkspacesProvider } from "@/context/userWorkspacesContext";
-import { ProcessContextProvider } from "@/context/ProcessContext";
+import { ProjectProvider } from "@/features/user/context/ProjectContext";
+import { UserWorkspacesProvider } from "@/features/user/context/userWorkspacesContext";
+import { ProcessContextProvider } from "@/features/user/context/ProcessContext";
 
 /* styles */
 import "./layout.css";

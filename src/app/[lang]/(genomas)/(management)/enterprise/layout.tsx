@@ -1,15 +1,15 @@
 "use client";
 
 /* contexts */
-import { SuggestionsProvider } from "@/context/enterprise/SuggestionsPromptContext";
+import { SuggestionsProvider } from "@/features/enterprise/context/SuggestionsPromptContext";
 import { ThemeProvider } from "@/features/theme/context/ThemeContext";
-import { WorkspacesProvider } from "@/context/enterprise/WorkspacesEnterpriseContext";
-import { ProjectsProvider } from "@/context/enterprise/ProjectContextEnterprise";
+import { WorkspacesProvider } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
+import { ProjectsProvider } from "@/features/enterprise/context/ProjectContextEnterprise";
 import { ModalProvider } from "@/features/modals/context/ModalsProject";
-import { GroupsProvider } from "@/context/enterprise/GroupsEnterpriseContext";
+import { GroupsProvider } from "@/features/enterprise/context/GroupsEnterpriseContext";
 
 /* hooks */
-import { DataTableUserEnterpriseProvider } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { DataTableUserEnterpriseProvider } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import BaseLayout from "../layout";
 
 export default function EnterpriseLayout({

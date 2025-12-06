@@ -1,7 +1,7 @@
 "use client";
 
 import "./tableEnterpriseUser.css";
-import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";

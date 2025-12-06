@@ -1,4 +1,4 @@
-import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { FaSearch } from "react-icons/fa";
 
 export const SearchSectionEnterpriseUser = () => {

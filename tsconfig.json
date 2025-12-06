@@ -25,11 +25,13 @@
       "@lib/*": ["./src/lib/*"],
       "@actions/*": ["./src/lib/actions/*"],
       "@fonts/*": ["./src/lib/fonts/*"],
-      "@Config/*": ["./src/lib/config/*"],
+      "@config/*": ["./src/config/*"],
       "@core/*": ["./src/core/*"],
       "@utils/*": ["./src/utils/*"],
       "@styles/*": ["./src/styles/*"],
-      "@features/*": ["./src/features/*"]
+      "@features/*": ["./src/features/*"],
+      "@prisma/*": ["./src/database/prisma/*"],
+      "@database/*": ["./src/database/*"]
     }
   },
   "include": [

@@ -2,11 +2,11 @@
 
 import React, { useEffect } from "react";
 import { ContainerDefaultEnterprise } from "../../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
-import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
+import { useWorkspacesContext } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 import "./enterpriseProjectHero.css";
 import "./enterpriseNavActions.css";
-import { useProjectsContextEnterprise } from "@/context/enterprise/ProjectContextEnterprise";
-import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
+import { useProjectsContextEnterprise } from "@/features/enterprise/context/ProjectContextEnterprise";
+import { IconRoundedFull } from "@/features/enterprise/components/enterprise/iconRoundedFull/IconRoundedFull";
 import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 import { FaAndroid } from "react-icons/fa";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";

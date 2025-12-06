@@ -3,10 +3,10 @@
 import { FiCalendar } from "react-icons/fi";
 
 import "./topBar.css";
-import { GreetTopBar } from "@/components/enterprise/greetTopBar/GreetTopBar";
-import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
+import { GreetTopBar } from "@/features/enterprise/components/enterprise/greetTopBar/GreetTopBar";
+import { IconRoundedFull } from "@/features/enterprise/components/enterprise/iconRoundedFull/IconRoundedFull";
 import { Suspense } from "react";
-import { ThemeSwitcher } from "@/components/enterprise/ThemeSwitcher/ThemeSwitcher";
+import { ThemeSwitcher } from "@/features/theme/components/ThemeSwitcher/ThemeSwitcher";
 
 export function TopBar({
   handleSetOpenSidebar,

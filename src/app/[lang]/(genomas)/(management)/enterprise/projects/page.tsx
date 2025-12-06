@@ -1,9 +1,9 @@
 "use client";
 
-import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
+import { ChatSuggestionTitle } from "@/features/enterprise/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 import { EnterpriseProjectHero } from "./components/EnterpriseProjectHero";
 import { EnterpriseProjectListContainer } from "./components/EnterpriseProjectListContainer";
-import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
+import { useWorkspacesContext } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 import { ContainerDefaultEnterprise } from "../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
 
 export default function page() {

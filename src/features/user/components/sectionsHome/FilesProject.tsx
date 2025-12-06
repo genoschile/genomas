@@ -10,7 +10,7 @@ import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 
 /* components */
 import { FilesProjectSelected } from "../FilesProjectSelected";
@@ -26,7 +26,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 /* styles */
 import "./filesProject.css";
 import { IFile } from "@/lib/types/files";
-import { useProcessContext } from "@/context/ProcessContext";
+import { useProcessContext } from "@/features/user/context/ProcessContext";
 import { routes } from "@/lib/api/routes";
 
 const ExampleResFastAPI = {

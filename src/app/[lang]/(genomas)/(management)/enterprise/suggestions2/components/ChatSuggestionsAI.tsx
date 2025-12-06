@@ -1,4 +1,4 @@
-import { useSuggestions } from "@/context/enterprise/SuggestionsPromptContext";
+import { useSuggestions } from "@/features/enterprise/context/SuggestionsPromptContext";
 import "./chatSuggestionsAI.css";
 import { MdContentCopy } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";

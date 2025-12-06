@@ -3,7 +3,7 @@
 import {
   Group,
   useGroupsContext,
-} from "@/context/enterprise/GroupsEnterpriseContext";
+} from "@/features/enterprise/context/GroupsEnterpriseContext";
 import { GroupsCard } from "./ContainerGroupList/GroupsCard";
 
 export const ContainerGroupsList = ({

@@ -1,6 +1,6 @@
 import "./typingSuggestionsAI.css";
 
-import { useSuggestions } from "@/context/enterprise/SuggestionsPromptContext";
+import { useSuggestions } from "@/features/enterprise/context/SuggestionsPromptContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { RiLoopLeftFill } from "react-icons/ri";
 import { TbPencilHeart } from "react-icons/tb";

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { FaExclamationCircle } from "react-icons/fa";
 import "./workspaceform.css";
-import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
+import { useUserWorkspacesContext } from "@/features/user/context/userWorkspacesContext";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 
 export const WorkspaceForm = () => {
   const [workspaceName, setWorkspaceName] = useState("");

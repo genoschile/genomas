@@ -2,7 +2,7 @@ import "./filesViewList.css";
 
 import { FilesTypeSwift } from "@/features/user/components/sectionsHome/FilesTypeSwift";
 import { useFilesContext } from "./context/FilesContext";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 export const FilesViewsList = () => {

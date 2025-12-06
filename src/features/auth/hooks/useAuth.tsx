@@ -3,30 +3,6 @@
 import { routes } from "@/lib/api/routes";
 import { useState } from "react";
 
-type LoginUserResponse = {
-  success: boolean;
-  message: string;
-  data?: {
-    email: string;
-    id: string;
-    name: string;
-    organizationId: string;
-    userType: string;
-    accessToken: string;
-  };
-};
-
-type LoginOrganizationResponse = {
-  success: boolean;
-  message: string;
-  data?: {
-    id: string;
-    name: string;
-    email: string;
-    accessToken: string;
-  };
-};
-
 export function useAuth() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
@@ -85,7 +61,6 @@ export function useAuth() {
     setAccessToken(data.data.accessToken);
     return { success: true, message: "Login successful", data: data.data };
   }
-
 
   return { accessToken, loginEnterprise, loginUser, logout };
 }

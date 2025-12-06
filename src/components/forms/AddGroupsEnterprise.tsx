@@ -6,9 +6,9 @@ import { MultiSelectChips } from "./componentsAddGroupsEnterprise/MultiSelectChi
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { toast } from "react-toastify";
 import { routes } from "@/lib/api/routes";
-import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
-import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
+import { useGroupsContext } from "@/features/enterprise/context/GroupsEnterpriseContext";
 
 export const AddGroupsFormEnterprise = () => {
   const [isPending, startTransition] = useTransition();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useFiltersTableUserEnterpriseContext } from "@/context/enterprise/FiltersTableUserEnterpriseContext";
+import { useFiltersTableUserEnterpriseContext } from "@/features/enterprise/context/FiltersTableUserEnterpriseContext";
 import "./SearchFilterEnterpriseUser.css";
 import { useState } from "react";
 import { BiMenuAltLeft } from "react-icons/bi";

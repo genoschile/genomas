@@ -1,7 +1,7 @@
 "use client";
 
 import "./addUsersEnterprise.css";
-import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";

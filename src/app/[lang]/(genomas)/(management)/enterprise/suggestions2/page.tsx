@@ -1,11 +1,11 @@
 "use client";
 
 import "./page.css";
-import { ChatSuggestionsList } from "@/components/enterprise/suggestionsAI/ChatSuggestionsList";
-import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
+import { ChatSuggestionsList } from "@/features/enterprise/components/enterprise/suggestionsAI/ChatSuggestionsList";
+import { ChatSuggestionTitle } from "@/features/enterprise/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
 import { TypingSuggestionsAI } from "./components/TypingSuggestionsAI";
 import { ChatSuggestionsAI } from "./components/ChatSuggestionsAI";
-import { useSuggestions } from "@/context/enterprise/SuggestionsPromptContext";
+import { useSuggestions } from "@/features/enterprise/context/SuggestionsPromptContext";
 
 export default function page() {
   const { history, status } = useSuggestions();

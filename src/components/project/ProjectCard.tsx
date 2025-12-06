@@ -4,7 +4,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import "./projectCard.css";
 import { FaFolder, FaUser } from "react-icons/fa";
 import { RiGitRepositoryPrivateFill } from "react-icons/ri";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { useState, useEffect, useRef } from "react";
 import { DropdownMenuCard } from "./components/DropdownMenuCard";

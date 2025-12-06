@@ -1,4 +1,4 @@
-import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { useEffect, useState } from "react";
 import { routes } from "@/lib/api/routes";

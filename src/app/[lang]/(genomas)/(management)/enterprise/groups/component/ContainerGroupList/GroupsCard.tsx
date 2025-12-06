@@ -13,7 +13,7 @@ import { GroupsCardHeader } from "./GroupsCardHeader";
 import {
   Group,
   useGroupsContext,
-} from "@/context/enterprise/GroupsEnterpriseContext";
+} from "@/features/enterprise/context/GroupsEnterpriseContext";
 import { GroupsCardMembersNoMembers } from "./GroupsCardMembersNoMembers";
 import { GroupsCardMembersContainer } from "./GroupsCardMembersContainer";
 import { GroupsCardRolesList } from "./GroupsCardRolesList";

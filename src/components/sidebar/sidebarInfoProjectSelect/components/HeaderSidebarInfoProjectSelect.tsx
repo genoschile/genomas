@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import "./headerSidebarInfoProjectSelect.css";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 
 const projectSidebarData = {
   usersWithAccess: [

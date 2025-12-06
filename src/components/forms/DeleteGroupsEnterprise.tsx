@@ -1,4 +1,4 @@
-import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
+import { useGroupsContext } from "@/features/enterprise/context/GroupsEnterpriseContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { routes } from "@/lib/api/routes";
 import { toast } from "react-toastify";

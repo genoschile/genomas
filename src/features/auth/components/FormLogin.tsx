@@ -11,13 +11,17 @@ import { toast } from "react-toastify";
 import "./form.css";
 import { AuthFormLogo } from "./AuthFormLogo";
 import { AuthLink } from "./AuthLink";
-import { useTranslations } from "@/features/lang/context/I18nClientProvider";
-import Link from "next/link";
-import { useSessionContext } from "@/features/auth/hooks/useSession";
+
+/* icons */
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
-import z from "zod";
+
+import Link from "next/link";
+
+import { useTranslations } from "@/features/lang/context/I18nClientProvider";
+import { useSessionContext } from "@/features/auth/hooks/useSession";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { loginSchema } from "@/features/auth/validation/user_login_validation";
 
 export default function FormLogin() {
   const router = useRouter();
@@ -51,13 +55,6 @@ export default function FormLogin() {
     loginSuccessToast: t("auth.login.toast.success"),
     loginErrorToast: t("auth.login.toast.error"),
   };
-
-  const loginSchema = z.object({
-    email: z.string().email({ message: "Invalid email address" }),
-    password: z
-      .string()
-      .min(6, { message: "Password must be at least 6 characters long" }),
-  });
 
   const handleSubmit = async (formData: FormData) => {
     setFormErrors({});

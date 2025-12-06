@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import "./deleteConfirmationForm.css";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { routes } from "@/lib/api/routes";
 import { IProject } from "@/lib/types/contextTypes";

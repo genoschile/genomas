@@ -1,5 +1,5 @@
-import { IconRoundedFull } from "@/components/enterprise/iconRoundedFull/IconRoundedFull";
-import { Group } from "@/context/enterprise/GroupsEnterpriseContext";
+import { IconRoundedFull } from "@/features/enterprise/components/enterprise/iconRoundedFull/IconRoundedFull";
+import { Group } from "@/features/enterprise/context/GroupsEnterpriseContext";
 import { FaUser } from "react-icons/fa";
 
 export const GroupsCardRolesList = ({ role }: Pick<Group, "role">) => {

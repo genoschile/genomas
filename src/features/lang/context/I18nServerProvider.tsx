@@ -9,8 +9,6 @@ export async function I18nServerProvider({
   lang: Language;
   children: React.ReactNode;
 }) {
-  console.log("I18nServerProvider hola", lang);
-
   const { dictionary } = await api.fetch(lang);
 
   return (

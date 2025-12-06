@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useUserWorkspacesContext } from "@/context/userWorkspacesContext";
+import { useUserWorkspacesContext } from "@/features/user/context/userWorkspacesContext";
 import "./projectWorkspacesSelected.css";
 
 export const ProjectWorkspaceSelector: React.FC = () => {

@@ -17,14 +17,13 @@ type User = {
   image: string;
   name: string;
   email: string;
-  userType: string; 
-  role?: string;    
+  userType: string;
+  role?: string;
   groups: string[];
   createdAt: Date;
   updatedAt: Date;
-  isDefaultAdmin: boolean; 
+  isDefaultAdmin: boolean;
 };
-
 
 type TableContextType = {
   users: User[];

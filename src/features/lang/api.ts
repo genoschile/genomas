@@ -2,7 +2,7 @@ import {
   Language,
   TranslationKey,
   TranslationParams,
-} from "@features/lang/types/i18n.types";
+} from "@/features/lang/types/i18n.types";
 
 export const createTranslator = (dictonary: Record<string, string>) => {
   return function t(key: TranslationKey, params?: TranslationParams): string {

@@ -1,4 +1,4 @@
-import { IAResponse, IAService } from "@/core/interfaces/IA/IAService";
+import { IAResponse, IAService } from "@/core/interfaces/IAService";
 
 export class SuggestionsUseCases {
   constructor(private iaService: IAService) {}

@@ -3,12 +3,12 @@
 import { useState, useEffect, useTransition } from "react";
 import { toast } from "react-toastify";
 import { routes } from "@/lib/api/routes";
-import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
+import { useGroupsContext } from "@/features/enterprise/context/GroupsEnterpriseContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import "./modalEditGroups.css";
 import { RoleSelector } from "@/components/forms/AddGroupsEnterprise";
 import { MultiSelectChips } from "@/components/forms/componentsAddGroupsEnterprise/MultiSelectChips";
-import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 
 export const ModalEditGroups = ({ groupId }: { groupId: string }) => {
   const [isPending, startTransition] = useTransition();

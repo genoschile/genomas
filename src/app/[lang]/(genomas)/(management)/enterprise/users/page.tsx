@@ -1,8 +1,8 @@
 "use client";
 
-import { ChatSuggestionTitle } from "@/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
-import { FiltersTableUserEnterpriseContextProvider } from "@/context/enterprise/FiltersTableUserEnterpriseContext";
-import { DataTableUserEnterpriseProvider } from "@/context/enterprise/DataTableUserEnterpriseContext";
+import { ChatSuggestionTitle } from "@/features/enterprise/components/enterprise/headerMainSectionEnterprise/HeaderMainSectionEnterprise";
+import { FiltersTableUserEnterpriseContextProvider } from "@/features/enterprise/context/FiltersTableUserEnterpriseContext";
+import { DataTableUserEnterpriseProvider } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { EnterpriseUserHero } from "./components/EnterpriseUserHero";
 import { TableEnterpriseUserContainer } from "./components/TableEnterpriseUserContainer";
 

@@ -3,7 +3,7 @@ import { ProjectHomeHeaderContainer } from "@/components/container/ProjectHomeHe
 import { ProjectCardList } from "@/components/project/ProjectCardList";
 import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
-import { useProjectContext } from "@/hooks/useProjectContext";
+import { useProjectContext } from "@/features/user/hooks/useProjectContext";
 import { IoIosAdd } from "react-icons/io";
 import { ProjectFilesSelected } from "../ProjectFilesSelected";
 import { WorkerNameSelected } from "../WorkerNameSelected";

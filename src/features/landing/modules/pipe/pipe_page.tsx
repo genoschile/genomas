@@ -1,6 +1,6 @@
 "use client";
 
-import CardAnalysis from "@/components/cards/CardAnalysis";
+import CardAnalysis from "@/features/landing/modules/pipe/components/cards/CardAnalysis";
 import "./page.css";
 import { AuthFormLogo } from "@/features/auth/components/AuthFormLogo";
 import { useTranslations } from "@/features/lang/context/I18nClientProvider";

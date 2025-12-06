@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { SearchFilterTable } from "../searchs/SearchFilterTable";
 import "./tableInputFiles.css";
 import { Pagination } from "./Pagination";
-import { useProcessContext } from "@/context/ProcessContext";
+import { useProcessContext } from "@/features/user/context/ProcessContext";
 
 const headerTables = ["File", "Workflow", "Id process", "Status"];
 

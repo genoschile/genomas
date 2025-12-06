@@ -1,6 +1,6 @@
 "use client";
 
-import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
+import { useWorkspacesContext } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 import { ItemWorkspace } from "./ItemWorkspaces";
 import "./containerListWorkspaces.css";
 

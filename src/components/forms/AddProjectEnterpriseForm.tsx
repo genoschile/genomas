@@ -1,7 +1,7 @@
 "use client";
 
 /* hooks */
-import { useWorkspacesContext } from "@/context/enterprise/WorkspacesEnterpriseContext";
+import { useWorkspacesContext } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -14,7 +14,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 
 /* style */
 import "./addProjectEnterpriseForm.css";
-import { useProjectsContextEnterprise } from "@/context/enterprise/ProjectContextEnterprise";
+import { useProjectsContextEnterprise } from "@/features/enterprise/context/ProjectContextEnterprise";
 import { routes } from "@/lib/api/routes";
 
 type SelectableItem = {
