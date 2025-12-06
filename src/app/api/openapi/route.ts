@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { openApiDoc } from "@/lib/openapi";
+import { openApiDoc } from "@/features/doc_api/openapi";
 
 export function GET() {
   return NextResponse.json(openApiDoc);

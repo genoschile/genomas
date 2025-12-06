@@ -5,7 +5,7 @@ import { DropdownMenu } from "./components/dropdowns/DropdownUser";
 import { WelcomeUser } from "./components/WelcomeUser";
 import "./userOptions.css";
 import { FaChevronRight } from "react-icons/fa";
-import { I18nButton } from "./I18nButton";
+import { I18nButton } from "../../features/lang/components/I18nButton";
 
 export default function UserOptions() {
   const [dropdownVisible, setDropdownVisible] = useState(false);

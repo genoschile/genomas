@@ -1,6 +1,5 @@
 import { PipelineType, Role } from "@core/interfaces/enums";
 import { IProject } from "./IProject";
-import { IPipelineRun } from "./IPipelineRun";
 
 export interface IWorkspaceResponse {
   id: string;

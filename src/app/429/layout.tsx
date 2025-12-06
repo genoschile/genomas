@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 
 /* fonts */
-import { inter } from "@/lib/fonts/fonts";
+import { inter } from "@/styles/fonts";
 
 export const metadata: Metadata = {
   title: "Genomas",

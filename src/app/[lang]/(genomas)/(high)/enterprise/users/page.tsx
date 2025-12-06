@@ -7,7 +7,7 @@ import { EnterpriseUserHero } from "./components/EnterpriseUserHero";
 import { TableEnterpriseUserContainer } from "./components/TableEnterpriseUserContainer";
 
 import "./page.css";
-import { ModalContainerAddUsersEnterprise } from "@/components/modals/ModalContainer";
+import { ModalContainerAddUsersEnterprise } from "@/features/modals/components/ModalContainer";
 
 export default function page() {
   return (

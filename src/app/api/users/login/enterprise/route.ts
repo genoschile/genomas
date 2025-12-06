@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { useCaseOrganization } from "@/core/instances";
 import { serialize } from "cookie";
-import { generateAccessToken, generateRefreshToken } from "@/lib/api/auth/auth";
+import { generateAccessToken, generateRefreshToken } from "@/features/auth/auth";
 
 /* login enterprise */
 export async function POST(req: Request) {

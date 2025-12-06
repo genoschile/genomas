@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifyAccessToken, AuthPayload } from "@/lib/api/auth/auth";
+import { verifyAccessToken, AuthPayload } from "@/features/auth/auth";
 
 export async function GET(req: Request) {
   const authHeader = req.headers.get("authorization");

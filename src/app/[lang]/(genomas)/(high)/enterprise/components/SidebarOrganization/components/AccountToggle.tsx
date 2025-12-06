@@ -1,6 +1,6 @@
 import { GrConfigure } from "react-icons/gr";
 import "./accountToggle.css";
-import { useSessionContext } from "@/hooks/useSession";
+import { useSessionContext } from "@/features/auth/hooks/useSession";
 
 interface AccountToggleProps {
   role?: "admin" | "user";

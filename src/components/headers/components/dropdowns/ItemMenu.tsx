@@ -7,7 +7,7 @@ import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { toast } from "react-toastify";
 import { deleteSession } from "@/lib/actions/session";
-import { useSessionContext } from "@/hooks/useSession";
+import { useSessionContext } from "@/features/auth/hooks/useSession";
 
 interface MenuItem {
   label: string;

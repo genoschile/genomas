@@ -6,7 +6,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { useFetchWithAuth } from "@/lib/api/auth/fetchAuth";
+import { useFetchWithAuth } from "@/features/auth/fetchAuth";
 
 export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
   const { users, editUser } = useDataTableUserEnterpriseContext();

@@ -6,16 +6,16 @@ import "@styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
 /* fonts */
-import { inter } from "@/lib/fonts/fonts";
+import { inter } from "@/styles/fonts";
 
 /* components */
 import { ToastContainer } from "react-toastify";
 
-import { I18nServerProvider } from "@/context/I18nServerProvider";
-import { Language } from "@/lib/i18n/i18n.types";
+import { I18nServerProvider } from "@/features/lang/context/I18nServerProvider";
+import { Language } from "@/features/lang/types/i18n.types";
 import { ModalProvider } from "@/context/ModalsProject";
 import { ReactNode } from "react";
-import { APP_LANGUAGE } from "@/lib/config/env";
+import { APP_LANGUAGE } from "@/config/env";
 
 export type LangLayoutProps = {
   children: ReactNode;

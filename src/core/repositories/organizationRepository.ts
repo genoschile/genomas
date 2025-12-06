@@ -11,7 +11,7 @@ import { ResponseWorkspacesDTO } from "../interfaces/IWorkspace";
 import { PipelineType } from "../interfaces/enums";
 import { IUser } from "../interfaces/IUser";
 import bcrypt from "bcrypt";
-import { generateSecurePassword } from "@/core/helpers/randomPwdSecure";
+import { generateSecurePassword } from "@/utils/randomPwdSecure";
 import { UserType as DomainUserType } from "@/core/interfaces/enums";
 
 export class OrganizationRepository implements IOrganizationRepository {

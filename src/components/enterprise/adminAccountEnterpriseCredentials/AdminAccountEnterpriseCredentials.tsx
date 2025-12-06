@@ -5,11 +5,10 @@ import { MdManageAccounts } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 
 import "./adminAccountEnterpriseCredentials.css";
-import { IconRoundedFull } from "../iconRoundedFull/IconRoundedFull";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSessionContext } from "@/hooks/useSession";
+import { useSessionContext } from "@/features/auth/hooks/useSession";
 import { routes } from "@/lib/api/routes";
 import { SkeletonWorkspace } from "@/app/[lang]/(genomas)/(high)/enterprise/components/workspaces/components/ContainerListWorkspaces";
 

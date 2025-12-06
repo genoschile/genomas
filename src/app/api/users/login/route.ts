@@ -1,7 +1,7 @@
 import { useCaseUser } from "@/core/instances";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { generateAccessToken, generateRefreshToken } from "@/lib/api/auth/auth";
+import { generateAccessToken, generateRefreshToken } from "@/features/auth/auth";
 import { serialize } from "cookie";
 
 export async function POST(req: Request) {

@@ -1,7 +1,7 @@
 import "./layout.css";
 import "./style.css";
-import { FooterLanding } from "@/components/footer/FooterLanding";
-import HeaderLanding from "@/components/headers/HeaderLanding";
+import { FooterLanding } from "@/features/landing/components/FooterLanding";
+import HeaderLanding from "@/features/landing/components/HeaderLanding";
 // import { ViewTransition } from "react";
 import { ExampleFormClinical } from "../(genomas)/user/components/utilsForm/stepUploads/components/ExampleFormClinical";
 

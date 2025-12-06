@@ -3,7 +3,8 @@
 import "./featuresContainer.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import { usePathname } from "next/navigation";
-import { I18nButton } from "./I18nButton";
+import { I18nButton } from "@/features/lang/components/I18nButton";
+
 
 export default function FeaturesContainer() {
   const pathname = usePathname();

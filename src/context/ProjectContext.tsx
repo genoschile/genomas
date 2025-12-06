@@ -1,6 +1,6 @@
 "use client";
 
-import { useSessionContext } from "@/hooks/useSession";
+import { useSessionContext } from "@/features/auth/hooks/useSession";
 import { routes } from "@/lib/api/routes";
 import { IProject } from "@/lib/types/contextTypes";
 import {

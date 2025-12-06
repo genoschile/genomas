@@ -1,8 +1,7 @@
-import "./layout.css";
-import { FooterLanding } from "@/components/footer/FooterLanding";
-import HeaderLanding from "@/components/headers/HeaderLanding";
+import { FooterLanding } from "@/features/landing/components/FooterLanding";
+import { HeaderLanding } from "@/features/landing/components/HeaderLanding";
 import { ViewTransition } from "react";
-import { ConfigOptions } from "./ConfigOptions";
+import { ConfigOptions } from "@/features/landing/components/ConfigOptions";
 
 export default function landingLayout({
   children,
@@ -13,7 +12,14 @@ export default function landingLayout({
     <>
       <HeaderLanding />
       <ViewTransition name="page">
-        <main className="home-main">{children}</main>
+        <main
+          style={{
+            display: "grid",
+            gap: "2rem",
+          }}
+        >
+          {children}
+        </main>
       </ViewTransition>
       <FooterLanding />
       <ConfigOptions />

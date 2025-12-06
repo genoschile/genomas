@@ -1,4 +1,4 @@
-import { SessionContextProvider } from "@/context/SessionContext";
+import { SessionContextProvider } from "@/features/auth/context/SessionContext";
 
 export default async function GenomasLayout({
   children,

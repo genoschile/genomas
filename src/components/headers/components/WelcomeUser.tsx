@@ -1,6 +1,6 @@
 "use client";
 
-import { useSessionContext } from "@/hooks/useSession";
+import { useSessionContext } from "@/features/auth/hooks/useSession";
 import "./welcomeUser.css";
 
 export function WelcomeUser() {

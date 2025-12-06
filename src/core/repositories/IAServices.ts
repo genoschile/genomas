@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { IAResponse, IAService } from "../interfaces/IA/IAService";
-import { GOOGLE_API_KEY } from "@/lib/config/env";
+import { GOOGLE_API_KEY } from "@/config/env";
 
 const ai = new GoogleGenAI({ apiKey: GOOGLE_API_KEY });
 

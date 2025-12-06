@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { UserType } from "@/core/interfaces/enums";
 import { useCaseUser } from "@/core/instances";
-import { AuthPayload, verifyAccessToken } from "@/lib/api/auth/auth";
+import { AuthPayload, verifyAccessToken } from "@/features/auth/auth";
 
 export async function PATCH(request: Request) {
   try {

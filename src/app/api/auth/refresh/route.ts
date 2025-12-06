@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateAccessToken, verifyRefreshToken } from "@/lib/api/auth/auth";
+import { generateAccessToken, verifyRefreshToken } from "@/features/auth/auth";
 
 export async function POST(req: Request) {
   try {

@@ -7,7 +7,7 @@ import {
   AWS_REGION,
   AWS_BUCKET_NAME,
   AWS_SECRET_ACCESS_KEY,
-} from "@lib/config/env";
+} from "@/config/env";
 
 const s3 = new S3Client({
   region: AWS_REGION,

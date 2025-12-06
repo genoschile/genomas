@@ -9,10 +9,10 @@ import { ProcessContextProvider } from "@/context/ProcessContext";
 import "./layout.css";
 
 /* components */
-import { FooterLanding } from "@/components/footer/FooterLanding";
+import { FooterLanding } from "@/features/landing/components/FooterLanding";
 import { HeaderUserWorkspace } from "@/components/headers/HeaderUserWorkspace";
 import { SidebarUser } from "@/components/sidebar/SidebarUser";
-import { ModalContainer } from "@/components/modals/ModalContainer";
+import { ModalContainer } from "@/features/modals/components/ModalContainer";
 import { FilesProvider } from "@/components/project/context/FilesContext";
 
 export default function userLayout({

@@ -1,16 +1,5 @@
-"use client";
-
-import "./page.css";
-import { Team } from "./components/Team";
-import { OurStory } from "./components/OurStory";
-import { AboutUsContainer } from "./components/AboutUsContainer";
+import { ContactPage } from "@/features/landing/modules/contact/contact_page";
 
 export default function page() {
-  return (
-    <section className="contact--page">
-      <AboutUsContainer />
-      <OurStory />
-      <Team />
-    </section>
-  );
+  return <ContactPage />;
 }

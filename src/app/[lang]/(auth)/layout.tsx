@@ -1,9 +1,9 @@
 /* components */
-import { FooterLanding } from "@/components/footer/FooterLanding";
+import { FooterLanding } from "@/features/landing/components/FooterLanding";
 import FeaturesHeader from "@/components/headers/FeaturesHeader";
 
 /* context */
-import { SessionContextProvider } from "@/context/SessionContext";
+import { SessionContextProvider } from "@/features/auth/context/SessionContext";
 
 export default function LoginLayout({
   children,
