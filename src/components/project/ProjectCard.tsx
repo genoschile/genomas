@@ -5,10 +5,10 @@ import "./projectCard.css";
 import { FaFolder, FaUser } from "react-icons/fa";
 import { RiGitRepositoryPrivateFill } from "react-icons/ri";
 import { useProjectContext } from "@/hooks/useProjectContext";
-import { useModalContext } from "@/hooks/useModalsProject";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { useState, useEffect, useRef } from "react";
 import { DropdownMenuCard } from "./components/DropdownMenuCard";
-import { MODAL_IDS } from "@/context/ModalsProject";
+import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 
 export const ProjectCard = ({
   id,

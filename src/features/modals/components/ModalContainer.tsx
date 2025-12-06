@@ -6,20 +6,21 @@ import { DeleteConfirmationForm } from "../../../components/project/components/D
 import { MembersForm } from "../../../components/forms/MembersForm";
 import { AddGroupsFormEnterprise } from "../../../components/forms/AddGroupsEnterprise";
 import { AddWorkspacesEnterpriseForm } from "../../../components/forms/AddWorkspacesEnterpriseForm";
-import { MODAL_IDS } from "@/context/ModalsProject";
+import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 import { AddProjectEnterpriseForm } from "../../../components/forms/AddProjectEnterpriseForm";
 import { AddUsersEnterprise } from "../../auth/components/AddUsersEnterprise";
 import { TbBulb } from "react-icons/tb";
 import { ModalGroupsDeleteEnterprise } from "../../../components/forms/DeleteGroupsEnterprise";
 import { ModalUtilsUsers } from "./modalUtilsUsers";
-import { WorkflowsForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/WorkflowsForm";
-import { StepsProvider } from "@/app/[lang]/(genomas)/user/components/utilsForm/workflowContext";
-import { UploadForm } from "@/app/[lang]/(genomas)/user/components/utilsForm/UploadForm";
-import { TrashContainer } from "@/app/[lang]/(genomas)/user/components/TrashContainer";
-import { ExecutorContainer } from "@/app/[lang]/(genomas)/user/components/utilsForm/ExecutorContainer";
-import { UploadStepsProvider } from "@/app/[lang]/(genomas)/user/components/utilsForm/stepUploads/UploadStepContext";
-import { ModalEditsUsersEnterprise } from "@/app/[lang]/(genomas)/(high)/enterprise/users/components/ModalEditsUsersEnterprise";
-import { ModalEditGroups } from "@/app/[lang]/(genomas)/(high)/enterprise/groups/component/ModalEditGroups";
+import { WorkflowsForm } from "@/features/user/components/utilsForm/WorkflowsForm";
+import { StepsProvider } from "@/features/user/components/utilsForm/workflowContext";
+import { UploadForm } from "@/features/user/components/utilsForm/UploadForm";
+import { TrashContainer } from "@/features/user/components/TrashContainer";
+import { ExecutorContainer } from "@/features/user/components/utilsForm/ExecutorContainer";
+import { UploadStepsProvider } from "@/features/user/components/utilsForm/stepUploads/UploadStepContext";
+import { ModalEditsUsersEnterprise } from "@/app/[lang]/(genomas)/(management)/enterprise/users/components/ModalEditsUsersEnterprise";
+import { ModalEditGroups } from "@/app/[lang]/(genomas)/(management)/enterprise/groups/component/ModalEditGroups";
+
 
 export const ModalContainer = () => {
   return (

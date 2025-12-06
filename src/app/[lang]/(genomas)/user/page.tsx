@@ -2,7 +2,7 @@
 
 /* components */
 import { SidebarInfoProjectSelect } from "@/components/sidebar/sidebarInfoProjectSelect/SidebarInfoProjectSelect";
-import { UserProject } from "./components/sectionsHome/UserProject";
+import { UserProject } from "../../../../features/user/components/sectionsHome/UserProject";
 
 /* style */
 import "./page.css";

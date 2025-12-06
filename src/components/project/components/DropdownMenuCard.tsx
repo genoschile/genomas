@@ -4,8 +4,8 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdDownload, MdEdit, MdInfoOutline } from "react-icons/md";
 import "./dropdownMenuCard.css";
 import { useProjectContext } from "@/hooks/useProjectContext";
-import { useModalContext } from "@/hooks/useModalsProject";
-import { MODAL_IDS } from "@/context/ModalsProject";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
+import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 import { toast } from "react-toastify";
 
 export const DropdownMenuCard = ({

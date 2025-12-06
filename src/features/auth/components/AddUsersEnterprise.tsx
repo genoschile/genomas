@@ -2,7 +2,7 @@
 
 import "./addUsersEnterprise.css";
 import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
-import { useModalContext } from "@/hooks/useModalsProject";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { routes } from "@/lib/api/routes";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { useState } from "react";

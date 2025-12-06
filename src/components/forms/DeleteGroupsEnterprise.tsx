@@ -1,5 +1,5 @@
 import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
-import { useModalContext } from "@/hooks/useModalsProject";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { routes } from "@/lib/api/routes";
 import { toast } from "react-toastify";
 

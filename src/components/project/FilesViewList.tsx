@@ -1,6 +1,6 @@
 import "./filesViewList.css";
 
-import { FilesTypeSwift } from "@/app/[lang]/(genomas)/user/components/sectionsHome/FilesTypeSwift";
+import { FilesTypeSwift } from "@/features/user/components/sectionsHome/FilesTypeSwift";
 import { useFilesContext } from "./context/FilesContext";
 import { useProjectContext } from "@/hooks/useProjectContext";
 import { IoArrowBackCircleSharp } from "react-icons/io5";

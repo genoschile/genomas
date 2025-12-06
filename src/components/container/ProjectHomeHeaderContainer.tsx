@@ -3,8 +3,8 @@
 import { MdCloudUpload } from "react-icons/md";
 import "./style.css";
 import { LuWorkflow } from "react-icons/lu";
-import { useModalContext } from "@/hooks/useModalsProject";
-import { MODAL_IDS } from "@/context/ModalsProject";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
+import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 import { FaRegTrashAlt, FaTasks } from "react-icons/fa";
 import { ProjectWorkspaceSelector } from "../project/ProjectWorkspaceSelected";
 

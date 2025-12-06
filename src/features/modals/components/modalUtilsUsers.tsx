@@ -1,14 +1,14 @@
 "use client";
 
 /* hooks */
-import { useModalContext } from "@/hooks/useModalsProject";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { useRef, useEffect } from "react";
 
 /* icons */
 import { FaTimes } from "react-icons/fa";
 
 /* types */
-import { ModalProps } from "@/context/ModalsProject";
+import { ModalProps } from "@/features/modals/context/ModalsProject";
 
 /* styles */
 import "./modalUtils.css";

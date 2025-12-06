@@ -3,8 +3,8 @@
 import { IoMdAddCircleOutline } from "react-icons/io";
 import "../metrics/metricsEnterprise.css";
 import { IconRoundedFull } from "../iconRoundedFull/IconRoundedFull";
-import { useModalContext } from "@/hooks/useModalsProject";
-import { MODAL_IDS } from "@/context/ModalsProject";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
+import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 
 export const QuickActionsUsers = () => {
   const { openModal } = useModalContext();

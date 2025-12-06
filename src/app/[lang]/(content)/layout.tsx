@@ -3,7 +3,7 @@ import "./style.css";
 import { FooterLanding } from "@/features/landing/components/FooterLanding";
 import HeaderLanding from "@/features/landing/components/HeaderLanding";
 // import { ViewTransition } from "react";
-import { ExampleFormClinical } from "../(genomas)/user/components/utilsForm/stepUploads/components/ExampleFormClinical";
+import { ExampleFormClinical } from "../../../features/user/components/utilsForm/stepUploads/components/ExampleFormClinical";
 
 export default function landingLayout({
   children,

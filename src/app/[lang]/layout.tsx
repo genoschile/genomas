@@ -13,7 +13,7 @@ import { ToastContainer } from "react-toastify";
 
 import { I18nServerProvider } from "@/features/lang/context/I18nServerProvider";
 import { Language } from "@/features/lang/types/i18n.types";
-import { ModalProvider } from "@/context/ModalsProject";
+import { ModalProvider } from "@/features/modals/context/ModalsProject";
 import { ReactNode } from "react";
 import { APP_LANGUAGE } from "@/config/env";
 

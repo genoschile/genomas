@@ -7,7 +7,7 @@ import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization
 import { toast } from "react-toastify";
 import { routes } from "@/lib/api/routes";
 import { useDataTableUserEnterpriseContext } from "@/context/enterprise/DataTableUserEnterpriseContext";
-import { useModalContext } from "@/hooks/useModalsProject";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { useGroupsContext } from "@/context/enterprise/GroupsEnterpriseContext";
 
 export const AddGroupsFormEnterprise = () => {

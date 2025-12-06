@@ -1,6 +1,6 @@
 import "./themeSwitcher.css";
 
-import { useTheme } from "@/context/enterprise/ThemeContext";
+import { useTheme } from "@/features/theme/context/ThemeContext";
 import { FaMoon } from "react-icons/fa";
 import { MdWbSunny } from "react-icons/md";
 
