@@ -30,7 +30,6 @@
       "@utils/*": ["./src/utils/*"],
       "@styles/*": ["./src/styles/*"],
       "@features/*": ["./src/features/*"],
-      "@prisma/*": ["./src/database/prisma/*"],
       "@database/*": ["./src/database/*"]
     }
   },

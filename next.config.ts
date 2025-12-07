@@ -19,6 +19,13 @@ const nextConfig: NextConfig = {
     "https://genomas.bnjm.site",
     "https://www.genomas.bnjm.site",
   ],
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@prisma/client': require.resolve('@prisma/client'),
+    };
+    return config;
+  },
   async rewrites() {
     return [
       // ❗ NO
