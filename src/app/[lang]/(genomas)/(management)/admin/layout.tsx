@@ -1,22 +1,17 @@
 "use client";
 
 /* contexts */
-import { ThemeProvider } from "@/features/theme/context/ThemeContext";
 import { ModalProvider } from "@/features/modals/context/ModalsProject";
+import { EnterprisePageLayout } from "@/features/enterprise/page_layout";
 
-/* hooks */
-import BaseLayout from "../layout";
-
-export default function EnterpriseLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <ThemeProvider>
-      <ModalProvider>
-        <BaseLayout role="admin">{children}</BaseLayout>
-      </ModalProvider>
-    </ThemeProvider>
+    <EnterprisePageLayout role="super-admin">
+      <ModalProvider>{children}</ModalProvider>
+    </EnterprisePageLayout>
   );
 }

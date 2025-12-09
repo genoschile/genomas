@@ -12,7 +12,7 @@ import React, {
   ReactNode,
 } from "react";
 
-type User = {
+export type User = {
   id: string;
   image: string;
   name: string;
@@ -23,6 +23,7 @@ type User = {
   createdAt: Date;
   updatedAt: Date;
   isDefaultAdmin: boolean;
+  _version?: number; // Para forzar re-renders
 };
 
 type TableContextType = {
@@ -50,6 +51,7 @@ export const DataTableUserEnterpriseProvider = ({
   const [loading, setLoading] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+  const [updateTrigger, setUpdateTrigger] = useState(0);
 
   useEffect(() => {
     console.log("Users state changed:", JSON.stringify(users, null, 2));
@@ -85,6 +87,7 @@ export const DataTableUserEnterpriseProvider = ({
           createdAt: u.createdAt ? new Date(u.createdAt) : undefined,
           updatedAt: u.updatedAt ? new Date(u.updatedAt) : undefined,
           isDefaultAdmin: !!u.isDefaultAdmin,
+          _version: 0, // Inicializar versión
         });
 
         setUsers((data.data || []).map(normalize));
@@ -100,7 +103,9 @@ export const DataTableUserEnterpriseProvider = ({
   }, []);
 
   const addUsers = async (newUsers: User[]) => {
-    setUsers((prevUsers) => [...prevUsers, ...newUsers]);
+    const usersWithVersion = newUsers.map(u => ({ ...u, _version: 0 }));
+    setUsers((prevUsers) => [...prevUsers, ...usersWithVersion]);
+    setUpdateTrigger(prev => prev + 1);
   };
 
   const toggleSelect = (id: string) => {
@@ -116,25 +121,35 @@ export const DataTableUserEnterpriseProvider = ({
   };
 
   const removeUser = (id: string) => {
-    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+    setUsers((prevUsers) => {
+      const filtered = prevUsers.filter((user) => user.id !== id);
+      console.log('🗑️ Removing user:', id, 'New count:', filtered.length);
+      return filtered;
+    });
+    setUpdateTrigger(prev => prev + 1); // Fuerza re-render
   };
 
   const editUser = (userId: string, updates: Partial<User>) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) => {
+    console.log('✏️ Editing user:', userId, 'Updates:', updates);
+    setUsers((prevUsers) => {
+      const newUsers = prevUsers.map((user) => {
         if (user.id !== userId) return user;
 
-        const merged = {
+        const updated = {
           ...user,
           ...updates,
           role: updates.role ?? updates.userType ?? user.role,
           userType: updates.userType ?? updates.role ?? user.userType,
+          _version: (user._version ?? 0) + 1, // Incrementa versión
         };
-
-        // 💡 aseguramos nuevo objeto (sin referencias viejas)
-        return JSON.parse(JSON.stringify(merged)) as User;
-      })
-    );
+        
+        console.log('✅ User updated:', { old: user, new: updated });
+        return updated;
+      });
+      
+      return [...newUsers]; // Nueva referencia de array
+    });
+    setUpdateTrigger(prev => prev + 1); // Fuerza re-render
   };
 
   return (

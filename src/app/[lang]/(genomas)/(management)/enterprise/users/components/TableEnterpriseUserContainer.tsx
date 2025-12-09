@@ -1,5 +1,5 @@
-import { TableEnterpriseUser } from "@/app/[lang]/(genomas)/(high)/enterprise/users/components/tablesUser/TableEnterpriseUser";
-import { ContainerDefaultEnterprise } from "../../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
+import { ContainerDefaultEnterprise } from "@/features/enterprise/components/ContainerDefaultEnterprise";
+import { TableEnterpriseUser } from "./tablesUser/TableEnterpriseUser";
 
 export const TableEnterpriseUserContainer = () => {
   return (

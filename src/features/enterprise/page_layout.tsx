@@ -7,13 +7,14 @@ import { ModalContainer } from "../modals/components/ModalContainer";
 import { SidebarOrganization } from "./components/SidebarOrganization/SidebarOrganization";
 import { CommandMenu } from "./components/SidebarOrganization/components/Search";
 import { TopBar } from "./components/SidebarOrganization/components/TopBar";
+import { ThemeProvider } from "../theme/context/ThemeContext";
 
 export const EnterprisePageLayout = ({
   children,
   role,
 }: {
   children: React.ReactNode;
-  role: "admin" | "user";
+  role: "super-admin" | "admin" | "user";
 }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -22,7 +23,7 @@ export const EnterprisePageLayout = ({
   };
 
   return (
-    <>
+    <ThemeProvider>
       <ModalContainer />
       <main className="enterpriselayout">
         <SidebarOrganization
@@ -36,6 +37,6 @@ export const EnterprisePageLayout = ({
           <CommandMenu />
         </section>
       </main>
-    </>
+    </ThemeProvider>
   );
 };

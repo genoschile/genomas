@@ -1,3 +1,5 @@
+"use client";
+
 import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
 import { useEffect, useState } from "react";
@@ -18,6 +20,8 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
+  
+  const [organizationId, setOrganizationId] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     email: "",
@@ -30,6 +34,10 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
   const findUserById = (id: string) => {
     return users.find((u) => u.id === id);
   };
+
+  useEffect(() => {
+    setOrganizationId(getLocalStorageOrganization());
+  }, []);
 
   useEffect(() => {
     if (userId) {
@@ -75,9 +83,8 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
     try {
       console.log("Submitting form...");
 
-      const organizationId = getLocalStorageOrganization();
       if (!organizationId) {
-        toast.error("Organization ID is, error interno.");
+        toast.error("Organization ID not found, error interno.");
         return;
       }
 
@@ -102,6 +109,14 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
 
       if (!res.ok) {
         const errorData = await res.json();
+        
+        // Manejo específico para email duplicado
+        if (errorData.code === 'DUPLICATE_EMAIL' || res.status === 409) {
+          toast.error("⚠️ Este email ya está registrado en el sistema");
+          setErrorMessage("Este email ya está en uso. Usa otro email.");
+          return;
+        }
+        
         toast.error(`Error: ${errorData.message || "Failed to edit user."}`);
         setErrorMessage(`Failed to edit user: ${errorData.message}`);
         return;
@@ -118,19 +133,24 @@ export const ModalEditsUsersEnterprise = ({ userId }: { userId: string }) => {
       const serverUser = data.data;
 
       const normalized = {
-        ...serverUser,
-        role: serverUser.role ?? serverUser.userType,
-        userType: serverUser.userType ?? serverUser.role,
+        id: serverUser.id ?? userId,
         image: serverUser.image ?? "",
+        name: serverUser.name ?? form.name,
+        email: serverUser.email ?? form.email,
+        role: serverUser.role ?? serverUser.userType ?? form.userType,
+        userType: serverUser.userType ?? serverUser.role ?? form.userType,
         groups: serverUser.groups ?? [],
+        createdAt: serverUser.createdAt ? new Date(serverUser.createdAt) : new Date(),
+        updatedAt: new Date(), // Marca como actualizado ahora
+        isDefaultAdmin: serverUser.isDefaultAdmin ?? false,
       };
 
-      editUser(normalized.id ?? userId, normalized);
-
-      closeModal();
-      setErrorMessage("");
+      console.log('📤 Updating user in context:', normalized);
+      editUser(userId, normalized);
 
       toast.success("Usuario editado correctamente");
+      closeModal();
+      setErrorMessage("");
     } catch (error) {
       console.error(error);
       toast.error("Error edit user.");

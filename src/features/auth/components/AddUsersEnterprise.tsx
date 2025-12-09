@@ -55,6 +55,14 @@ export const AddUsersEnterprise = () => {
 
       if (!res.ok) {
         const errorData = await res.json();
+        
+        // Manejo específico para email duplicado
+        if (errorData.code === 'DUPLICATE_EMAIL' || res.status === 409) {
+          toast.error("⚠️ Este email ya está registrado en el sistema");
+          setErrorMessage("Este email ya está en uso. Usa otro email o asigna el usuario existente.");
+          return;
+        }
+        
         toast.error(`Error: ${errorData.message || "Failed to add user."}`);
         setErrorMessage(`Failed to add user: ${errorData.message}`);
         return;

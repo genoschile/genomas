@@ -13,7 +13,7 @@ export function SidebarOrganization({
 }: {
   openSidebar?: boolean;
   handleSetOpenSidebar?: () => void;
-  role?: "admin" | "user";
+  role?: "super-admin" | "admin" | "user";
 }) {
   return (
     <>

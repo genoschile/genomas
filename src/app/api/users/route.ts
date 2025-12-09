@@ -79,6 +79,18 @@ export async function PATCH(request: Request) {
   } catch (error) {
     console.error("Error in PATCH /api/users/", error);
 
+    // Manejo específico de email duplicado (Prisma P2002)
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
+      return NextResponse.json(
+        {
+          message: "Este email ya está registrado en el sistema",
+          success: false,
+          code: 'DUPLICATE_EMAIL'
+        },
+        { status: 409 } // 409 Conflict
+      );
+    }
+
     return NextResponse.json(
       {
         message: error instanceof Error ? error.message : "Unexpected error",

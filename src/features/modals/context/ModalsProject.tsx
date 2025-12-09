@@ -14,6 +14,7 @@ export const MODAL_IDS = {
   HELPER_SUGGESTIONS: "helper_suggestions",
   DELETE_GROUPS_ENTERPRISE: "delete_group_enterprise",
   EDIT_GROUPS_ENTERPRISE: "edit_group_enterprise",
+  DELETE_USER_CONFIRMATION: "delete_user_confirmation",
   UPLOAD_FILES: "upload_files",
   WORKFLOWS: "workflows",
   TRASH_USER: "trash_user",

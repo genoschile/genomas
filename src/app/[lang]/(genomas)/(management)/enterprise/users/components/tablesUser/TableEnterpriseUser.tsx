@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import "./tableEnterpriseUser.css";
 import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
@@ -7,6 +8,8 @@ import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { SkeletonTable } from "./SkeletonTableUser";
 import { ButtonEditUser } from "./ButtonEditUser";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
+import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 
 type UserItemProps = {
   id: string;
@@ -37,7 +40,7 @@ const UserItem = ({
   toggleFavorite,
   handleDelete,
 }: UserItemProps) => {
-  console.log("Rendering UserItem:", { id, name, email, role, groups });
+  console.log("🔄 Rendering UserItem:", { id, name, email, role });
 
   return (
     <li
@@ -69,10 +72,32 @@ const UserItem = ({
         )}
       </div>
       <div className="user-info">
-        <span>{name}</span>
-        <span>{email}</span>
-        <span>{role ?? "—"}</span>
-        <span>{groups?.join(", ")}</span>
+        <span className="user-name">{name}</span>
+        <span className="user-email">{email}</span>
+        <span className="user-role">{role ?? "—"}</span>
+        <div className="user-groups">
+          {groups && groups.length > 0 ? (
+            <>
+              <span className="groups-count-badge">
+                {groups.length} {groups.length === 1 ? 'grupo' : 'grupos'}
+              </span>
+              <div className="user-groups-badges">
+                {groups.slice(0, 3).map((groupName, idx) => (
+                  <span key={idx} className="group-badge" title={groupName}>
+                    {groupName}
+                  </span>
+                ))}
+                {groups.length > 3 && (
+                  <span className="group-badge group-badge-more" title={`+${groups.length - 3} más`}>
+                    +{groups.length - 3}
+                  </span>
+                )}
+              </div>
+            </>
+          ) : (
+            <span className="no-groups">Sin grupos</span>
+          )}
+        </div>
       </div>
       <div className="user-actions">
         <ButtonEditUser userId={id} />
@@ -94,35 +119,12 @@ export const TableEnterpriseUser = () => {
     toggleSelect,
     toggleFavorite,
     loading,
-    removeUser,
   } = useDataTableUserEnterpriseContext();
 
-  const orgId = getLocalStorageOrganization();
+  const { openModal } = useModalContext();
 
-  const handleDelete = async (userId: string) => {
-    if (!confirm("¿Estás seguro de que deseas eliminar este usuario?")) return;
-
-    try {
-      if (!orgId) {
-        toast.error("ID de organización no encontrado");
-        return;
-      }
-
-      const res = await fetch(`/api/deleteUserFromOrganization/${orgId}`, {
-        method: "DELETE",
-        body: JSON.stringify({ userId }),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (res.ok) {
-        removeUser(userId);
-        toast.success("Usuario eliminado correctamente");
-      } else {
-        toast.error("Error al eliminar el usuario");
-      }
-    } catch {
-      toast.error("Error al eliminar el usuario");
-    }
+  const handleDelete = (userId: string) => {
+    openModal(MODAL_IDS.DELETE_USER_CONFIRMATION, { userId });
   };
 
   if (loading) return <SkeletonTable rows={2} />;
@@ -131,7 +133,7 @@ export const TableEnterpriseUser = () => {
     <ul className="enterprise-user-list">
       {users.map((user) => (
         <UserItem
-          key={user.id}
+          key={`${user.id}-${user._version ?? 0}`}
           id={user.id}
           name={user.name}
           email={user.email}

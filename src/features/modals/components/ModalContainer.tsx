@@ -20,6 +20,7 @@ import { ExecutorContainer } from "@/features/user/components/utilsForm/Executor
 import { UploadStepsProvider } from "@/features/user/components/utilsForm/stepUploads/UploadStepContext";
 import { ModalEditsUsersEnterprise } from "@/app/[lang]/(genomas)/(management)/enterprise/users/components/ModalEditsUsersEnterprise";
 import { ModalEditGroups } from "@/app/[lang]/(genomas)/(management)/enterprise/groups/component/ModalEditGroups";
+import { ModalDeleteUserConfirmation } from "@/app/[lang]/(genomas)/(management)/enterprise/users/components/ModalDeleteUserConfirmation";
 
 
 export const ModalContainer = () => {
@@ -61,7 +62,7 @@ export const ModalContainer = () => {
       </Modal>
 
       <Modal id={MODAL_IDS.EDIT_GROUPS_ENTERPRISE} title="Edit Group">
-        {({ payload }) => <ModalEditGroups groupId={payload.userId} />}
+        {({ payload }) => <ModalEditGroups groupId={payload.groupId} />}
       </Modal>
 
       <Modal id={MODAL_IDS.EDIT_USERS_ENTERPRISE} title="Edit Users">
@@ -100,6 +101,14 @@ export const ModalContainerAddUsersEnterprise = () => {
     <>
       <Modal id={MODAL_IDS.ADD_USER_ENTERPRISE} title="Add Users">
         <AddUsersEnterprise />
+      </Modal>
+      
+      <Modal id={MODAL_IDS.EDIT_USERS_ENTERPRISE} title="Edit User">
+        {({ payload }) => <ModalEditsUsersEnterprise userId={payload.userId} />}
+      </Modal>
+      
+      <Modal id={MODAL_IDS.DELETE_USER_CONFIRMATION} title="Confirmar Eliminación">
+        {({ payload }) => <ModalDeleteUserConfirmation userId={payload.userId} />}
       </Modal>
     </>
   );

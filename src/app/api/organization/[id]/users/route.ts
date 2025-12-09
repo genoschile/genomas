@@ -41,6 +41,22 @@ export async function POST(
   } catch (error) {
     console.error("Error in POST /api/organization/[id]/users", error);
 
+    if (
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
+      error.code === "P2002"
+    ) {
+      return NextResponse.json(
+        {
+          message: "Este email ya está registrado en el sistema",
+          success: false,
+          code: "DUPLICATE_EMAIL",
+        },
+        { status: 409 } // 409 Conflict
+      );
+    }
+
     return NextResponse.json(
       {
         message: `Error: ${
@@ -148,5 +164,3 @@ export async function DELETE(
     );
   }
 }
-
-

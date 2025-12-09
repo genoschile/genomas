@@ -1,24 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useMemo, useState } from "react";
+import { useGroupsContext } from "@/features/enterprise/context/GroupsEnterpriseContext";
+import { toast } from "react-toastify";
+import { ContainerDefaultEnterprise } from "@/features/enterprise/components/ContainerDefaultEnterprise";
+import { ContainerGroupsHeader } from "../../groups/component/ContainerGroupsHeader";
+import { SearchFilterEnterpriseGroups } from "../../groups/component/ContainerGroupsFiltersComponent/SearchFilterEnterpriseGroups";
+import { ContainerGroupsList } from "../../groups/component/ContainerGroupsList";
 
-export default function GroupsPage() {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    // Redirect to info page, will default to users tab
-    const basePath = pathname.replace("/groups", "");
-    router.replace(`${basePath}/info`);
-  }, [pathname, router]);
-
-  return null;
-}
-
-/*
-// PREVIOUS PAGE CONTENT - Keeping as reference
-export default function OldPage() {
+export const GroupsView = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isAscending, setIsAscending] = useState(true);
 
@@ -31,43 +21,20 @@ export default function OldPage() {
 
   const handleChangeDateCreateAscDesc = () => {
     if (groups.length === 0) {
-      toast.error("No hay grupos para ordenar", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-
+      toast.error("No hay grupos para ordenar");
       return;
     }
 
     if (groups.length === 1) {
-      toast.error("No se puede ordenar un solo grupo", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-
+      toast.error("No se puede ordenar un solo grupo");
       return;
     }
+    
     setIsAscending((prev) => !prev);
     toast.info(
       `Orden de creación de grupos ${
         isAscending ? "ascendente" : "descendente"
-      }`,
-      {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      }
+      }`
     );
   };
 
@@ -76,7 +43,7 @@ export default function OldPage() {
 
     const filtered =
       query === ""
-        ? groups // si no hay term, devuelve todo
+        ? groups
         : groups.filter((group) =>
             `${group.name} ${group.description}`.toLowerCase().includes(query)
           );
@@ -90,11 +57,6 @@ export default function OldPage() {
 
   return (
     <>
-      <ChatSuggestionTitle
-        title="Administra tus Groups"
-        description="Puedes agregar, editar y eliminar usuarios de tu organización."
-      />
-
       <ContainerDefaultEnterprise dinamicStyle="enterprise-groups__hero">
         <ContainerGroupsHeader
           searchTerm={searchTerm}
@@ -114,5 +76,4 @@ export default function OldPage() {
       </ContainerDefaultEnterprise>
     </>
   );
-}
-*/
+};

@@ -4,8 +4,9 @@ import { JSX } from "react";
 import { IconRoundedFull } from "../iconRoundedFull/IconRoundedFull";
 import { FaChartLine, FaUser, FaUsers } from "react-icons/fa";
 import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
-import { SkeletonWorkspace } from "@/app/[lang]/(genomas)/(high)/enterprise/components/workspaces/components/ContainerListWorkspaces";
+
 import { useGroupsContext } from "@/features/enterprise/context/GroupsEnterpriseContext";
+import { SkeletonWorkspace } from "../../workspaces/components/ContainerListWorkspaces";
 
 type Props = {
   title: string;

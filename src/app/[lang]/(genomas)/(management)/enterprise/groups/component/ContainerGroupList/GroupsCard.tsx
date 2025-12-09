@@ -20,6 +20,7 @@ import { GroupsCardRolesList } from "./GroupsCardRolesList";
 
 /* hooks */
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
+import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 
 export const GroupsCard = ({ item }: { item: Group }) => {
   const { openModal } = useModalContext();
@@ -29,12 +30,12 @@ export const GroupsCard = ({ item }: { item: Group }) => {
 
   const handleEdit = () => {
     handleChangeCurrentGroup(item);
-    openModal("edit_group_enterprise", { userId: item.id });
+    openModal(MODAL_IDS.EDIT_GROUPS_ENTERPRISE, { groupId: item.id });
   };
 
   const handleDelete = () => {
     handleChangeCurrentGroup(item);
-    openModal("delete_group_enterprise");
+    openModal(MODAL_IDS.DELETE_GROUPS_ENTERPRISE);
   };
 
   const isSelected = selectedGroups.some((g) => g.id === item.id);
@@ -44,7 +45,11 @@ export const GroupsCard = ({ item }: { item: Group }) => {
       className={`groupsCard flip ${isSelected ? "selected" : ""} `}
       onClick={() => handleAddGroupSelected(item)}
     >
-      <GroupsCardHeader name={item.name} description={item.description} />
+      <GroupsCardHeader 
+        name={item.name} 
+        description={item.description}
+        userCount={item.users?.length || 0}
+      />
 
       {item.users && item.users.length > 0 ? (
         <GroupsCardMembers

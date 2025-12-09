@@ -1,0 +1,227 @@
+.projects-view {
+  width: 100%;
+}
+
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-icon {
+  color: var(--primary-color, #667eea);
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary, #fff);
+}
+
+.header-subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--text-secondary, #999);
+  font-size: 0.9rem;
+}
+
+.project-search {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-color, #333);
+  border-radius: 8px;
+  background: var(--background, #1a1a1a);
+  color: var(--text-primary, #fff);
+  font-size: 0.95rem;
+  min-width: 250px;
+  transition: all 0.3s ease;
+}
+
+.project-search:focus {
+  outline: none;
+  border-color: var(--primary-color, #667eea);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--background-elevated, #1a1a1a);
+  border: 2px solid var(--border-color, #333);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  border-color: var(--primary-color, #667eea);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+}
+
+.project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.project-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary, #fff);
+  word-break: break-word;
+  flex: 1;
+}
+
+.visibility-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.visibility-badge.public {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+
+.visibility-badge.private {
+  background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+  color: white;
+}
+
+.project-description {
+  color: var(--text-secondary, #999);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+.project-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-color, #333);
+  border-bottom: 1px solid var(--border-color, #333);
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary, #999);
+  font-size: 0.85rem;
+}
+
+.stat-item svg {
+  color: var(--primary-color, #667eea);
+}
+
+.project-workspace {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: var(--background, #222);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.workspace-label {
+  color: var(--text-secondary, #999);
+  font-weight: 600;
+}
+
+.workspace-name {
+  color: var(--text-primary, #fff);
+  font-weight: 500;
+}
+
+.project-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.project-date,
+.project-owner {
+  font-size: 0.8rem;
+  color: var(--text-muted, #666);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.empty-icon {
+  color: var(--text-muted, #444);
+  margin-bottom: 1rem;
+}
+
+.empty-text {
+  color: var(--text-secondary, #999);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .projects-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .project-search {
+    width: 100%;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .visibility-badge {
+    align-self: flex-start;
+  }
+
+  .project-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .project-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}

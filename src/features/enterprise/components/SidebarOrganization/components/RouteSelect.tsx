@@ -11,13 +11,12 @@ import { GiGlowingHands } from "react-icons/gi";
 import "./routeSelect.css";
 
 const pathNameBase = "/enterprise";
+const adminPathBase = "/admin";
 
 const ROUTES_BY_ROLE = {
   user: [
     { Icon: FiHome, title: "Home", path: pathNameBase },
-    { Icon: FiUser, title: "Users", path: `${pathNameBase}/users` },
-    { Icon: MdGroups2, title: "Groups", path: `${pathNameBase}/groups` },
-    { Icon: FiHome, title: "Project", path: `${pathNameBase}/projects` },
+    { Icon: FiUser, title: "Info", path: `${pathNameBase}/info` },
     {
       Icon: GiGlowingHands,
       title: "AI Suggestions",
@@ -25,6 +24,11 @@ const ROUTES_BY_ROLE = {
     },
   ],
   admin: [{ Icon: FiHome, title: "Organization", path: pathNameBase }],
+  "super-admin": [
+    { Icon: FiHome, title: "Organizations", path: adminPathBase },
+    { Icon: FiUser, title: "All Users", path: `${adminPathBase}/users` },
+    { Icon: MdGroups2, title: "All Groups", path: `${adminPathBase}/groups` },
+  ],
 } as const;
 
 const Route = ({
@@ -48,7 +52,7 @@ const Route = ({
   );
 };
 
-export function RouteSelect({ role }: { role?: "admin" | "user" }) {
+export function RouteSelect({ role }: { role?: "super-admin" | "admin" | "user" }) {
   const pathname = usePathname();
 
   const routes = role ? ROUTES_BY_ROLE[role] : ROUTES_BY_ROLE.user;
@@ -57,7 +61,7 @@ export function RouteSelect({ role }: { role?: "admin" | "user" }) {
     <div className="sidebar-org--routecontainer">
       <ul>
         {routes.map(({ Icon, title, path }, index) => {
-          const isHome = path === "/enterprise";
+          const isHome = path === "/enterprise" || path === "/admin";
           const isSelected = isHome
             ? pathname === path
             : pathname === path || pathname.startsWith(path + "/");
