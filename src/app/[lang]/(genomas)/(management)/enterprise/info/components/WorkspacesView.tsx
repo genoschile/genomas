@@ -3,8 +3,8 @@
 import "./workspacesView.css";
 import { useWorkspacesContext } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 import { MdWorkspaces } from "react-icons/md";
-import { FaUsers, FaProjectDiagram } from "react-icons/fa";
 import { useState } from "react";
+import { ContainerDefaultEnterprise } from "@/features/enterprise/components/ContainerDefaultEnterprise";
 
 export const WorkspacesView = () => {
   const { workspaces } = useWorkspacesContext();
@@ -15,15 +15,16 @@ export const WorkspacesView = () => {
   );
 
   return (
-    <div className="workspaces-view">
+    <ContainerDefaultEnterprise>
       <div className="workspaces-header">
         <div className="header-content">
           <MdWorkspaces size={32} className="header-icon" />
           <div>
             <h2 className="header-title">Workspaces</h2>
             <p className="header-subtitle">
-              {workspaces.length} workspace{workspaces.length !== 1 ? "s" : ""}{" "}
-              configurado{workspaces.length !== 1 ? "s" : ""}
+              {workspaces.length} workspace
+              {workspaces.length !== 1 ? "s" : ""} configurado
+              {workspaces.length !== 1 ? "s" : ""}
             </p>
           </div>
         </div>
@@ -57,9 +58,7 @@ export const WorkspacesView = () => {
               </div>
 
               {workspace.description && (
-                <p className="workspace-description">
-                  {workspace.description}
-                </p>
+                <p className="workspace-description">{workspace.description}</p>
               )}
 
               <div className="workspace-footer">
@@ -71,6 +70,6 @@ export const WorkspacesView = () => {
           ))
         )}
       </div>
-    </div>
+    </ContainerDefaultEnterprise>
   );
 };

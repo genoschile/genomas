@@ -10,8 +10,7 @@ import {
   QuickActionsGroups,
   QuickActionsProjects,
 } from "@/features/enterprise/components/enterprise/quickactions/QuickActions";
-import { ContainerWorkspaces } from "../../../../../features/enterprise/components/workspaces/components/ContainerWorkspaces";
-import { ContainerListWorkspaces } from "../../../../../features/enterprise/components/workspaces/components/ContainerListWorkspaces";
+import { ContainerWorkspaces } from "@/features/enterprise/components/workspaces/components/ContainerWorkspaces";
 import { DataTableUserEnterpriseProvider } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 
 export default function page() {
@@ -21,10 +20,6 @@ export default function page() {
         title="Hello there"
         description="What do you think of your organization's summary?"
       />
-      {/* 
-      <ContainerWorkspaces>
-        <ContainerListWorkspaces />
-      </ContainerWorkspaces> */}
 
       <ContainerWorkspaces>
         <div className="container__grid-metrics">

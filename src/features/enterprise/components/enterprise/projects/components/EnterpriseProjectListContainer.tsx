@@ -1,7 +1,7 @@
 "use client";
 
 import { useProjectsContextEnterprise } from "@/features/enterprise/context/ProjectContextEnterprise";
-import { ContainerDefaultEnterprise } from "../../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
+import { ContainerDefaultEnterprise } from "../../../ContainerDefaultEnterprise";
 import { useWorkspacesContext } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 import "./enterpriseProjectListContainer.css";
 

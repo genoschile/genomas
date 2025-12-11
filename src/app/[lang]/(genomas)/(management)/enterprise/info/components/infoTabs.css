@@ -1,12 +1,6 @@
 .info-tabs {
   display: flex;
   gap: 1rem;
-  padding: 1.5rem;
-  background: var(--background-elevated, #1a1a1a);
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  overflow-x: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .info-tab {

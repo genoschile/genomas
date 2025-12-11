@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import "./teamTabs.css";
 import { FaUsers } from "react-icons/fa";
 import { MdGroups2 } from "react-icons/md";

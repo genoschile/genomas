@@ -1,4 +1,6 @@
-import { ContainerDefaultEnterprise } from "../../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
+import "./page.css"
+
+import { ContainerDefaultEnterprise } from "@/features/enterprise/components/ContainerDefaultEnterprise";
 import { NavActionsEnterpriseUser } from "./NavActionsEnterpriseUser";
 import { SearchSectionEnterpriseUser } from "./SearchSectionEnterpriseUser";
 

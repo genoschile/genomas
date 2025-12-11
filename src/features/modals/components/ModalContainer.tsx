@@ -18,9 +18,11 @@ import { UploadForm } from "@/features/user/components/utilsForm/UploadForm";
 import { TrashContainer } from "@/features/user/components/TrashContainer";
 import { ExecutorContainer } from "@/features/user/components/utilsForm/ExecutorContainer";
 import { UploadStepsProvider } from "@/features/user/components/utilsForm/stepUploads/UploadStepContext";
-import { ModalEditsUsersEnterprise } from "@/app/[lang]/(genomas)/(management)/enterprise/users/components/ModalEditsUsersEnterprise";
-import { ModalEditGroups } from "@/app/[lang]/(genomas)/(management)/enterprise/groups/component/ModalEditGroups";
-import { ModalDeleteUserConfirmation } from "@/app/[lang]/(genomas)/(management)/enterprise/users/components/ModalDeleteUserConfirmation";
+import { ModalEditsUsersEnterprise } from "@/features/enterprise/components/enterprise/users/components/ModalEditsUsersEnterprise";
+import { ModalEditGroups } from "@/features/enterprise/components/enterprise/groups/component/ModalEditGroups";
+import { ModalDeleteUserConfirmation } from "@/features/enterprise/components/enterprise/users/components/ModalDeleteUserConfirmation";
+import { ModalAssignUserToGroup } from "./ModalAssignUserToGroup";
+import { ModalViewGroupsList } from "./ModalViewGroupsList";
 
 
 export const ModalContainer = () => {
@@ -109,6 +111,14 @@ export const ModalContainerAddUsersEnterprise = () => {
       
       <Modal id={MODAL_IDS.DELETE_USER_CONFIRMATION} title="Confirmar Eliminación">
         {({ payload }) => <ModalDeleteUserConfirmation userId={payload.userId} />}
+      </Modal>
+
+      <Modal id={MODAL_IDS.ASSIGN_USER_TO_GROUP} title="Asignar Grupos">
+        {({ payload }) => <ModalAssignUserToGroup payload={payload} />}
+      </Modal>
+
+      <Modal id={MODAL_IDS.VIEW_GROUPS_LIST} title="Lista de Grupos">
+        <ModalViewGroupsList />
       </Modal>
     </>
   );

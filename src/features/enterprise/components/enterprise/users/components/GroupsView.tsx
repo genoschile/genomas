@@ -4,9 +4,9 @@ import { useMemo, useState } from "react";
 import { useGroupsContext } from "@/features/enterprise/context/GroupsEnterpriseContext";
 import { toast } from "react-toastify";
 import { ContainerDefaultEnterprise } from "@/features/enterprise/components/ContainerDefaultEnterprise";
-import { ContainerGroupsHeader } from "@/features/enterprise/components/enterprise/groups/component/ContainerGroupsHeader";
-import { SearchFilterEnterpriseGroups } from "@/features/enterprise/components/enterprise/groups/component/ContainerGroupsFiltersComponent/SearchFilterEnterpriseGroups";
-import { ContainerGroupsList } from "@/features/enterprise/components/enterprise/groups/component/ContainerGroupsList";
+import { ContainerGroupsHeader } from "../../groups/component/ContainerGroupsHeader";
+import { SearchFilterEnterpriseGroups } from "../../groups/component/ContainerGroupsFiltersComponent/SearchFilterEnterpriseGroups";
+import { ContainerGroupsList } from "../../groups/component/ContainerGroupsList";
 
 export const GroupsView = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,7 +29,7 @@ export const GroupsView = () => {
       toast.error("No se puede ordenar un solo grupo");
       return;
     }
-
+    
     setIsAscending((prev) => !prev);
     toast.info(
       `Orden de creación de grupos ${

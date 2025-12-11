@@ -45,23 +45,33 @@ export const MultiSelectChips = ({
   };
 
   return (
-    <>
-      <label htmlFor={name}>{label}:</label>
+    <div className="multi-select-container">
+      <label htmlFor={name} className="select-label">{label}:</label>
 
-      <div className="selected-chips">
-        {selectedIds.map((id) => {
-          const item = data.find((el) => el.id === id);
-          if (!item) return null; // evita key undefined
-          return (
-            <div key={`chip-${id}`} className="chip">
-              {item.name}
-              <button type="button" onClick={() => remove(id)}>
-                &times;
-              </button>
-            </div>
-          );
-        })}
-      </div>
+      {selectedIds.length > 0 && (
+        <div className="selected-chips">
+          {selectedIds.map((id) => {
+            const item = data.find((el) => el.id === id);
+            if (!item) return null;
+            return (
+              <div key={`chip-${id}`} className="chip">
+                <span className="chip-text">{item.name}</span>
+                <button
+                  type="button"
+                  className="chip-remove"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    remove(id);
+                  }}
+                  aria-label={`Eliminar ${item.name}`}
+                >
+                  &times;
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <select
         className="select-list"
@@ -69,14 +79,23 @@ export const MultiSelectChips = ({
         name={name}
         multiple
         onChange={handleSelect}
-        value={selectedIds}
+        value={[]}
       >
         {data.map((item) => (
-          <option key={item.id} value={item.id}>
-            {item.name}
+          <option
+            key={item.id}
+            value={item.id}
+            disabled={selectedIds.includes(item.id)}
+          >
+            {item.name} {selectedIds.includes(item.id) ? "✓" : ""}
           </option>
         ))}
       </select>
-    </>
+
+      {/* Hidden inputs for form submission */}
+      {selectedIds.map((id) => (
+        <input key={`hidden-${id}`} type="hidden" name={name} value={id} />
+      ))}
+    </div>
   );
 };

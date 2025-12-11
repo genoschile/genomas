@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { ContainerDefaultEnterprise } from "../../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
+import { ContainerDefaultEnterprise } from "../../../ContainerDefaultEnterprise";
 import { useWorkspacesContext } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 import "./enterpriseProjectHero.css";
 import "./enterpriseNavActions.css";

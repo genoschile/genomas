@@ -1,142 +1,183 @@
 .add-groups-enterprise {
-  block-size: 100%;
-  inline-size: 100%;
-
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
   margin: 0 auto;
+  padding: 2rem;
+  background: transparent;
+}
 
-  > fieldset {
-    display: flex;
+.add-groups-enterprise > fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border: none;
+  padding: 0;
+}
 
-    border: none;
+.add-groups-enterprise legend {
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
+  background: transparent;
+  padding: 0;
+}
 
-    legend {
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-align: center;
-      text-wrap: nowrap;
-      margin-block-end: 1rem;
-    }
+.add-groups-enterprise > fieldset > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
 
-    > * {
-      outline: 1px solid green;
-      flex: 1;
+.add-groups-enterprise label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
 
-      display: flex;
-      flex-direction: column;
+.add-groups-enterprise input[type="text"],
+.add-groups-enterprise textarea {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-      padding-inline: 0.5rem;
-    }
+.add-groups-enterprise input[type="text"]:focus,
+.add-groups-enterprise textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
 
-    > :first-child {
-      background-color: red;
-    }
+.add-groups-enterprise input[type="text"]::placeholder,
+.add-groups-enterprise textarea::placeholder {
+  color: #999;
+}
 
-    label:not(:first-of-type) {
-      margin-block-start: 1rem;
-    }
+.add-groups-enterprise textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
 
-    :is(input, select, textarea) {
-      margin-block-start: 0.5rem;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 0.5rem;
-      width: 100%;
-      box-sizing: border-box;
+.add-groups-enterprise > button[type="submit"] {
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  margin-top: 0.5rem;
+}
 
-      &:focus {
-        outline: none;
-        border-color: blue;
-      }
-    }
-  }
+.add-groups-enterprise > button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
 
-  > button {
-    margin-block-start: 1rem;
-    margin-inline-start: auto;
-    inline-size: 100%;
-    padding: 0.5rem 1rem;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-  }
+/* Selected roles/items chips */
+.selected-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .chip {
-  display: inline-block;
-  padding: 4px 8px;
-  margin: 2px;
-  background: #e0e0e0;
-  border-radius: 12px;
-  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.chip:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 .chip button {
-  background: none;
+  background: rgba(255, 255, 255, 0.3);
   border: none;
-  margin-left: 6px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1;
+  color: white;
+  transition: background 0.2s ease;
+  padding: 0;
 }
 
+.chip button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+/* Select styling */
 .select-list {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem 1rem;
+  line-height: 1.5;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 
-  width: min(100%, 240px);
-  
-  padding: 12px;
-  line-height: 24px;
- 
-  border: solid 1px #999;
-  border-radius: 12px;
-
-
-  -moz-appearance: none; 
-  -webkit-appearance: none; 
-  appearance: none;
-  
-  background-image: url(/caret.svg);
-  background-size: 18px;
-  background-repeat: no-repeat;
-  background-position: calc(100% - 12px) center; /*Lo posicionamos a la derecha*/
-  padding-right: 24px; /*le damos algo de espacio para que el caret no se superponga al texto*/
-
+.select-list:focus {
   outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 optgroup {
-  counter-reset: count;
-  font-size: 0;
-  font-weight: 400;
-  font-style: italic;
-  color: steelblue;
-  text-indent: 12px;
+  font-weight: 600;
+  color: #667eea;
+  padding: 0.5rem;
 }
-optgroup:before {
-  content: attr(label);
-  display: block;
-  padding: 6px;
-  font-size: 16px;
-  line-height: 24px;
-  background-color: aliceblue;
-  border-radius: 6px;
-}
+
 option {
-  counter-increment: count;
-  padding: 12px;
-  font-size: 14px;
-  color: slategray;
-  text-indent: 0;
-  background-color: #fff;
+  padding: 0.5rem;
+  color: #1a1a1a;
+  background-color: #ffffff;
+  cursor: pointer;
 }
-option:before {
-  content: counter(count) ". ";
+
+option:hover {
+  background-color: #f5f5f5;
 }
-option + option {
-  border-top: solid 2px aliceblue;
+
+.form-message {
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #1a1a1a;
+  text-align: center;
+  margin-top: 1rem;
 }

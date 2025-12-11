@@ -28,9 +28,12 @@ export type User = {
 
 type TableContextType = {
   users: User[];
+  filteredUsers: User[];
   selectedIds: string[];
   favoriteIds: string[];
   loading: boolean;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
   toggleSelect: (id: string) => void;
   toggleFavorite: (id: string) => void;
   addUsers: (newUsers: User[]) => void;
@@ -52,6 +55,19 @@ export const DataTableUserEnterpriseProvider = ({
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [updateTrigger, setUpdateTrigger] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filtrar usuarios basado en el término de búsqueda
+  const filteredUsers = users.filter((user) => {
+    if (!searchTerm) return true;
+    const search = searchTerm.toLowerCase();
+    return (
+      user.name.toLowerCase().includes(search) ||
+      user.email.toLowerCase().includes(search) ||
+      user.role?.toLowerCase().includes(search) ||
+      user.groups.some((group) => group.toLowerCase().includes(search))
+    );
+  });
 
   useEffect(() => {
     console.log("Users state changed:", JSON.stringify(users, null, 2));
@@ -157,6 +173,7 @@ export const DataTableUserEnterpriseProvider = ({
       value={{
         addUsers,
         users,
+        filteredUsers,
         selectedIds,
         favoriteIds,
         toggleSelect,
@@ -164,6 +181,8 @@ export const DataTableUserEnterpriseProvider = ({
         loading,
         removeUser,
         editUser,
+        searchTerm,
+        setSearchTerm,
       }}
     >
       {children}

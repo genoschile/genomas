@@ -1,7 +1,7 @@
 "use client";
 
 import { IconRoundedFull } from "@/features/enterprise/components/enterprise/iconRoundedFull/IconRoundedFull";
-import { ContainerDefaultEnterprise } from "../../../../../../../features/enterprise/components/ContainerDefaultEnterprise";
+import { ContainerDefaultEnterprise } from "../../../ContainerDefaultEnterprise";
 import { FaAndroid } from "react-icons/fa6";
 
 import "./enterpriseNavActions.css";

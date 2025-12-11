@@ -3,14 +3,21 @@
 import "./workspacesProjectsView.css";
 import { useWorkspacesContext } from "@/features/enterprise/context/WorkspacesEnterpriseContext";
 import { useProjectsContextEnterprise } from "@/features/enterprise/context/ProjectContextEnterprise";
-import { MdWorkspaces } from "react-icons/md";
+import { MdWorkspaces, MdAdd } from "react-icons/md";
 import { FaProjectDiagram } from "react-icons/fa";
 import { useState } from "react";
+import { useModalContext } from "@/features/modals/hooks/useModalsProject";
+import { MODAL_IDS } from "@/features/modals/context/ModalsProject";
 
 export const WorkspacesProjectsView = () => {
   const { workspaces } = useWorkspacesContext();
   const { projectsByWorkspace } = useProjectsContextEnterprise();
+  const { openModal } = useModalContext();
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleCreateProject = (workspaceId: string) => {
+    openModal(MODAL_IDS.ADD_PROJECTS_ENTERPRISE, { workspaceId });
+  };
 
   // Flatten all projects
   const allProjects = Object.values(projectsByWorkspace).flat();
@@ -73,7 +80,9 @@ export const WorkspacesProjectsView = () => {
             // Solo mostrar workspace si coincide con búsqueda o tiene proyectos que coinciden
             if (
               searchTerm &&
-              !workspace.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+              !workspace.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) &&
               filteredWorkspaceProjects.length === 0
             ) {
               return null;
@@ -96,6 +105,14 @@ export const WorkspacesProjectsView = () => {
                   <div className="workspace-meta">
                     <span className="pipeline-badge">
                       {workspace.pipelineType || "Standard"}
+                    <button
+                      className="create-project-btn"
+                      onClick={() => handleCreateProject(workspace.id)}
+                      title="Crear nuevo proyecto"
+                    >
+                      <MdAdd size={18} />
+                      Crear Proyecto
+                    </button>
                     </span>
                     <span className="projects-count">
                       {workspaceProjects.length} proyecto

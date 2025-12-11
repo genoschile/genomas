@@ -5,7 +5,7 @@ import "./tableEnterpriseUser.css";
 import { useDataTableUserEnterpriseContext } from "@/features/enterprise/context/DataTableUserEnterpriseContext";
 import { getLocalStorageOrganization } from "@/utils/getLocalStorageOrganization";
 import { toast } from "react-toastify";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaRegStar } from "react-icons/fa";
 import { SkeletonTable } from "./SkeletonTableUser";
 import { ButtonEditUser } from "./ButtonEditUser";
 import { useModalContext } from "@/features/modals/hooks/useModalsProject";
@@ -24,6 +24,7 @@ type UserItemProps = {
   toggleSelect: (id: string) => void;
   toggleFavorite: (id: string) => void;
   handleDelete: (id: string) => void;
+  handleAssignGroup: (id: string) => void;
 };
 
 const UserItem = ({
@@ -39,6 +40,7 @@ const UserItem = ({
   toggleSelect,
   toggleFavorite,
   handleDelete,
+  handleAssignGroup,
 }: UserItemProps) => {
   console.log("🔄 Rendering UserItem:", { id, name, email, role });
 
@@ -54,22 +56,31 @@ const UserItem = ({
           checked={selectedIds.includes(id)}
           onChange={() => toggleSelect(id)}
         />
-        <FaStar
-          size={20}
-          onClick={() => toggleFavorite(id)}
-          className={favoriteIds.includes(id) ? "favorite" : ""}
-        />
       </div>
-      <div className="user-avatar" data-name={name?.charAt(0).toUpperCase()}>
-        {image && (
-          <img
-            src={image}
-            alt="User avatar"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
-          />
-        )}
+      <div className="user-avatar-container">
+        <div className="user-avatar" data-name={name?.charAt(0).toUpperCase()}>
+          {image && (
+            <img
+              src={image}
+              alt="User avatar"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          )}
+        </div>
+        <button
+          className={`star-badge ${favoriteIds.includes(id) ? "is-favorite" : ""}`}
+          onClick={() => toggleFavorite(id)}
+          title={favoriteIds.includes(id) ? "Remover de favoritos" : "Agregar a favoritos"}
+          aria-label={favoriteIds.includes(id) ? "Remover de favoritos" : "Agregar a favoritos"}
+        >
+          {favoriteIds.includes(id) ? (
+            <FaStar size={16} />
+          ) : (
+            <FaRegStar size={16} />
+          )}
+        </button>
       </div>
       <div className="user-info">
         <span className="user-name">{name}</span>
@@ -100,6 +111,9 @@ const UserItem = ({
         </div>
       </div>
       <div className="user-actions">
+        <button className="assign-group" onClick={() => handleAssignGroup(id)}>
+          Asignar Grupo
+        </button>
         <ButtonEditUser userId={id} />
         {!isDefaultAdmin && (
           <button className="delete" onClick={() => handleDelete(id)}>
@@ -114,11 +128,13 @@ const UserItem = ({
 export const TableEnterpriseUser = () => {
   const {
     users,
+    filteredUsers,
     selectedIds,
     favoriteIds,
     toggleSelect,
     toggleFavorite,
     loading,
+    searchTerm,
   } = useDataTableUserEnterpriseContext();
 
   const { openModal } = useModalContext();
@@ -127,35 +143,48 @@ export const TableEnterpriseUser = () => {
     openModal(MODAL_IDS.DELETE_USER_CONFIRMATION, { userId });
   };
 
+  const handleAssignGroup = (userId: string) => {
+    openModal(MODAL_IDS.ASSIGN_USER_TO_GROUP, { userId });
+  };
+
   if (loading) return <SkeletonTable rows={2} />;
 
   return (
-    <ul className="enterprise-user-list">
-      {users.map((user) => (
-        <UserItem
-          key={`${user.id}-${user._version ?? 0}`}
-          id={user.id}
-          name={user.name}
-          email={user.email}
-          role={user.userType}
-          groups={user.groups}
-          image={user.image}
-          isDefaultAdmin={user.isDefaultAdmin}
-          selectedIds={selectedIds}
-          favoriteIds={favoriteIds}
-          toggleSelect={toggleSelect}
-          toggleFavorite={toggleFavorite}
-          handleDelete={handleDelete}
-        />
-      ))}
-      {/* <li className="pagination-wrapper">
-        <Pagination
-          totalPosts={users.length}
-          postsPerPage={postsPerPage}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-        />
-      </li> */}
-    </ul>
+    <div className="table-wrapper">
+      {searchTerm && (
+        <div className="search-results-info">
+          <span>
+            {filteredUsers.length} de {users.length} usuario
+            {filteredUsers.length !== 1 ? "s" : ""}
+          </span>
+        </div>
+      )}
+      <ul className="enterprise-user-list">
+        {filteredUsers.length === 0 ? (
+          <div className="no-results">
+            <p>No se encontraron usuarios que coincidan con "{searchTerm}"</p>
+          </div>
+        ) : (
+          filteredUsers.map((user) => (
+            <UserItem
+              key={`${user.id}-${user._version ?? 0}`}
+              id={user.id}
+              name={user.name}
+              email={user.email}
+              role={user.userType}
+              groups={user.groups}
+              image={user.image}
+              isDefaultAdmin={user.isDefaultAdmin}
+              selectedIds={selectedIds}
+              favoriteIds={favoriteIds}
+              toggleSelect={toggleSelect}
+              toggleFavorite={toggleFavorite}
+              handleDelete={handleDelete}
+              handleAssignGroup={handleAssignGroup}
+            />
+          ))
+        )}
+      </ul>
+    </div>
   );
 };
